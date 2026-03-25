@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import './LoginPage.css'
+import './SignupPage.css'
 
 export default function SignupPage() {
   const navigate = useNavigate()
