@@ -6,8 +6,12 @@ export default function LandingPage() {
   const styleRef = useRef<HTMLLinkElement>(null)
 
   useEffect(() => {
+    // Set theme on <html> so CSS vars cascade correctly
+    document.documentElement.setAttribute('data-theme', 'light')
+
     // Load landing page JS for globe/particles animations
-    if (!document.getElementById('landing-app-script')) {
+    const loadScript = () => {
+      if (document.getElementById('landing-app-script')) return
       const script = document.createElement('script')
       script.id = 'landing-app-script'
       script.src = '/landing/app.js'
@@ -15,8 +19,14 @@ export default function LandingPage() {
       document.body.appendChild(script)
     }
 
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadScript)
+    } else {
+      loadScript()
+    }
+
     return () => {
-      // Don't remove on unmount — the landing page should persist
+      document.documentElement.removeAttribute('data-theme')
     }
   }, [])
 
