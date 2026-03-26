@@ -78,7 +78,7 @@ export default function SignupPage() {
               <img
                 src="/images/coodra-logo.png"
                 alt="Coodra"
-                style={{ height: 100, width: 'auto', display: 'block' }}
+                style={{ height: 160, width: 'auto', display: 'block' }}
               />
             </a>
 
