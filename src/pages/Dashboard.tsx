@@ -126,7 +126,7 @@ export default function Dashboard() {
           <img
             src="/images/coodra-logo.png"
             alt="Coodra"
-            style={{ height: 32, width: 'auto', display: 'block' }}
+            style={{ height: 44, width: 'auto', display: 'block' }}
           />
         </a>
 

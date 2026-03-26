@@ -46,7 +46,7 @@ export default function LandingPage() {
             <img
               src="/images/coodra-logo.png"
               alt="Coodra"
-              style={{ height: 32, width: 'auto', display: 'block' }}
+              style={{ height: 44, width: 'auto', display: 'block' }}
             />
           </a>
           <ul className="nav-links">
@@ -292,7 +292,11 @@ export default function LandingPage() {
 
           <div className="footer-bottom">
             <p>© 2026 Coodra. All rights reserved.</p>
-            <p className="footer-bottom-brand">COODRA</p>
+            <img
+              src="/images/coodra-logo.png"
+              alt="Coodra"
+              style={{ height: 44, width: 'auto', display: 'block', opacity: 0.7 }}
+            />
           </div>
         </div>
       </footer>

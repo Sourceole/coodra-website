@@ -64,29 +64,8 @@
 .sidebar-brand {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
   padding: 0.5rem 0.5rem;
   text-decoration: none;
-}
-
-.sidebar-brand .brand-mark {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 0.6rem;
-  background: linear-gradient(140deg, rgba(83, 217, 255, 0.95), rgba(49, 126, 255, 0.92));
-  box-shadow: 0 8px 30px rgba(69, 157, 255, 0.55);
-  flex-shrink: 0;
-}
-
-.sidebar-brand .brand-text {
-  font-weight: 800;
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
-  color: #f3f8ff;
-}
-
-.dashboard[data-theme="light"] .sidebar-brand .brand-text {
-  color: #122746;
 }
 
 .sidebar-new-chat {
