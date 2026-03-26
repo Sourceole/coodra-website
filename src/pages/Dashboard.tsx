@@ -122,10 +122,13 @@ export default function Dashboard() {
     <div className="dashboard" data-theme={theme}>
       {/* Sidebar */}
       <aside className="dashboard-sidebar">
-        <div className="sidebar-brand">
-          <div className="brand-mark" />
-          <span className="brand-text">COODRA</span>
-        </div>
+        <a className="sidebar-brand" href="/" aria-label="Coodra home">
+          <img
+            src="/images/coodra-logo.png"
+            alt="Coodra"
+            style={{ height: 32, width: 'auto', display: 'block' }}
+          />
+        </a>
 
         <button className="sidebar-new-chat" onClick={() => setMessages([])}>
           + New conversation

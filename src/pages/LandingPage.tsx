@@ -43,8 +43,11 @@ export default function LandingPage() {
       <header className="site-header">
         <nav className="nav container" aria-label="Primary">
           <a className="brand" href="/#top" aria-label="Coodra home">
-            <span className="brand-mark" aria-hidden="true" />
-            <span className="brand-text">COODRA</span>
+            <img
+              src="/images/coodra-logo.png"
+              alt="Coodra"
+              style={{ height: 32, width: 'auto', display: 'block' }}
+            />
           </a>
           <ul className="nav-links">
             <li><a href="/#how-it-works">How it works</a></li>

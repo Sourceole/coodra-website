@@ -76,8 +76,9 @@ export default function SignupPage() {
           <div className="signup__showcaseInner">
             <a className="signup__brand" href="/" aria-label="Go to Coodra home">
               <img
-                src="https://cdn.shopify.com/s/files/1/0974/2332/7513/files/Coodra_logo_black.png?v=1771986962"
+                src="/images/coodra-logo.png"
                 alt="Coodra"
+                style={{ height: 34, width: 'auto', display: 'block' }}
               />
             </a>
 
