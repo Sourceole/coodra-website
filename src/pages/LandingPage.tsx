@@ -46,7 +46,7 @@ export default function LandingPage() {
             <img
               src="/images/coodra-logo.png"
               alt="Coodra"
-              style={{ height: 44, width: 'auto', display: 'block' }}
+              style={{ height: 100, width: 'auto', display: 'block' }}
             />
           </a>
           <ul className="nav-links">
@@ -295,7 +295,7 @@ export default function LandingPage() {
             <img
               src="/images/coodra-logo.png"
               alt="Coodra"
-              style={{ height: 44, width: 'auto', display: 'block', opacity: 0.7 }}
+              style={{ height: 100, width: 'auto', display: 'block', opacity: 0.7 }}
             />
           </div>
         </div>
