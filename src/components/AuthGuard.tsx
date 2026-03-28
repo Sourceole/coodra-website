@@ -28,7 +28,11 @@ export function AuthGuard({ children }: AuthGuardProps) {
   }, [])
 
   if (loading) {
-    return <div className="auth-loading">Loading...</div>
+    return (
+      <div className="auth-loading">
+        <div className="auth-spinner" aria-label="Loading" />
+      </div>
+    )
   }
 
   if (!hasSession) {

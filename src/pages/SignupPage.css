@@ -48,14 +48,12 @@
   align-items: center;
   gap: 12px;
   position: absolute;
-  top: 44px;
-  left: 52px;
+  top: var(--coodra-header-logo-top);
+  left: var(--coodra-header-logo-left);
   z-index: 3;
 }
 
 .signup__brand img {
-  height: 34px;
-  width: auto;
   display: block;
 }
 
@@ -380,6 +378,11 @@
   background: #f0f4f8;
 }
 
+.btn-google:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 @keyframes signupTyping {
   0% { width: 0; }
   56% { width: 43ch; }
@@ -425,10 +428,6 @@
     border-right: 0;
     border-bottom: 1px solid var(--line);
     padding: 26px 20px;
-  }
-  .signup__brand {
-    top: 20px;
-    left: 20px;
   }
   .signup__heroCopy h1 {
     font-size: clamp(36px, 8vw, 52px);

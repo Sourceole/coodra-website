@@ -18,3 +18,39 @@ body {
   display: flex;
   flex-direction: column;
 }
+:root {
+  --coodra-header-logo-width: 240px;
+  --coodra-site-container: min(1180px, calc(100vw - 2.8rem));
+  --coodra-header-logo-left: calc((100vw - var(--coodra-site-container)) / 2);
+  --coodra-header-logo-top: calc(0.35rem + 0.35rem);
+}
+
+.coodra-logo-img {
+  width: var(--coodra-header-logo-width);
+  max-width: min(38vw, var(--coodra-header-logo-width));
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* ── AuthGuard loading spinner ─────────────────────────────────────── */
+.auth-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #0a0a0f;
+}
+
+.auth-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #7c3aed;
+  border-radius: 50%;
+  animation: authSpin 0.7s linear infinite;
+}
+
+@keyframes authSpin {
+  to { transform: rotate(360deg); }
+}
