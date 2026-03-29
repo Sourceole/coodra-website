@@ -135,6 +135,7 @@ const MFA_API = 'https://api.coodra.com/api/mfa';
 const RETAILER_PLAN_API = 'https://api.coodra.com/api/retailer-plan';
 const WELCOME_CONTEXT_API = 'https://api.coodra.com/api/welcome-context';
 const ANALYZE_ATTACHMENT_API = 'https://api.coodra.com/api/analyze-attachment';
+const ATTACHMENT_ANALYSIS_ENABLED = false;
 const PERFORMANCE_STATUS_API = 'https://api.coodra.com/api/performance/status';
 const PERFORMANCE_SYNC_API = 'https://api.coodra.com/api/performance/sync';
 const PERFORMANCE_CONNECTIONS_API = 'https://api.coodra.com/api/performance/connections';
@@ -622,6 +623,9 @@ function runLogoIntroOnce() {
 }
 
 async function analyzeAttachmentFile(file) {
+  if (!ATTACHMENT_ANALYSIS_ENABLED) {
+    throw new Error("attachments_disabled");
+  }
   const mimeType = String(file?.type || "").trim();
   if (!mimeType) throw new Error("missing_mime");
 
@@ -2200,13 +2204,16 @@ function incrementUnreadForChat(chatId) {
   const c = currentChat();
   if (!c) return;
 
-  c.messages.push({ role, text, at: Date.now() });
+  const trimmed = String(text || '').trim();
+  if (!trimmed) return;
+
+  c.messages.push({ role, text: trimmed, at: Date.now() });
   c.meta = role === 'user' ? 'Active now' : c.meta;
   saveState();
   renderChat();
   renderRecent();
 
-  apiAddMessage(c.id, role, text).catch(() => {
+  apiAddMessage(c.id, role, trimmed).catch(() => {
     showToast('Message sync failed', 'warn');
   });
 }
@@ -2311,18 +2318,7 @@ let _cachedWelcomeCtx = null;
 
 async function fetchWelcomeContext() {
   if (_cachedWelcomeCtx !== null) return _cachedWelcomeCtx;
-  if (!getBackendJwt()) return _cachedWelcomeCtx = { type: 'default' };
-  try {
-    const u = new URL(WELCOME_CONTEXT_API);
-    const r = await fetch(u.toString(), {
-      headers: authHeaders({ 'Content-Type': 'application/json' })
-    });
-    if (!r.ok) throw new Error('welcome-context fetch failed');
-    const data = await r.json().catch(() => null);
-    _cachedWelcomeCtx = data || { type: 'default' };
-  } catch (_) {
-    _cachedWelcomeCtx = { type: 'default' };
-  }
+  _cachedWelcomeCtx = { type: 'default' };
   return _cachedWelcomeCtx;
 }
 
@@ -2573,9 +2569,11 @@ function renderChat() {
     if (stream.stopped && out && !out.endsWith('…')) out += '…';
     const storedText = normalizeAssistantDisplayText(out);
     c.messages.push({ role: 'assistant', text: storedText, at: Date.now() });
-    apiAddMessage(c.id, 'assistant', storedText).catch(() => {
-      showToast('Message sync failed', 'warn');
-    });
+    if (storedText) {
+      apiAddMessage(c.id, 'assistant', storedText).catch(() => {
+        showToast('Message sync failed', 'warn');
+      });
+    }
 
     c.meta = 'Active now';
     saveState();
@@ -2590,22 +2588,7 @@ function renderChat() {
 }
 
 async function loadShopCatalog(q = '') {
-  const u = new URL(CATALOG_API);
-  u.searchParams.set('limit', '50');
-  if (q) u.searchParams.set('q', q);
-
-  const r = await fetch(u.toString());
-  const j = await r.json();
-  if (!r.ok || !j?.ok) throw new Error(j?.error || 'catalog_failed');
-
-  state.shop = (j.items || []).map(x => ({
-  id: x.id,
-  name: x.name,
-  vendor: x.vendor || '',
-  category: x.category || x.productType || 'Uncategorized',
-  price: Number(x.price || 0),
-  imageUrl: x.imageUrl || ''
-}));
+  state.shop = [];
 }
 
 async function refreshPlanFromBackend() {
@@ -4789,7 +4772,7 @@ async function handleOpenToBuyUpdateFromChat(text) {
     });
     const j = await r.json().catch(() => ({}));
     const text = j?.choices?.[0]?.message?.content?.trim() || '';
-    return { ok: r.ok, j, text };
+    return { ok: r.ok, status: r.status, j, text };
   };
 
   // Streaming variant: calls /api/chat?stream=true and yields SSE chunks.
@@ -4888,7 +4871,7 @@ async function handleOpenToBuyUpdateFromChat(text) {
       // Non-streaming fallback (shouldn't happen often)
       const j = await r.json().catch(() => ({}));
       const text = j?.choices?.[0]?.message?.content?.trim() || '';
-      return { ok: r.ok, j, text };
+      return { ok: r.ok, status: r.status, j, text };
     }
   }
 
@@ -4943,6 +4926,17 @@ async function handleOpenToBuyUpdateFromChat(text) {
     removeThinking();
     if (!chatResult.ok || !chatResult.text) {
       const errCode = String(chatResult?.j?.error || '').trim().toLowerCase();
+      if (chatResult?.ok === false && (Number(chatResult?.status || 0) === 402 || errCode.includes('quota') || errCode.includes('limit_reached'))) {
+        if (chatResult?.j?.billing && typeof chatResult.j.billing === 'object') {
+          state.billing = { ...(state.billing || {}), ...chatResult.j.billing };
+          applyBillingUiGates();
+          renderBillingUsageSummary();
+        }
+        const msg = formatBillingGateMessage(chatResult?.j, 'You hit your current plan limit. Upgrade to unlock more.');
+        await streamAssistantMessage(msg, 6);
+        showToast(msg, 'warn');
+        return;
+      }
       if (chatResult?.ok === false && errCode === 'feature_locked') {
         if (chatResult?.j?.billing && typeof chatResult.j.billing === 'object') {
           state.billing = { ...(state.billing || {}), ...chatResult.j.billing };
@@ -5004,16 +4998,16 @@ async function ensureRetailerRole() {
   const email = String(CUSTOMER_EMAIL || '').trim().toLowerCase();
   const customerId = String(CUSTOMER_ID || '').trim();
   if (!email) {
-    // If Shopify confirms logged-in customer but email isn't exposed, fail-open.
-    if (customerId) return { ok: true, reason: 'retailer_fallback_missing_email' };
+    if (customerId) return { ok: false, reason: 'retailer_missing_email' };
     return { ok: false, reason: 'missing_email' };
   }
 
+  const qsUserId = USER_ID_STR ? `&user_id=${encodeURIComponent(USER_ID_STR)}` : '';
   const r = await fetch(
-    `${ACCESS_API}?view=role_resolve&scope=retailer&email=${encodeURIComponent(email)}`,
+    `${ACCESS_API}?view=role_resolve&scope=retailer&email=${encodeURIComponent(email)}${qsUserId}`,
     {
       method: 'GET',
-      headers: { 'x-user-email': email }
+      headers: authHeaders({ 'x-user-email': email })
     }
   );
   const j = await r.json().catch(() => ({}));
@@ -5023,12 +5017,13 @@ async function ensureRetailerRole() {
 }
 
   if (!r.ok || !j.ok) {
-    // Prevent hard lockout when role API is temporarily unavailable.
-    return { ok: true, reason: 'retailer_fallback_role_resolve_failed' };
+    return { ok: false, reason: 'retailer_role_resolve_failed' };
   }
 
-  // Retailer app is self-serve now: any authenticated customer can enter.
-  return { ok: true, reason: 'retailer_self_serve' };
+  if (j.can_access_retailer === false) {
+    return { ok: false, reason: 'retailer_forbidden' };
+  }
+  return { ok: true, reason: 'retailer_verified' };
 }
 
 async function loadMfaSecurityStatus() {
@@ -5101,24 +5096,24 @@ async function saveMfaSecuritySettings(payload = {}) {
 
 function createMfaGateModal() {
   const overlay = document.createElement('div');
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(3,8,17,.62);z-index:1500;display:grid;place-items:center;padding:18px;';
+  overlay.style.cssText = 'position:fixed;inset:0;background:#e9eff7;z-index:2147483647;display:grid;place-items:center;padding:18px;';
   const card = document.createElement('div');
-  card.style.cssText = 'width:min(420px,94vw);border:1px solid rgba(46,211,183,.28);background:linear-gradient(180deg,rgba(10,20,35,.98),rgba(12,26,44,.98));border-radius:16px;padding:18px;box-shadow:0 24px 60px rgba(0,0,0,.45);';
+  card.style.cssText = 'width:min(420px,94vw);border:1px solid rgba(162,181,207,.6);background:linear-gradient(180deg,#f9fbff,#edf3fb);border-radius:16px;padding:18px;box-shadow:0 24px 60px rgba(28,44,70,.22);';
   card.innerHTML = `
-    <div style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#8ea2bd;margin-bottom:8px;">Security verification</div>
-    <h3 style="margin:0 0 8px;font-size:24px;line-height:1.15;color:#F4F7FB;">Enter your sign-in code</h3>
-    <p style="margin:0 0 14px;font-size:14px;line-height:1.5;color:#A9B8CE;">We emailed a 6-digit code to <b style="color:#E9F0FA;">${esc(CUSTOMER_EMAIL || '')}</b>.</p>
+    <div style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#5f7597;margin-bottom:8px;">Security verification</div>
+    <h3 style="margin:0 0 8px;font-size:24px;line-height:1.15;color:#10233d;">Enter your sign-in code</h3>
+    <p style="margin:0 0 14px;font-size:14px;line-height:1.5;color:#516989;">We emailed a 6-digit code to <b style="color:#10233d;">${esc(CUSTOMER_EMAIL || '')}</b>.</p>
     <input id="soMfaCodeInput" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="000000"
-      style="width:100%;height:48px;border-radius:12px;border:1px solid rgba(164,180,201,.42);background:rgba(10,20,35,.55);color:#fff;padding:0 14px;font-size:22px;letter-spacing:.26em;text-align:center;outline:none;">
+      style="width:100%;height:48px;border-radius:12px;border:1px solid rgba(162,181,207,.62);background:#ffffff;color:#10233d;padding:0 14px;font-size:22px;letter-spacing:.26em;text-align:center;outline:none;">
     <div id="soMfaErr" style="display:none;margin-top:10px;color:#FCA5A5;font-size:13px;"></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
-      <button id="soMfaVerifyBtn" type="button" style="flex:1 1 160px;height:44px;border:0;border-radius:12px;background:#2ED3B7;color:#063B35;font-weight:760;cursor:pointer;">Verify code</button>
-      <button id="soMfaResendBtn" type="button" style="flex:1 1 120px;height:44px;border:1px solid rgba(164,180,201,.42);border-radius:12px;background:rgba(13,25,44,.7);color:#d5e2f3;font-weight:650;cursor:pointer;">Resend</button>
-      <a href="/account/logout" style="flex:1 1 100%;display:inline-flex;align-items:center;justify-content:center;height:40px;border-radius:10px;border:1px solid rgba(164,180,201,.28);color:#A9B8CE;text-decoration:none;">Sign out</a>
+      <button id="soMfaVerifyBtn" type="button" style="flex:1 1 160px;height:44px;border:0;border-radius:12px;background:#2ED3B7;color:#edf3fb;font-weight:760;cursor:pointer;">Verify code</button>
+      <button id="soMfaResendBtn" type="button" style="flex:1 1 120px;height:44px;border:1px solid rgba(162,181,207,.62);border-radius:12px;background:#ffffff;color:#29486f;font-weight:650;cursor:pointer;">Resend</button>
+      <a href="/account/logout" style="flex:1 1 100%;display:inline-flex;align-items:center;justify-content:center;height:40px;border-radius:10px;border:1px solid rgba(162,181,207,.5);color:#496588;text-decoration:none;background:#f8fbff;">Sign out</a>
     </div>
   `;
   overlay.appendChild(card);
-  root.appendChild(overlay);
+  document.body.appendChild(overlay);
   return { overlay, card };
 }
 
@@ -5469,7 +5464,7 @@ function renderShopFilterControls() {
         /* Attach menu */
 const attachMenu = document.createElement('div');
 attachMenu.className = 'soRc__attachMenu';
-attachMenu.innerHTML = `<button class="soRc__attachMenuBtn" type="button">Attach photos & files</button>`;
+attachMenu.innerHTML = `<button class="soRc__attachMenuBtn" type="button" ${ATTACHMENT_ANALYSIS_ENABLED ? '' : 'disabled'}>${ATTACHMENT_ANALYSIS_ENABLED ? 'Attach photos & files' : 'Attachments coming soon'}</button>`;
 root.appendChild(attachMenu); // IMPORTANT: was document.body.appendChild(...)
 
 function openAttachMenu() {
@@ -5500,6 +5495,10 @@ els.attachBtn?.addEventListener('click', (e) => {
 attachMenu.addEventListener('click', (e) => {
   if (!e.target.closest('.soRc__attachMenuBtn')) return;
   closeAttachMenu();
+  if (!ATTACHMENT_ANALYSIS_ENABLED) {
+    showToast('Attachments are temporarily disabled.', 'warn');
+    return;
+  }
   els.files?.click();
 });
 
@@ -5852,8 +5851,13 @@ jumpBtn.addEventListener('click', () => {
   els.chat?.scrollTo({ top: els.chat.scrollHeight, behavior: 'smooth' });
 });
 
-        els.files?.addEventListener('change', async () => {
+els.files?.addEventListener('change', async () => {
   try {
+    if (!ATTACHMENT_ANALYSIS_ENABLED) {
+      showToast('Attachments are temporarily disabled.', 'warn');
+      if (els.files) els.files.value = '';
+      return;
+    }
     const files = [...(els.files.files || [])];
     if (!files.length) return;
 
@@ -6651,7 +6655,7 @@ setCompany(CUSTOMER_COMPANY || 'Your Company');
 
 installMobileExitGuard();
 installMobileSwipeOpenSidebar();
-root.classList.remove('soRc--booting');
+root.style.visibility = 'hidden';
 
 try {
   const access = await ensureRetailerRole();
@@ -6661,11 +6665,16 @@ try {
   }
   const mfaOk = await ensureMfaVerified();
   if (!mfaOk) {
-    console.warn('MFA gate unavailable or not completed; continuing with limited access.');
+    return;
   }
 } catch (e) {
-  console.warn('Retailer auth gate error; continuing with existing session.', e);
+  console.warn('Retailer auth gate error; redirecting to login.', e);
+  window.location.replace('/login');
+  return;
 }
+
+root.classList.remove('soRc--booting');
+root.style.visibility = '';
 
 setInterval(() => {
   ensureRetailerRole().catch(() => {});
