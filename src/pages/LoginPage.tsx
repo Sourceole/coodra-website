@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { supabase, exchangeForBackendJwt } from '../lib/supabase'
 import './LoginPage.css'
 
 const RECOMMENDATIONS = [
@@ -123,10 +123,30 @@ export default function LoginPage() {
 
   useEffect(() => {
     let active = true
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const init = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!active || !session) return
+
+      const exchanged = await exchangeForBackendJwt()
       if (!active) return
-      if (session) navigate('/dashboard', { replace: true })
-    })
+
+      if (exchanged?.token && exchanged?.exp) {
+        try {
+          sessionStorage.setItem('backend_jwt', exchanged.token)
+          sessionStorage.setItem('backend_jwt_exp', String(exchanged.exp))
+        } catch {
+          // ignore storage failures
+        }
+        navigate('/dashboard', { replace: true })
+        return
+      }
+
+      // If the backend JWT exchange fails, don't bounce in a login<->dashboard loop.
+      await supabase.auth.signOut().catch(() => {})
+      setError('Your session could not be verified. Please sign in again.')
+    }
+    void init()
+
     return () => {
       active = false
     }
@@ -145,6 +165,22 @@ export default function LoginPage() {
       return
     }
 
+    const exchanged = await exchangeForBackendJwt()
+    if (!exchanged?.token || !exchanged?.exp) {
+      await supabase.auth.signOut().catch(() => {})
+      setError('Sign-in succeeded, but your dashboard session could not be verified. Please try again.')
+      setLoading(false)
+      return
+    }
+
+    try {
+      sessionStorage.setItem('backend_jwt', exchanged.token)
+      sessionStorage.setItem('backend_jwt_exp', String(exchanged.exp))
+    } catch {
+      // ignore storage failures
+    }
+
+    setLoading(false)
     navigate('/dashboard')
   }
 
