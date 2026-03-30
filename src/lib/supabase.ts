@@ -23,17 +23,17 @@ function resolveApiEndpoint(path: string) {
 }
 
 // Exchange Supabase session for a backend JWT by calling role_resolve
-export async function exchangeForBackendJwt(): Promise<{ token: string; exp: number } | null> {
+export async function exchangeForBackendJwt(): Promise<{ token: string; exp: number; role: string } | null> {
   const { data: { session } } = await supabase.auth.getSession()
   if (!session?.user) return null
 
   const supabaseToken = session.access_token
-  const email = (session.user.email || '').trim().toLowerCase()
-  const userId = (session.user.id || '').trim()
+  const sessionEmail = session.user.email || ''
+  const email = sessionEmail.trim().toLowerCase()
 
-  async function attemptExchange(): Promise<{ token: string; exp: number } | null> {
+  async function attemptExchange(): Promise<{ token: string; exp: number; role: string } | null> {
     const roleResolveUrl = resolveApiEndpoint(
-      `/log?view=role_resolve&scope=retailer&email=${encodeURIComponent(email)}&user_id=${encodeURIComponent(userId)}`
+      `/log?view=role_resolve&scope=retailer&email=${encodeURIComponent(email)}`
     )
 
     let res: Response
@@ -41,17 +41,22 @@ export async function exchangeForBackendJwt(): Promise<{ token: string; exp: num
       res = await fetch(roleResolveUrl, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${supabaseToken}`,
-          'x-user-id': userId,
-          'x-user-email': session.user.email || '',
+          'x-user-email': sessionEmail,
         },
       })
     } catch {
       return null
     }
 
-    if (!res.ok) return null
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}))
+      console.warn('exchangeForBackendJwt: role_resolve failed', {
+        status: res.status,
+        error: err?.error || 'unknown_error',
+      })
+      return null
+    }
     const data = await res.json()
     if (!data?.backend_jwt) return null
 
@@ -69,7 +74,7 @@ export async function exchangeForBackendJwt(): Promise<{ token: string; exp: num
       }
     }
 
-    return { token: data.backend_jwt, exp }
+    return { token: data.backend_jwt, exp, role: data.role || '' }
   }
 
   // Try up to 3 times with a short delay, in case the first call hits a timing issue

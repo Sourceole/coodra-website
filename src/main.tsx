@@ -7,6 +7,7 @@ import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import Dashboard from './pages/Dashboard'
+import AdminPage from './pages/AdminPage'
 import PricingPage from './pages/PricingPage'
 import VerifyEmailPage from './pages/VerifyEmailPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
@@ -62,6 +63,14 @@ createRoot(document.getElementById('root')!).render(
           element={
             <AuthGuard>
               <Dashboard />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <AuthGuard>
+              <AdminPage />
             </AuthGuard>
           }
         />

@@ -1,215 +1,128 @@
-import { useEffect, useState, useRef, useCallback } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase, exchangeForBackendJwt } from '../lib/supabase'
 import './Dashboard.css'
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://api.coodra.com'
-
-const QUICK_CHIPS = [
-  'What should I reorder this week?',
-  'How are my margins looking?',
-  'Any stockout risks?',
-  'Top movers this month',
-  'Slow-moving inventory',
-]
-
-interface BackendUser {
+type BootPayload = {
+  userId: string | null
   email: string
   firstName: string
-  businessName: string
-  merchantKey: string
-  planCode: string
+  company: string
+  region: string
+  backendJwt: string
+  backendJwtExp: number
+  role: string
 }
 
-interface Message {
-  role: 'user' | 'assistant'
-  content: string
+declare global {
+  interface Window {
+    __SO_RC_BOOT__?: BootPayload
+    __SO_RC_TEMPLATE_LOADED__?: boolean
+  }
+}
+
+function clearStoredJwt() {
+  try {
+    sessionStorage.removeItem('backend_jwt')
+    sessionStorage.removeItem('backend_jwt_exp')
+  } catch {
+    // ignore
+  }
 }
 
 export default function Dashboard() {
   const navigate = useNavigate()
-  const [backendUser, setBackendUser] = useState<BackendUser | null>(null)
   const [loading, setLoading] = useState(true)
-  const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput] = useState('')
-  const [chatLoading, setChatLoading] = useState(false)
-  const [backendJwt, setBackendJwt] = useState('')
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
+  const [error, setError] = useState('')
 
   useEffect(() => {
-    scrollToBottom()
-  }, [messages, chatLoading])
+    let cancelled = false
+    let scriptEl: HTMLScriptElement | null = null
 
-  useEffect(() => {
     const init = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      if (!session) {
-        navigate('/login')
-        return
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession()
+
+        if (!session) {
+          if (!cancelled) navigate('/login')
+          return
+        }
+
+        // Always exchange on boot so we don't get stuck with stale/invalid cached backend JWTs.
+        const exchanged = await exchangeForBackendJwt()
+        const jwt = exchanged?.token || ''
+        const exp = Number(exchanged?.exp || 0)
+
+        if (!jwt || !exp) {
+          clearStoredJwt()
+          if (!cancelled) navigate('/login')
+          return
+        }
+
+        sessionStorage.setItem('backend_jwt', jwt)
+        sessionStorage.setItem('backend_jwt_exp', String(exp))
+
+        const user = session.user
+        window.__SO_RC_BOOT__ = {
+          userId: user.id || null,
+          email: user.email || '',
+          firstName: user.user_metadata?.first_name || user.user_metadata?.name?.split(' ')[0] || '',
+          company: user.user_metadata?.business_name || user.email?.split('@')[0] || 'Retailer',
+          region: user.user_metadata?.region || 'Unknown',
+          backendJwt: jwt,
+          backendJwtExp: exp,
+          role: exchanged?.role || '',
+        }
+
+        const host = document.getElementById('soRcHost')
+        if (!host) throw new Error('Dashboard host not found')
+
+        const htmlRes = await fetch('/wh-command-center.template.html', { cache: 'no-store' })
+        if (!htmlRes.ok) throw new Error('Could not load dashboard template')
+        const templateHtml = await htmlRes.text()
+
+        if (cancelled) return
+        host.innerHTML = `<section id="so-rc-web" class="soRc soRc--booting">${templateHtml}</section>`
+
+        scriptEl = document.createElement('script')
+        scriptEl.src = `/wh-command-center.web.js?v=${Date.now()}`
+        scriptEl.async = false
+        scriptEl.onload = () => {
+          if (cancelled) return
+          window.__SO_RC_TEMPLATE_LOADED__ = true
+          setLoading(false)
+        }
+        scriptEl.onerror = () => {
+          if (cancelled) return
+          setError('Dashboard script failed to load. Please refresh.')
+          setLoading(false)
+        }
+
+        document.body.appendChild(scriptEl)
+      } catch (err) {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : 'Dashboard failed to initialize')
+          setLoading(false)
+        }
       }
-
-      const jwt = await exchangeForBackendJwt()
-      if (jwt) {
-        setBackendJwt(jwt.token)
-        sessionStorage.setItem('backend_jwt', jwt.token)
-        sessionStorage.setItem('backend_jwt_exp', String(jwt.exp))
-      }
-
-      const user = session.user
-      setBackendUser({
-        email: user.email || '',
-        firstName: user.user_metadata?.first_name || user.user_metadata?.name?.split(' ')[0] || '',
-        businessName: user.user_metadata?.business_name || user.email?.split('@')[0] || '',
-        merchantKey: '',
-        planCode: 'free',
-      })
-
-      setLoading(false)
     }
 
     init()
+
+    return () => {
+      cancelled = true
+      if (scriptEl && scriptEl.parentNode) scriptEl.parentNode.removeChild(scriptEl)
+    }
   }, [navigate])
 
-  const sendMessage = async (e?: React.FormEvent, initialInput?: string) => {
-    e?.preventDefault()
-    const text = (initialInput ?? input).trim()
-    if (!text || chatLoading) return
-
-    const userMsg: Message = { role: 'user', content: text }
-    setMessages(prev => [...prev, userMsg])
-    setInput('')
-    setChatLoading(true)
-
-    try {
-      const res = await fetch(`${API_URL}/api/chat`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${backendJwt}`,
-          'x-user-email': backendUser?.email || '',
-        },
-        body: JSON.stringify({ messages: [...messages, userMsg] }),
-      })
-
-      if (!res.ok) throw new Error('Chat request failed')
-      const data = await res.json()
-      const reply = data.choices?.[0]?.message?.content || "I'm having trouble responding right now."
-      setMessages(prev => [...prev, { role: 'assistant', content: reply }])
-    } catch {
-      setMessages(prev => [...prev, { role: 'assistant', content: "I'm having trouble responding right now. Please try again." }])
-    } finally {
-      setChatLoading(false)
-    }
-  }
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut()
-    sessionStorage.removeItem('backend_jwt')
-    sessionStorage.removeItem('backend_jwt_exp')
-    navigate('/login')
-  }
-
-  if (loading) {
-    return <div className="dashboard-loading">Loading...</div>
-  }
-
   return (
-    <div className="dashboard" data-theme={theme}>
-      {/* Sidebar */}
-      <aside className="dashboard-sidebar">
-        <a className="sidebar-brand" href="/" aria-label="Coodra home">
-          <img
-            src="/images/coodra-logo.png"
-            alt="Coodra"
-            style={{ height: 160, width: 'auto', display: 'block' }}
-          />
-        </a>
-
-        <button className="sidebar-new-chat" onClick={() => setMessages([])}>
-          + New conversation
-        </button>
-
-        <div className="sidebar-user">
-          <div className="user-info">
-            <p className="user-name">{backendUser?.firstName || backendUser?.email}</p>
-            <p className="user-business">{backendUser?.businessName}</p>
-          </div>
-          <button onClick={handleLogout} className="btn-logout">Sign out</button>
-        </div>
-      </aside>
-
-      {/* Main */}
-      <main className="dashboard-main">
-        <header className="dashboard-header">
-          <button
-            className="theme-toggle"
-            onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? '☀️' : '🌙'}
-          </button>
-        </header>
-
-        <div className="chat-area">
-          {messages.length === 0 ? (
-            <div className="chat-empty">
-              <div className="chat-empty-logo">COODRA</div>
-              <h2>What's on your mind?</h2>
-              <p>Ask me anything about your store — inventory, margins, Q4 planning, POS data.</p>
-              <div className="quick-chips">
-                {QUICK_CHIPS.map(chip => (
-                  <button
-                    key={chip}
-                    className="quick-chip"
-                    onClick={() => sendMessage(undefined, chip)}
-                  >
-                    {chip}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="chat-messages">
-              {messages.map((msg, i) => (
-                <div key={i} className={`chat-message chat-message--${msg.role}`}>
-                  <div className="message-content">
-                    {msg.content.split('\n').map((line, j) => (
-                      line.trim() ? <p key={j}>{line}</p> : null
-                    ))}
-                  </div>
-                </div>
-              ))}
-              {chatLoading && (
-                <div className="chat-message chat-message--assistant">
-                  <div className="message-content typing-indicator">
-                    <span /><span /><span />
-                  </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-          )}
-        </div>
-
-        <form className="chat-composer" onSubmit={sendMessage}>
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask Coodra anything..."
-            disabled={chatLoading}
-            autoFocus
-          />
-          <button type="submit" disabled={chatLoading || !input.trim()}>
-            Send
-          </button>
-        </form>
-      </main>
+    <div className="dashboard-shell">
+      <div id="soRcHost" className="dashboard-host" />
+      {loading ? <div className="dashboard-loading">Loading...</div> : null}
+      {error ? <div className="dashboard-error">{error}</div> : null}
     </div>
   )
 }
+
