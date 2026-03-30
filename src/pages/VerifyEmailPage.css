@@ -1,0 +1,80 @@
+.verify-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: linear-gradient(160deg, #f4f8ff, #eaf2ff 55%, #e6f2ff);
+}
+
+.verify-card {
+  width: min(560px, 100%);
+  background: #ffffff;
+  border: 1px solid #d6dee8;
+  border-radius: 18px;
+  padding: 1.4rem;
+  box-shadow: 0 18px 46px rgba(15, 23, 42, 0.12);
+}
+
+.verify-card h1 {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.05;
+  color: #0b1220;
+}
+
+.verify-card p {
+  margin: 0.8rem 0 0;
+  color: #4b607a;
+  line-height: 1.55;
+}
+
+.verify-msg {
+  margin-top: 0.9rem;
+  border-radius: 10px;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.92rem;
+}
+
+.verify-msg--ok {
+  border: 1px solid rgba(46, 211, 183, 0.35);
+  background: rgba(46, 211, 183, 0.12);
+  color: #0f766e;
+}
+
+.verify-msg--error {
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.12);
+  color: #991b1b;
+}
+
+.verify-btn {
+  margin-top: 1rem;
+  width: 100%;
+  height: 46px;
+  border: 0;
+  border-radius: 12px;
+  background: #2ed3b7;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.verify-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.verify-links {
+  margin-top: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.verify-links a {
+  color: #0f172a;
+  text-decoration: none;
+  font-weight: 600;
+}
+

@@ -1,9 +1,53 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, type MouseEvent } from 'react'
 import { Link } from 'react-router-dom'
 import './LandingPage.css'
 
+const integrationShowcaseItems = [
+  {
+    name: 'Shopify',
+    description: 'Sync products, orders, and inventory in real time.',
+    iconSrc: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/shopify.svg',
+    className: 'brand-shopify',
+  },
+  {
+    name: 'Square',
+    description: 'Unify in-store sales and catalog performance signals.',
+    iconSrc: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/square.svg',
+    className: 'brand-square',
+  },
+  {
+    name: 'Lightspeed',
+    description: 'Connect POS sell-through and stock movement data.',
+    iconSrc: 'https://www.google.com/s2/favicons?sz=128&domain=lightspeedhq.com',
+    className: 'brand-lightspeed',
+  },
+  {
+    name: 'Clover',
+    description: 'Bring transaction and location trends into one view.',
+    iconSrc: 'https://www.google.com/s2/favicons?sz=128&domain=clover.com',
+    className: 'brand-clover',
+  },
+  {
+    name: 'Moneris',
+    description: 'Pull payment and sales snapshots into decision workflows.',
+    iconSrc: 'https://www.google.com/s2/favicons?sz=128&domain=moneris.com',
+    className: 'brand-moneris',
+  },
+]
+
 export default function LandingPage() {
-  const styleRef = useRef<HTMLLinkElement>(null)
+  const handleIntegrationVisualMove = (event: MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const y = event.clientY - rect.top
+    event.currentTarget.style.setProperty('--mx', `${x}px`)
+    event.currentTarget.style.setProperty('--my', `${y}px`)
+  }
+
+  const handleIntegrationVisualLeave = (event: MouseEvent<HTMLDivElement>) => {
+    event.currentTarget.style.setProperty('--mx', '50%')
+    event.currentTarget.style.setProperty('--my', '50%')
+  }
 
   useEffect(() => {
     // Set theme on <html> so CSS vars cascade correctly
@@ -46,7 +90,7 @@ export default function LandingPage() {
             <img
               src="/images/coodra-logo.png"
               alt="Coodra"
-              style={{ height: 160, width: 'auto', display: 'block' }}
+              className="coodra-logo-img"
             />
           </a>
           <ul className="nav-links">
@@ -92,6 +136,20 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Video placeholder */}
+        <section id="media-expand" className="media-expand container" aria-label="Coodra product reel placeholder">
+          <div className="media-expand-stage" data-reveal="up">
+            <div className="media-expand-frame" aria-hidden="true">
+              <div className="media-expand-placeholder">
+                <div className="media-expand-placeholder-inner">
+                  <span className="media-expand-play" />
+                  <p>See Coodra in action</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* How it works */}
         <section id="how-it-works" className="how-it-works container">
           <div className="how-scroll">
@@ -120,34 +178,44 @@ export default function LandingPage() {
 
         {/* Integrations */}
         <section id="integrations" className="integrations container">
-          <header className="integrations-head">
-            <p className="eyebrow">Integrations</p>
-            <h2>Connect your commerce systems in minutes.</h2>
-            <p className="integrations-sub">
-              POS, ERP, ecommerce, and accounting data flow into one decision layer so your team can act with confidence.
-            </p>
-          </header>
+          <div className="integrations-showcase">
+            <div className="integrations-showcase-head">
+              <div className="integrations-copy">
+                <p className="eyebrow">Integrations</p>
+                <h2>Plug in your systems. Decide faster every day.</h2>
+                <p className="integrations-sub">
+                  Connect the POS tools you already use, then let Coodra turn daily sales and inventory signals into clear next actions your team can approve.
+                </p>
+              </div>
+              <div
+                className="integrations-illustration"
+                aria-hidden="true"
+                onMouseMove={handleIntegrationVisualMove}
+                onMouseLeave={handleIntegrationVisualLeave}
+              >
+                <div className="integrations-node-grid" />
+                <div className="integrations-node-grid-highlight" />
+                <div className="integrations-node-core">
+                  <img src="/images/coodra-orbit-logo.png" alt="Coodra icon" />
+                </div>
+                <span className="integrations-node-dot dot-a" />
+                <span className="integrations-node-dot dot-b" />
+                <span className="integrations-node-dot dot-c" />
+              </div>
+            </div>
 
-          <div className="integrations-orbit">
-            <div className="orbit-grid" aria-hidden="true" />
-            <div className="orbit-core">
-              <strong>Coodra</strong>
-              <small>Decision Layer</small>
-            </div>
-            <div className="tbar-trunk" aria-hidden="true" />
-            <div className="tbar" aria-hidden="true">
-              <div className="tbar-drop tbar-drop-1" />
-              <div className="tbar-drop tbar-drop-2" />
-              <div className="tbar-drop tbar-drop-3" />
-              <div className="tbar-drop tbar-drop-4" />
-              <div className="tbar-drop tbar-drop-5" />
-            </div>
-            <div className="logos-row">
-              <span className="orbit-logo brand-shopify">Shopify</span>
-              <span className="orbit-logo brand-square">Square</span>
-              <span className="orbit-logo brand-moneris">Moneris</span>
-              <span className="orbit-logo brand-lightspeed">Lightspeed</span>
-              <span className="orbit-logo brand-clover">Clover</span>
+            <div className="integrations-list" role="list" aria-label="Coodra POS integrations">
+              {integrationShowcaseItems.map((item) => (
+                <article key={item.name} className="integration-row" role="listitem">
+                  <div className={`integration-logo ${item.className}`}>
+                    <img src={item.iconSrc} alt={`${item.name} logo`} />
+                  </div>
+                  <div className="integration-text">
+                    <h3>{item.name}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
@@ -295,7 +363,7 @@ export default function LandingPage() {
             <img
               src="/images/coodra-logo.png"
               alt="Coodra"
-              style={{ height: 160, width: 'auto', display: 'block', opacity: 0.7 }}
+              style={{ height: 140, width: 'auto', display: 'block', opacity: 0.7 }}
             />
           </div>
         </div>
