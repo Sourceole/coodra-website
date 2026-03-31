@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { supabase, resolveApiEndpoint } from '../lib/supabase'
 import './SignupPage.css'
 
 export default function SignupPage() {
@@ -40,7 +40,7 @@ export default function SignupPage() {
 
     // Best-effort backend notification
     try {
-      fetch('https://api.coodra.com/api/log?action=partner_application_submit', {
+      fetch(resolveApiEndpoint('/log?action=partner_application_submit'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -54,7 +54,9 @@ export default function SignupPage() {
         }),
         keepalive: true,
       }).catch(() => {})
-    } catch (_) {}
+    } catch {
+      void 0
+    }
 
     setLoading(false)
 

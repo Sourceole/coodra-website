@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState, useCallback, useMemo } from 'react'
 import { supabase, exchangeForBackendJwt } from '../lib/supabase'
 import { Navigate } from 'react-router-dom'
@@ -212,9 +213,9 @@ function OverviewTab() {
   const [revenueMode, setRevenueMode] = useState<'mrr' | 'arr'>('mrr')
   const [revenueRange, setRevenueRange] = useState<'3m' | '6m' | '12m' | 'all'>('12m')
   const [hoverMonthIdx, setHoverMonthIdx] = useState(-1)
-  const revenueDaily = Array.isArray(payload?.revenue?.daily) ? payload.revenue.daily : []
 
   const monthlyRevenue = useMemo(() => {
+    const revenueDaily = Array.isArray(payload?.revenue?.daily) ? payload.revenue.daily : []
     const map = new Map<string, OverviewRevenuePoint>()
     for (const point of revenueDaily) {
       const month = String(point?.date || '').slice(0, 7)
@@ -229,7 +230,7 @@ function OverviewTab() {
     }))
     const rangeCount = revenueRange === '3m' ? 3 : revenueRange === '6m' ? 6 : revenueRange === '12m' ? 12 : points.length
     return points.slice(Math.max(0, points.length - rangeCount))
-  }, [revenueDaily, revenueRange])
+  }, [payload, revenueRange])
 
   useEffect(() => {
     adminFetch('/log?view=admin_overview')
@@ -530,7 +531,9 @@ function RetailersTab() {
       .catch(() => { setError('Network error'); setLoading(false) })
   }, [search, planFilter, statusFilter])
 
-  useEffect(() => { loadRetailers(0); setPage(0) }, [search, planFilter, statusFilter])
+  useEffect(() => {
+    loadRetailers(page * limit)
+  }, [loadRetailers, page, limit])
 
   const openManage = (r: Retailer) => {
     setManageRetailer(r)
@@ -577,16 +580,16 @@ function RetailersTab() {
           className="admin-search"
           placeholder="Search email…"
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={e => { setSearch(e.target.value); setPage(0) }}
         />
-        <select className="admin-select" value={planFilter} onChange={e => setPlanFilter(e.target.value)}>
+        <select className="admin-select" value={planFilter} onChange={e => { setPlanFilter(e.target.value); setPage(0) }}>
           <option value="">All Plans</option>
           <option value="free">Free</option>
           <option value="starter">Starter</option>
           <option value="growth">Growth</option>
           <option value="enterprise">Enterprise</option>
         </select>
-        <select className="admin-select" value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
+        <select className="admin-select" value={statusFilter} onChange={e => { setStatusFilter(e.target.value); setPage(0) }}>
           <option value="">All Statuses</option>
           <option value="active">Active</option>
           <option value="trialing">Trialing</option>
@@ -636,9 +639,9 @@ function RetailersTab() {
 
       {totalPages > 1 && (
         <div className="admin-pagination">
-          <button className="admin-btn admin-btn-sm" disabled={page === 0} onClick={() => { setPage(p => p - 1); loadRetailers((page - 1) * limit) }}>Prev</button>
+          <button className="admin-btn admin-btn-sm" disabled={page === 0} onClick={() => setPage(p => p - 1)}>Prev</button>
           <span>Page {page + 1} of {totalPages}</span>
-          <button className="admin-btn admin-btn-sm" disabled={page >= totalPages - 1} onClick={() => { setPage(p => p + 1); loadRetailers((page + 1) * limit) }}>Next</button>
+          <button className="admin-btn admin-btn-sm" disabled={page >= totalPages - 1} onClick={() => setPage(p => p + 1)}>Next</button>
         </div>
       )}
 
@@ -710,7 +713,7 @@ function ChatsTab() {
   }, [])
 
   useEffect(() => {
-    if (!selectedUserId) { setThreads([]); setSelectedThread(null); return }
+    if (!selectedUserId) return
     setLoadingT(true)
     adminFetch(`/log?view=retailer_chats&user_id=${encodeURIComponent(selectedUserId)}&limit=50`)
       .then(r => r.json())
@@ -722,7 +725,7 @@ function ChatsTab() {
   }, [selectedUserId])
 
   useEffect(() => {
-    if (!selectedThread) { setMessages([]); return }
+    if (!selectedThread) return
     setLoadingM(true)
     adminFetch(`/log?view=retailer_chat_messages&chat_id=${encodeURIComponent(selectedThread.id)}&limit=100`)
       .then(r => r.json())
@@ -742,7 +745,16 @@ function ChatsTab() {
           {loadingR ? (
             <div className="admin-td-center">Loading…</div>
           ) : (
-            <select className="admin-select admin-chat-retailer-select" value={selectedUserId} onChange={e => { setSelectedUserId(e.target.value); setSelectedThread(null) }}>
+            <select
+              className="admin-select admin-chat-retailer-select"
+              value={selectedUserId}
+              onChange={e => {
+                setSelectedUserId(e.target.value)
+                setSelectedThread(null)
+                setThreads([])
+                setMessages([])
+              }}
+            >
               <option value="">Select retailer…</option>
               {retailers.map(r => (
                 <option key={r.user_id} value={r.user_id}>{r.email}</option>
@@ -759,7 +771,7 @@ function ChatsTab() {
                 <button
                   key={t.id}
                   className={`admin-thread-item${selectedThread?.id === t.id ? ' active' : ''}`}
-                  onClick={() => setSelectedThread(t)}
+                  onClick={() => { setSelectedThread(t); setMessages([]) }}
                 >
                   <div className="admin-thread-title">{t.title || '(No title)'}</div>
                   <div className="admin-thread-date">{t.last_message_at ? new Date(t.last_message_at).toLocaleDateString() : ''}</div>
@@ -806,9 +818,7 @@ function ApplicationsTab() {
   const limit = 50
   const [actioningId, setActioningId] = useState<string | null>(null)
 
-  useEffect(() => { loadApps(0); setPage(0) }, [statusFilter])
-
-  const loadApps = (offset = 0) => {
+  const loadApps = useCallback((offset = 0) => {
     setLoading(true)
     const params = new URLSearchParams({ status: statusFilter, limit: String(limit), offset: String(offset) })
     adminFetch(`/log?view=admin_partner_applications&${params}`)
@@ -819,7 +829,11 @@ function ApplicationsTab() {
         setLoading(false)
       })
       .catch(() => { setError('Network error'); setLoading(false) })
-  }
+  }, [statusFilter, limit])
+
+  useEffect(() => {
+    loadApps(page * limit)
+  }, [loadApps, page, limit])
 
   const patchStatus = async (id: string, status: 'approved' | 'rejected', notes = '') => {
     setActioningId(id)
@@ -841,7 +855,7 @@ function ApplicationsTab() {
       <div className="admin-toolbar">
         <div className="admin-filter-tabs">
           {['pending', 'approved', 'rejected'].map(s => (
-            <button key={s} className={`admin-filter-tab${statusFilter === s ? ' active' : ''}`} onClick={() => setStatusFilter(s)}>
+            <button key={s} className={`admin-filter-tab${statusFilter === s ? ' active' : ''}`} onClick={() => { setStatusFilter(s); setPage(0) }}>
               {s.charAt(0).toUpperCase() + s.slice(1)}
             </button>
           ))}
@@ -908,9 +922,9 @@ function ApplicationsTab() {
 
       {totalPages > 1 && (
         <div className="admin-pagination">
-          <button className="admin-btn admin-btn-sm" disabled={page === 0} onClick={() => { setPage(p => p - 1); loadApps((page - 1) * limit) }}>Prev</button>
+          <button className="admin-btn admin-btn-sm" disabled={page === 0} onClick={() => setPage(p => p - 1)}>Prev</button>
           <span>Page {page + 1} of {totalPages}</span>
-          <button className="admin-btn admin-btn-sm" disabled={page >= totalPages - 1} onClick={() => { setPage(p => p + 1); loadApps((page + 1) * limit) }}>Next</button>
+          <button className="admin-btn admin-btn-sm" disabled={page >= totalPages - 1} onClick={() => setPage(p => p + 1)}>Next</button>
         </div>
       )}
     </div>

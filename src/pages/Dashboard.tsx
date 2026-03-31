@@ -21,6 +21,7 @@ declare global {
   interface Window {
     __SO_RC_BOOT__?: BootPayload
     __SO_RC_TEMPLATE_LOADED__?: boolean
+    __COODRA_API_BASE__?: string
   }
 }
 
@@ -88,9 +89,12 @@ export default function Dashboard() {
   const [bootTheme, setBootTheme] = useState<ThemeMode>(() => readThemeFromStorage())
 
   useEffect(() => {
+    applyDocumentTheme(bootTheme)
+  }, [bootTheme])
+
+  useEffect(() => {
     let cancelled = false
     let scriptEl: HTMLScriptElement | null = null
-    applyDocumentTheme(bootTheme)
     const logoutHandler = async (event: MouseEvent) => {
       const target = event.target as HTMLElement | null
       const logoutLink = target?.closest('a[href="/account/logout"]') as HTMLAnchorElement | null
@@ -161,6 +165,9 @@ export default function Dashboard() {
           backendJwtExp: exp,
           role,
         }
+        window.__COODRA_API_BASE__ = String((import.meta.env.VITE_API_URL as string) || 'https://api.coodra.com')
+          .trim()
+          .replace(/\/+$/, '')
 
         const host = document.getElementById('soRcHost')
         if (!host) throw new Error('Dashboard host not found')

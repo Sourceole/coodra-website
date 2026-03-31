@@ -14,7 +14,21 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
 })
 
-function resolveApiEndpoint(path: string) {
+function getCachedBackendJwt(): { token: string; exp: number; role: string } | null {
+  try {
+    const token = sessionStorage.getItem('backend_jwt') || ''
+    const exp = Number(sessionStorage.getItem('backend_jwt_exp') || 0)
+    const role = sessionStorage.getItem('backend_jwt_role') || ''
+    const now = Math.floor(Date.now() / 1000)
+    if (!token || !exp) return null
+    if (exp - now < 120) return null
+    return { token, exp, role }
+  } catch {
+    return null
+  }
+}
+
+export function resolveApiEndpoint(path: string) {
   const baseRaw = ((import.meta.env.VITE_API_URL as string) || 'https://api.coodra.com').trim().replace(/\/+$/, '')
   if (baseRaw.endsWith('/api')) {
     return `${baseRaw}${path.startsWith('/') ? path : `/${path}`}`
@@ -24,6 +38,9 @@ function resolveApiEndpoint(path: string) {
 
 // Exchange Supabase session for a backend JWT by calling role_resolve
 export async function exchangeForBackendJwt(): Promise<{ token: string; exp: number; role: string } | null> {
+  const cached = getCachedBackendJwt()
+  if (cached) return cached
+
   const { data: { session } } = await supabase.auth.getSession()
   if (!session?.user) return null
 
@@ -74,14 +91,22 @@ export async function exchangeForBackendJwt(): Promise<{ token: string; exp: num
       }
     }
 
-    return { token: data.backend_jwt, exp, role: data.role || '' }
+    const result = { token: data.backend_jwt, exp, role: data.role || '' }
+    try {
+      sessionStorage.setItem('backend_jwt', result.token)
+      sessionStorage.setItem('backend_jwt_exp', String(result.exp))
+      sessionStorage.setItem('backend_jwt_role', result.role || '')
+    } catch {
+      // ignore storage failures
+    }
+    return result
   }
 
-  // Try up to 3 times with a short delay, in case the first call hits a timing issue
-  for (let attempt = 0; attempt < 3; attempt++) {
+  // Try twice with short backoff to keep login snappy.
+  for (let attempt = 0; attempt < 2; attempt++) {
     const result = await attemptExchange()
     if (result?.token) return result
-    if (attempt < 2) await new Promise(r => setTimeout(r, 500))
+    if (attempt < 1) await new Promise(r => setTimeout(r, 200))
   }
   return null
 }
