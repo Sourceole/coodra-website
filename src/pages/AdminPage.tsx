@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState, useCallback, useMemo } from 'react'
-import { supabase, exchangeForBackendJwt } from '../lib/supabase'
-import { Navigate } from 'react-router-dom'
+import { supabase, exchangeForBackendJwt, getCachedBackendJwt } from '../lib/supabase'
 import './AdminPage.css'
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -117,7 +116,8 @@ function resolveApiEndpoint(path: string) {
 }
 
 async function adminFetch(path: string, options: RequestInit = {}) {
-  const exchanged = await exchangeForBackendJwt()
+  const cached = getCachedBackendJwt()
+  const exchanged = cached || await exchangeForBackendJwt()
   const token = exchanged?.token
   const email = (await supabase.auth.getSession())?.data?.session?.user?.email || ''
   const hasBody = options.body !== undefined && options.body !== null
@@ -154,24 +154,7 @@ function monthLabel(monthKey: string) {
 }
 
 export default function AdminPage() {
-  const [role, setRole] = useState('')
-  const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<Tab>('overview')
-
-  useEffect(() => {
-    exchangeForBackendJwt().then(result => {
-      setRole(result?.role || '')
-      setLoading(false)
-    })
-  }, [])
-
-  if (loading) {
-    return <div className="admin-loading"><div className="admin-spinner" /></div>
-  }
-
-  if (role !== 'admin') {
-    return <Navigate to="/" replace />
-  }
 
   return (
     <div className="admin-shell">

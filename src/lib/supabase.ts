@@ -14,7 +14,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
 })
 
-function getCachedBackendJwt(): { token: string; exp: number; role: string } | null {
+export function getCachedBackendJwt(): { token: string; exp: number; role: string } | null {
   try {
     const token = sessionStorage.getItem('backend_jwt') || ''
     const exp = Number(sessionStorage.getItem('backend_jwt_exp') || 0)

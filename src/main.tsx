@@ -12,6 +12,7 @@ import PricingPage from './pages/PricingPage'
 import VerifyEmailPage from './pages/VerifyEmailPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import { AuthGuard } from './components/AuthGuard'
+import { AdminGuard } from './components/AdminGuard'
 
 declare global {
   interface Window {
@@ -69,9 +70,11 @@ createRoot(document.getElementById('root')!).render(
         <Route
           path="/admin"
           element={
-            <AuthGuard>
-              <AdminPage />
-            </AuthGuard>
+            <AdminGuard>
+              <AuthGuard>
+                <AdminPage />
+              </AuthGuard>
+            </AdminGuard>
           }
         />
         <Route path="*" element={<Navigate to="/" replace />} />
