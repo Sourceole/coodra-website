@@ -1,6 +1,10 @@
-﻿.dashboard-shell {
+.dashboard-shell {
   position: relative;
   min-height: 100vh;
+  background: #f4f5f7;
+}
+
+.dashboard-shell[data-theme='dark'] {
   background: #0b1220;
 }
 
@@ -22,6 +26,12 @@
 }
 
 .dashboard-loading {
+  color: #0f172a;
+  border: 1px solid rgba(161, 184, 210, 0.42);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.dashboard-shell[data-theme='dark'] .dashboard-loading {
   color: #dbe7f5;
   border: 1px solid rgba(161, 184, 210, 0.28);
   background: rgba(9, 17, 30, 0.86);
@@ -32,3 +42,4 @@
   border: 1px solid rgba(245, 158, 11, 0.42);
   background: rgba(54, 36, 12, 0.92);
 }
+

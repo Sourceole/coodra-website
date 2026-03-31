@@ -14,6 +14,9 @@ type BootPayload = {
   role: string
 }
 
+type ThemeMode = 'light' | 'dark'
+const GLOBAL_THEME_KEY = 'so_theme_last_v1'
+
 declare global {
   interface Window {
     __SO_RC_BOOT__?: BootPayload
@@ -25,19 +28,83 @@ function clearStoredJwt() {
   try {
     sessionStorage.removeItem('backend_jwt')
     sessionStorage.removeItem('backend_jwt_exp')
+    sessionStorage.removeItem('backend_jwt_role')
   } catch {
     // ignore
   }
+}
+
+function getCachedBackendJwt(): { token: string; exp: number } | null {
+  try {
+    const token = sessionStorage.getItem('backend_jwt') || ''
+    const exp = Number(sessionStorage.getItem('backend_jwt_exp') || 0)
+    const now = Math.floor(Date.now() / 1000)
+    if (!token || !exp) return null
+    // Require at least 2 minutes remaining to avoid near-expiry failures.
+    if (exp - now < 120) return null
+    return { token, exp }
+  } catch {
+    return null
+  }
+}
+
+function normalizeTheme(value: unknown): ThemeMode {
+  return String(value || '').trim().toLowerCase() === 'dark' ? 'dark' : 'light'
+}
+
+function applyDocumentTheme(mode: ThemeMode) {
+  const light = mode === 'light'
+  document.documentElement.setAttribute('data-so-rc-theme', light ? 'light' : 'dark')
+  document.body.setAttribute('data-so-rc-theme', light ? 'light' : 'dark')
+  document.documentElement.style.backgroundColor = light ? '#f4f5f7' : '#0b1220'
+  document.body.style.backgroundColor = light ? '#f4f5f7' : '#0b1220'
+}
+
+function userScopeFromIdentity(userId: string | null | undefined, email: string | null | undefined): string {
+  return String(userId || email || 'anon')
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]/g, '_')
+}
+
+function readThemeFromStorage(scope?: string): ThemeMode {
+  try {
+    const scopedKey = scope ? `so_theme_v6_${scope}` : ''
+    if (scopedKey) {
+      const scopedRaw = localStorage.getItem(scopedKey)
+      if (scopedRaw) return normalizeTheme(scopedRaw)
+    }
+    const globalRaw = localStorage.getItem(GLOBAL_THEME_KEY)
+    if (globalRaw) return normalizeTheme(globalRaw)
+  } catch {
+    // ignore and use default
+  }
+  return 'light'
 }
 
 export default function Dashboard() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [bootTheme, setBootTheme] = useState<ThemeMode>(() => readThemeFromStorage())
 
   useEffect(() => {
     let cancelled = false
     let scriptEl: HTMLScriptElement | null = null
+    applyDocumentTheme(bootTheme)
+    const logoutHandler = async (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null
+      const logoutLink = target?.closest('a[href="/account/logout"]') as HTMLAnchorElement | null
+      if (!logoutLink) return
+      event.preventDefault()
+      clearStoredJwt()
+      try {
+        await supabase.auth.signOut()
+      } catch {
+        // ignore and continue to login
+      }
+      if (!cancelled) navigate('/login?logged_out=1', { replace: true })
+    }
+    document.addEventListener('click', logoutHandler, true)
 
     const init = async () => {
       try {
@@ -50,10 +117,24 @@ export default function Dashboard() {
           return
         }
 
-        // Always exchange on boot so we don't get stuck with stale/invalid cached backend JWTs.
-        const exchanged = await exchangeForBackendJwt()
-        const jwt = exchanged?.token || ''
-        const exp = Number(exchanged?.exp || 0)
+        // Load template in parallel while we resolve backend auth.
+        const templatePromise = fetch('/wh-command-center.template.html')
+          .then((res) => {
+            if (!res.ok) throw new Error('Could not load dashboard template')
+            return res.text()
+          })
+
+        // Reuse cached backend JWT when still valid; fall back to exchange.
+        const cached = getCachedBackendJwt()
+        let jwt = cached?.token || ''
+        let exp = Number(cached?.exp || 0)
+        let role = ''
+        if (!jwt || !exp) {
+          const exchanged = await exchangeForBackendJwt()
+          jwt = exchanged?.token || ''
+          exp = Number(exchanged?.exp || 0)
+          role = exchanged?.role || ''
+        }
 
         if (!jwt || !exp) {
           clearStoredJwt()
@@ -65,6 +146,11 @@ export default function Dashboard() {
         sessionStorage.setItem('backend_jwt_exp', String(exp))
 
         const user = session.user
+        const themeScope = userScopeFromIdentity(user.id || null, user.email || '')
+        const resolvedTheme = readThemeFromStorage(themeScope)
+        setBootTheme(resolvedTheme)
+        applyDocumentTheme(resolvedTheme)
+
         window.__SO_RC_BOOT__ = {
           userId: user.id || null,
           email: user.email || '',
@@ -73,21 +159,20 @@ export default function Dashboard() {
           region: user.user_metadata?.region || 'Unknown',
           backendJwt: jwt,
           backendJwtExp: exp,
-          role: exchanged?.role || '',
+          role,
         }
 
         const host = document.getElementById('soRcHost')
         if (!host) throw new Error('Dashboard host not found')
+        applyDocumentTheme(resolvedTheme)
 
-        const htmlRes = await fetch('/wh-command-center.template.html', { cache: 'no-store' })
-        if (!htmlRes.ok) throw new Error('Could not load dashboard template')
-        const templateHtml = await htmlRes.text()
+        const templateHtml = await templatePromise
 
         if (cancelled) return
-        host.innerHTML = `<section id="so-rc-web" class="soRc soRc--booting">${templateHtml}</section>`
+        host.innerHTML = `<section id="so-rc-web" class="soRc soRc--booting" data-theme="${resolvedTheme}">${templateHtml}</section>`
 
         scriptEl = document.createElement('script')
-        scriptEl.src = `/wh-command-center.web.js?v=${Date.now()}`
+        scriptEl.src = '/wh-command-center.web.js'
         scriptEl.async = false
         scriptEl.onload = () => {
           if (cancelled) return
@@ -113,16 +198,15 @@ export default function Dashboard() {
 
     return () => {
       cancelled = true
+      document.removeEventListener('click', logoutHandler, true)
       if (scriptEl && scriptEl.parentNode) scriptEl.parentNode.removeChild(scriptEl)
     }
   }, [navigate])
 
   return (
-    <div className="dashboard-shell">
+    <div className="dashboard-shell" data-loading={loading ? '1' : '0'} data-theme={bootTheme}>
       <div id="soRcHost" className="dashboard-host" />
-      {loading ? <div className="dashboard-loading">Loading...</div> : null}
       {error ? <div className="dashboard-error">{error}</div> : null}
     </div>
   )
 }
-

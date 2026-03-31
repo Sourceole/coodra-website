@@ -167,6 +167,7 @@ const USER_SCOPE = String(USER_ID || CUSTOMER_EMAIL || 'anon')
   .toLowerCase()
   .replace(/[^a-z0-9_-]/g, '_');
 const USER_ID_STR = String(USER_ID || '').trim();
+const GLOBAL_THEME_KEY = 'so_theme_last_v1';
 
 const STORAGE = {
   theme: `so_theme_v6_${USER_SCOPE}`,
@@ -182,6 +183,23 @@ const STORAGE = {
   mfaDevice: `so_mfa_device_v1_${USER_SCOPE}`,
   mfaTrusted: `so_mfa_trusted_device_v1_${USER_SCOPE}`,
   };
+
+function normalizeThemeMode(v) {
+  return String(v || '').trim().toLowerCase() === 'dark' ? 'dark' : 'light';
+}
+
+function readThemePreference() {
+  const scoped = safeGet(STORAGE.theme, '');
+  if (scoped) return normalizeThemeMode(scoped);
+  const globalTheme = safeGet(GLOBAL_THEME_KEY, '');
+  return normalizeThemeMode(globalTheme || 'light');
+}
+
+function persistThemePreference(next) {
+  const mode = normalizeThemeMode(next);
+  safeSet(STORAGE.theme, mode);
+  safeSet(GLOBAL_THEME_KEY, mode);
+}
 
 const authHeaders = (extra = {}) => {
   const h = {
@@ -208,6 +226,33 @@ function recommendHeaders(extra = {}) {
   const jwt = getBackendJwt();
   if (jwt) h.Authorization = `Bearer ${jwt}`;
   return h;
+}
+
+async function fetchWithJwtRetry(url, options = {}, retry = true) {
+  const opts = options && typeof options === 'object' ? options : {};
+  let resp = await fetch(url, opts);
+  if (!retry) return resp;
+
+  let errCode = '';
+  try {
+    const clone = resp.clone();
+    const j = await clone.json().catch(() => ({}));
+    errCode = String(j?.error || '').trim().toLowerCase();
+  } catch (_) {}
+
+  const needsJwtRefresh = resp.status === 401 || errCode === 'jwt_required' || errCode === 'unauthorized';
+  if (!needsJwtRefresh) return resp;
+
+  setBackendJwt('', 0);
+  const refreshed = await ensureBackendJwt();
+  if (!refreshed) return resp;
+
+  const baseHeaders = (opts.headers && typeof opts.headers === 'object') ? opts.headers : {};
+  const retryHeaders = { ...baseHeaders };
+  delete retryHeaders.Authorization;
+  const next = { ...opts, headers: authHeaders(retryHeaders) };
+  resp = await fetch(url, next);
+  return resp;
 }
 
 function getMfaToken() {
@@ -353,7 +398,7 @@ async function apiGetChatMessages(chatId, limit = 200) {
 async function apiCreateChat(title = 'New chat') {
   const u = new URL(CHAT_STATE_API);
   u.searchParams.set('action', 'retailer_chat_create');
-  const r = await fetch(u.toString(), {
+  const r = await fetchWithJwtRetry(u.toString(), {
     method: 'POST',
     headers: chatHeaders(),
     body: JSON.stringify({ title })
@@ -366,7 +411,7 @@ async function apiCreateChat(title = 'New chat') {
 async function apiAddMessage(chatId, role, content, kind = null) {
   const u = new URL(CHAT_STATE_API);
   u.searchParams.set('action', 'retailer_chat_message_add');
-  const r = await fetch(u.toString(), {
+  const r = await fetchWithJwtRetry(u.toString(), {
     method: 'POST',
     headers: chatHeaders(),
     body: JSON.stringify({ chat_id: chatId, role, content, kind })
@@ -1981,7 +2026,7 @@ async function getLiveCartContext() {
             runLogoIntroOnce();
           }
         }
-        applyTheme(safeGet(STORAGE.theme, 'dark'));
+        applyTheme(readThemePreference());
 
         function ensurePanelStatusPills() {
           (els.panels || []).forEach((panel) => {
@@ -2053,7 +2098,7 @@ root.addEventListener('click', (e) => {
 
         els.themeToggle?.addEventListener('click', () => {
   const next = (safeGet(STORAGE.theme, 'dark') === 'dark') ? 'light' : 'dark';
-  safeSet(STORAGE.theme, next);
+  persistThemePreference(next);
   applyTheme(next);
 });
 
@@ -2330,6 +2375,7 @@ function applyGreetingToHero(ctx) {
 }
 
 function renderChat() {
+  if (!els.chat) return;
   const c = currentChat();
 
   if (!c || !c.messages.length) {
@@ -2568,12 +2614,16 @@ function renderChat() {
 
     if (stream.stopped && out && !out.endsWith('…')) out += '…';
     const storedText = normalizeAssistantDisplayText(out);
-    c.messages.push({ role: 'assistant', text: storedText, at: Date.now() });
-    if (storedText) {
-      apiAddMessage(c.id, 'assistant', storedText).catch(() => {
-        showToast('Message sync failed', 'warn');
-      });
+    if (!storedText) {
+      // Stream produced no visible text; remove placeholder bubble.
+      msg.remove();
+      return;
     }
+
+    c.messages.push({ role: 'assistant', text: storedText, at: Date.now() });
+    apiAddMessage(c.id, 'assistant', storedText).catch(() => {
+      showToast('Message sync failed', 'warn');
+    });
 
     c.meta = 'Active now';
     saveState();
@@ -4765,7 +4815,7 @@ async function handleOpenToBuyUpdateFromChat(text) {
       attachment_summary: attachmentSummary,
       performance_context: perfContext
     };
-    const r = await fetch(CHAT_API, {
+    const r = await fetchWithJwtRetry(CHAT_API, {
       method: 'POST',
       headers: authHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify(payload)
@@ -4825,7 +4875,7 @@ async function handleOpenToBuyUpdateFromChat(text) {
       attachment_summary: attachmentSummary,
       performance_context: perfContext
     };
-    const r = await fetch(CHAT_API + '?stream=true', {
+    const r = await fetchWithJwtRetry(CHAT_API + '?stream=true', {
       method: 'POST',
       headers: authHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify(payload)
@@ -4885,6 +4935,7 @@ async function handleOpenToBuyUpdateFromChat(text) {
     addThinking(focusLines);
     let chatResult;
     let isStreaming = false;
+    let streamedAssistantRendered = false;
 
     try {
       // Try streaming first
@@ -4893,8 +4944,15 @@ async function handleOpenToBuyUpdateFromChat(text) {
         // Streaming path: stream chunks to UI, then fetch full JSON for post-processing
         isStreaming = true;
         chatResult = { ok: true, j: {}, text: '' };
+        const assistantCountBefore = Array.isArray(c?.messages)
+          ? c.messages.filter((m) => m?.role === 'assistant' && String(m?.text || '').trim()).length
+          : 0;
         removeThinking();
         await streamAssistantMessage(streamResult.chunks, 6);
+        const assistantCountAfter = Array.isArray(c?.messages)
+          ? c.messages.filter((m) => m?.role === 'assistant' && String(m?.text || '').trim()).length
+          : 0;
+        streamedAssistantRendered = assistantCountAfter > assistantCountBefore;
         chatResult.text = (typeof streamResult.getText === 'function' ? streamResult.getText() : '') || '';
         if (!chatResult.text) {
           const lastAssistant = Array.isArray(c?.messages)
@@ -4910,6 +4968,12 @@ async function handleOpenToBuyUpdateFromChat(text) {
           if (!chatResult.text) chatResult.text = jResult.text || '';
         } catch (followErr) {
           console.warn('post-stream follow-up failed; keeping streamed response', followErr);
+        }
+        // Some backends emit only a final "done" payload with full content and no incremental chunks.
+        // In that case, stream UI receives nothing; render the finalized text once here.
+        if (!streamedAssistantRendered && chatResult.text) {
+          await streamAssistantMessage(chatResult.text, 6);
+          streamedAssistantRendered = true;
         }
       } else {
         chatResult = streamResult;
@@ -5778,7 +5842,7 @@ els.billingBtn?.addEventListener('click', async () => {
   const sel = document.getElementById('soSheetTheme');
   sel?.addEventListener('change', () => {
     const next = sel.value.toLowerCase() === 'light' ? 'light' : 'dark';
-    safeSet(STORAGE.theme, next);
+    persistThemePreference(next);
     showToast('Settings saved', 'ok');
     applyTheme(next);
   });
@@ -6684,41 +6748,13 @@ setInterval(() => {
 loadState();
 loadPoliciesAutomationCache();
 
-try {
-  await hydrateChatsFromBackend();
-  await hydrateActiveChatMessages();
-} catch {
-  showToast('Could not load chat history', 'warn');
-}
-
-await syncPlanNow();
-await getLiveCartContext();
-await loadBillingEntitlements();
-const _savedReports = await loadSavedReportsList();
-if (_savedReports.length) {
-  const byCode = Object.fromEntries(_savedReports.map((r) => [String(r.code || ''), r]));
-  if (els.reportWeeklyBtn && byCode.weekly_summary?.label) els.reportWeeklyBtn.textContent = byCode.weekly_summary.label;
-  if (els.reportMonthlyBtn && byCode.monthly_summary?.label) els.reportMonthlyBtn.textContent = byCode.monthly_summary.label;
-  if (els.reportOpportunitiesBtn && byCode.top_opportunities?.label) els.reportOpportunitiesBtn.textContent = byCode.top_opportunities.label;
-}
 renderRecent();
 renderDeleteModal();
 renderChat();
 renderPlan();
 renderPoliciesAutomation();
-loadReportsHistory();
 renderReportsHistory();
-loadPerformanceStatus().catch(() => {});
-loadPoliciesAutomation().catch(() => {});
 renderShopSkeleton();
-loadShopCatalog(uiPrefs.shopQuery || '')
-  .then(() => {
-    renderShop(uiPrefs.shopQuery || '');
-    renderPlan(); // refresh cart images once catalog is in memory
-  })
-  .catch(() => showToast('Could not load catalog', 'err'));
-
-
 const urlTab = new URLSearchParams(window.location.search).get('tab');
 const urlConnected = new URLSearchParams(window.location.search).get('connected');
 const urlConnectError = new URLSearchParams(window.location.search).get('connect_error');
@@ -6755,5 +6791,53 @@ if (['shopify', 'square', 'clover', 'lightspeed', 'moneris'].includes(String(url
 autoGrow();
 updateSendState();
 updateJumpButton();
+
+// Warm background data in parallel so nav/panels become interactive immediately.
+hydrateChatsFromBackend()
+  .then(() => hydrateActiveChatMessages())
+  .then(() => {
+    renderRecent();
+    renderChat();
+  })
+  .catch(() => showToast('Could not load chat history', 'warn'));
+
+syncPlanNow()
+  .then(() => {
+    renderPlan();
+    renderPoliciesAutomation();
+  })
+  .catch(() => {});
+
+getLiveCartContext().catch(() => {});
+
+loadBillingEntitlements()
+  .then(() => {
+    renderPlan();
+    renderPoliciesAutomation();
+  })
+  .catch(() => {});
+
+loadSavedReportsList()
+  .then((_savedReports) => {
+    if (!_savedReports.length) return;
+    const byCode = Object.fromEntries(_savedReports.map((r) => [String(r.code || ''), r]));
+    if (els.reportWeeklyBtn && byCode.weekly_summary?.label) els.reportWeeklyBtn.textContent = byCode.weekly_summary.label;
+    if (els.reportMonthlyBtn && byCode.monthly_summary?.label) els.reportMonthlyBtn.textContent = byCode.monthly_summary.label;
+    if (els.reportOpportunitiesBtn && byCode.top_opportunities?.label) els.reportOpportunitiesBtn.textContent = byCode.top_opportunities.label;
+  })
+  .catch(() => {});
+
+loadReportsHistory();
+renderReportsHistory();
+
+loadPerformanceStatus().catch(() => {});
+loadPoliciesAutomation().catch(() => {});
+
+loadShopCatalog(uiPrefs.shopQuery || '')
+  .then(() => {
+    renderShop(uiPrefs.shopQuery || '');
+    renderPlan(); // refresh cart images once catalog is in memory
+  })
+  .catch(() => showToast('Could not load catalog', 'err'));
 
       })();
