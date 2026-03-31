@@ -1,5 +1,6 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 import { supabase, exchangeForBackendJwt } from '../lib/supabase'
+import { Navigate } from 'react-router-dom'
 import './AdminPage.css'
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -14,9 +15,56 @@ type OverviewStats = {
   aiDecisionsToday: number
 }
 
+type OverviewPlanMix = {
+  plan: string
+  count: number
+}
+
+type OverviewTrendPoint = {
+  date: string
+  new_retailers: number
+  chats: number
+  ai_decisions: number
+}
+
+type OverviewHourlyPoint = {
+  hour: number
+  ai_decisions: number
+}
+
+type OverviewAttention = {
+  past_due: number
+  trial_ending_7d: number
+  no_activity_14d: number
+}
+
+type OverviewTopActive = {
+  user_id: string
+  email: string
+  plan_code: string
+  chat_count: number
+}
+
+type OverviewRevenuePoint = {
+  date: string
+  mrr: number
+  arr: number
+}
+
+type OverviewPayload = {
+  stats: OverviewStats
+  plan_mix: OverviewPlanMix[]
+  trends: { daily: OverviewTrendPoint[] }
+  revenue?: { daily: OverviewRevenuePoint[] }
+  activity: { hourly_ai_decisions_utc: OverviewHourlyPoint[] }
+  attention: OverviewAttention
+  top_active: OverviewTopActive[]
+}
+
 type Retailer = {
   user_id: string
   email: string
+  role: string
   plan_code: string
   status: string
   period_end: string | null
@@ -71,12 +119,18 @@ async function adminFetch(path: string, options: RequestInit = {}) {
   const exchanged = await exchangeForBackendJwt()
   const token = exchanged?.token
   const email = (await supabase.auth.getSession())?.data?.session?.user?.email || ''
+  const hasBody = options.body !== undefined && options.body !== null
+  const method = String(options.method || (hasBody ? 'POST' : 'GET')).toUpperCase()
+  const defaultHeaders: Record<string, string> = {
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    'x-user-email': email,
+  }
+  if (hasBody && method !== 'GET') defaultHeaders['Content-Type'] = 'application/json'
   const res = await fetch(resolveApiEndpoint(path), {
     ...options,
+    method,
     headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      'x-user-email': email,
+      ...defaultHeaders,
       ...(options.headers || {}),
     },
   })
@@ -86,6 +140,17 @@ async function adminFetch(path: string, options: RequestInit = {}) {
 // ── AdminPage ─────────────────────────────────────────────────────────────────
 
 type Tab = 'overview' | 'retailers' | 'chats' | 'applications'
+
+function toNum(v: unknown, fallback = 0) {
+  const n = Number(v)
+  return Number.isFinite(n) ? n : fallback
+}
+
+function monthLabel(monthKey: string) {
+  const [y, m] = String(monthKey || '').split('-').map((x) => Number(x))
+  if (!Number.isFinite(y) || !Number.isFinite(m) || m < 1 || m > 12) return monthKey
+  return new Date(Date.UTC(y, m - 1, 1)).toLocaleString('en-US', { month: 'short' })
+}
 
 export default function AdminPage() {
   const [role, setRole] = useState('')
@@ -104,13 +169,7 @@ export default function AdminPage() {
   }
 
   if (role !== 'admin') {
-    return (
-      <div className="admin-access-denied">
-        <div className="admin-access-icon">⚠️</div>
-        <h1>Access Denied</h1>
-        <p>You must be an admin to view this page.</p>
-      </div>
-    )
+    return <Navigate to="/" replace />
   }
 
   return (
@@ -148,55 +207,287 @@ export default function AdminPage() {
 // ── Overview Tab ──────────────────────────────────────────────────────────────
 
 function OverviewTab() {
-  const [stats, setStats] = useState<OverviewStats | null>(null)
+  const [payload, setPayload] = useState<OverviewPayload | null>(null)
   const [error, setError] = useState('')
+  const [revenueMode, setRevenueMode] = useState<'mrr' | 'arr'>('mrr')
+  const [revenueRange, setRevenueRange] = useState<'3m' | '6m' | '12m' | 'all'>('12m')
+  const [hoverMonthIdx, setHoverMonthIdx] = useState(-1)
+  const revenueDaily = Array.isArray(payload?.revenue?.daily) ? payload.revenue.daily : []
+
+  const monthlyRevenue = useMemo(() => {
+    const map = new Map<string, OverviewRevenuePoint>()
+    for (const point of revenueDaily) {
+      const month = String(point?.date || '').slice(0, 7)
+      if (!month) continue
+      map.set(month, point)
+    }
+    const points = Array.from(map.entries()).map(([month, point]) => ({
+      month,
+      mrr: toNum(point.mrr),
+      arr: toNum(point.arr),
+      date: point.date,
+    }))
+    const rangeCount = revenueRange === '3m' ? 3 : revenueRange === '6m' ? 6 : revenueRange === '12m' ? 12 : points.length
+    return points.slice(Math.max(0, points.length - rangeCount))
+  }, [revenueDaily, revenueRange])
 
   useEffect(() => {
-    adminFetch('/api/log?view=admin_overview')
+    adminFetch('/log?view=admin_overview')
       .then(r => r.json())
       .then(d => {
-        if (d.ok) setStats(d.stats)
+        if (d.ok) setPayload(d)
         else setError(d.error || 'Failed to load')
       })
       .catch(() => setError('Network error'))
   }, [])
 
   if (error) return <div className="admin-error">{error}</div>
-  if (!stats) return <div className="admin-loading"><div className="admin-spinner" /></div>
+  if (!payload) return <div className="admin-loading"><div className="admin-spinner" /></div>
+
+  const stats = payload.stats
+  const planMix = Array.isArray(payload.plan_mix) ? payload.plan_mix : []
+  const maxPlan = Math.max(1, ...planMix.map(p => toNum(p.count)))
+  const paidCount = planMix
+    .filter((p) => String(p.plan).toLowerCase() !== 'free')
+    .reduce((sum, p) => sum + toNum(p.count), 0)
+  const mrr = toNum(stats.mrr)
+  const arr = mrr * 12
+  const arpa = paidCount > 0 ? mrr / paidCount : 0
+  const revenuePrimary = revenueMode === 'mrr' ? mrr : arr
+  const revenuePrimaryLabel = revenueMode === 'mrr' ? 'Monthly recurring revenue' : 'Annual recurring revenue'
+  const revenueMax = Math.max(1, ...monthlyRevenue.map((p) => toNum(revenueMode === 'mrr' ? p.mrr : p.arr)))
+  const revenuePoints = monthlyRevenue.map((p, i) => {
+    const x = monthlyRevenue.length <= 1 ? 0 : (i / (monthlyRevenue.length - 1)) * 100
+    const v = toNum(revenueMode === 'mrr' ? p.mrr : p.arr)
+    const y = 100 - (v / revenueMax) * 100
+    return { x, y, value: v, month: p.month }
+  })
+  const revenuePolyline = revenuePoints.map((p) => `${p.x},${p.y}`).join(' ')
+  const activeRevenueIdx = hoverMonthIdx >= 0 ? hoverMonthIdx : Math.max(0, revenuePoints.length - 1)
+  const activeRevenuePoint = revenuePoints[activeRevenueIdx]
+  const hourly = Array.isArray(payload.activity?.hourly_ai_decisions_utc) ? payload.activity.hourly_ai_decisions_utc : []
+  const maxHour = Math.max(1, ...hourly.map(h => toNum(h.ai_decisions)))
+  const topActive = Array.isArray(payload.top_active) ? payload.top_active.slice(0, 6) : []
+  const attention = payload.attention || { past_due: 0, trial_ending_7d: 0, no_activity_14d: 0 }
 
   return (
     <div className="admin-overview">
-      <h2 className="admin-page-title">Overview</h2>
+      <div className="admin-overview-header">
+        <h2 className="admin-page-title">Executive Overview</h2>
+      </div>
+
       <div className="admin-stat-grid">
         <div className="admin-stat-card">
-          <div className="admin-stat-value">{stats.totalRetailers.toLocaleString()}</div>
+          <div className="admin-stat-value">{toNum(stats.totalRetailers).toLocaleString()}</div>
           <div className="admin-stat-label">Total Retailers</div>
         </div>
         <div className="admin-stat-card">
-          <div className="admin-stat-value">{stats.activeRetailers.toLocaleString()}</div>
+          <div className="admin-stat-value">{toNum(stats.activeRetailers).toLocaleString()}</div>
           <div className="admin-stat-label">Active</div>
         </div>
         <div className="admin-stat-card">
-          <div className="admin-stat-value">${stats.mrr.toLocaleString()}</div>
+          <div className="admin-stat-value">${toNum(stats.mrr).toLocaleString()}</div>
           <div className="admin-stat-label">MRR</div>
         </div>
         <div className="admin-stat-card">
-          <div className="admin-stat-value">{stats.newThisMonth.toLocaleString()}</div>
+          <div className="admin-stat-value">{toNum(stats.newThisMonth).toLocaleString()}</div>
           <div className="admin-stat-label">New This Month</div>
         </div>
         <div className="admin-stat-card">
-          <div className="admin-stat-value">{stats.trialRetailers.toLocaleString()}</div>
+          <div className="admin-stat-value">{toNum(stats.trialRetailers).toLocaleString()}</div>
           <div className="admin-stat-label">Trialing</div>
         </div>
         <div className="admin-stat-card">
-          <div className="admin-stat-value">{stats.chatsToday.toLocaleString()}</div>
+          <div className="admin-stat-value">{toNum(stats.chatsToday).toLocaleString()}</div>
           <div className="admin-stat-label">Chats Today</div>
         </div>
         <div className="admin-stat-card">
-          <div className="admin-stat-value">{stats.aiDecisionsToday.toLocaleString()}</div>
+          <div className="admin-stat-value">{toNum(stats.aiDecisionsToday).toLocaleString()}</div>
           <div className="admin-stat-label">AI Decisions Today</div>
         </div>
       </div>
+
+      <div className="admin-insight-grid">
+        <section className="admin-panel admin-panel-revenue">
+          <div className="admin-panel-head">
+            <h3>Revenue</h3>
+            <div className="admin-range-toggle">
+              <button
+                className={`admin-range-btn${revenueMode === 'mrr' ? ' active' : ''}`}
+                onClick={() => setRevenueMode('mrr')}
+              >
+                MRR
+              </button>
+              <button
+                className={`admin-range-btn${revenueMode === 'arr' ? ' active' : ''}`}
+                onClick={() => setRevenueMode('arr')}
+              >
+                ARR
+              </button>
+            </div>
+          </div>
+          <div className="admin-revenue-subhead">
+            <div className="admin-range-toggle">
+              {(['3m', '6m', '12m', 'all'] as const).map((range) => (
+                <button
+                  key={range}
+                  className={`admin-range-btn${revenueRange === range ? ' active' : ''}`}
+                  onClick={() => setRevenueRange(range)}
+                >
+                  {range.toUpperCase()}
+                </button>
+              ))}
+            </div>
+            {activeRevenuePoint ? (
+              <div className="admin-revenue-hover-value">
+                <span>{monthLabel(activeRevenuePoint.month)} {activeRevenuePoint.month.slice(0, 4)}</span>
+                <strong>${toNum(activeRevenuePoint.value).toLocaleString()}</strong>
+              </div>
+            ) : null}
+          </div>
+          <div className="admin-revenue-main">
+            <div className="admin-revenue-value">${revenuePrimary.toLocaleString()}</div>
+            <div className="admin-revenue-label">{revenuePrimaryLabel}</div>
+          </div>
+          <div className="admin-revenue-grid">
+            <div className="admin-revenue-item">
+              <span>Paid Accounts</span>
+              <strong>{paidCount.toLocaleString()}</strong>
+            </div>
+            <div className="admin-revenue-item">
+              <span>ARPA</span>
+              <strong>${Math.round(arpa).toLocaleString()}</strong>
+            </div>
+            <div className="admin-revenue-item">
+              <span>Trialing</span>
+              <strong>{toNum(stats.trialRetailers).toLocaleString()}</strong>
+            </div>
+            <div className="admin-revenue-item">
+              <span>New This Month</span>
+              <strong>{toNum(stats.newThisMonth).toLocaleString()}</strong>
+            </div>
+          </div>
+          <div
+            className="admin-revenue-trend"
+            onMouseMove={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect()
+              const ratio = Math.min(1, Math.max(0, (e.clientX - rect.left) / Math.max(1, rect.width)))
+              const idx = Math.round(ratio * Math.max(0, monthlyRevenue.length - 1))
+              setHoverMonthIdx(idx)
+            }}
+            onMouseLeave={() => setHoverMonthIdx(-1)}
+          >
+            <div className="admin-revenue-trend-head">
+              <span>{revenueMode.toUpperCase()} trend</span>
+              <span>monthly</span>
+            </div>
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="admin-revenue-trend-chart">
+              <polyline className="line-grid" points="0,100 100,100" />
+              <polyline className="line-grid" points="0,75 100,75" />
+              <polyline className="line-grid" points="0,50 100,50" />
+              <polyline className="line-grid" points="0,25 100,25" />
+              <polyline className="line-revenue" points={revenuePolyline} />
+              {activeRevenuePoint ? (
+                <>
+                  <line className="line-cursor" x1={activeRevenuePoint.x} x2={activeRevenuePoint.x} y1={0} y2={100} />
+                  <circle className="line-dot" cx={activeRevenuePoint.x} cy={activeRevenuePoint.y} r="1.45" />
+                </>
+              ) : null}
+            </svg>
+            <div className="admin-revenue-months">
+              {monthlyRevenue.map((point, idx) => (
+                <span key={`${point.month}-${idx}`} className={idx === activeRevenueIdx ? 'active' : ''}>
+                  {monthLabel(point.month)}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="admin-panel">
+          <div className="admin-panel-head">
+            <h3>Plan Mix</h3>
+            <span>Live distribution</span>
+          </div>
+          <div className="admin-planmix-list">
+            {planMix.map((p) => (
+              <div key={p.plan} className="admin-planmix-row">
+                <span className="plan-name">{p.plan}</span>
+                <div className="plan-bar">
+                  <div style={{ width: `${(toNum(p.count) / maxPlan) * 100}%` }} />
+                </div>
+                <span className="plan-count">{toNum(p.count).toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="admin-panel">
+          <div className="admin-panel-head">
+            <h3>Attention Needed</h3>
+            <span>Revenue risk and churn</span>
+          </div>
+          <div className="admin-attention">
+            <div className="attention-item">
+              <strong>{toNum(attention.past_due).toLocaleString()}</strong>
+              <span>Past due accounts</span>
+            </div>
+            <div className="attention-item">
+              <strong>{toNum(attention.trial_ending_7d).toLocaleString()}</strong>
+              <span>Trials ending in 7 days</span>
+            </div>
+            <div className="attention-item">
+              <strong>{toNum(attention.no_activity_14d).toLocaleString()}</strong>
+              <span>No activity in 14 days</span>
+            </div>
+          </div>
+        </section>
+
+        <section className="admin-panel">
+          <div className="admin-panel-head">
+            <h3>Peak Hours (UTC)</h3>
+            <span>AI decisions in last 24h</span>
+          </div>
+          <div className="admin-hourly">
+            {hourly.map((h) => (
+              <div key={h.hour} className="hour-bar" title={`${h.hour}:00 UTC - ${toNum(h.ai_decisions)} decisions`}>
+                <div className="hour-fill" style={{ height: `${(toNum(h.ai_decisions) / maxHour) * 100}%` }} />
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <section className="admin-panel admin-top-active">
+        <div className="admin-panel-head">
+          <h3>Most Active Retailers (30d)</h3>
+          <span>By chat thread volume</span>
+        </div>
+        {topActive.length === 0 ? (
+          <div className="admin-empty-inline">No activity data yet.</div>
+        ) : (
+          <div className="admin-table-wrap">
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Retailer</th>
+                  <th>Plan</th>
+                  <th>Chats (30d)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topActive.map((r) => (
+                  <tr key={r.user_id}>
+                    <td>{r.email || r.user_id}</td>
+                    <td><span className={`admin-plan-badge plan-${r.plan_code}`}>{r.plan_code}</span></td>
+                    <td>{toNum(r.chat_count).toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
     </div>
   )
 }
@@ -216,6 +507,7 @@ function RetailersTab() {
   const [manageRetailer, setManageRetailer] = useState<Retailer | null>(null)
   const [managePlan, setManagePlan] = useState('')
   const [manageStatus, setManageStatus] = useState('')
+  const [manageRole, setManageRole] = useState('retailer_user')
   const [saving, setSaving] = useState(false)
 
   const loadRetailers = useCallback((offset = 0) => {
@@ -224,12 +516,12 @@ function RetailersTab() {
     if (search) params.set('search', search)
     if (planFilter) params.set('plan_code', planFilter)
     if (statusFilter) params.set('status', statusFilter)
-    adminFetch(`/api/log?view=admin_retailers&${params}`)
+    adminFetch(`/log?view=admin_retailers&${params}`)
       .then(r => r.json())
       .then(d => {
         if (d.ok) {
-          setRetailers(d.retailers)
-          setTotal(d.total)
+          setRetailers(Array.isArray(d.retailers) ? d.retailers : [])
+          setTotal(toNum(d.total))
         } else {
           setError(d.error || 'Failed to load')
         }
@@ -244,16 +536,27 @@ function RetailersTab() {
     setManageRetailer(r)
     setManagePlan(r.plan_code)
     setManageStatus(r.status)
+    setManageRole(r.role || 'retailer_user')
   }
 
   const savePlan = async () => {
     if (!manageRetailer) return
     setSaving(true)
-    const res = await adminFetch('/api/log?action=admin_set_plan', {
+    const planRes = await adminFetch('/log?action=admin_set_plan', {
       method: 'PATCH',
       body: JSON.stringify({ user_id: manageRetailer.user_id, plan_code: managePlan, status: manageStatus }),
     })
-    const d = await res.json()
+    const planData = await planRes.json().catch(() => ({}))
+    if (!planData?.ok) {
+      setSaving(false)
+      alert(planData?.error || 'Failed to update')
+      return
+    }
+    const roleRes = await adminFetch('/log?action=admin_set_role', {
+      method: 'PATCH',
+      body: JSON.stringify({ user_id: manageRetailer.user_id, email: manageRetailer.email, role: manageRole }),
+    })
+    const d = await roleRes.json().catch(() => ({}))
     setSaving(false)
     if (d.ok) {
       setManageRetailer(null)
@@ -291,7 +594,7 @@ function RetailersTab() {
           <option value="canceled">Canceled</option>
           <option value="paused">Paused</option>
         </select>
-        <span className="admin-count">{total.toLocaleString()} retailers</span>
+        <span className="admin-count">{toNum(total).toLocaleString()} retailers</span>
       </div>
 
       {error && <div className="admin-error">{error}</div>}
@@ -301,6 +604,7 @@ function RetailersTab() {
           <thead>
             <tr>
               <th>Email</th>
+              <th>Role</th>
               <th>Plan</th>
               <th>Status</th>
               <th>Period End</th>
@@ -310,12 +614,13 @@ function RetailersTab() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={6} className="admin-td-center">Loading…</td></tr>
+              <tr><td colSpan={7} className="admin-td-center">Loading…</td></tr>
             ) : retailers.length === 0 ? (
-              <tr><td colSpan={6} className="admin-td-center">No retailers found</td></tr>
+              <tr><td colSpan={7} className="admin-td-center">No retailers found</td></tr>
             ) : retailers.map(r => (
               <tr key={r.user_id}>
                 <td>{r.email}</td>
+                <td>{r.role || 'retailer_user'}</td>
                 <td><span className={`admin-plan-badge plan-${r.plan_code}`}>{r.plan_code}</span></td>
                 <td><span className={`admin-status-badge status-${r.status}`}>{r.status}</span></td>
                 <td>{r.period_end ? new Date(r.period_end).toLocaleDateString() : '—'}</td>
@@ -342,6 +647,13 @@ function RetailersTab() {
           <div className="admin-modal" onClick={e => e.stopPropagation()}>
             <h3>Manage Retailer</h3>
             <p className="admin-modal-email">{manageRetailer.email}</p>
+            <div className="admin-modal-field">
+              <label>Role</label>
+              <select className="admin-select" value={manageRole} onChange={e => setManageRole(e.target.value)}>
+                <option value="retailer_user">Retailer</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
             <div className="admin-modal-field">
               <label>Plan</label>
               <select className="admin-select" value={managePlan} onChange={e => setManagePlan(e.target.value)}>
@@ -388,10 +700,10 @@ function ChatsTab() {
 
   useEffect(() => {
     const params = new URLSearchParams({ limit: '500' })
-    adminFetch(`/api/log?view=admin_retailers&${params}`)
+    adminFetch(`/log?view=admin_retailers&${params}`)
       .then(r => r.json())
       .then(d => {
-        if (d.ok) setRetailers(d.retailers)
+        if (d.ok) setRetailers(Array.isArray(d.retailers) ? d.retailers : [])
         setLoadingR(false)
       })
       .catch(() => setLoadingR(false))
@@ -400,7 +712,7 @@ function ChatsTab() {
   useEffect(() => {
     if (!selectedUserId) { setThreads([]); setSelectedThread(null); return }
     setLoadingT(true)
-    adminFetch(`/api/log?view=retailer_chats&user_id=${encodeURIComponent(selectedUserId)}&limit=50`)
+    adminFetch(`/log?view=retailer_chats&user_id=${encodeURIComponent(selectedUserId)}&limit=50`)
       .then(r => r.json())
       .then(d => {
         setThreads(d.chats || [])
@@ -412,7 +724,7 @@ function ChatsTab() {
   useEffect(() => {
     if (!selectedThread) { setMessages([]); return }
     setLoadingM(true)
-    adminFetch(`/api/log?view=retailer_chat_messages&chat_id=${encodeURIComponent(selectedThread.id)}&limit=100`)
+    adminFetch(`/log?view=retailer_chat_messages&chat_id=${encodeURIComponent(selectedThread.id)}&limit=100`)
       .then(r => r.json())
       .then(d => {
         setMessages(d.messages || [])
@@ -499,10 +811,10 @@ function ApplicationsTab() {
   const loadApps = (offset = 0) => {
     setLoading(true)
     const params = new URLSearchParams({ status: statusFilter, limit: String(limit), offset: String(offset) })
-    adminFetch(`/api/log?view=admin_partner_applications&${params}`)
+    adminFetch(`/log?view=admin_partner_applications&${params}`)
       .then(r => r.json())
       .then(d => {
-        if (d.ok) { setApps(d.applications); setTotal(d.total) }
+        if (d.ok) { setApps(Array.isArray(d.applications) ? d.applications : []); setTotal(toNum(d.total)) }
         else setError(d.error || 'Failed to load')
         setLoading(false)
       })
@@ -511,7 +823,7 @@ function ApplicationsTab() {
 
   const patchStatus = async (id: string, status: 'approved' | 'rejected', notes = '') => {
     setActioningId(id)
-    const res = await adminFetch('/api/log?action=partner_application_status', {
+    const res = await adminFetch('/log?action=partner_application_status', {
       method: 'PATCH',
       body: JSON.stringify({ id, status, reviewed_by: 'admin', decision_notes: notes }),
     })
