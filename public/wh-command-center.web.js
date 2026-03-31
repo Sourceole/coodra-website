@@ -2556,6 +2556,7 @@ function renderChat() {
     const msg = document.createElement('div');
     msg.className = 'soRc__msg';
     msg.innerHTML = `<div class="soRc__bubble"><div class="soRc__text" id="soStreamTarget"></div></div>`;
+    msg.style.display = 'none';
     els.chat.appendChild(msg);
 
     const target = msg.querySelector('#soStreamTarget');
@@ -2570,6 +2571,7 @@ function renderChat() {
         if (!part || stream.stopped) continue;
         // Accumulate output
         out += (part === '\n' ? ' ' : part === '\n\n' ? '\n' : part);
+        if (msg.style.display === 'none') msg.style.display = '';
 
         if (part === '\n') {
           if (lastWasNl) {
