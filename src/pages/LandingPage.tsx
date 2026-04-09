@@ -1,4 +1,4 @@
-import { useEffect, type MouseEvent } from 'react'
+﻿import { useEffect, type MouseEvent } from 'react'
 import { Link } from 'react-router-dom'
 import './LandingPage.css'
 
@@ -196,7 +196,7 @@ export default function LandingPage() {
                 <div className="integrations-node-grid" />
                 <div className="integrations-node-grid-highlight" />
                 <div className="integrations-node-core">
-                  <img src="/images/coodra-orbit-logo.png" alt="Coodra icon" />
+                  <img src="/images/logo.png" alt="Coodra icon" />
                 </div>
                 <span className="integrations-node-dot dot-a" />
                 <span className="integrations-node-dot dot-b" />
@@ -359,7 +359,7 @@ export default function LandingPage() {
           </div>
 
           <div className="footer-bottom">
-            <p>© 2026 Coodra. All rights reserved.</p>
+            <p>&copy; 2026 Coodra. All rights reserved.</p>
             <img
               src="/images/coodra-logo.png"
               alt="Coodra"
@@ -371,3 +371,4 @@ export default function LandingPage() {
     </div>
   )
 }
+

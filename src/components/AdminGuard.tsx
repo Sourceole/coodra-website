@@ -7,15 +7,14 @@ interface AdminGuardProps {
 }
 
 export function AdminGuard({ children }: AdminGuardProps) {
-  const [loading, setLoading] = useState(true)
-  const [isAdmin, setIsAdmin] = useState(false)
+  const cached = getCachedBackendJwt()
+  const cachedRole = cached?.role || ''
+  const [loading, setLoading] = useState(!cached)
+  const [isAdmin, setIsAdmin] = useState(cachedRole === 'admin')
 
   useEffect(() => {
     let cancelled = false
-    const cached = getCachedBackendJwt()
-    if (cached?.role === 'admin') {
-      setIsAdmin(true)
-      setLoading(false)
+    if (cachedRole === 'admin') {
       return
     }
     exchangeForBackendJwt()
@@ -32,7 +31,7 @@ export function AdminGuard({ children }: AdminGuardProps) {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [cachedRole])
 
   if (loading) {
     return (

@@ -1,7 +1,7 @@
-.pricing-page {
+﻿.pricing-page {
   --text: #0a1a31;
   --muted: #506786;
-  --brand-a: #2fd7c6;
+  --brand: #2fd7c6;
   min-height: 100vh;
   color: var(--text);
   background:
@@ -10,7 +10,6 @@
     linear-gradient(155deg, #f4f8ff, #ecf3ff 52%, #e5eefc);
 }
 
-/* ── Header ────────────────────────────────────────────────────────────── */
 .pricing-header {
   position: sticky;
   top: 0;
@@ -26,14 +25,14 @@
   padding: 0;
 }
 
+.pricing-brand {
+  line-height: 0;
+}
+
 .pricing-brand .coodra-logo-img {
   width: var(--coodra-header-logo-width);
   max-width: min(38vw, var(--coodra-header-logo-width));
   height: auto;
-}
-
-.pricing-brand {
-  line-height: 0;
 }
 
 .pricing-links {
@@ -59,7 +58,6 @@
   text-decoration: none;
 }
 
-/* ── Main content ──────────────────────────────────────────────────────── */
 .pricing-main {
   padding-top: clamp(4.4rem, 9vh, 6.6rem);
   padding-bottom: 4.5rem;
@@ -68,7 +66,7 @@
 .pricing-hero {
   max-width: 52rem;
   margin: 0 auto;
-  padding-top: clamp(2.75rem, 7vh, 4.5rem);
+  padding-top: clamp(2.2rem, 5vh, 3.2rem);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,22 +75,21 @@
 
 .pricing-hero h1 {
   margin: 0;
-  font-size: clamp(2rem, 4.8vw, 3.3rem);
+  font-size: clamp(2rem, 4.8vw, 3.2rem);
   letter-spacing: -0.03em;
-  line-height: 1.02;
+  line-height: 1.03;
 }
 
 .pricing-hero p {
   margin: 0.8rem auto 0;
   max-width: 48rem;
   color: var(--muted);
-  font-size: 1.04rem;
+  font-size: 1.02rem;
 }
 
 .pricing-billing-switch {
-  margin: 1.1rem auto 0;
+  margin-top: 1.1rem;
   position: relative;
-  width: fit-content;
   display: grid;
   grid-template-columns: 1fr 1fr;
   border: 1px solid rgba(86, 138, 217, 0.33);
@@ -100,12 +97,13 @@
   border-radius: 999px;
   padding: 3px;
   box-shadow: 0 10px 20px rgba(67, 106, 157, 0.12);
+  cursor: pointer;
 }
 
 .billing-option {
   position: relative;
   z-index: 1;
-  min-width: 108px;
+  min-width: 116px;
   border: 0;
   background: transparent;
   color: #385476;
@@ -118,7 +116,15 @@
 }
 
 .billing-option.is-active {
-  color: #ffffff;
+  color: #fff;
+}
+
+.billing-discount {
+  margin-left: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  opacity: 0.95;
 }
 
 .billing-knob {
@@ -128,7 +134,7 @@
   height: calc(100% - 6px);
   width: calc(50% - 3px);
   border-radius: 999px;
-  background: linear-gradient(140deg, var(--brand-a), var(--brand-c));
+  background: linear-gradient(140deg, #2fd7c6, #1eb8a8);
   box-shadow: 0 8px 18px rgba(47, 199, 187, 0.3);
   transition: transform 280ms cubic-bezier(0.22, 0.8, 0.3, 1);
 }
@@ -137,146 +143,61 @@
   transform: translateX(100%);
 }
 
-/* ── Card grid ─────────────────────────────────────────────────────────── */
 .pricing-grid {
-  margin-top: 2rem;
+  margin-top: 1.8rem;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.35rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1.15rem;
   align-items: stretch;
 }
 
-/* ── Glass card ───────────────────────────────────────────────────────── */
 .price-card {
   position: relative;
-  border-radius: 22px;
-  overflow: visible;
-  background: rgba(255, 255, 255, 0.62);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow:
-    0 24px 56px rgba(16, 44, 91, 0.1),
-    0 1px 0 rgba(255, 255, 255, 0.9) inset;
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 16px 40px rgba(16, 44, 91, 0.1);
   display: flex;
   flex-direction: column;
-  padding: 1.6rem 1.5rem 1.5rem;
-  isolation: isolate;
-  height: 100%;
-  transition:
-    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 280ms ease,
-    border-color 280ms ease;
-}
-
-/* Top glass sheen — layered on top of card bg */
-.price-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 55%;
-  background: linear-gradient(
-    160deg,
-    rgba(255, 255, 255, 0.78) 0%,
-    rgba(255, 255, 255, 0.22) 45%,
-    rgba(255, 255, 255, 0.04) 100%
-  );
-  pointer-events: none;
-  z-index: 0;
-  border-radius: 22px 22px 0 0;
+  padding: 1.35rem 1.15rem 1.15rem;
+  min-height: 100%;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
 }
 
 .price-card:hover {
-  transform: translateY(-5px);
-  box-shadow:
-    0 28px 56px rgba(16, 44, 91, 0.14),
-    0 1px 0 rgba(255, 255, 255, 0.9) inset;
-  border-color: rgba(46, 211, 183, 0.38);
+  transform: translateY(-4px);
+  border-color: rgba(46, 211, 183, 0.4);
+  box-shadow: 0 22px 46px rgba(16, 44, 91, 0.14);
 }
 
-/* ── Popular / Growth card ─────────────────────────────────────────────── */
 .is-popular {
-  border: 1px solid rgba(46, 211, 183, 0.52);
-  background: rgba(255, 255, 255, 0.72);
-  box-shadow:
-    0 24px 56px rgba(33, 114, 152, 0.16),
-    0 1px 0 rgba(255, 255, 255, 0.95) inset;
-  transform: scale(1.035);
-  z-index: 1;
-}
-
-.is-popular:hover {
-  transform: scale(1.035) translateY(-5px);
-  box-shadow:
-    0 30px 64px rgba(33, 114, 152, 0.2),
-    0 1px 0 rgba(255, 255, 255, 0.95) inset;
-}
-
-/* ── Popular sheen sweep ──────────────────────────────────────────────── */
-.popular-sheen {
-  position: absolute;
-  inset: 0;
-  border-radius: 22px;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.popular-sheen::after {
-  content: "";
-  position: absolute;
-  top: -5%;
-  left: -70%;
-  width: 55%;
-  height: 110%;
-  background: linear-gradient(
-    108deg,
-    transparent 20%,
-    rgba(255, 255, 255, 0.75) 45%,
-    rgba(255, 255, 255, 0.35) 55%,
-    transparent 75%
-  );
-  transform: skewX(-14deg);
-  animation: sheenSweep 2.8s ease-in-out infinite;
-}
-
-@keyframes sheenSweep {
-  0%   { left: -75%; }
-  60%  { left: 110%; }
-  100% { left: 110%; }
-}
-
-/* ── Content stack (all above the ::before sheen) ──────────────────────── */
-.price-card > * {
-  position: relative;
-  z-index: 1;
+  border-color: rgba(46, 211, 183, 0.48);
+  box-shadow: 0 22px 48px rgba(33, 114, 152, 0.18);
 }
 
 .popular-badge {
   position: absolute;
-  top: 0;
+  top: -11px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  display: inline-block;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
   border-radius: 999px;
-  padding: 4px 12px;
-  font-size: 0.68rem;
+  padding: 3px 10px;
+  font-size: 0.62rem;
   font-weight: 800;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #ffffff;
+  color: #fff;
   background: linear-gradient(135deg, #2fd7c6, #1eb8a8);
   border: 1px solid rgba(46, 211, 183, 0.45);
-  box-shadow: 0 4px 12px rgba(46, 211, 183, 0.35);
-  margin-bottom: 0;
-  z-index: 6;
 }
 
 .tier-name {
   margin: 0;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--muted);
@@ -284,157 +205,95 @@
 }
 
 .tier-price {
-  font-size: 2.2rem;
+  font-size: 1.95rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: #0a1a31;
-  line-height: 1;
-  margin: 0.3rem 0 0;
-}
-
-.tier-price span {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--muted);
-  margin-left: 0.25rem;
+  line-height: 1.05;
+  margin: 0.35rem 0 0;
 }
 
 .tier-desc {
   margin: 0.5rem 0 0;
-  font-size: 0.86rem;
+  font-size: 0.83rem;
   color: var(--muted);
   line-height: 1.5;
-  min-height: unset;
 }
 
-/* ── Feature list ─────────────────────────────────────────────────────── */
 .tier-list {
   margin: 0.75rem 0 0;
   padding-left: 0;
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.5rem;
   flex: 1;
 }
 
 .tier-list li {
   display: flex;
   align-items: flex-start;
-  gap: 0.55rem;
-  font-size: 0.82rem;
+  gap: 0.5rem;
+  font-size: 0.8rem;
   color: #385476;
-  line-height: 1.45;
+  line-height: 1.4;
 }
 
 .tier-list li::before {
-  content: "";
-  display: block;
-  width: 16px;
-  height: 16px;
-  min-width: 16px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%232fd7c6' opacity='0.18'/%3E%3Cpath d='M5 8l2 2 4-4' stroke='%232fd7c6' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") center / contain no-repeat;
-  margin-top: 1px;
+  content: '';
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  margin-top: 2px;
+  border-radius: 999px;
+  background: rgba(47, 215, 198, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(47, 215, 198, 0.62);
 }
 
-/* ── CTA button — scoped to pricing grid cards ─────────────────────────── */
 .price-card .pricing-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
   border-radius: 11px;
-  padding: 0.6rem 1.1rem;
-  font-size: 0.88rem;
+  padding: 0.56rem 0.95rem;
+  font-size: 0.85rem;
   font-weight: 700;
-  letter-spacing: 0.01em;
   text-decoration: none;
-  transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
-  cursor: pointer;
+  transition: all 0.2s ease;
   border: 1px solid transparent;
   margin-top: auto;
   width: 100%;
 }
 
 .price-card .pricing-btn-ghost {
-  background: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.7);
   border-color: rgba(65, 179, 174, 0.3);
   color: #0a1a31;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
 }
 
 .price-card .pricing-btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   border-color: rgba(46, 211, 183, 0.5);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(46, 211, 183, 0.15);
 }
 
 .price-card .pricing-btn-primary {
   background: linear-gradient(135deg, #2fd7c6, #1eb8a8);
   border-color: rgba(46, 211, 183, 0.5);
-  color: #ffffff;
-  text-shadow: 0 1px 2px rgba(8, 30, 52, 0.18);
-  box-shadow: 0 4px 14px rgba(46, 211, 183, 0.28);
+  color: #fff;
 }
 
 .price-card .pricing-btn-primary:hover {
-  background: linear-gradient(135deg, #36dfcc, #22c9b5);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(46, 211, 183, 0.38);
+  background: linear-gradient(135deg, #37dfcc, #24c9b5);
 }
 
-/* CTA glow pulse on popular */
-.is-popular .pricing-btn-primary {
-  animation: ctaGlow 2.4s ease-in-out infinite;
-}
-
-@keyframes ctaGlow {
-  0%, 100% {
-    box-shadow: 0 4px 14px rgba(46, 211, 183, 0.28);
-  }
-  50% {
-    box-shadow: 0 4px 14px rgba(46, 211, 183, 0.28), 0 0 22px 4px rgba(46, 211, 183, 0.2);
-  }
-}
-
-/* ── Card entrance animation ──────────────────────────────────────────── */
-@keyframes cardEntrance {
-  0%   { opacity: 0; transform: translateY(32px) scale(0.95); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes cardEntrancePopular {
-  0%   { opacity: 0; transform: scale(1.035) translateY(32px); }
-  100% { opacity: 1; transform: scale(1.035) translateY(0); }
-}
-
-.price-card {
-  opacity: 0;
-  animation: cardEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.price-card:nth-child(1) { animation-delay: 0ms; }
-.price-card:nth-child(2) { animation-delay: 110ms; }
-.price-card:nth-child(3) { animation-delay: 0ms; }
-.price-card:nth-child(4) { animation-delay: 200ms; }
-
-.is-popular {
-  animation: cardEntrancePopular 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: 0ms;
-  animation-fill-mode: both;
-}
-
-/* ── Feature comparison table ─────────────────────────────────────────── */
 .pricing-features-section {
-  margin-top: clamp(8rem, 18vh, 12rem);
+  margin-top: clamp(2.2rem, 5vh, 3.2rem);
 }
 
 .pricing-features-head {
   text-align: center;
   max-width: 42rem;
-  margin: 0 auto 1.25rem;
+  margin: 0 auto 1rem;
 }
 
 .pricing-features-head .eyebrow {
@@ -443,25 +302,23 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--brand-a);
+  color: var(--brand);
 }
 
 .pricing-features-head h2 {
-  margin: 0.55rem 0 0;
+  margin: 0.5rem 0 0;
   font-size: clamp(1.35rem, 2.1vw, 1.9rem);
   letter-spacing: -0.02em;
   color: var(--text);
 }
 
 .pricing-table-wrap {
-  margin-top: 1.2rem;
-  border-radius: 18px;
+  margin-top: 1rem;
+  border-radius: 16px;
   overflow: auto;
-  background: rgba(255, 255, 255, 0.52);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.82);
   box-shadow: 0 12px 36px rgba(16, 44, 91, 0.08);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
 }
 
 .pricing-table {
@@ -475,39 +332,24 @@
 .pricing-table th,
 .pricing-table td {
   border-bottom: 1px solid rgba(200, 218, 240, 0.5);
-  padding: 0.72rem 0.9rem;
+  padding: 0.68rem 0.85rem;
   text-align: center;
 }
 
 .pricing-table th {
   color: var(--text);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 700;
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.45);
 }
 
 .pricing-table td:first-child,
 .pricing-table th:first-child {
   text-align: left;
   color: var(--text);
-  min-width: 220px;
-}
-
-/* Yes cells — teal checkmark */
-.pricing-table td:not(:first-child) {
-  text-align: center;
-}
-
-.pricing-table td:not(:first-child)::before {
-  content: none;
-}
-
-.pricing-table td:not(:first-child) {
-  position: relative;
+  min-width: 210px;
 }
 
 .pricing-table td.check-yes {
@@ -516,37 +358,25 @@
 }
 
 .pricing-table td.check-yes::before {
-  content: "";
+  content: '';
   display: inline-block;
-  width: 16px;
-  height: 16px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%232fd7c6' opacity='0.18'/%3E%3Cpath d='M5 8l2 2 4-4' stroke='%232fd7c6' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") center / contain no-repeat;
-  vertical-align: middle;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(47, 215, 198, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(47, 215, 198, 0.62);
 }
 
 .pricing-table td.check-dash {
   color: rgba(80, 103, 134, 0.4);
-  font-size: 0.9rem;
 }
 
-/* ── Reduced motion ──────────────────────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  .popular-sheen::after,
-  .popular-badge,
-  .is-popular .pricing-btn-primary,
-  .price-card,
-  .is-popular {
-    animation: none !important;
-  }
-  .price-card {
-    opacity: 1;
-  }
-  .is-popular {
-    transform: scale(1.035);
+@media (max-width: 1180px) {
+  .pricing-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-/* ── Responsive ───────────────────────────────────────────────────────── */
 @media (max-width: 1040px) {
   .pricing-links {
     display: none !important;
@@ -576,19 +406,12 @@
     grid-template-columns: 1fr;
   }
 
-  .is-popular {
-    transform: scale(1);
-  }
-  .is-popular:hover {
-    transform: translateY(-5px);
-  }
-
   .pricing-features-section {
-    margin-top: 5rem;
+    margin-top: 2rem;
   }
 
   .pricing-features-head {
     text-align: left;
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.8rem;
   }
 }

@@ -1,6 +1,6 @@
 ﻿import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { supabase, exchangeForBackendJwt } from '../lib/supabase'
+import { supabase, exchangeForBackendJwt, getCachedBackendJwt } from '../lib/supabase'
 import './Dashboard.css'
 
 type BootPayload = {
@@ -32,20 +32,6 @@ function clearStoredJwt() {
     sessionStorage.removeItem('backend_jwt_role')
   } catch {
     // ignore
-  }
-}
-
-function getCachedBackendJwt(): { token: string; exp: number } | null {
-  try {
-    const token = sessionStorage.getItem('backend_jwt') || ''
-    const exp = Number(sessionStorage.getItem('backend_jwt_exp') || 0)
-    const now = Math.floor(Date.now() / 1000)
-    if (!token || !exp) return null
-    // Require at least 2 minutes remaining to avoid near-expiry failures.
-    if (exp - now < 120) return null
-    return { token, exp }
-  } catch {
-    return null
   }
 }
 
