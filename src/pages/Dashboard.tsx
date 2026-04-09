@@ -16,6 +16,7 @@ type BootPayload = {
 
 type ThemeMode = 'light' | 'dark'
 const GLOBAL_THEME_KEY = 'so_theme_last_v1'
+const RC_ASSET_VERSION = '2026-04-09-uxfix-1'
 
 declare global {
   interface Window {
@@ -108,7 +109,7 @@ export default function Dashboard() {
         }
 
         // Load template in parallel while we resolve backend auth.
-        const templatePromise = fetch('/wh-command-center.template.html')
+        const templatePromise = fetch(`/wh-command-center.template.html?v=${RC_ASSET_VERSION}`)
           .then((res) => {
             if (!res.ok) throw new Error('Could not load dashboard template')
             return res.text()
@@ -165,7 +166,7 @@ export default function Dashboard() {
         host.innerHTML = `<section id="so-rc-web" class="soRc soRc--booting" data-theme="${resolvedTheme}">${templateHtml}</section>`
 
         scriptEl = document.createElement('script')
-        scriptEl.src = '/wh-command-center.web.js'
+        scriptEl.src = `/wh-command-center.web.js?v=${RC_ASSET_VERSION}`
         scriptEl.async = false
         scriptEl.onload = () => {
           if (cancelled) return
