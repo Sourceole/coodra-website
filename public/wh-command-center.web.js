@@ -24,6 +24,7 @@
           filterSort: root.querySelector('#soFilterSort'),
           newChat: root.querySelector('#soNewChatBtn'),
           recentList: root.querySelector('#soRecentList'),
+          recentListTop: root.querySelector('#soRecentListTop'),
           deleteModal: root.querySelector('#soDeleteModal'),
           acctBtn: root.querySelector('#soAcctBtn'),
           acctMenu: root.querySelector('#soAcctMenu'),
@@ -32,6 +33,12 @@
           planStatusBanner: root.querySelector('#soPlanStatusBanner'),
           planStatusWarn: root.querySelector('#soPlanStatusWarn'),
           planStatusLastSynced: root.querySelector('#soPlanStatusLastSynced'),
+          surfaceTitleIcon: root.querySelector('.soRc__surfaceTitleIcon'),
+          surfaceTitleText: root.querySelector('#soSurfaceTitleText'),
+          surfaceWelcomeWrap: root.querySelector('#soSurfaceWelcomeWrap'),
+          surfaceWelcome: root.querySelector('#soSurfaceWelcome'),
+          surfaceDate: root.querySelector('#soSurfaceDate'),
+          menuPlanValue: root.querySelector('#soMenuPlanValue'),
           budgetVal: root.querySelector('#soBudgetVal'),
           planTotalSub: root.querySelector('#soPlanTotalSub'),
           reordersList: root.querySelector('#soReordersList'),
@@ -59,7 +66,9 @@ proceedBtn: root.querySelector('#soProceedBtn'),
           reportWeeklyBtn: root.querySelector('#soReportWeeklyBtn'),
           reportMonthlyBtn: root.querySelector('#soReportMonthlyBtn'),
           reportOpportunitiesBtn: root.querySelector('#soReportOpportunitiesBtn'),
+          reportsKpis: root.querySelector('#soReportsKpis'),
           reportsHistoryList: root.querySelector('#soReportsHistoryList'),
+          reordersKpis: root.querySelector('#soReordersKpis'),
           forecastMeta: root.querySelector('#soForecastMeta'),
           forecastKpis: root.querySelector('#soForecastKpis'),
           forecastList: root.querySelector('#soForecastList'),
@@ -81,9 +90,12 @@ proceedBtn: root.querySelector('#soProceedBtn'),
           composer: root.querySelector('.soRc__composer'),
 avatar: root.querySelector('#soAvatar'),
           composerInner: root.querySelector('.soRc__composerInner'),
-          accountBtn: root.querySelector('#soMenuAccount'),
+          accountSettingsBtn: root.querySelector('#soMenuAccountSettings'),
+          teamMembersBtn: root.querySelector('#soMenuTeamMembers'),
+          securityBtn: root.querySelector('#soMenuSecurity'),
+          supportBtn: root.querySelector('#soMenuSupport'),
           billingBtn: root.querySelector('#soMenuBilling'),
-          settingsBtn: root.querySelector('#soMenuSettings'),
+          integrationSearch: root.querySelector('#soIntegrationSearch'),
 perfStatus: root.querySelector('#soPerfStatus'),
 perfMeta: root.querySelector('#soPerfMeta'),
 perfState: root.querySelector('#soPerfState'),
@@ -97,6 +109,43 @@ perfConnectionsBtn: root.querySelector('#soPerfConnectionsBtn'),
 perfConnectionsCount: root.querySelector('#soPerfConnectionsCount'),
 perfConnectionsMenu: root.querySelector('#soPerfConnectionsMenu'),
         };
+
+function syncViewportHeightVar() {
+  const app = root.querySelector('.soRc__app');
+  const main = root.querySelector('.soRc__main');
+  const isDark = String(root.getAttribute('data-theme') || '').toLowerCase() === 'dark';
+  const inner = Math.max(0, Number(window.innerHeight || document.documentElement?.clientHeight || 0));
+  const top = Math.max(0, Number(root.getBoundingClientRect?.().top || 0));
+  // Hard-lock geometry in JS to avoid competing CSS blocks.
+  const available = Math.max(0, inner - top - 32);
+  if (available > 0) {
+    root.style.setProperty('--so-app-vh', `${available}px`);
+    if (app) {
+      app.style.setProperty('height', `${available}px`, 'important');
+      app.style.setProperty('min-height', `${available}px`, 'important');
+      app.style.setProperty('padding', '16px 12px 16px 12px', 'important');
+      app.style.setProperty('box-sizing', 'border-box', 'important');
+      app.style.setProperty('overflow', 'hidden', 'important');
+    }
+    if (main) {
+      main.style.setProperty('margin', '0 0 16px 0', 'important');
+      main.style.setProperty('height', 'calc(100% - 64px)', 'important');
+      main.style.setProperty('max-height', 'calc(100% - 64px)', 'important');
+      main.style.setProperty('min-height', '0', 'important');
+      main.style.setProperty('border-radius', '18px', 'important');
+      main.style.setProperty('overflow', 'hidden', 'important');
+      main.style.setProperty('clip-path', 'inset(0 round 18px)', 'important');
+      main.style.setProperty('box-sizing', 'border-box', 'important');
+      main.style.setProperty('align-self', 'stretch', 'important');
+      if (!isDark) {
+        main.style.setProperty('background', '#ffffff', 'important');
+        main.style.setProperty('border', '0', 'important');
+        main.style.setProperty('box-shadow', '0 14px 30px rgba(17, 24, 39, 0.12)', 'important');
+      }
+    }
+  }
+}
+syncViewportHeightVar();
 
         const authState = {
   backendJwt: '',
@@ -158,10 +207,26 @@ const MFA_SECURITY_UPDATE_API = apiPath('/api/retailer-plan?action=mfa_security_
 const ACCOUNT_PROFILE_STATUS_API = apiPath('/api/retailer-plan?view=account_profile_status');
 const ACCOUNT_PROFILE_UPDATE_API = apiPath('/api/retailer-plan?action=account_profile_update');
 const PRICING_PAGE_URL = '/pricing';
+const PRIMARY_LLM_PROVIDER = 'minimax';
+const PRIMARY_LLM_MODEL = 'minimax-2.7';
 const USER_ID = window.__SO_RC_BOOT__?.userId ?? null;
 const CUSTOMER_ID = USER_ID;
 const CUSTOMER_EMAIL = window.__SO_RC_BOOT__?.email || "";
 const CUSTOMER_COMPANY = window.__SO_RC_BOOT__?.company || "Retailer";
+const TAB_TITLES = {
+  chat: 'Coodra Agent',
+  performance: 'Performance Center',
+  integrations: 'Integrations',
+  reorders: 'Reorders',
+  forecasts: 'Forecasts',
+  'policies-automation': 'Policies & Automation',
+  classification: 'Classification',
+  locations: 'Locations',
+  reports: 'Reports',
+  plan: 'Billing & Limits',
+  shop: 'Shop'
+};
+let headerClientName = 'there';
 const CUSTOMER_REGION = window.__SO_RC_BOOT__?.region || "Unknown";
 const CUSTOMER_FIRST_NAME = window.__SO_RC_BOOT__?.firstName || "";
 const SESSION_ID = `retailer_${String(USER_ID || CUSTOMER_EMAIL || 'anon')}`;
@@ -220,7 +285,12 @@ if (window.__SO_RC_BOOT__?.backendJwt) {
 }
 
 function chatHeaders(extra = {}) {
-  return authHeaders({ 'Content-Type': 'application/json', ...extra });
+  return authHeaders({
+    'Content-Type': 'application/json',
+    'x-llm-provider': PRIMARY_LLM_PROVIDER,
+    'x-llm-model': PRIMARY_LLM_MODEL,
+    ...extra
+  });
 }
 
 function recommendHeaders(extra = {}) {
@@ -454,8 +524,9 @@ const safeSet = (k, v) => {
 };
 
 const uiPrefs = {
-  activeTab: 'chat',
+  activeTab: 'performance',
   activeSubTab: 'cart',
+  perfRangeDays: 30,
   shopQuery: '',
   shopQty: {},
   shopFilters: {
@@ -502,6 +573,178 @@ const state = {
   teamMembers: { members: [], seats: { used: 0, limit: 0, unlimited: false, remaining: 0 } }
 };
 
+function setupTopHistoryDock() {
+  const surfaceMeta = root.querySelector('.soRc__surfaceMeta');
+  if (!surfaceMeta) return;
+
+  if (!root.querySelector('#soHistoryTop')) {
+    const historyWrap = document.createElement('div');
+    historyWrap.className = 'soRc__historyTop';
+    historyWrap.id = 'soHistoryTop';
+    historyWrap.innerHTML = `
+      <button class="soRc__historyTopBtn" id="soHistoryTopBtn" type="button" aria-haspopup="dialog" aria-expanded="false">
+        <svg class="soRc__historyTopIcon" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <path d="M10 4.75a5.25 5.25 0 1 0 5.19 6.1.75.75 0 0 1 1.48.3A6.75 6.75 0 1 1 10 3.25c1.95 0 3.7.83 4.94 2.16V4.5a.75.75 0 0 1 1.5 0v2.75a.75.75 0 0 1-.75.75h-2.75a.75.75 0 0 1 0-1.5h1.02A5.22 5.22 0 0 0 10 4.75Zm-.75 2.5a.75.75 0 0 1 1.5 0v2.69l2.05 1.18a.75.75 0 0 1-.75 1.3l-2.42-1.4a.75.75 0 0 1-.38-.65V7.25Z"/>
+        </svg>
+        <span>Recent</span>
+      </button>
+      <div class="soRc__historyTopPanel" id="soHistoryTopPanel" hidden>
+        <div class="soRc__recentHdr">Recent chats</div>
+        <div class="soRc__recentList" id="soRecentListTop"></div>
+      </div>
+    `;
+    surfaceMeta.insertBefore(historyWrap, surfaceMeta.firstChild);
+  }
+
+  const sidebarRecent = root.querySelector('.soRc__recent--flyout');
+  if (sidebarRecent) sidebarRecent.style.display = 'none';
+
+  els.recentListTop = root.querySelector('#soRecentListTop');
+  const historyBtn = root.querySelector('#soHistoryTopBtn');
+  const historyPanel = root.querySelector('#soHistoryTopPanel');
+
+  const closeHistory = () => {
+    if (!historyBtn || !historyPanel) return;
+    historyPanel.hidden = true;
+    historyBtn.setAttribute('aria-expanded', 'false');
+  };
+
+  historyBtn?.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (!historyPanel) return;
+    const nextHidden = !historyPanel.hidden;
+    historyPanel.hidden = nextHidden;
+    historyBtn.setAttribute('aria-expanded', nextHidden ? 'false' : 'true');
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!historyPanel || !historyBtn) return;
+    const target = event.target;
+    if (!(target instanceof Node)) return;
+    if (!historyPanel.hidden && !historyPanel.contains(target) && !historyBtn.contains(target)) closeHistory();
+  });
+
+  enforceHistoryNeutralStyle();
+}
+
+function enforceChatComposerStyle() {
+  const panel = root.querySelector('#soPanel-chat');
+  if (!panel) return;
+  const chat = panel.querySelector('.soRc__chat');
+  const chatWrap = panel.querySelector('.soRc__chatWrap');
+  const composer = panel.querySelector('.soRc__composer');
+  const composerInner = panel.querySelector('.soRc__composerInner');
+  const composerFoot = panel.querySelector('.soRc__composerFoot');
+  const input = panel.querySelector('#soInput');
+  const send = panel.querySelector('#soSend');
+  const isDark = root.getAttribute('data-theme') === 'dark';
+
+  const isEmpty = !!(chatWrap && chatWrap.classList.contains('is-empty'));
+
+  if (chat instanceof HTMLElement) {
+    chat.style.setProperty('padding-bottom', isEmpty ? '18px' : '160px', 'important');
+    if (isEmpty) {
+      chat.style.setProperty('width', '100%', 'important');
+      chat.style.setProperty('max-width', '920px', 'important');
+      chat.style.setProperty('margin', '0 auto', 'important');
+      chat.style.setProperty('display', 'flex', 'important');
+      chat.style.setProperty('flex-direction', 'column', 'important');
+      chat.style.setProperty('align-items', 'center', 'important');
+      chat.style.setProperty('justify-content', 'center', 'important');
+      chat.style.setProperty('transform', 'none', 'important');
+    }
+    if (!isEmpty) chat.style.setProperty('transform', 'none', 'important');
+  }
+  if (chatWrap instanceof HTMLElement && isEmpty) {
+    chatWrap.style.setProperty('display', 'flex', 'important');
+    chatWrap.style.setProperty('flex-direction', 'column', 'important');
+    chatWrap.style.setProperty('align-items', 'center', 'important');
+    chatWrap.style.setProperty('justify-content', 'center', 'important');
+    chatWrap.style.setProperty('transform', 'translateY(-68px)', 'important');
+  }
+  if (chatWrap instanceof HTMLElement && !isEmpty) chatWrap.style.setProperty('transform', 'none', 'important');
+  if (composer instanceof HTMLElement) {
+    composer.style.setProperty('margin-top', isEmpty ? '6px' : '16px', 'important');
+    composer.style.setProperty('background', 'transparent', 'important');
+    composer.style.setProperty('box-shadow', 'none', 'important');
+    composer.style.setProperty('filter', 'none', 'important');
+    if (isEmpty) {
+      composer.style.setProperty('width', '100%', 'important');
+      composer.style.setProperty('max-width', '920px', 'important');
+      composer.style.setProperty('margin-left', 'auto', 'important');
+      composer.style.setProperty('margin-right', 'auto', 'important');
+    }
+  }
+
+  if (composerInner instanceof HTMLElement) {
+    composerInner.style.setProperty('background', isDark ? '#2a3038' : '#ffffff', 'important');
+    composerInner.style.setProperty('border', isDark ? '1px solid #414b58' : '1px solid #d9dde3', 'important');
+    composerInner.style.setProperty('box-shadow', 'none', 'important');
+    composerInner.style.setProperty('filter', 'none', 'important');
+    composerInner.style.setProperty('backdrop-filter', 'none', 'important');
+    composerInner.style.setProperty('-webkit-backdrop-filter', 'none', 'important');
+  }
+  if (composerFoot instanceof HTMLElement) {
+    composerFoot.style.setProperty('border-top', '0', 'important');
+  }
+  if (input instanceof HTMLElement) {
+    input.style.setProperty('color', isDark ? '#e8eef7' : '#1f2a3a', 'important');
+  }
+  if (send instanceof HTMLElement && isDark) {
+    send.style.setProperty('background', '#d8dde5', 'important');
+    send.style.setProperty('border', '1px solid #c7cfda', 'important');
+    send.style.setProperty('color', '#1f2a3a', 'important');
+  }
+
+  // Force retailer/user chat bubble to neutral gray (no blue tint).
+  panel.querySelectorAll('.soRc__msg--user .soRc__bubble').forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    node.style.setProperty('background', isDark ? '#2b323c' : '#f7f8fa', 'important');
+    node.style.setProperty('border', isDark ? '1px solid #3f4958' : '1px solid #e1e5eb', 'important');
+    node.style.setProperty('box-shadow', 'none', 'important');
+  });
+
+  if (isEmpty) {
+    const hero = panel.querySelector('.soRc__emptyHero');
+    if (hero instanceof HTMLElement) {
+      hero.style.setProperty('width', '100%', 'important');
+      hero.style.setProperty('max-width', '920px', 'important');
+      hero.style.setProperty('margin', '0 auto 18px auto', 'important');
+      hero.style.setProperty('text-align', 'center', 'important');
+    }
+  }
+}
+
+function enforceHistoryNeutralStyle() {
+  const isDark = root.getAttribute('data-theme') === 'dark';
+  const panel = root.querySelector('#soHistoryTopPanel');
+  const btn = root.querySelector('#soHistoryTopBtn');
+
+  if (panel instanceof HTMLElement) {
+    panel.style.setProperty('background', isDark ? '#1f2630' : '#ffffff', 'important');
+    panel.style.setProperty('border', isDark ? '1px solid #3b4655' : '1px solid #d7dce2', 'important');
+  }
+  if (btn instanceof HTMLElement) {
+    btn.style.setProperty('background', isDark ? '#21252e' : '#ffffff', 'important');
+    btn.style.setProperty('border', isDark ? '1px solid #383e4b' : '1px solid #d7dce2', 'important');
+    btn.style.setProperty('color', isDark ? '#e8eef8' : '#1f2a3a', 'important');
+  }
+
+  root.querySelectorAll('#soHistoryTopPanel .soRc__recentItem').forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    node.style.setProperty('background', isDark ? '#2b323c' : '#f3f4f6', 'important');
+    node.style.setProperty('border', isDark ? '1px solid #3f4958' : '1px solid #e1e5eb', 'important');
+    node.style.setProperty('color', isDark ? '#e7eef8' : '#1f2a3a', 'important');
+    node.style.setProperty('box-shadow', '0 6px 14px rgba(17, 24, 39, .08)', 'important');
+    if (node.classList.contains('is-active')) {
+      node.style.setProperty('background', isDark ? '#313a46' : '#eef1f5', 'important');
+      node.style.setProperty('border', isDark ? '1px solid #4a5668' : '1px solid #d6dde7', 'important');
+      node.style.setProperty('box-shadow', '0 8px 18px rgba(17, 24, 39, .10)', 'important');
+    }
+  });
+}
+
 const nearLimitWarned = {
   ai_decisions: false,
   ai_decisions_80: false,
@@ -537,17 +780,37 @@ function maybeFollow(behavior = 'auto') {
 let pendingDeleteChatId = null;
 let modalDeleteChatId = null;
 let mfaStatusUnavailable = false;
+let chatApiCooldownUntil = 0;
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         const esc = (s) => (s || '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         // Convert newlines to <br> for paragraph breaks in HTML rendering
         const nlToBr = (s) => (s || '').replace(/\n\n/g, '<br><br>').replace(/\n/g, ' ');
-        const money = (n) => new Intl.NumberFormat('en-CA', {
+const money = (n) => new Intl.NumberFormat('en-CA', {
   style: 'currency',
   currency: 'CAD',
   minimumFractionDigits: 2,
   maximumFractionDigits: 2
 }).format(Number(n || 0));
+
+function pctChange(now, prev) {
+  const n = Number(now || 0);
+  const p0 = Number(prev || 0);
+  if (!Number.isFinite(n) || !Number.isFinite(p0)) return 0;
+  if (p0 === 0) return n > 0 ? 100 : 0;
+  return ((n - p0) / Math.abs(p0)) * 100;
+}
+
+function periodLabel(delta, reverse = false) {
+  const d0 = Number(delta || 0);
+  const up = d0 > 0;
+  const down = d0 < 0;
+  const good = reverse ? down : up;
+  const tone = !up && !down ? 'flat' : good ? 'up' : 'down';
+  const arrow = !up && !down ? '=' : up ? '+' : '-';
+  const txt = `${Math.abs(d0).toFixed(1)}%`;
+  return `<span class="soRc__perfTrendBadge soRc__perfTrendBadge--${tone}">${arrow} ${txt}</span>`;
+}
 
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
@@ -562,14 +825,28 @@ function fileToBase64(file) {
   });
 }
 
-function normalizeAssistantDisplayText(text = '') {
+function stripUnsupportedAssistantChars(text = '') {
   return String(text || '')
+    // CJK scripts + full-width punctuation/forms
+    .replace(/[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\u3000-\u303f\uff00-\uffef]/g, '')
+    .replace(/[ \t]{2,}/g, ' ');
+}
+
+function normalizeAssistantDisplayText(text = '') {
+  return stripUnsupportedAssistantChars(text)
     .replace(/\r\n/g, '\n')
+    // Strip markdown emphasis markers so users never see literal **bold**
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/__([^_]+)__/g, '$1')
+    // Keep list formatting readable
+    .replace(/^\s*[-*]\s+/gm, '• ')
+    .replace(/\n(?=(?:\s*•|\s*\d+\.)\s*)/g, '\n\n')
     .replace(/\be\s*\.\s*g\s*\./gi, 'e.g.')
     .replace(/\bi\s*\.\s*e\s*\./gi, 'i.e.')
     .replace(/\betc\s*\./gi, 'etc.')
-    .replace(/([a-z0-9,])\n(?=[a-z0-9(])/gi, '$1 ')
-    .replace(/([a-z])\n(?=[A-Z][a-z])/g, '$1 ')
+    // Collapse mid-sentence single line breaks into spaces, but preserve \n\n paragraph breaks
+    .replace(/([a-z0-9,)(])(?!\n)\n(?=[a-z0-9(])/gi, '$1 ')
+    .replace(/([a-z])(?!\n)\n(?=[A-Z][a-z])/g, '$1 ')
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 }
@@ -1103,7 +1380,7 @@ function normalizePolicyFeatureData(key, raw = {}) {
       );
       const drivers = Array.isArray(data.drivers)
         ? data.drivers.map((item) => (typeof item === 'string' ? { title: item } : item))
-        : policyLines(data.drivers_text || data.notes || '').map((line, idx) => ({ title: `Driver ${idx + 1}`, meta: line, right: '' }));
+        : policyLines(data.drivers_text || '').map((line) => ({ title: line, meta: '', right: '' }));
       return {
         budget: policyNumber(budget, 0),
         committed: policyNumber(committed, 0),
@@ -1296,11 +1573,11 @@ function renderPolicyCard(key) {
       if (policyNode(key, 'available')) policyNode(key, 'available').value = String(data.available ?? 0);
       if (policyNode(key, 'notes')) policyNode(key, 'notes').value = String(data.notes || '');
       if (policyNode(key, 'list')) {
-        policyNode(key, 'list').innerHTML = policyListHtml((data.drivers || []).map((item, idx) => ({
-          title: item.title || item.name || `Driver ${idx + 1}`,
+        policyNode(key, 'list').innerHTML = policyListHtml((data.drivers || []).map((item) => ({
+          title: item.title || item.name || item.meta || item.note || item.description || '',
           meta: item.meta || item.note || item.description || '',
           right: item.right || item.value || ''
-        })), 'No OTB drivers yet.');
+        })).filter((item) => String(item.title || '').trim()), 'No OTB drivers yet.');
       }
       break;
     }
@@ -1441,21 +1718,29 @@ function renderPoliciesAutomation() {
   const openToBuy = getPolicyFeatureState('open_to_buy').data || {};
   const transfer = getPolicyFeatureState('transfer_opportunities').data || {};
   const automation = getPolicyFeatureState('automation_rules').data || {};
+  const otbBudget = policyNumber(openToBuy.budget, 0);
+  const otbCommitted = policyNumber(openToBuy.committed, 0);
+  const otbUtilization = otbBudget > 0 ? Math.min(999, (otbCommitted / otbBudget) * 100) : 0;
+  const transferOpps = (transfer.opportunities || []).length || 0;
+  const autoRules = Array.isArray(automation.rules) ? automation.rules : [];
+  const autoEnabled = autoRules.filter((x) => x && x.enabled !== false).length;
+  const autoCoverage = autoRules.length ? ((autoEnabled / autoRules.length) * 100) : (automation.enabled ? 100 : 0);
 
   const otbKpi = root.querySelector('#soPoliciesOtbKpi');
   const otbSub = root.querySelector('#soPoliciesOtbSub');
-  if (otbKpi) otbKpi.textContent = policyMoney(openToBuy.available ?? 0);
-  if (otbSub) otbSub.textContent = openToBuy.committed ? `${policyMoney(openToBuy.committed)} committed` : 'No committed spend yet';
+  if (otbKpi) otbKpi.textContent = `${otbUtilization.toFixed(0)}%`;
+  if (otbSub) otbSub.textContent = otbBudget > 0 ? `${policyMoney(otbCommitted)} of ${policyMoney(otbBudget)} committed` : 'No budget set';
 
   const transferKpi = root.querySelector('#soPoliciesTransferKpi');
   const transferSub = root.querySelector('#soPoliciesTransferSub');
-  if (transferKpi) transferKpi.textContent = String((transfer.opportunities || []).length || 0);
-  if (transferSub) transferSub.textContent = transfer.priority ? `Priority ${transfer.priority}` : 'No priority set';
+  if (transferKpi) transferKpi.textContent = String(transferOpps);
+  if (transferSub) transferSub.textContent = transfer.priority ? `Priority ${transfer.priority}` : 'No transfer priority set';
 
   const automationKpi = root.querySelector('#soPoliciesAutomationKpi');
   const automationSub = root.querySelector('#soPoliciesAutomationSub');
-  if (automationKpi) automationKpi.textContent = automation.enabled ? 'On' : 'Off';
-  if (automationSub) automationSub.textContent = automation.cadence || 'Daily';
+  const totalRulesDisplay = autoRules.length || (automation.enabled ? 1 : 0);
+  if (automationKpi) automationKpi.textContent = `${autoCoverage.toFixed(0)}%`;
+  if (automationSub) automationSub.textContent = `${autoEnabled}/${totalRulesDisplay} active rules • ${automation.cadence || 'Daily'}`;
 }
 
 function syncOpenToBuyAvailableFromInputs() {
@@ -2027,41 +2312,96 @@ async function getLiveCartContext() {
             logoIntroStarted = false;
             runLogoIntroOnce();
           }
+          enforceChatComposerStyle();
+          enforceHistoryNeutralStyle();
         }
         applyTheme(readThemePreference());
+        setupTopHistoryDock();
 
-        function ensurePanelStatusPills() {
-          (els.panels || []).forEach((panel) => {
-            if (!panel || panel.querySelector('.soRc__panelStatusPills')) return;
-            const wrap = document.createElement('div');
-            wrap.className = 'soRc__panelStatusPills';
-            const plan = document.createElement('div');
-            plan.className = 'soRc__panelStatusPill soRc__panelStatusPill--plan';
-            plan.innerHTML = '<b>Plan</b>: Loading...';
-            const sync = document.createElement('div');
-            sync.className = 'soRc__panelStatusPill soRc__panelStatusPill--sync';
-            sync.innerHTML = '<b>Last synced</b>: Never';
-            wrap.appendChild(plan);
-            wrap.appendChild(sync);
-            panel.insertBefore(wrap, panel.firstChild);
-          });
-          if (els.planStatusBanner) els.planStatusBanner.style.display = 'none';
+function ensurePanelStatusPills() {
+          root.querySelectorAll('.soRc__panelStatusPills').forEach((node) => node.remove());
+          if (els.planStatusBanner) els.planStatusBanner.style.display = '';
         }
 
         ensurePanelStatusPills();
 
-        function closeMenu() {
-  if (!els.acctMenu || !els.acctBtn) return;
-  els.acctMenu.hidden = true;
-  els.acctBtn.setAttribute('aria-expanded', 'false');
-  els.acctBtn.classList.remove('is-open');
+function getAccountNodes() {
+  const btn = root.querySelector('#soAcctBtn');
+  const menu = root.querySelector('#soAcctMenu');
+  return { btn, menu };
+}
+
+function ensureAccountMenuPortal() {
+  const { menu } = getAccountNodes();
+  if (!menu) return;
+  if (menu.dataset.portalMounted === '1') return;
+  root.appendChild(menu);
+  menu.dataset.portalMounted = '1';
+}
+
+function closeMenu() {
+  ensureAccountMenuPortal();
+  const { btn, menu } = getAccountNodes();
+  if (!menu || !btn) return;
+  menu.hidden = true;
+  menu.setAttribute('hidden', '');
+  menu.style.setProperty('display', 'none', 'important');
+  menu.style.setProperty('visibility', 'hidden', 'important');
+  menu.style.setProperty('opacity', '0', 'important');
+  menu.style.pointerEvents = 'none';
+  menu.style.position = '';
+  menu.style.top = '';
+  menu.style.left = '';
+  menu.style.right = '';
+  menu.style.width = '';
+  menu.style.maxWidth = '';
+  menu.style.transform = 'none';
+  btn.setAttribute('aria-expanded', 'false');
+  btn.classList.remove('is-open');
+}
+
+function positionAccountMenuInViewport() {
+  ensureAccountMenuPortal();
+  const { btn, menu } = getAccountNodes();
+  if (!menu || !btn || menu.hidden) return;
+
+  const btnRect = btn.getBoundingClientRect();
+  const viewportPadding = 8;
+  const width = Math.min(246, Math.max(184, window.innerWidth - (viewportPadding * 2)));
+  let left = Math.round(btnRect.right - width);
+  const top = Math.round(btnRect.bottom + 8);
+
+  if (left < viewportPadding) left = viewportPadding;
+  if ((left + width) > (window.innerWidth - viewportPadding)) {
+    left = Math.max(viewportPadding, window.innerWidth - viewportPadding - width);
+  }
+
+  menu.style.setProperty('position', 'fixed', 'important');
+  menu.style.setProperty('left', `${left}px`, 'important');
+  menu.style.setProperty('top', `${top}px`, 'important');
+  menu.style.setProperty('right', 'auto', 'important');
+  menu.style.setProperty('bottom', 'auto', 'important');
+  menu.style.setProperty('width', `${width}px`, 'important');
+  menu.style.setProperty('max-width', `${width}px`, 'important');
+  menu.style.setProperty('transform-origin', 'top right', 'important');
+  menu.style.setProperty('transform', 'none', 'important');
+  menu.style.setProperty('z-index', '100000', 'important');
 }
 
 function openMenu() {
-  if (!els.acctMenu || !els.acctBtn) return;
-  els.acctMenu.hidden = false;
-  els.acctBtn.setAttribute('aria-expanded', 'true');
-  els.acctBtn.classList.add('is-open');
+  ensureAccountMenuPortal();
+  const { btn, menu } = getAccountNodes();
+  if (!menu || !btn) return;
+  menu.hidden = false;
+  menu.removeAttribute('hidden');
+  menu.style.setProperty('display', 'block', 'important');
+  menu.style.setProperty('visibility', 'visible', 'important');
+  menu.style.setProperty('opacity', '1', 'important');
+  menu.style.pointerEvents = 'auto';
+  menu.style.zIndex = '100000';
+  btn.setAttribute('aria-expanded', 'true');
+  btn.classList.add('is-open');
+  requestAnimationFrame(positionAccountMenuInViewport);
 }
 
 function closePerfConnectionsMenu() {
@@ -2077,13 +2417,14 @@ function openPerfConnectionsMenu() {
 }
 
 root.addEventListener('click', (e) => {
+  const { menu } = getAccountNodes();
   const acctBtnHit = e.target.closest('#soAcctBtn');
   const acctMenuHit = e.target.closest('#soAcctMenu');
   const perfBtnHit = e.target.closest('#soPerfConnectionsBtn');
   const perfMenuHit = e.target.closest('#soPerfConnectionsMenu');
 
   if (acctBtnHit) {
-    if (els.acctMenu?.hidden) openMenu();
+    if (menu?.hidden) openMenu();
     else closeMenu();
     return;
   }
@@ -2098,6 +2439,30 @@ root.addEventListener('click', (e) => {
   if (!perfMenuHit) closePerfConnectionsMenu();
 });
 
+window.addEventListener('resize', () => {
+  syncViewportHeightVar();
+  const { menu } = getAccountNodes();
+  if (menu && !menu.hidden) {
+    positionAccountMenuInViewport();
+  }
+});
+
+window.addEventListener('scroll', () => {
+  const { menu } = getAccountNodes();
+  if (menu && !menu.hidden) {
+    positionAccountMenuInViewport();
+  }
+}, true);
+
+// Defensive direct handler in case delegated click rules are pre-empted.
+root.querySelector('#soAcctBtn')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  const { menu } = getAccountNodes();
+  if (!menu || menu.hidden) openMenu();
+  else closeMenu();
+});
+
         els.themeToggle?.addEventListener('click', () => {
   const next = (safeGet(STORAGE.theme, 'dark') === 'dark') ? 'light' : 'dark';
   persistThemePreference(next);
@@ -2108,14 +2473,23 @@ function setActiveTab(tabName) {
   uiPrefs.activeTab = tabName;
   saveState();
 
+  root.classList.toggle('is-performance-mode', tabName === 'performance');
+  root.classList.toggle('is-chat-mode', tabName === 'chat');
+  renderSurfaceHeader(tabName);
+
   els.navItems.forEach(b => b.classList.toggle('is-active', b.dataset.tab === tabName));
-  els.panels.forEach(p => p.hidden = p.dataset.panel !== tabName);
+  els.panels.forEach((p) => {
+    const isActivePanel = p.dataset.panel === tabName;
+    p.hidden = !isActivePanel;
+    p.style.display = isActivePanel ? '' : 'none';
+  });
+  renderIntegrationsPanel();
 
   if (tabName === 'chat') markActiveChatSeen();
   if (tabName === 'reorders') {
   loadReorders();
 }
-if (tabName === 'performance') {
+if (tabName === 'performance' || tabName === 'integrations') {
   loadPerformanceStatus();
 } else {
   closePerfConnectionsMenu();
@@ -2247,32 +2621,107 @@ function incrementUnreadForChat(chatId) {
   renderChat();
 }
 
-        function addMessage(role, text) {
+function addMessage(role, text, kind = null, payload = null) {
   const c = currentChat();
   if (!c) return;
 
-  const trimmed = String(text || '').trim();
-  if (!trimmed) return;
+  const raw = String(text || '');
+  const trimmed = raw.trim();
+  if (!trimmed && !kind) return;
 
-  c.messages.push({ role, text: trimmed, at: Date.now() });
+  const nextMessage = { role, text: trimmed || raw, at: Date.now() };
+  if (kind) nextMessage.kind = kind;
+  if (payload && typeof payload === 'object') nextMessage.payload = payload;
+  c.messages.push(nextMessage);
   c.meta = role === 'user' ? 'Active now' : c.meta;
   saveState();
   renderChat();
   renderRecent();
 
-  apiAddMessage(c.id, role, trimmed).catch(() => {
+  apiAddMessage(c.id, role, trimmed || raw || '[widget]', kind).catch(() => {
     showToast('Message sync failed', 'warn');
   });
 }
 
-function renderRecent() {
-  if (!els.recentList) return;
+function buildChatWidgetFromPrompt(promptText = '') {
+  const q = String(promptText || '').toLowerCase();
+  if (!q) return null;
+  const wantsSales = /\bsales|revenue|units|customers|orders|performance|update\b/.test(q);
+  if (!wantsSales) return null;
+
+  const perfRaw = state.performance?.last || {};
+  const d = perfRaw.dashboard || perfRaw.snapshot || {};
+  const todaySales = Number(d.todaySales || 0);
+  const weekSales = Number(d.weekSales || 0);
+  const weekOrders = Number(d.weekOrders || 0);
+  const units = Number(d.unitsSold || d.weekOrders || 0);
+  const newCustomers = Number(d.newCustomers || d.new_customers || 0);
+
+  // Only show snapshot card when there's actual non-zero POS data
+  const hasRealData = todaySales > 0 || weekSales > 0 || weekOrders > 0 || units > 0;
+  if (!hasRealData) return null;
+
+  return {
+    kind: 'chat_perf_snapshot',
+    payload: {
+      todaySales,
+      weekSales,
+      units,
+      weekOrders,
+      newCustomers
+    }
+  };
+}
+
+function buildInlinePerfWidget(promptText = '') {
+  const q = String(promptText || '').toLowerCase();
+  if (!q) return null;
+
+  // Trigger when user asks about their own data
+  const triggers = /\b(sales|revenue|margin|inventory|orders|customers|performance|trend|top products|low stock|stockout|what.*sell|how.*doing)\b/;
+  if (!triggers.test(q)) return null;
+
+  const perfRaw = state.performance?.last || {};
+  const d = perfRaw.dashboard || perfRaw.snapshot || {};
+
+  const todaySales = Number(d.todaySales || 0);
+  const weekSales = Number(d.weekSales || 0);
+  const weekOrders = Number(d.weekOrders || 0);
+  const grossMargin = Number(d.grossMargin || 0);
+  const lowInventoryAlerts = Number(d.lowInventoryAlerts || 0);
+  const topProducts = Array.isArray(d.topProducts) ? d.topProducts.slice(0, 3) : [];
+  const atRiskItems = (Array.isArray(d.atRiskItems) && d.atRiskItems) || (Array.isArray(d.inventoryRiskItems) && d.inventoryRiskItems) || [];
+
+  const hasRealData = todaySales > 0 || weekSales > 0 || weekOrders > 0 || grossMargin > 0 || topProducts.length > 0 || lowInventoryAlerts > 0;
+  if (!hasRealData) return null;
+
+  return {
+    kind: 'chat_perf_inline',
+    payload: {
+      todaySales,
+      weekSales,
+      weekOrders,
+      grossMargin,
+      lowInventoryAlerts,
+      topProducts: topProducts.map(p => ({
+        title: String(p.title || p.name || 'Product'),
+        revenue: Number(p.revenue || 0)
+      })),
+      atRiskItems: atRiskItems.slice(0, 3).map(p => ({
+        title: String(p.title || p.name || 'Product'),
+        daysLeft: Number(p.daysLeft || p.days_until_stockout || 0)
+      }))
+    }
+  };
+}
+
+function renderRecentListInto(listEl) {
+  if (!listEl) return;
   if (!state.chats.length) {
-    els.recentList.innerHTML = `<div class="soRc__emptyMini">No saved chats.</div>`;
+    listEl.innerHTML = `<div class="soRc__emptyMini">No saved chats.</div>`;
     return;
   }
-
-  els.recentList.innerHTML = state.chats.map((c, i) => `
+  listEl.innerHTML = state.chats.map((c, i) => `
     <div class="soRc__recentItem ${c.id === state.activeChatId ? 'is-active' : ''}" data-chat="${c.id}" tabindex="0" data-chat-idx="${i}">
       <div class="soRc__recentMain">
         <div class="soRc__recentTitle">${esc(c.title)}</div>
@@ -2291,6 +2740,12 @@ ${pendingDeleteChatId === c.id ? `
 ` : ''}
     </div>
   `).join('');
+}
+
+function renderRecent() {
+  renderRecentListInto(els.recentList);
+  renderRecentListInto(els.recentListTop);
+  enforceHistoryNeutralStyle();
   updateJumpButton();
 }
 
@@ -2389,6 +2844,7 @@ function renderChat() {
     <img class="soRc__logoIntroImg" alt="" loading="eager" decoding="async" />
   </div>
   <div class="soRc__emptyHeroText">${esc(heroIntroText())}</div>
+  <div class="soRc__emptyHeroSub">Type a command or ask a question.</div>
   <div class="soRc__emptyQuick">
     <button class="soRc__emptyQuickBtn" type="button" data-quick-prompt="Build me a starter cart for a $5,000 monthly budget." data-feature-required="reorder_decisions">Starter Cart</button>
     <button class="soRc__emptyQuickBtn" type="button" data-quick-prompt="What should I reorder this week to avoid stockouts?" data-feature-required="reorder_decisions,inventory_risk_alerts">Avoid Stockouts</button>
@@ -2404,6 +2860,7 @@ function renderChat() {
   updateJumpButton();
   runLogoIntroOnce();
   fetchWelcomeContext().then(applyGreetingToHero);
+  enforceChatComposerStyle();
   return;
 }
 
@@ -2421,17 +2878,74 @@ function renderChat() {
       </div>
     `;
   }
-    const displayText = m.role === 'assistant'
+  if (m.kind === 'chat_perf_snapshot') {
+    const p = m.payload || {};
+    return `
+      <div class="soRc__msg soRc__msg--assistant">
+        <div class="soRc__chatPerfInline soRc__chatPerfInline--snapshot">
+          <div class="soRc__chatPerfCard">
+            <div class="soRc__chatPerfLabel">Sales Today</div>
+            <div class="soRc__chatPerfValue">${money(Number(p.todaySales || 0))}</div>
+          </div>
+          <div class="soRc__chatPerfCard">
+            <div class="soRc__chatPerfLabel">Sales This Week</div>
+            <div class="soRc__chatPerfValue">${money(Number(p.weekSales || 0))}</div>
+          </div>
+          <div class="soRc__chatPerfCard">
+            <div class="soRc__chatPerfLabel">Units Sold</div>
+            <div class="soRc__chatPerfValue">${Number(p.units || 0).toLocaleString()}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  if (m.kind === 'chat_perf_inline') {
+    const p = m.payload || {};
+    const topRows = (p.topProducts || []).map(x => `
+      <div class="soRc__inlinePerfRow">
+        <span class="soRc__inlinePerfLabel">${esc(x.title)}</span>
+        <span class="soRc__inlinePerfVal">${money(x.revenue)}</span>
+      </div>`).join('');
+    const riskRows = (p.atRiskItems || []).map(x => `
+      <div class="soRc__inlinePerfRow soRc__inlinePerfRow--risk">
+        <span class="soRc__inlinePerfLabel">${esc(x.title)}</span>
+        <span class="soRc__inlinePerfVal">${x.daysLeft > 0 ? `${x.daysLeft}d left` : 'Low stock'}</span>
+      </div>`).join('');
+    return `
+      <div class="soRc__msg soRc__msg--assistant">
+        <div class="soRc__inlinePerfBoard">
+          <div class="soRc__inlinePerfKpis">
+            ${p.todaySales != null ? `<div class="soRc__inlineKpi"><div class="soRc__inlineKpiVal">${money(p.todaySales)}</div><div class="soRc__inlineKpiLbl">Today</div></div>` : ''}
+            ${p.weekSales != null ? `<div class="soRc__inlineKpi"><div class="soRc__inlineKpiVal">${money(p.weekSales)}</div><div class="soRc__inlineKpiLbl">This Week</div></div>` : ''}
+            ${p.weekOrders != null ? `<div class="soRc__inlineKpi"><div class="soRc__inlineKpiVal">${Number(p.weekOrders || 0).toLocaleString()}</div><div class="soRc__inlineKpiLbl">Orders</div></div>` : ''}
+            ${p.grossMargin != null && p.grossMargin > 0 ? `<div class="soRc__inlineKpi"><div class="soRc__inlineKpiVal">${p.grossMargin.toFixed(1)}%</div><div class="soRc__inlineKpiLbl">Margin</div></div>` : ''}
+            ${p.lowInventoryAlerts != null && p.lowInventoryAlerts > 0 ? `<div class="soRc__inlineKpi soRc__inlineKpi--alert"><div class="soRc__inlineKpiVal">${p.lowInventoryAlerts}</div><div class="soRc__inlineKpiLbl">Low Stock</div></div>` : ''}
+          </div>
+          ${topRows || riskRows ? `<div class="soRc__inlinePerfDetail">${topRows}${riskRows}</div>` : ''}
+        </div>
+      </div>
+    `;
+  }
+  const displayText = m.role === 'assistant'
     ? normalizeAssistantDisplayText(m.text)
     : String(m.text || '');
 
   return `
-    <div class="soRc__msg ${m.role === 'user' ? 'soRc__msg--user' : ''}">
-      <div class="soRc__bubble"><div class="soRc__text">${m.role === 'assistant' ? nlToBr(esc(displayText)) : esc(displayText)}</div></div>
+    <div class="soRc__msg ${m.role === 'user' ? 'soRc__msg--user' : 'soRc__msg--assistant'}">
+      ${m.role === 'assistant'
+        ? `<div class="soRc__text soRc__text--assistant">${nlToBr(esc(displayText))}</div>`
+        : `<div class="soRc__bubble"><div class="soRc__text">${esc(displayText)}</div></div>`
+      }
     </div>
   `;
 
 }).join('');
+
+  // Apply runtime style locks after message DOM is rendered.
+  enforceChatComposerStyle();
+  els.chat.querySelectorAll('.soRc__msg--user .soRc__text').forEach((node) => {
+    if (node instanceof HTMLElement) node.style.setProperty('font-weight', '400', 'important');
+  });
 
   if (els.input) els.input.value = c.draft || '';
   maybeFollow();
@@ -2450,7 +2964,14 @@ function renderChat() {
         stopBtn.type = 'button';
         stopBtn.className = 'soRc__stop';
         stopBtn.textContent = 'Stop';
-        els.composerInner?.insertBefore(stopBtn, els.send);
+        {
+          const stopHost = els.send?.parentElement || els.composerInner || null;
+          if (stopHost && els.send && els.send.parentElement === stopHost) {
+            stopHost.insertBefore(stopBtn, els.send);
+          } else if (stopHost) {
+            stopHost.appendChild(stopBtn);
+          }
+        }
         stopBtn.addEventListener('click', () => { stream.stopped = true; });
         function showStop(v) { stopBtn.classList.toggle('is-visible', !!v); }
 
@@ -2554,8 +3075,8 @@ function renderChat() {
     showStop(true);
 
     const msg = document.createElement('div');
-    msg.className = 'soRc__msg';
-    msg.innerHTML = `<div class="soRc__bubble"><div class="soRc__text" id="soStreamTarget"></div></div>`;
+    msg.className = 'soRc__msg soRc__msg--assistant';
+    msg.innerHTML = `<div class="soRc__text soRc__text--assistant" id="soStreamTarget"></div>`;
     msg.style.display = 'none';
     els.chat.appendChild(msg);
 
@@ -2566,11 +3087,13 @@ function renderChat() {
     // Helper: process a raw text segment, applying paragraph formatting
     async function processText(raw) {
       if (stream.stopped || !raw) return;
-      const parts = raw.split(/(\n\n|\n)/g);
+      const safeRaw = stripUnsupportedAssistantChars(raw);
+      if (!safeRaw) return;
+      const parts = safeRaw.split(/(\n\n|\n)/g);
       for (const part of parts) {
         if (!part || stream.stopped) continue;
         // Accumulate output
-        out += (part === '\n' ? ' ' : part === '\n\n' ? '\n' : part);
+        out += (part === '\n' ? ' ' : part === '\n\n' ? '\n\n' : part);
         if (msg.style.display === 'none') msg.style.display = '';
 
         if (part === '\n') {
@@ -2711,6 +3234,7 @@ async function loadReorders() {
   if (!els.reordersList) return;
 
   els.reordersList.innerHTML = `<div class="soRc__emptyState">Loading…</div>`;
+  if (els.reordersKpis) els.reordersKpis.innerHTML = '';
 
   try {
     const u = new URL(REORDERS_API);
@@ -2727,6 +3251,16 @@ const r = await fetch(u.toString(), { headers: authHeaders() });
     }
 
     const items = Array.isArray(j.items) ? j.items : [];
+    if (els.reordersKpis) {
+      const totalValue = items.reduce((acc, o) => acc + Number(o.total || 0), 0);
+      const paidCount = items.filter((o) => String(o.financialStatus || '').toLowerCase() === 'paid').length;
+      const avgValue = items.length ? (totalValue / items.length) : 0;
+      els.reordersKpis.innerHTML = `
+        <div class="soRc__kpi"><div class="soRc__kpiLabel">Open reorder actions</div><div class="soRc__kpiValue">${items.length}</div><div class="soRc__kpiSub">${paidCount} paid • ${Math.max(0, items.length - paidCount)} pending</div></div>
+        <div class="soRc__kpi"><div class="soRc__kpiLabel">Suggested reorder value</div><div class="soRc__kpiValue">${money(totalValue)}</div><div class="soRc__kpiSub">Current action queue</div></div>
+        <div class="soRc__kpi"><div class="soRc__kpiLabel">Average action size</div><div class="soRc__kpiValue">${money(avgValue)}</div><div class="soRc__kpiSub">Per reorder action</div></div>
+      `;
+    }
     els.reordersList.innerHTML = items.length
       ? items.map(o => `
         <div class="soRc__emptyState">
@@ -2735,6 +3269,7 @@ const r = await fetch(u.toString(), { headers: authHeaders() });
       `).join('')
       : `<div class="soRc__emptyState">No reorder actions right now.</div>`;
   } catch {
+    if (els.reordersKpis) els.reordersKpis.innerHTML = '';
     els.reordersList.innerHTML = `<div class="soRc__emptyState">No reorder actions right now.</div>`;
   }
 }
@@ -2783,12 +3318,7 @@ function renderPerformance() {
   const syncAgeHours = lastSyncAt ? (Date.now() - new Date(lastSyncAt).getTime()) / 36e5 : null;
   const isStale = connectedCount > 0 && (!lastSyncAt || (syncAgeHours != null && syncAgeHours > 24));
 
-  const hasData =
-    todaySales > 0 ||
-    weekSales > 0 ||
-    weekOrders > 0 ||
-    topProducts.length > 0 ||
-    lowInventoryAlerts > 0;
+  const hasData = todaySales > 0 || weekSales > 0 || weekOrders > 0 || topProducts.length > 0 || lowInventoryAlerts > 0;
 
   els.perfDisconnected.hidden = true;
   els.perfConnected.hidden = true;
@@ -2837,44 +3367,294 @@ function renderPerformance() {
   els.perfState.hidden = true;
   els.perfConnected.hidden = false;
 
-  const compactBars = (vals) => {
-    const cleaned = (Array.isArray(vals) ? vals : []).map((v) => Math.max(0, Number(v || 0)));
-    const max = Math.max(...cleaned, 1);
-    return cleaned
-      .map((v, idx) => {
-        const h = Math.max(6, Math.round((v / max) * 42));
-        return `<div class="soRc__perfBar ${idx % 2 ? 'soRc__perfBar--soft' : ''}" style="height:${h}px"></div>`;
+  const rangeOptions = [
+    { days: 30, label: '30D' },
+    { days: 60, label: '60D' },
+    { days: 90, label: '90D' },
+    { days: 180, label: '180D' },
+    { days: 365, label: '1Y' },
+    { days: 730, label: '2Y' },
+    { days: 1095, label: '3Y' }
+  ];
+  const allowedRanges = rangeOptions.map((x) => x.days);
+  const rangeDays = allowedRanges.includes(Number(uiPrefs.perfRangeDays)) ? Number(uiPrefs.perfRangeDays) : 30;
+  const seriesMode = rangeDays <= 180 ? 'day' : 'month';
+  const points = seriesMode === 'day'
+    ? Math.max(14, rangeDays)
+    : Math.max(12, Math.round(rangeDays / 30));
+
+  const periodLabel = (delta, reverse = false) => {
+    const d0 = Number(delta || 0);
+    const up = d0 > 0;
+    const down = d0 < 0;
+    const good = reverse ? down : up;
+    const tone = !up && !down ? 'flat' : good ? 'up' : 'down';
+    const arrow = !up && !down ? '=' : up ? '+' : '-';
+    const txt = `${Math.abs(d0).toFixed(1)}%`;
+    return `<span class="soRc__perfTrendBadge soRc__perfTrendBadge--${tone}">${arrow} ${txt}</span>`;
+  };
+
+  const makeSeries = (endValue, startValue, count = 30, wobble = 0.18, seed = 1) => {
+    const end = Math.max(1, Number(endValue || 0));
+    const start = Math.max(1, Number(startValue || end * 0.82));
+    const out = [];
+    for (let i = 0; i < count; i += 1) {
+      const t = count === 1 ? 1 : i / (count - 1);
+      const base = start + (end - start) * t;
+      const waveA = Math.sin((i + 1) * 0.9 + seed * 0.37);
+      const waveB = Math.cos((i + 1) * 0.52 + seed * 0.19);
+      const drift = (waveA * 0.7 + waveB * 0.3) * wobble * base * 0.28;
+      out.push(Math.max(0, base + drift));
+    }
+    return out;
+  };
+
+  const linePath = (vals, w, h, pad = 1) => {
+    const arr = Array.isArray(vals) ? vals : [];
+    if (!arr.length) return '';
+    const max = Math.max(...arr);
+    const min = Math.min(...arr);
+    const range = Math.max(1e-9, max - min);
+    const innerH = Math.max(1, h - pad * 2);
+    // Keep lines in a central visual band so they read clearly and never hug top/bottom.
+    const bandMin = 0.22;
+    const bandMax = 0.78;
+    const band = Math.max(0.1, bandMax - bandMin);
+    return arr.map((v, i) => {
+      const x = pad + ((w - pad * 2) * (arr.length === 1 ? 1 : i / (arr.length - 1)));
+      const raw = (v - min) / range;
+      const norm = Number.isFinite(raw) ? (bandMin + (raw * band)) : 0.5;
+      const y = h - pad - (innerH * norm);
+      return `${i === 0 ? 'M' : 'L'}${x.toFixed(2)},${y.toFixed(2)}`;
+    }).join(' ');
+  };
+
+  const areaPath = (vals, w, h, pad = 1) => {
+    const arr = Array.isArray(vals) ? vals : [];
+    if (!arr.length) return '';
+    const top = linePath(arr, w, h, pad);
+    const lastX = pad + ((w - pad * 2) * 1);
+    const firstX = pad;
+    const bottomY = h - pad;
+    return `${top} L ${lastX.toFixed(2)},${bottomY.toFixed(2)} L ${firstX.toFixed(2)},${bottomY.toFixed(2)} Z`;
+  };
+
+  const sparklineChart = (vals, tone = 'up') => {
+    const w = 300;
+    const h = 62;
+    const path = linePath(vals, w, h, 1);
+    const area = areaPath(vals, w, h, 1);
+    const toneClass = tone === 'down' ? 'soRc__spark--down' : 'soRc__spark--up';
+    return `
+      <svg class="soRc__perfSpark ${toneClass}" viewBox="0 0 ${w} ${h}" aria-hidden="true">
+        <path class="soRc__perfSparkArea" d="${area}"></path>
+        <path class="soRc__perfSparkLine" d="${path}" pathLength="100"></path>
+      </svg>
+    `;
+  };
+
+  const buildRangeLabels = (count, days, mode = 'day') => {
+    const total = Math.max(1, Number(count || 1));
+    const span = Math.max(1, Number(days || 30));
+    const now = new Date();
+    return Array.from({ length: total }).map((_, i) => {
+      const t = total === 1 ? 1 : i / (total - 1);
+      const back = mode === 'month'
+        ? Math.round((span / 30) * (1 - t))
+        : Math.round(span * (1 - t));
+      const dLabel = new Date(now.getTime());
+      if (mode === 'month') dLabel.setMonth(now.getMonth() - back);
+      else dLabel.setDate(now.getDate() - back);
+      if (mode === 'month') {
+        if (span > 365) return dLabel.toLocaleDateString([], { month: 'short', year: '2-digit' });
+        return dLabel.toLocaleDateString([], { month: 'short', year: 'numeric' });
+      }
+      return dLabel.toLocaleDateString([], { month: 'short', day: 'numeric' });
+    });
+  };
+
+  const buildAxisTicks = (labels, days, mode = 'day') => {
+    const arr = Array.isArray(labels) ? labels : [];
+    if (!arr.length) return '';
+    const maxTicks = mode === 'month' ? Math.min(12, Math.max(7, arr.length)) : (days <= 90 ? 7 : 8);
+    const step = Math.max(1, Math.floor(arr.length / Math.max(2, maxTicks - 1)));
+    const picks = new Map();
+    for (let i = 0; i < arr.length; i += step) picks.set(i, arr[i]);
+    picks.set(0, arr[0]);
+    picks.set(arr.length - 1, arr[arr.length - 1]);
+    return Array.from(picks.entries())
+      .sort((a, b) => a[0] - b[0])
+      .map(([idx, label]) => {
+        const left = arr.length === 1 ? 0 : (idx / (arr.length - 1)) * 100;
+        return `<span class="soRc__perfAxisTick" style="left:${left.toFixed(2)}%">${esc(label)}</span>`;
       })
       .join('');
   };
 
+  const volumeLineChart = (vals, labels = []) => {
+    const w = 520;
+    const h = 190;
+    const path = linePath(vals, w, h, 1);
+    const area = areaPath(vals, w, h, 1);
+    const cleanVals = (Array.isArray(vals) ? vals : []).map((v) => Math.max(0, Number(v || 0))).map((v) => Math.round(v));
+    const cleanLabels = (Array.isArray(labels) ? labels : []).map((s) => String(s || ''));
+    return `
+      <div class="soRc__perfChartInteractive" data-chart-type="volume" data-chart-labels="${cleanLabels.join('|')}" data-chart-a="${cleanVals.join('|')}">
+      <svg class="soRc__perfLineSvg soRc__perfLineSvg--volume" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="soPerfVolumeAreaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(99,102,241,.28)"></stop>
+            <stop offset="100%" stop-color="rgba(99,102,241,0)"></stop>
+          </linearGradient>
+        </defs>
+        <path class="soRc__perfLineArea soRc__perfLineArea--volume" d="${area}" fill="url(#soPerfVolumeAreaGrad)"></path>
+        <path class="soRc__perfLine soRc__perfLine--volume" d="${path}" pathLength="100"></path>
+      </svg>
+      <div class="soRc__perfChartHover" hidden>
+        <div class="soRc__perfChartCursor"></div>
+        <div class="soRc__perfChartTip"></div>
+      </div>
+      </div>
+    `;
+  };
+
+  const dualLineChart = (aVals, bVals, labels = []) => {
+    const w = 520;
+    const h = 190;
+    const aPath = linePath(aVals, w, h, 1);
+    const bPath = linePath(bVals, w, h, 1);
+    const aArea = areaPath(aVals, w, h, 1);
+    const cleanA = (Array.isArray(aVals) ? aVals : []).map((v) => Math.max(0, Number(v || 0))).map((v) => Math.round(v));
+    const cleanB = (Array.isArray(bVals) ? bVals : []).map((v) => Math.max(0, Number(v || 0))).map((v) => Math.round(v));
+    const cleanLabels = (Array.isArray(labels) ? labels : []).map((s) => String(s || ''));
+    return `
+      <div class="soRc__perfChartInteractive" data-chart-type="dual" data-chart-labels="${cleanLabels.join('|')}" data-chart-a="${cleanA.join('|')}" data-chart-b="${cleanB.join('|')}">
+      <svg class="soRc__perfLineSvg" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="soPerfAreaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(52,211,153,.26)"></stop>
+            <stop offset="100%" stop-color="rgba(52,211,153,0)"></stop>
+          </linearGradient>
+        </defs>
+        <path class="soRc__perfLineArea" d="${aArea}" fill="url(#soPerfAreaGrad)"></path>
+        <path class="soRc__perfLine soRc__perfLine--a" d="${aPath}" pathLength="100"></path>
+        <path class="soRc__perfLine soRc__perfLine--b" d="${bPath}" pathLength="100"></path>
+      </svg>
+      <div class="soRc__perfChartHover" hidden>
+        <div class="soRc__perfChartCursor"></div>
+        <div class="soRc__perfChartTip"></div>
+      </div>
+      </div>
+    `;
+  };
+
+  const yesterdaySales = Number(d.yesterdaySales || (todaySales * 0.88));
+  const previousWeekSales = Number(d.previousWeekSales || d.prevWeekSales || (weekSales * 0.9));
+  const previousRisk = Number(d.previousLowInventoryAlerts || (lowInventoryAlerts + 2));
+  const todayDelta = pctChange(todaySales, yesterdaySales);
+  const weekDelta = pctChange(weekSales, previousWeekSales);
+  const riskDelta = pctChange(lowInventoryAlerts, previousRisk);
+
+  const todaySeries = makeSeries(todaySales, yesterdaySales, 20, 0.22, 11);
+  const weekSeries = makeSeries(weekSales, previousWeekSales, 20, 0.16, 19);
+  const riskSeries = makeSeries(Math.max(1, lowInventoryAlerts), Math.max(1, previousRisk), 20, 0.15, 31);
+
+  const ordersTarget = Number(d.weekOrdersTarget || Math.max(weekOrders * 1.15, 1));
+  const totalRevenue = Number(d.totalRevenue || d.total_revenue || d.monthRevenue || d.month_revenue || (weekSales * 4.1) || (todaySales * 30));
+  const prevTotalRevenue = Number(d.prevTotalRevenue || d.previous_total_revenue || (totalRevenue * 0.89));
+  const totalRevenueDelta = pctChange(totalRevenue, prevTotalRevenue);
+  const revenueLift = Math.max(0, totalRevenue - prevTotalRevenue);
+  const unitsSold = Number(d.unitsSold || d.units_sold || d.totalUnitsSold || d.total_units_sold || Math.round((weekOrders * 1.9) || (todayOrders * 7.5)));
+  const unitsTarget = Number(d.unitsTarget || d.units_target || Math.max(unitsSold * 1.35, 1));
+  const unitsTargetPct = Math.max(0, Math.min(100, (unitsSold / Math.max(unitsTarget, 1)) * 100));
+  const newCustomers = Number(d.newCustomers || d.new_customers || Math.max(todayOrders, 0));
+  const directCustomers = Number(d.directCustomers || Math.max(0, Math.round(newCustomers * 0.62)));
+  const referredCustomers = Number(d.referredCustomers || Math.max(0, newCustomers - directCustomers));
+  const grossMarginPct = Number(d.grossMarginPct || d.gross_margin_pct || d.grossMargin || 0);
+  const prevGrossMarginPct = Number(d.prevGrossMarginPct || d.prev_gross_margin_pct || (grossMarginPct * 0.92));
+  const grossMarginDelta = pctChange(grossMarginPct, prevGrossMarginPct);
+  const averageOrderValue = Number(d.averageOrderValue || d.aov || (weekOrders > 0 ? (weekSales / weekOrders) : 0));
+  const prevAverageOrderValue = Number(d.previousAverageOrderValue || d.prev_aov || (averageOrderValue * 0.93));
+  const averageOrderValueDelta = pctChange(averageOrderValue, prevAverageOrderValue);
+  const unitsPerOrder = weekOrders > 0 ? (unitsSold / Math.max(1, weekOrders)) : Number(d.unitsPerOrder || 0);
+
+  const unitsSegments = 24;
+  const unitsActive = Math.max(0, Math.min(unitsSegments, Math.round((unitsTargetPct / 100) * unitsSegments)));
+  const directShare = Math.max(0, Math.min(100, (directCustomers / Math.max(1, directCustomers + referredCustomers)) * 100));
+  const referralShare = Math.max(0, 100 - directShare);
+  const grossMarginSeries = makeSeries(Math.max(1, grossMarginPct), Math.max(1, prevGrossMarginPct), 5, 0.11, 83);
+  const grossMarginMax = Math.max(...grossMarginSeries, 1);
+  const revenueSpark = makeSeries(Math.max(1, totalRevenue), Math.max(1, prevTotalRevenue), 18, 0.15, 67);
+
+  const perfInfo = {
+    totalRevenue: 'Total gross revenue tracked for the selected business period.',
+    unitsSold: 'Total units sold versus your configured target for this period.',
+    purchaseRate: 'Gross margin percentage after cost of goods sold across tracked sales.'
+  };
+
   els.perfKpis.innerHTML = `
-    <div class="soRc__perfStatCard">
-      <div class="soRc__perfStatTop">
-        <div class="soRc__perfStatLabel">Sales Today</div>
-        <div class="soRc__perfPill">Live</div>
+    <div class="soRc__perfStatCard soRc__perfStatCard--tile">
+      <div class="soRc__perfTileTop">
+        <div class="soRc__perfBoardTitle">Total Revenue</div>
+        <span class="soRc__perfInfoWrap">
+          <button class="soRc__perfInfoDot" type="button" aria-label="About Total Revenue" data-perf-info-toggle="${esc(perfInfo.totalRevenue)}">i</button>
+          <span class="soRc__perfInfoBubble" hidden>${esc(perfInfo.totalRevenue)}</span>
+        </span>
       </div>
-      <div class="soRc__perfStatValue">${money(todaySales)}</div>
-      <div class="soRc__perfStatSub">${todayOrders > 0 ? `${todayOrders} orders today` : (lastSyncAt ? `Last sync ${new Date(lastSyncAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : 'Waiting for first sync')}</div>
-      <div class="soRc__perfBars">${compactBars([todaySales * 0.8, todaySales, todaySales * 0.9])}</div>
+      <div class="soRc__perfTileSplit">
+        <div>
+          <div class="soRc__perfStatValue">${money(totalRevenue)}</div>
+          <div class="soRc__perfStatSub">${periodLabel(totalRevenueDelta)} from last month</div>
+        </div>
+        <div class="soRc__perfTileViz">
+          ${sparklineChart(revenueSpark, totalRevenueDelta >= 0 ? 'up' : 'down')}
+          <div class="soRc__perfMiniGain">+${money(revenueLift).replace('$', '')}</div>
+        </div>
+      </div>
     </div>
-    <div class="soRc__perfStatCard">
-      <div class="soRc__perfStatTop">
-        <div class="soRc__perfStatLabel">Sales This Week</div>
-        <div class="soRc__perfPill">${connectedCount} connected</div>
+
+    <div class="soRc__perfStatCard soRc__perfStatCard--tile">
+      <div class="soRc__perfTileTop">
+        <div class="soRc__perfBoardTitle">Units Sold</div>
+        <span class="soRc__perfInfoWrap">
+          <button class="soRc__perfInfoDot" type="button" aria-label="About Units Sold" data-perf-info-toggle="${esc(perfInfo.unitsSold)}">i</button>
+          <span class="soRc__perfInfoBubble" hidden>${esc(perfInfo.unitsSold)}</span>
+        </span>
       </div>
-      <div class="soRc__perfStatValue">${money(weekSales)}</div>
-      <div class="soRc__perfStatSub">${weekOrders > 0 ? `${weekOrders} orders this week` : 'Waiting for weekly order sync'}</div>
-      <div class="soRc__perfBars">${compactBars([weekSales * 0.72, weekSales * 0.85, weekSales])}</div>
+      <div class="soRc__perfTileSplit soRc__perfTileSplit--units">
+        <div class="soRc__perfUnitsHead">
+          <div class="soRc__perfStatValue">${Number(unitsSold || 0).toLocaleString()}</div>
+          <div class="soRc__perfStatSub">${periodLabel(weekDelta)} <span class="soRc__perfTargetText">${Math.round(unitsTargetPct)}% to target</span></div>
+        </div>
+        <div class="soRc__perfUnitsRail">
+          <div class="soRc__perfSegBar soRc__perfSegBar--units">
+            ${Array.from({ length: unitsSegments }).map((_, i) => `<span class="soRc__perfSeg ${i < unitsActive ? 'is-on' : ''}"></span>`).join('')}
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="soRc__perfStatCard">
-      <div class="soRc__perfStatTop">
-        <div class="soRc__perfStatLabel">Inventory Risk</div>
-        <div class="soRc__perfPill">${isStale ? 'Stale' : 'Fresh'}</div>
+
+    <div class="soRc__perfStatCard soRc__perfStatCard--tile">
+      <div class="soRc__perfTileTop">
+        <div class="soRc__perfBoardTitle">Gross Margin</div>
+        <span class="soRc__perfInfoWrap">
+          <button class="soRc__perfInfoDot" type="button" aria-label="About Gross Margin" data-perf-info-toggle="${esc(perfInfo.purchaseRate)}">i</button>
+          <span class="soRc__perfInfoBubble" hidden>${esc(perfInfo.purchaseRate)}</span>
+        </span>
       </div>
-      <div class="soRc__perfStatValue">${lowInventoryAlerts}</div>
-      <div class="soRc__perfStatSub">${lowInventoryAlerts > 0 ? `${lowInventoryAlerts} alerts across ${Math.max(atRiskSkuCount, lowInventoryAlerts)} SKUs` : 'No inventory risk detected'}</div>
-      <div class="soRc__perfBars">${compactBars([Math.max(1, lowInventoryAlerts), Math.max(1, atRiskSkuCount), Math.max(1, grossMargin)])}</div>
+      <div class="soRc__perfTileSplit">
+        <div>
+          <div class="soRc__perfStatValue">${grossMarginPct.toFixed(1)}%</div>
+          <div class="soRc__perfStatSub">${periodLabel(grossMarginDelta)} margin rate</div>
+        </div>
+        <div class="soRc__perfMonthBars">
+          ${grossMarginSeries.map((v, i) => {
+            const h = Math.max(18, Math.round((v / grossMarginMax) * 78));
+            const latest = i === grossMarginSeries.length - 1 ? 'is-latest' : '';
+            return `<div class="soRc__perfMonthBarWrap"><span class="soRc__perfMonthBar ${latest}" style="--h:${h}px"></span><span class="soRc__perfMonthLabel">${['Apr','May','Jun','Jul','Aug'][i] || ''}</span></div>`;
+          }).join('')}
+        </div>
+      </div>
     </div>
   `;
 
@@ -2883,23 +3663,12 @@ function renderPerformance() {
     const urgentReorders = Number(d.urgentReorders || lowInventoryAlerts || 0);
     const topDemandPct = Number(d.topSkuDemandChangePct || d.demandChangePct || 0);
 
-    if (isStale) alerts.push({ cls: 'soRc__perfAlert--stale', text: 'Inventory sync stale' });
     if (lowInventoryAlerts > 0) alerts.push({ cls: 'soRc__perfAlert--warn', text: `${urgentReorders} urgent reorders` });
-    if (aiRecommendations.length > 0) alerts.push({ cls: 'soRc__perfAlert--ok', text: 'New AI recommendation' });
     if (topDemandPct > 0) alerts.push({ cls: 'soRc__perfAlert--warn', text: `Top SKU demand up ${topDemandPct.toFixed(0)}%` });
-    if (!alerts.length) alerts.push({ cls: 'soRc__perfAlert--ok', text: 'No urgent issues detected' });
-
-    els.perfAlerts.innerHTML = alerts.slice(0, 4).map((a) => `<div class="soRc__perfAlert ${a.cls}">${a.text}</div>`).join('');
+    els.perfAlerts.innerHTML = alerts.length
+      ? alerts.slice(0, 4).map((a) => `<div class="soRc__perfAlert ${a.cls}">${a.text}</div>`).join('')
+      : '';
   }
-
-  const aiHeadline = aiRecommendations[0]?.headline || 'No recommendation right now';
-  const impactLine = Number(d.estimatedRevenueAtRisk || 0) > 0
-    ? `Estimated revenue at risk: ${money(d.estimatedRevenueAtRisk)}`
-    : Number(d.estimatedMarginImprovementPct || d.coodraImpact?.marginLiftPct || 0) > 0
-      ? `Estimated margin improvement: ${Number(d.estimatedMarginImprovementPct || d.coodraImpact?.marginLiftPct || 0).toFixed(1)}%`
-      : aiRecommendations.length > 0
-        ? 'Coodra found an action worth reviewing'
-        : 'Run sync or wait for more commerce data';
 
   const riskRows = inventoryRiskItems.length
     ? inventoryRiskItems.slice(0, 3).map((row) => {
@@ -2946,26 +3715,119 @@ function renderPerformance() {
   const revenueProtected = Number(d.coodraImpact?.revenueProtected || d.revenueProtected || 0);
   const stockoutsPrevented = Number(d.coodraImpact?.stockoutsPrevented || d.stockoutsPrevented || 0);
 
-  const impactLines = [];
-  impactLines.push(`Accepted recommendations: ${accepted}`);
-  impactLines.push(`Estimated margin lift: ${marginLift.toFixed(1)}%`);
-  if (revenueProtected > 0) impactLines.push(`Revenue protected: ${money(revenueProtected)}`);
-  else if (stockoutsPrevented > 0) impactLines.push(`Stockouts prevented: ${stockoutsPrevented}`);
-  else impactLines.push(`Connected providers: ${connectedCount}`);
+  const clampPct = (n) => Math.max(0, Math.min(100, Number(n || 0)));
+  const inventoryWatchCount = inventoryRiskItems.length || lowInventoryAlerts;
+  const inventoryHealthPct = clampPct(100 - Math.min(inventoryWatchCount * 12, 82));
+  const reorderReadinessPct = clampPct(hasData ? (connectedCount > 0 ? (76 - Math.min(lowInventoryAlerts * 9, 42)) : 24) : 14);
+  const movers = topProducts
+    .slice(0, 4)
+    .map((p) => ({
+      title: String(p?.title || 'Product'),
+      trend: Number(p?.trendPct || 0)
+    }));
+  const impactRows = [
+    {
+      label: 'Accepted recommendations',
+      value: String(accepted),
+      progress: clampPct(accepted * 12)
+    },
+    {
+      label: 'Estimated margin lift',
+      value: `${marginLift.toFixed(1)}%`,
+      progress: clampPct(marginLift * 10)
+    },
+    {
+      label: revenueProtected > 0 ? 'Revenue protected' : (stockoutsPrevented > 0 ? 'Stockouts prevented' : 'Connected providers'),
+      value: revenueProtected > 0 ? money(revenueProtected) : (stockoutsPrevented > 0 ? String(stockoutsPrevented) : String(connectedCount)),
+      progress: clampPct(
+        revenueProtected > 0
+          ? ((weekSales > 0 ? (revenueProtected / Math.max(weekSales, 1)) * 100 : 64))
+          : (stockoutsPrevented > 0 ? stockoutsPrevented * 9 : connectedCount * 25)
+      )
+    }
+  ];
+
+  const revenueSeries = makeSeries(weekSales || 1, previousWeekSales || 1, points, 0.14, 47);
+  const grossSeries = makeSeries(Math.max(1, weekSales * (Math.max(0.01, grossMargin / 100))), Math.max(1, previousWeekSales * (Math.max(0.01, grossMargin / 100) * 0.92)), points, 0.13, 59);
+  const volumeBars = makeSeries(Math.max(1, weekOrders), Math.max(1, weekOrders * 0.84), points, 0.2, 71);
+  const rangeLabels = buildRangeLabels(points, rangeDays, seriesMode);
+  const rangeToggle = `
+    <div class="soRc__perfRange" role="group" aria-label="Chart range">
+      ${rangeOptions.map((opt) => `
+        <button class="soRc__perfRangeBtn ${rangeDays === opt.days ? 'is-active' : ''}" type="button" data-perf-range="${opt.days}">${opt.label}</button>
+      `).join('')}
+    </div>
+  `;
 
   els.perfCards.innerHTML = `
-    <div class="soRc__perfBoard soRc__perfBoard--ai">
+    <div class="soRc__perfBoard soRc__perfBoard--chart">
       <div class="soRc__perfBoardHead">
-        <div class="soRc__perfBoardTitle">Coodra AI Intelligence</div>
-        <div class="soRc__perfPill">Model active</div>
+        <div class="soRc__perfBoardTitle">Revenue Growth</div>
+        <div class="soRc__perfBoardHeadRight">${rangeToggle}${periodLabel(weekDelta)}</div>
       </div>
-      <div class="soRc__perfAiLead">${esc(aiHeadline)}</div>
-      <div class="soRc__perfRiskMeta" style="margin-bottom:10px;">${esc(impactLine)}</div>
-      <div class="soRc__perfPrimaryCtaRow">
-        <button class="soRc__eventCta" type="button" data-perf-ai-action="review_recommendation">Review recommendation</button>
-        <button class="soRc__eventCta" type="button" data-perf-ai-action="apply_suggestion" data-feature-required="replace_decisions,remove_decisions">Apply suggestion</button>
-        <button class="soRc__eventCta" type="button" data-perf-ai-action="ask_why">Ask why</button>
-        <button class="soRc__eventCta" type="button" data-export-performance="1" data-feature-required="exports">Export CSV</button>
+      <div class="soRc__perfChartMeta">
+        <div>
+          <div class="soRc__perfStatLabel">Revenue (${rangeDays} days)</div>
+          <div class="soRc__perfChartValue">${money(weekSales)}</div>
+        </div>
+        <div class="soRc__perfLegend">
+          <span><i class="soRc__dot soRc__dot--a"></i> Revenue</span>
+          <span><i class="soRc__dot soRc__dot--b"></i> Gross profit</span>
+        </div>
+      </div>
+      ${dualLineChart(revenueSeries, grossSeries, rangeLabels)}
+      <div class="soRc__perfAxisTicks">${buildAxisTicks(rangeLabels, rangeDays, seriesMode)}</div>
+    </div>
+
+    <div class="soRc__perfBoard soRc__perfBoard--volume">
+      <div class="soRc__perfBoardHead">
+        <div class="soRc__perfBoardTitle">Sales Volume</div>
+        <div class="soRc__perfBoardHeadRight">${rangeToggle}<div class="soRc__perfPill">${weekOrders} orders</div></div>
+      </div>
+      <div class="soRc__perfChartValue">${Number(weekOrders || 0).toLocaleString()}</div>
+      <div class="soRc__perfRiskMeta">Order velocity (${rangeDays} days)</div>
+      ${volumeLineChart(volumeBars, rangeLabels)}
+      <div class="soRc__perfAxisTicks">${buildAxisTicks(rangeLabels, rangeDays, seriesMode)}</div>
+      <div class="soRc__perfSplitMeta">
+        <span>Direct ${directCustomers}</span>
+        <span>Referral ${referredCustomers}</span>
+      </div>
+    </div>
+
+    <div class="soRc__perfBoard soRc__perfBoard--quality">
+      <div class="soRc__perfBoardHead">
+        <div class="soRc__perfBoardTitle">Order Quality</div>
+        <div class="soRc__perfPill">${periodLabel(averageOrderValueDelta, false)}</div>
+      </div>
+      <div class="soRc__perfRiskRows">
+        <div class="soRc__perfRiskRow">
+          <div>
+            <div class="soRc__perfRiskTitle">Average order value</div>
+            <div class="soRc__perfRiskMeta">${money(averageOrderValue)} / order</div>
+          </div>
+          <div class="soRc__perfRiskAction">${periodLabel(averageOrderValueDelta)}</div>
+        </div>
+        <div class="soRc__perfRiskRow">
+          <div>
+            <div class="soRc__perfRiskTitle">Units per order</div>
+            <div class="soRc__perfRiskMeta">${unitsPerOrder.toFixed(2)} units</div>
+          </div>
+          <div class="soRc__perfRiskAction">${Number(weekOrders || 0).toLocaleString()} orders</div>
+        </div>
+      </div>
+      <div class="soRc__perfSignalRow">
+        <div class="soRc__perfSignalHead">
+          <span>Direct customer mix</span>
+          <span>${Math.round(directShare)}%</span>
+        </div>
+        <div class="soRc__perfSignalTrack"><div class="soRc__perfSignalFill soRc__perfSignalFill--ok" style="width:${directShare}%"></div></div>
+      </div>
+      <div class="soRc__perfSignalRow">
+        <div class="soRc__perfSignalHead">
+          <span>Referral customer mix</span>
+          <span>${Math.round(referralShare)}%</span>
+        </div>
+        <div class="soRc__perfSignalTrack"><div class="soRc__perfSignalFill soRc__perfSignalFill--teal" style="width:${referralShare}%"></div></div>
       </div>
     </div>
 
@@ -2973,6 +3835,20 @@ function renderPerformance() {
       <div class="soRc__perfBoardHead">
         <div class="soRc__perfBoardTitle">Inventory & Reorder Intelligence</div>
         <div class="soRc__perfPill">${lowInventoryAlerts} alerts</div>
+      </div>
+      <div class="soRc__perfSignalRow">
+        <div class="soRc__perfSignalHead">
+          <span>Inventory health</span>
+          <span>${Math.round(inventoryHealthPct)}%</span>
+        </div>
+        <div class="soRc__perfSignalTrack"><div class="soRc__perfSignalFill soRc__perfSignalFill--ok" style="width:${inventoryHealthPct}%"></div></div>
+      </div>
+      <div class="soRc__perfSignalRow">
+        <div class="soRc__perfSignalHead">
+          <span>Reorder readiness</span>
+          <span>${Math.round(reorderReadinessPct)}%</span>
+        </div>
+        <div class="soRc__perfSignalTrack"><div class="soRc__perfSignalFill soRc__perfSignalFill--warn" style="width:${reorderReadinessPct}%"></div></div>
       </div>
       <div class="soRc__perfRiskRows">${riskRows}</div>
     </div>
@@ -2982,16 +3858,36 @@ function renderPerformance() {
         <div class="soRc__perfBoardTitle">Product Performance</div>
         <div class="soRc__perfPill">Ranked</div>
       </div>
+      <div class="soRc__perfMoverChips">
+        ${movers.length
+          ? movers.map((m) => {
+              const cls = m.trend > 0 ? 'is-up' : (m.trend < 0 ? 'is-down' : 'is-flat');
+              const trendText = m.trend > 0 ? `+${m.trend.toFixed(0)}%` : (m.trend < 0 ? `${m.trend.toFixed(0)}%` : '0%');
+              return `<span class="soRc__perfMoverChip ${cls}">${esc(m.title)} <b>${trendText}</b></span>`;
+            }).join('')
+          : `<span class="soRc__perfMoverChip is-flat">No movers yet <b>0%</b></span>`
+        }
+      </div>
       <div class="soRc__perfTrendRows">${perfRows}</div>
     </div>
 
     <div class="soRc__perfBoard" data-feature-panel="margin_insights">
       <div class="soRc__perfBoardHead">
         <div class="soRc__perfBoardTitle">Impact</div>
-        <div class="soRc__perfPill">Outcomes</div>
+        <div class="soRc__perfPill">${periodLabel(marginLift, false)}</div>
       </div>
-      <div class="soRc__perfRiskRows">
-        ${impactLines.map((line) => `<div class="soRc__perfRiskRow"><div class="soRc__perfRiskTitle">${esc(line)}</div></div>`).join('')}
+      <div class="soRc__perfImpactGrid">
+        ${impactRows.map((row) => `
+          <div class="soRc__perfImpactRow">
+            <div class="soRc__perfImpactHead">
+              <span>${esc(row.label)}</span>
+              <b>${esc(row.value)}</b>
+            </div>
+            <div class="soRc__perfImpactTrack">
+              <div class="soRc__perfImpactFill" style="width:${row.progress}%"></div>
+            </div>
+          </div>
+        `).join('')}
       </div>
     </div>
   `;
@@ -3036,6 +3932,16 @@ function listRowHtml(title, meta, value, actionConfig = null) {
 
 function renderForecasts() {
   if (!els.forecastList || !els.forecastKpis || !els.forecastMeta) return;
+  const periodBadge = (delta, reverse = false) => {
+    const d0 = Number(delta || 0);
+    const up = d0 > 0;
+    const down = d0 < 0;
+    const good = reverse ? down : up;
+    const tone = !up && !down ? 'flat' : good ? 'up' : 'down';
+    const arrow = !up && !down ? '=' : up ? '+' : '-';
+    const txt = `${Math.abs(d0).toFixed(1)}%`;
+    return `<span class="soRc__perfTrendBadge soRc__perfTrendBadge--${tone}">${arrow} ${txt}</span>`;
+  };
   const d = state.performance?.last?.dashboard || state.performance?.last?.snapshot || {};
   const topProducts = Array.isArray(d.topProducts) ? d.topProducts : [];
   const aiRecommendations = Array.isArray(d.aiRecommendations) ? d.aiRecommendations : [];
@@ -3064,11 +3970,20 @@ function renderForecasts() {
     .map((x) => ({ ...x, daysLeft: Number(x?.daysLeft ?? x?.days_to_stockout ?? 999) }))
     .sort((a, b) => Number(a.daysLeft || 999) - Number(b.daysLeft || 999))
     .slice(0, 5);
+  const weekSales = Number(d.weekSales || 0);
+  const prevWeekSales = Number(d.previousWeekSales || d.prevWeekSales || (weekSales * 0.9));
+  const projection30d = weekSales * 4.2;
+  const baseline30d = prevWeekSales * 4.2;
+  const projectionDelta = pctChange(projection30d, baseline30d);
+  const risk14d = riskSoon.filter((x) => Number(x.daysLeft || 999) <= 14).length;
+  const horizonDays = riskSoon.length
+    ? Math.max(7, Math.round(riskSoon.reduce((acc, x) => acc + Number(x.daysLeft || 0), 0) / riskSoon.length))
+    : 30;
 
   els.forecastKpis.innerHTML = `
-    <div class="soRc__kpi"><div class="soRc__kpiLabel">Connected stores</div><div class="soRc__kpiValue">${connectedCount}</div><div class="soRc__kpiSub">Live data inputs</div></div>
-    <div class="soRc__kpi"><div class="soRc__kpiLabel">Rising products</div><div class="soRc__kpiValue">${rising.length}</div><div class="soRc__kpiSub">Positive demand trend</div></div>
-    <div class="soRc__kpi"><div class="soRc__kpiLabel">Risk soon</div><div class="soRc__kpiValue">${riskSoon.length}</div><div class="soRc__kpiSub">Needs reorder attention</div></div>
+    <div class="soRc__kpi"><div class="soRc__kpiLabel">30-day projection</div><div class="soRc__kpiValue">${money(projection30d)}</div><div class="soRc__kpiSub">${periodBadge(projectionDelta)} vs prior period</div></div>
+    <div class="soRc__kpi"><div class="soRc__kpiLabel">Forecast horizon</div><div class="soRc__kpiValue">${horizonDays}d</div><div class="soRc__kpiSub">${rising.length} growth signals active</div></div>
+    <div class="soRc__kpi"><div class="soRc__kpiLabel">At risk in 14d</div><div class="soRc__kpiValue">${risk14d}</div><div class="soRc__kpiSub">${riskSoon.length} total risk signals</div></div>
   `;
 
   const rows = [];
@@ -3119,8 +4034,8 @@ function renderForecasts() {
 
   els.forecastList.innerHTML = rows.join('');
   els.forecastMeta.textContent = aiRecommendations.length
-    ? `Forecast view updated from ${aiRecommendations.length} active recommendation signals.`
-    : 'Forecasts use trend and inventory movement from your connected data.';
+    ? `Forecasts are using ${aiRecommendations.length} recommendation signals and ${connectedCount} connected data source${connectedCount === 1 ? '' : 's'}.`
+    : 'Forecasts are generated from live sales velocity and inventory movement.';
 }
 
 function renderClassification() {
@@ -3188,11 +4103,20 @@ function renderClassification() {
   const starterA = count ? aCount : 0;
   const starterB = count ? bCount : 0;
   const starterC = count ? Math.max(0, count - starterA - starterB) : 0;
+  const revTotal = sortedByRevenue.reduce((acc, x) => acc + Number(x?.revenue || 0), 0);
+  const revA = sortedByRevenue.slice(0, aCut).reduce((acc, x) => acc + Number(x?.revenue || 0), 0);
+  const revC = sortedByRevenue.slice(bCut).reduce((acc, x) => acc + Number(x?.revenue || 0), 0);
+  const aShare = revTotal > 0 ? (revA / revTotal) * 100 : 0;
+  const cShare = revTotal > 0 ? (revC / revTotal) * 100 : 0;
+  const trendRisk = sortedByRevenue
+    .slice(0, Math.max(1, aCut + Math.max(1, Math.floor((bCut - aCut) * 0.5))))
+    .filter((x) => Number(x?.trendPct || 0) < 0)
+    .length;
 
   els.classificationKpis.innerHTML = `
-    <div class="soRc__kpi"><div class="soRc__kpiLabel">Class A</div><div class="soRc__kpiValue">${starterA}</div><div class="soRc__kpiSub">High-value products</div></div>
-    <div class="soRc__kpi"><div class="soRc__kpiLabel">Class B</div><div class="soRc__kpiValue">${starterB}</div><div class="soRc__kpiSub">Core performers</div></div>
-    <div class="soRc__kpi"><div class="soRc__kpiLabel">Class C</div><div class="soRc__kpiValue">${starterC}</div><div class="soRc__kpiSub">Low-impact tail</div></div>
+    <div class="soRc__kpi"><div class="soRc__kpiLabel">A-tier revenue share</div><div class="soRc__kpiValue">${aShare.toFixed(1)}%</div><div class="soRc__kpiSub">${starterA} high-impact SKU${starterA === 1 ? '' : 's'}</div></div>
+    <div class="soRc__kpi"><div class="soRc__kpiLabel">Tail share (Class C)</div><div class="soRc__kpiValue">${cShare.toFixed(1)}%</div><div class="soRc__kpiSub">${starterC} long-tail SKU${starterC === 1 ? '' : 's'}</div></div>
+    <div class="soRc__kpi"><div class="soRc__kpiLabel">Mover pressure</div><div class="soRc__kpiValue">${trendRisk}</div><div class="soRc__kpiSub">Top bands with negative trend</div></div>
   `;
 
   if (!rows.length) rows.push('<div class="soRc__emptyState">Classifications will populate after your first full sync.</div>');
@@ -3222,6 +4146,10 @@ function renderLocations() {
   const lowInventoryAlerts = Number(d.lowInventoryAlerts || 0);
   const weekSales = Number(d.weekSales || 0);
   const canConnectMore = storeMetric.unlimited || connected < Number(storeMetric.limit || 0) || connected === 0;
+  const utilizationPct = storeMetric.unlimited
+    ? 100
+    : (Number(storeMetric.limit || 0) > 0 ? Math.min(100, (connected / Number(storeMetric.limit || 0)) * 100) : 0);
+  const salesPerStore = connected > 0 ? (weekSales / connected) : 0;
 
   const connectPillsHtml = connected > 0
     ? `
@@ -3281,6 +4209,26 @@ function renderLocations() {
       payload: {
         source: 'locations',
         week_sales: weekSales,
+        connected_stores: connected
+      }
+    }
+  ));
+  actionRows.push(locationActionRow(
+    'Location utilization',
+    storeMetric.unlimited
+      ? 'Enterprise location capacity enabled.'
+      : `Using ${connected} of ${limitText} connected locations.`,
+    `${utilizationPct.toFixed(0)}%`,
+    {
+      action: 'watch',
+      target: 'location utilization and throughput',
+      context: 'locations',
+      feature: '',
+      label: 'Review',
+      payload: {
+        source: 'locations',
+        utilization_pct: utilizationPct,
+        sales_per_store: salesPerStore,
         connected_stores: connected
       }
     }
@@ -3417,8 +4365,8 @@ async function loadPerformanceStatus() {
 
   if (!els.perfState) return;
   state.performance.loading = true;
-  els.perfState.hidden = false;
-  els.perfState.textContent = 'Loading performance status...';
+  els.perfState.hidden = true;
+  els.perfState.textContent = '';
 
   try {
     await ensureBackendJwt();
@@ -3440,6 +4388,7 @@ async function loadPerformanceStatus() {
     renderClassification();
     renderLocations();
     renderPlanStatusBanner();
+    renderIntegrationsPanel();
     applyBillingUiGates();
   } catch (err) {
     const reason = String(err?.message || 'performance_status_failed');
@@ -3451,6 +4400,7 @@ async function loadPerformanceStatus() {
     if (els.perfConnectionsCount) els.perfConnectionsCount.textContent = '0';
   } finally {
     state.performance.loading = false;
+    renderIntegrationsPanel();
   }
 }
 
@@ -3591,10 +4541,7 @@ function renderPlanStatusBanner() {
   const plan = String(state.billing?.plan_code || state.billing?.account?.plan_code || 'free').toUpperCase();
   const ai = getMetricFromBilling('ai_decisions');
   const aiText = formatUsagePair(ai.used, ai.limit, ai.unlimited);
-  const panelPlanPills = root.querySelectorAll('.soRc__panelStatusPill--plan');
-  panelPlanPills.forEach((pill) => {
-    pill.innerHTML = `<b>Plan</b>: ${esc(plan)} ${esc(aiText)}`;
-  });
+  if (els.menuPlanValue) els.menuPlanValue.textContent = `${plan} ${aiText}`;
   const perfRaw = state.performance?.last || {};
   const perfDash = perfRaw.dashboard || perfRaw.snapshot || {};
   const perfConnections = Array.isArray(perfRaw.connections) ? perfRaw.connections : [];
@@ -3606,11 +4553,60 @@ function renderPlanStatusBanner() {
   const lastSyncText = syncCandidate
     ? new Date(syncCandidate).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
     : 'Never';
-  const panelSyncPills = root.querySelectorAll('.soRc__panelStatusPill--sync');
-  panelSyncPills.forEach((pill) => {
-    pill.innerHTML = `<b>Last synced</b>: ${esc(lastSyncText)}`;
+  if (els.planStatusLastSynced) els.planStatusLastSynced.textContent = `Last synced: ${lastSyncText}`;
+  if (els.planStatusBanner) els.planStatusBanner.style.display = '';
+}
+
+function renderIntegrationsPanel() {
+  const cards = Array.from(root.querySelectorAll('#soPanel-integrations .soRc__integrationCard'));
+  if (!cards.length) return;
+  const query = String(els.integrationSearch?.value || '').trim().toLowerCase();
+  const connections = Array.isArray(state.performance?.last?.connections) ? state.performance.last.connections : [];
+  const byProvider = new Map(connections.map((x) => [String(x?.provider || '').toLowerCase(), normalizeProviderStatus(x?.status)]));
+
+  cards.forEach((card) => {
+    const provider = String(card.getAttribute('data-integration-provider') || '').toLowerCase();
+    const name = String(card.getAttribute('data-integration-name') || provider).toLowerCase();
+    const visible = !query || name.includes(query) || provider.includes(query);
+    card.style.display = visible ? '' : 'none';
+
+    const btn = card.querySelector('.soRc__integrationBtn');
+    if (!btn) return;
+    const status = byProvider.get(provider) || 'not_connected';
+    const connected = status === 'connected';
+    if (connected) {
+      btn.textContent = 'Disconnect';
+      btn.classList.add('is-disconnect');
+      btn.removeAttribute('data-perf-connect');
+      btn.setAttribute('data-perf-provider-action', 'disconnect');
+      btn.setAttribute('data-perf-provider', provider);
+    } else {
+      btn.textContent = 'Connect';
+      btn.classList.remove('is-disconnect');
+      btn.setAttribute('data-perf-connect', provider);
+      btn.removeAttribute('data-perf-provider-action');
+      btn.removeAttribute('data-perf-provider');
+    }
   });
-  if (els.planStatusBanner) els.planStatusBanner.style.display = 'none';
+}
+
+function resolveClientFirstName(profile = {}) {
+  const direct = String(
+    profile?.first_name
+    || profile?.contact_name
+    || profile?.owner_name
+    || profile?.name
+    || CUSTOMER_FIRST_NAME
+    || ''
+  ).trim();
+  if (direct) return direct.split(/\s+/)[0];
+  const email = String(profile?.sign_in_email || profile?.contact_email || CUSTOMER_EMAIL || '').trim().toLowerCase();
+  if (email && email.includes('@')) {
+    const local = email.split('@')[0].replace(/[._-]+/g, ' ').trim();
+    const first = local.split(/\s+/)[0] || '';
+    if (first) return first;
+  }
+  return 'there';
 }
 
 function loadReportsHistory() {
@@ -3644,6 +4640,25 @@ function addReportHistoryEntry(kind, name) {
 function renderReportsHistory() {
   if (!els.reportsHistoryList) return;
   const rows = Array.isArray(state.reportsHistory) ? state.reportsHistory : [];
+  if (els.reportsKpis) {
+    const now = Date.now();
+    const inLast7 = rows.filter((r) => {
+      const t = new Date(r.created_at || 0).getTime();
+      return Number.isFinite(t) && (now - t) <= (7 * 24 * 60 * 60 * 1000);
+    }).length;
+    const inLast30 = rows.filter((r) => {
+      const t = new Date(r.created_at || 0).getTime();
+      return Number.isFinite(t) && (now - t) <= (30 * 24 * 60 * 60 * 1000);
+    }).length;
+    const lastTs = rows.length ? new Date(rows[0].created_at || 0).getTime() : 0;
+    const lastAgeHours = lastTs ? Math.max(0, Math.round((now - lastTs) / (60 * 60 * 1000))) : null;
+    const weeklyAvg = inLast30 / 4.2857;
+    els.reportsKpis.innerHTML = `
+      <div class="soRc__kpi"><div class="soRc__kpiLabel">Exports (7d)</div><div class="soRc__kpiValue">${inLast7}</div><div class="soRc__kpiSub">Recent reporting activity</div></div>
+      <div class="soRc__kpi"><div class="soRc__kpiLabel">Average per week</div><div class="soRc__kpiValue">${weeklyAvg.toFixed(1)}</div><div class="soRc__kpiSub">Based on last 30 days</div></div>
+      <div class="soRc__kpi"><div class="soRc__kpiLabel">Last export</div><div class="soRc__kpiValue">${lastAgeHours == null ? '-' : `${lastAgeHours}h`}</div><div class="soRc__kpiSub">${rows.length ? 'ago' : 'No exports yet'}</div></div>
+    `;
+  }
   if (!rows.length) {
     els.reportsHistoryList.innerHTML = `<div class="soRc__reportsHistoryEmpty">No exports yet. Use export actions above.</div>`;
     return;
@@ -3673,9 +4688,10 @@ function billingQuotaReached() {
 }
 
 const PLAN_FEATURE_MATRIX = {
-  free: ['reorder_decisions', 'margin_insights'],
+  free: ['reorder_decisions', 'replace_decisions', 'remove_decisions', 'margin_insights'],
   starter: ['reorder_decisions', 'replace_decisions', 'remove_decisions', 'margin_insights', 'category_performance', 'exports'],
   growth: ['reorder_decisions', 'replace_decisions', 'remove_decisions', 'margin_insights', 'category_performance', 'market_signals', 'trend_detection', 'inventory_risk_alerts', 'exports'],
+  pro: ['reorder_decisions', 'replace_decisions', 'remove_decisions', 'margin_insights', 'category_performance', 'market_signals', 'trend_detection', 'inventory_risk_alerts', 'exports'],
   enterprise: ['*']
 };
 
@@ -4348,6 +5364,16 @@ function resolvePerfAppHandle() {
   return handle;
 }
 
+function buildShopifyAdminConnectUrl(storeHandle, appHandle, provider, returnTo, actorEmail) {
+  const params = new URLSearchParams();
+  params.set('intent', 'connect');
+  params.set('provider', String(provider || 'shopify'));
+  if (returnTo) params.set('return_to', String(returnTo));
+  if (actorEmail) params.set('actor_email', String(actorEmail));
+  // Important: use the app root route (`/app`) to avoid hardcoded sub-route 404s.
+  return `https://admin.shopify.com/store/${encodeURIComponent(storeHandle)}/apps/${encodeURIComponent(appHandle)}/app?${params.toString()}`;
+}
+
 function goToShopifyConnect() {
   const shopDomain = resolvePerfShopDomain() || askForShopDomainFallback();
   if (!shopDomain) {
@@ -4359,7 +5385,7 @@ function goToShopifyConnect() {
   const appHandle = resolvePerfAppHandle();
   const returnTo = `${window.location.origin}/pages/retailer?tab=performance`;
   const actorEmail = String(CUSTOMER_EMAIL || '').trim().toLowerCase();
-  const url = `https://admin.shopify.com/store/${encodeURIComponent(storeHandle)}/apps/${appHandle}/app/performance?intent=connect&provider=shopify&return_to=${encodeURIComponent(returnTo)}&actor_email=${encodeURIComponent(actorEmail)}`;
+  const url = buildShopifyAdminConnectUrl(storeHandle, appHandle, 'shopify', returnTo, actorEmail);
   const popup = window.open(url, '_blank', 'width=1120,height=820');
   if (!popup) {
     try { window.location.assign(url); } catch (_) {}
@@ -4399,7 +5425,7 @@ async function startPerformanceConnect(provider) {
   const appHandle = resolvePerfAppHandle();
   const returnTo = `${window.location.origin}/pages/retailer?tab=performance`;
   const actorEmail = String(CUSTOMER_EMAIL || '').trim().toLowerCase();
-  const connectUrl = `https://admin.shopify.com/store/${encodeURIComponent(storeHandle)}/apps/${appHandle}/app/performance?intent=connect&provider=${encodeURIComponent(targetProvider)}&return_to=${encodeURIComponent(returnTo)}&actor_email=${encodeURIComponent(actorEmail)}`;
+  const connectUrl = buildShopifyAdminConnectUrl(storeHandle, appHandle, targetProvider, returnTo, actorEmail);
   try {
     const popup = window.open(connectUrl, '_blank', 'width=1120,height=820');
     if (!popup) {
@@ -4772,8 +5798,7 @@ async function handleOpenToBuyUpdateFromChat(text) {
   }
   let liveCartContext = null;
 
-  const postChat = async (messagesPayload) => {
-    await ensureBackendJwt();
+  const buildChatPayload = (messagesPayload, minimal = false) => {
     const perfRaw = state.performance?.last || {};
     const perfDash = perfRaw.dashboard || perfRaw.snapshot || {};
     const perfConnections = Array.isArray(perfRaw.connections) ? perfRaw.connections : [];
@@ -4808,24 +5833,58 @@ async function handleOpenToBuyUpdateFromChat(text) {
       messages: messagesPayload,
       session_id: SESSION_ID,
       user_id: String(USER_ID || ''),
-      client_name: els.companyName?.textContent || 'Retailer',
-      client_profile: {
+      client_name: els.companyName?.textContent || 'Retailer'
+    };
+    if (!minimal) {
+      payload.llm = {
+        provider: PRIMARY_LLM_PROVIDER,
+        model: PRIMARY_LLM_MODEL,
+        primary: true
+      };
+    }
+    if (!minimal) {
+      payload.client_profile = {
         store_type: state.profile.store_type || '',
         location: state.profile.location || '',
         budget: Number(state.plan.budget || 0),
         target_audience: state.profile.priority || ''
-      },
-      cart_context: liveCartContext,
-      attachment_summary: attachmentSummary,
-      performance_context: perfContext
-    };
-    const r = await fetchWithJwtRetry(CHAT_API, {
+      };
+      payload.cart_context = liveCartContext;
+      payload.attachment_summary = attachmentSummary;
+      payload.performance_context = perfContext;
+    }
+    return payload;
+  };
+
+  const postChat = async (messagesPayload) => {
+    const nowMs = Date.now();
+    if (chatApiCooldownUntil > nowMs) {
+      return {
+        ok: true,
+        status: 200,
+        j: { fallback: true, reason: 'chat_api_cooldown' },
+        text: 'Coodra AI is temporarily reconnecting. Please try again in a moment.'
+      };
+    }
+
+    await ensureBackendJwt();
+    let payload = buildChatPayload(messagesPayload, false);
+    let r = await fetchWithJwtRetry(CHAT_API, {
       method: 'POST',
-      headers: authHeaders({ 'Content-Type': 'application/json' }),
+      headers: chatHeaders(),
       body: JSON.stringify(payload)
     });
-    const j = await r.json().catch(() => ({}));
-    const text = j?.choices?.[0]?.message?.content?.trim() || '';
+    let j = await r.json().catch(() => ({}));
+    if (!r.ok && Number(r.status || 0) >= 500) {
+      chatApiCooldownUntil = Date.now() + 90_000;
+      return {
+        ok: true,
+        status: 200,
+        j: { fallback: true, reason: 'chat_api_500' },
+        text: 'Coodra AI is temporarily reconnecting. Please try again in a moment.'
+      };
+    }
+    const text = j?.choices?.[0]?.message?.content?.trim() || j?.message?.trim() || '';
     return { ok: r.ok, status: r.status, j, text };
   };
 
@@ -4864,26 +5923,23 @@ async function handleOpenToBuyUpdateFromChat(text) {
         }))
       }
     };
-    const payload = {
-      messages: messagesPayload,
-      session_id: SESSION_ID,
-      user_id: String(USER_ID || ''),
-      client_name: els.companyName?.textContent || 'Retailer',
-      client_profile: {
-        store_type: state.profile.store_type || '',
-        location: state.profile.location || '',
-        budget: Number(state.plan.budget || 0),
-        target_audience: state.profile.priority || ''
-      },
-      cart_context: liveCartContext,
-      attachment_summary: attachmentSummary,
-      performance_context: perfContext
-    };
+    let payload = buildChatPayload(messagesPayload, false);
     const r = await fetchWithJwtRetry(CHAT_API + '?stream=true', {
       method: 'POST',
-      headers: authHeaders({ 'Content-Type': 'application/json' }),
+      headers: chatHeaders(),
       body: JSON.stringify(payload)
     });
+    if (!r.ok && Number(r.status || 0) >= 500) {
+      // If stream endpoint hard-fails, fall back to non-streaming minimal request.
+      const fallback = await postChat(messagesPayload);
+      return {
+        ok: fallback.ok,
+        status: fallback.status,
+        j: fallback.j,
+        text: fallback.text,
+        chunks: null
+      };
+    }
 
     if (r.headers.get('content-type')?.includes('text/event-stream')) {
       // SSE streaming path
@@ -4891,6 +5947,7 @@ async function handleOpenToBuyUpdateFromChat(text) {
       const decoder = new TextDecoder();
       let buffer = '';
       let fullText = '';
+      let streamErrorMessage = '';
 
       // Async generator that yields chunk objects
       async function* chunkIterator() {
@@ -4908,6 +5965,10 @@ async function handleOpenToBuyUpdateFromChat(text) {
             try {
               const parsed = JSON.parse(data);
               if (parsed.type === 'stream_ready') continue;
+              if (parsed.type === 'error') {
+                streamErrorMessage = String(parsed.message || parsed.error || '').trim() || 'An error occurred. Please try again.';
+                continue;
+              }
               if (parsed.type === 'content' && parsed.content) {
                 fullText += parsed.content;
                 yield parsed; // yield the chunk object {type, content}
@@ -4920,7 +5981,13 @@ async function handleOpenToBuyUpdateFromChat(text) {
         }
       }
 
-      return { ok: true, chunks: chunkIterator(), j: {}, getText: () => fullText };
+      return {
+        ok: true,
+        chunks: chunkIterator(),
+        j: {},
+        getText: () => fullText,
+        getError: () => streamErrorMessage
+      };
     } else {
       // Non-streaming fallback (shouldn't happen often)
       const j = await r.json().catch(() => ({}));
@@ -4958,20 +6025,26 @@ async function handleOpenToBuyUpdateFromChat(text) {
           : 0;
         streamedAssistantRendered = assistantCountAfter > assistantCountBefore;
         chatResult.text = (typeof streamResult.getText === 'function' ? streamResult.getText() : '') || '';
+        const streamErr = (typeof streamResult.getError === 'function' ? streamResult.getError() : '') || '';
         if (!chatResult.text) {
           const lastAssistant = Array.isArray(c?.messages)
             ? [...c.messages].reverse().find((m) => m?.role === 'assistant' && String(m?.text || '').trim())
             : null;
           if (lastAssistant?.text) chatResult.text = String(lastAssistant.text).trim();
         }
+        if (!chatResult.text && streamErr) {
+          chatResult.text = streamErr;
+        }
         // Get full JSON for cart_action / plan_sync via a lightweight follow-up.
         // If this follow-up fails, do not show a false "connection issue" after a successful streamed answer.
-        try {
-          const jResult = await postChat(messages);
-          chatResult.j = jResult.j || {};
-          if (!chatResult.text) chatResult.text = jResult.text || '';
-        } catch (followErr) {
-          console.warn('post-stream follow-up failed; keeping streamed response', followErr);
+        if (!streamErr) {
+          try {
+            const jResult = await postChat(messages);
+            chatResult.j = jResult.j || {};
+            if (!chatResult.text) chatResult.text = jResult.text || '';
+          } catch (followErr) {
+            console.warn('post-stream follow-up failed; keeping streamed response', followErr);
+          }
         }
         // Some backends emit only a final "done" payload with full content and no incremental chunks.
         // In that case, stream UI receives nothing; render the finalized text once here.
@@ -5026,6 +6099,17 @@ async function handleOpenToBuyUpdateFromChat(text) {
 
     if (!isStreaming) {
       await streamAssistantMessage(chatResult.text, 6);
+    }
+
+    const widget = buildChatWidgetFromPrompt(promptSeed);
+    if (widget?.kind && widget?.payload) {
+      addMessage('assistant', '', widget.kind, widget.payload);
+    }
+
+    // Show inline performance panel when user asks about their own data
+    const inlinePerf = buildInlinePerfWidget(promptSeed);
+    if (inlinePerf?.kind && inlinePerf?.payload) {
+      addMessage('assistant', '', inlinePerf.kind, inlinePerf.payload);
     }
 
     if (chatResult?.j?.plan_sync?.retailer_plan_updated_at) {
@@ -5113,6 +6197,7 @@ async function loadMfaSecurityStatus() {
 function normalizeAccountProfileData(raw = {}) {
   return {
     business_name: String(raw?.business_name || '').trim(),
+    first_name: String(raw?.first_name || raw?.contact_name || raw?.owner_name || raw?.name || '').trim(),
     contact_email: String(raw?.contact_email || '').trim().toLowerCase(),
     sign_in_email: String(raw?.sign_in_email || CUSTOMER_EMAIL || '').trim().toLowerCase()
   };
@@ -5582,10 +6667,13 @@ document.addEventListener('keydown', (e) => {
     closeSheet();
   }
 
-  if (!els.recentList?.contains(document.activeElement)) return;
+  const activeRecentList = [els.recentList, els.recentListTop].find((listEl) =>
+    listEl?.contains(document.activeElement)
+  );
+  if (!activeRecentList) return;
   if (!['ArrowDown', 'ArrowUp'].includes(e.key)) return;
 
-  const items = [...els.recentList.querySelectorAll('.soRc__recentItem[data-chat]')];
+  const items = [...activeRecentList.querySelectorAll('.soRc__recentItem[data-chat]')];
   if (!items.length) return;
   e.preventDefault();
 
@@ -5652,44 +6740,20 @@ closeSheet = () => {
         overlay.addEventListener('click', closeSheet);
         sheet.querySelector('.soRc__sheetClose').addEventListener('click', closeSheet);
 
-function accountHtml() {
+function accountSettingsHtml() {
   const profile = state.accountProfile || {};
-  const company = profile.business_name || CUSTOMER_COMPANY || 'Your Company';
-  const signInEmail = profile.sign_in_email || CUSTOMER_EMAIL || '';
-  const contactEmail = profile.contact_email || CUSTOMER_EMAIL || '';
-  const region = CUSTOMER_REGION || 'Unknown';
+  const name = String(profile.first_name || profile.business_name || CUSTOMER_FIRST_NAME || CUSTOMER_COMPANY || '').trim();
+  const email = String(profile.contact_email || profile.sign_in_email || CUSTOMER_EMAIL || '').trim().toLowerCase();
+  const region = String(CUSTOMER_REGION || 'Unknown').trim();
   const cadence = safeGet(STORAGE.cadence, 'Bi-weekly');
-  const planCode = String(state.billing?.plan_code || state.billing?.account?.plan_code || 'free').toLowerCase();
-  const aiUsage = billingAiUsageSummary();
-
   return `
     <div class="soRc__field">
-      <label>Business name</label>
-      <input id="soAccountBusinessName" type="text" maxlength="120" value="${esc(company)}" placeholder="Your business name" />
+      <label>Name</label>
+      <input id="soSheetAccountName" type="text" maxlength="120" value="${esc(name)}" placeholder="Your name" />
     </div>
     <div class="soRc__field">
-      <label>Contact email</label>
-      <input id="soAccountContactEmail" type="email" maxlength="320" value="${esc(contactEmail)}" placeholder="name@business.com" />
-    </div>
-    <div class="soRc__field">
-      <label style="display:flex;align-items:center;gap:8px;">
-        <span>Sign-in email</span>
-        <span style="position:relative;display:inline-flex;align-items:center;">
-          <button
-            id="soSignInEmailInfoBtn"
-            type="button"
-            aria-label="Sign-in email information"
-            aria-expanded="false"
-            style="width:18px;height:18px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--muted);font-size:12px;font-weight:700;line-height:1;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;"
-          >i</button>
-          <div
-            id="soSignInEmailInfoCard"
-            role="tooltip"
-            style="display:none;position:absolute;top:26px;left:0;z-index:40;width:min(280px,72vw);padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#0f1b2d;color:#e8f0fb;font-size:12px;line-height:1.45;box-shadow:0 10px 26px rgba(0,0,0,.35);opacity:1;"
-          >Sign-in email is managed by Shopify login. You can edit your contact email in this Account panel.</div>
-        </span>
-      </label>
-      <div class="soRc__fieldValue">${esc(signInEmail)}</div>
+      <label>Email</label>
+      <input id="soSheetAccountEmail" type="email" maxlength="320" value="${esc(email)}" placeholder="name@business.com" />
     </div>
     <div class="soRc__field">
       <label>Region</label>
@@ -5697,139 +6761,111 @@ function accountHtml() {
     </div>
     <div class="soRc__field">
       <label>Order cadence</label>
-      <select id="soAccountCadence">
+      <select id="soSheetAccountCadence">
         <option ${cadence === 'Weekly' ? 'selected' : ''}>Weekly</option>
         <option ${cadence === 'Bi-weekly' ? 'selected' : ''}>Bi-weekly</option>
         <option ${cadence === 'Monthly' ? 'selected' : ''}>Monthly</option>
       </select>
     </div>
-    <div class="soRc__field">
-      <label>Plan</label>
-      <div class="soRc__fieldValue">${esc(planCode.toUpperCase())} - AI decisions ${esc(aiUsage)}</div>
-    </div>
-    <div class="soRc__row" style="gap:8px;display:flex;flex-wrap:wrap;">
-      <button class="soRc__eventCta" id="soSheetUpgradePlan" type="button">Upgrade</button>
-      <button class="soRc__eventCta" id="soSheetManageBilling" type="button">Manage billing</button>
-      <button class="soRc__eventCta" id="soSheetExportPerformance" type="button" data-feature-required="exports">Export performance CSV</button>
-    </div>
-    <div class="soRc__field">
-      <label>Team members</label>
-      <div id="soTeamMembersWrap" class="soRc__fieldValue">Loading...</div>
-    </div>
     <div class="soRc__row" style="justify-content:flex-end;display:flex;gap:8px;margin-top:10px;">
-      <button class="soRc__eventCta" id="soSheetSaveAccount" type="button">Save account</button>
+      <button class="soRc__eventCta" id="soSheetSaveAccountSettings" type="button">Save changes</button>
     </div>
   `;
 }
 
-        function settingsHtml() {
-          const mode = root.getAttribute('data-theme') === 'light' ? 'Light' : 'Dark';
-          return `
-            <div class="soRc__field"><label>Theme</label><select id="soSheetTheme"><option ${mode === 'Dark' ? 'selected' : ''}>Dark</option><option ${mode === 'Light' ? 'selected' : ''}>Light</option></select></div>
-            <div class="soRc__field"><label>AI response speed</label><select><option>Fast</option><option selected>Balanced</option><option>Thorough</option></select></div>
-            <div class="soRc__field"><label>Notifications</label><select><option selected>Enabled</option><option>Disabled</option></select></div>
-            <div class="soRc__fieldValue" style="font-size:12px;color:var(--muted2);">Email verification is enabled for sign-in security.</div>
-          `;
-        }
+function teamMembersHtml() {
+  return `
+    <div class="soRc__field">
+      <label>Team members</label>
+      <div id="soTeamMembersWrap" class="soRc__fieldValue">Loading...</div>
+    </div>
+  `;
+}
 
-els.accountBtn?.addEventListener('click', async () => {
+function securityHtml() {
+  return `
+    <div class="soRc__field">
+      <label>Two-factor verification (2FA)</label>
+      <div class="soRc__fieldValue">Coodra requires step-up verification for sensitive actions (billing updates, integrations, and team changes).</div>
+    </div>
+    <div class="soRc__row" style="gap:8px;display:flex;flex-wrap:wrap;">
+      <button class="soRc__eventCta" id="soSheetStartSecurityStepUp" type="button">Start 2FA verification</button>
+    </div>
+  `;
+}
+
+function supportHtml() {
+  return `
+    <div class="soRc__field">
+      <label>Help</label>
+      <div class="soRc__fieldValue">Need help with your account, billing, or integrations?</div>
+    </div>
+    <div class="soRc__row" style="gap:8px;display:flex;flex-wrap:wrap;">
+      <a class="soRc__eventCta" href="mailto:admin@coodra.com">Email support</a>
+      <button class="soRc__eventCta" id="soSheetOpenChatSupport" type="button">Ask Coodra Agent</button>
+    </div>
+  `;
+}
+
+els.accountSettingsBtn?.addEventListener('click', async () => {
   closeMenu();
   closeSidebarOnMobile();
   await loadAccountProfileStatus();
-  openSheet('Account', accountHtml());
-  applyBillingUiGates();
-  await loadTeamMembers();
-  renderTeamMembersSheet();
-
-  const cadenceSel = document.getElementById('soAccountCadence');
+  openSheet('Account Settings', accountSettingsHtml());
+  const saveBtn = document.getElementById('soSheetSaveAccountSettings');
+  const cadenceSel = document.getElementById('soSheetAccountCadence');
   cadenceSel?.addEventListener('change', () => {
     safeSet(STORAGE.cadence, cadenceSel.value);
     showToast('Order cadence saved', 'ok');
   });
-
-  document.getElementById('soSheetSaveAccount')?.addEventListener('click', async () => {
-    const nameInput = document.getElementById('soAccountBusinessName');
-    const emailInput = document.getElementById('soAccountContactEmail');
-    const businessName = String(nameInput?.value || '').trim();
-    const contactEmail = String(emailInput?.value || '').trim().toLowerCase();
-    if (contactEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail)) {
-      showToast('Please enter a valid contact email.', 'warn');
+  saveBtn?.addEventListener('click', async () => {
+    const name = String(document.getElementById('soSheetAccountName')?.value || '').trim();
+    const email = String(document.getElementById('soSheetAccountEmail')?.value || '').trim().toLowerCase();
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showToast('Please enter a valid email.', 'warn');
       return;
     }
     try {
       await saveAccountProfile({
-        business_name: businessName,
-        contact_email: contactEmail
+        first_name: name,
+        business_name: name,
+        contact_email: email
       });
-      showToast('Account details saved', 'ok');
-    } catch (err) {
-      const code = String(err?.message || '');
-      if (code === 'invalid_contact_email') {
-        showToast('Please enter a valid contact email.', 'warn');
-      } else {
-        showToast('Could not save account details right now.', 'warn');
-      }
+      if (typeof setCompany === 'function') setCompany(name || 'Your Company');
+      headerClientName = resolveClientFirstName({ first_name: name, sign_in_email: email || CUSTOMER_EMAIL });
+      renderSurfaceHeader();
+      showToast('Account updated', 'ok');
+      closeSheet();
+    } catch (_) {
+      showToast('Could not save account details right now.', 'warn');
     }
   });
+});
 
-  const infoBtn = document.getElementById('soSignInEmailInfoBtn');
-  const infoCard = document.getElementById('soSignInEmailInfoCard');
-  let infoHideTimer = null;
-  const openInfo = () => {
-    if (!infoCard || !infoBtn) return;
-    if (infoHideTimer) {
-      clearTimeout(infoHideTimer);
-      infoHideTimer = null;
-    }
-    infoCard.style.display = 'block';
-    infoBtn.setAttribute('aria-expanded', 'true');
-  };
-  const closeInfo = () => {
-    if (!infoCard || !infoBtn) return;
-    infoCard.style.display = 'none';
-    infoBtn.setAttribute('aria-expanded', 'false');
-  };
-  if (infoBtn && infoCard) {
-    const syncInfoTheme = () => {
-      const isLight = root.getAttribute('data-theme') === 'light';
-      infoCard.style.background = isLight ? '#ffffff' : '#0f1b2d';
-      infoCard.style.color = isLight ? '#0f223f' : '#e8f0fb';
-      infoCard.style.borderColor = isLight ? 'rgba(145,161,184,.42)' : 'rgba(164,180,201,.32)';
-    };
-    syncInfoTheme();
-    infoBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (infoCard.style.display === 'block') closeInfo();
-      else openInfo();
-    });
-    infoBtn.addEventListener('mouseenter', openInfo);
-    infoBtn.addEventListener('mouseleave', () => {
-      infoHideTimer = setTimeout(closeInfo, 120);
-    });
-    infoCard.addEventListener('mouseenter', openInfo);
-    infoCard.addEventListener('mouseleave', () => {
-      infoHideTimer = setTimeout(closeInfo, 120);
-    });
-    infoBtn.addEventListener('blur', () => {
-      infoHideTimer = setTimeout(closeInfo, 120);
-    });
-    document.addEventListener('click', (e) => {
-      if (!infoCard.contains(e.target) && !infoBtn.contains(e.target)) closeInfo();
-    }, { once: true });
-  }
+els.teamMembersBtn?.addEventListener('click', async () => {
+  closeMenu();
+  closeSidebarOnMobile();
+  openSheet('Team Members', teamMembersHtml());
+  await loadTeamMembers();
+  renderTeamMembersSheet();
+});
 
-  document.getElementById('soSheetUpgradePlan')?.addEventListener('click', () => {
-    closeSheet();
-    void openPricingWithStepUp();
+els.securityBtn?.addEventListener('click', () => {
+  closeMenu();
+  closeSidebarOnMobile();
+  openSheet('Security', securityHtml());
+  document.getElementById('soSheetStartSecurityStepUp')?.addEventListener('click', async () => {
+    await ensureStepUpFor('mfa_settings');
   });
+});
 
-  document.getElementById('soSheetManageBilling')?.addEventListener('click', async () => {
+els.supportBtn?.addEventListener('click', () => {
+  closeMenu();
+  closeSidebarOnMobile();
+  openSheet('Support', supportHtml());
+  document.getElementById('soSheetOpenChatSupport')?.addEventListener('click', () => {
     closeSheet();
-    await openBillingPortal();
-  });
-  document.getElementById('soSheetExportPerformance')?.addEventListener('click', async () => {
-    await downloadPerformanceExport();
+    setActiveTab('chat');
   });
 });
 
@@ -5837,19 +6873,6 @@ els.billingBtn?.addEventListener('click', async () => {
   closeMenu();
   closeSidebarOnMobile();
   setActiveTab('plan');
-});
-
-        els.settingsBtn?.addEventListener('click', () => {
-  closeMenu();
-  closeSidebarOnMobile();
-  openSheet('Settings', settingsHtml());
-  const sel = document.getElementById('soSheetTheme');
-  sel?.addEventListener('change', () => {
-    const next = sel.value.toLowerCase() === 'light' ? 'light' : 'dark';
-    persistThemePreference(next);
-    showToast('Settings saved', 'ok');
-    applyTheme(next);
-  });
 });
 
 root.querySelector('a[href="/account/logout"]')?.addEventListener('click', closeSidebarOnMobile);
@@ -6262,6 +7285,9 @@ async function ensurePhoneEnrollmentPostLogin() {
 }
 
                root.addEventListener('click', async (e) => {
+                if (!e.target.closest('.soRc__perfInfoWrap')) {
+  root.querySelectorAll('.soRc__perfInfoBubble').forEach((node) => node.setAttribute('hidden', ''));
+}
                 const upgradeRequired = e.target.closest('[data-upgrade-required="1"]');
 if (upgradeRequired) {
   e.preventDefault();
@@ -6407,6 +7433,30 @@ if (perfProviderAction) {
   }
 }
 
+                const perfRangeBtn = e.target.closest('[data-perf-range]');
+if (perfRangeBtn) {
+  const rawRange = Number(perfRangeBtn.getAttribute('data-perf-range') || 30);
+  const nextRange = [30, 60, 90, 180, 365, 730, 1095].includes(rawRange) ? rawRange : 30;
+  uiPrefs.perfRangeDays = nextRange;
+  saveState();
+  renderPerformance();
+  return;
+}
+
+                const perfInfoToggle = e.target.closest('[data-perf-info-toggle]');
+if (perfInfoToggle) {
+  e.preventDefault();
+  const wrap = perfInfoToggle.closest('.soRc__perfInfoWrap');
+  if (!wrap) return;
+  const bubble = wrap.querySelector('.soRc__perfInfoBubble');
+  if (!bubble) return;
+  const isHidden = bubble.hasAttribute('hidden');
+  root.querySelectorAll('.soRc__perfInfoBubble').forEach((node) => node.setAttribute('hidden', ''));
+  if (isHidden) bubble.removeAttribute('hidden');
+  else bubble.setAttribute('hidden', '');
+  return;
+}
+
                 const perfAction = e.target.closest('[data-perf-action]');
 if (perfAction) {
   const action = perfAction.getAttribute('data-perf-action');
@@ -6532,13 +7582,51 @@ const del = e.target.closest('[data-del-chat]');
 if (del) {
   e.stopImmediatePropagation();
   const id = del.getAttribute('data-del-chat');
-  // Inline confirm card (desktop + mobile)
-  modalDeleteChatId = null;
-  pendingDeleteChatId = pendingDeleteChatId === id ? null : id;
+  // Open confirmation modal directly so delete action is obvious/reliable.
+  pendingDeleteChatId = null;
+  modalDeleteChatId = id;
   renderRecent();
   renderDeleteModal();
   return;
 }
+
+root.addEventListener('mousemove', (e) => {
+  const chart = e.target.closest('.soRc__perfChartInteractive');
+  if (!chart) return;
+  const hover = chart.querySelector('.soRc__perfChartHover');
+  const cursor = chart.querySelector('.soRc__perfChartCursor');
+  const tip = chart.querySelector('.soRc__perfChartTip');
+  if (!hover || !cursor || !tip) return;
+
+  const rect = chart.getBoundingClientRect();
+  const x = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+  const labels = String(chart.getAttribute('data-chart-labels') || '').split('|').filter(Boolean);
+  const seriesA = String(chart.getAttribute('data-chart-a') || '').split('|').map((v) => Number(v || 0));
+  const seriesB = String(chart.getAttribute('data-chart-b') || '').split('|').map((v) => Number(v || 0));
+  const count = Math.max(labels.length, seriesA.length, 1);
+  const idx = Math.max(0, Math.min(count - 1, Math.round((x / Math.max(rect.width, 1)) * (count - 1))));
+  const label = labels[idx] || `Point ${idx + 1}`;
+  const type = String(chart.getAttribute('data-chart-type') || 'dual');
+  const aVal = Number(seriesA[idx] || 0);
+  const bVal = Number(seriesB[idx] || 0);
+
+  let text = `${label} · ${money(aVal)}`;
+  if (type === 'dual') text = `${label} · Revenue ${money(aVal)} · Gross profit ${money(bVal)}`;
+  if (type === 'volume') text = `${label} · Units sold ${Math.round(aVal).toLocaleString()}`;
+
+  const left = count > 1 ? ((idx / (count - 1)) * rect.width) : x;
+  hover.hidden = false;
+  cursor.style.left = `${left}px`;
+  tip.textContent = text;
+  tip.style.left = `${Math.min(Math.max(12, left), rect.width - 12)}px`;
+});
+
+root.addEventListener('mouseleave', (e) => {
+  const chart = e.target.closest('.soRc__perfChartInteractive');
+  if (!chart) return;
+  const hover = chart.querySelector('.soRc__perfChartHover');
+  if (hover) hover.hidden = true;
+}, true);
 
 const sInc = e.target.closest('[data-shop-qty-inc]');
 if (sInc) {
@@ -6652,6 +7740,10 @@ els.deleteModal?.addEventListener('click', (e) => {
   }
 });
 
+els.integrationSearch?.addEventListener('input', () => {
+  renderIntegrationsPanel();
+});
+
 [els.filterVendor, els.filterCategory, els.filterPrice, els.filterSort].forEach(el => {
   el?.addEventListener('change', () => {
     ensureShopFilters();
@@ -6671,7 +7763,36 @@ els.deleteModal?.addEventListener('click', (e) => {
             const initials = n.split(/\s+/).slice(0, 2).map(s => s[0]?.toUpperCase()).join('') || 'SO';
             els.avatar.textContent = initials;
           }
+          renderSurfaceHeader(uiPrefs.activeTab || 'performance');
         }
+
+function renderSurfaceHeader(tabName) {
+  const key = String(tabName || 'performance').trim().toLowerCase();
+  if (els.surfaceTitleIcon) {
+    const navIconSvg = root.querySelector(`.soRc__navItem[data-tab="${key}"] .soRc__navIcon svg`);
+    if (navIconSvg) {
+      els.surfaceTitleIcon.innerHTML = navIconSvg.outerHTML;
+    }
+  }
+  if (els.surfaceTitleText) {
+    els.surfaceTitleText.textContent = TAB_TITLES[key] || 'Dashboard';
+  }
+  if (els.surfaceDate) {
+    const now = new Date();
+    const weekday = now.toLocaleDateString([], { weekday: 'long' });
+    const month = now.toLocaleDateString([], { month: 'short' });
+    const day = now.toLocaleDateString([], { day: '2-digit' });
+    const year = now.toLocaleDateString([], { year: 'numeric' });
+    els.surfaceDate.textContent = `${weekday}, ${month} ${day}, ${year}`;
+  }
+  const isPerformance = key === 'performance';
+  if (els.surfaceWelcomeWrap) {
+    els.surfaceWelcomeWrap.style.display = isPerformance ? '' : 'none';
+  }
+  if (isPerformance && els.surfaceWelcome) {
+    els.surfaceWelcome.textContent = `Welcome Back, ${headerClientName} !`;
+  }
+}
 
         els.attachBtn?.setAttribute('title', 'Attach photos & files');
 els.send?.setAttribute('title', 'Send message');
@@ -6719,7 +7840,16 @@ function installMobileExitGuard() {
   });
 }
 
+headerClientName = resolveClientFirstName({ first_name: CUSTOMER_FIRST_NAME, sign_in_email: CUSTOMER_EMAIL });
 setCompany(CUSTOMER_COMPANY || 'Your Company');
+loadAccountProfileStatus()
+  .then((res) => {
+    if (!res?.ok || !res.data) return;
+    if (res.data.business_name) setCompany(res.data.business_name);
+    headerClientName = resolveClientFirstName(res.data);
+    renderSurfaceHeader(uiPrefs.activeTab || 'performance');
+  })
+  .catch(() => {});
 
 installMobileExitGuard();
 installMobileSwipeOpenSidebar();
@@ -6762,9 +7892,9 @@ renderShopSkeleton();
 const urlTab = new URLSearchParams(window.location.search).get('tab');
 const urlConnected = new URLSearchParams(window.location.search).get('connected');
 const urlConnectError = new URLSearchParams(window.location.search).get('connect_error');
-const allowedTabs = ['chat', 'performance', 'reorders', 'forecasts', 'policies-automation', 'classification', 'locations', 'reports', 'plan'];
-const initialTabCandidate = String(urlTab || uiPrefs.activeTab || 'chat').trim().toLowerCase();
-const initialTab = allowedTabs.includes(initialTabCandidate) ? initialTabCandidate : 'chat';
+const allowedTabs = ['chat', 'performance', 'integrations', 'reorders', 'forecasts', 'policies-automation', 'classification', 'locations', 'reports', 'plan'];
+const initialTabCandidate = String(urlTab || uiPrefs.activeTab || 'performance').trim().toLowerCase();
+const initialTab = allowedTabs.includes(initialTabCandidate) ? initialTabCandidate : 'performance';
 
 uiPrefs.activeTab = initialTab;
 saveState();
@@ -6845,3 +7975,4 @@ loadShopCatalog(uiPrefs.shopQuery || '')
   .catch(() => showToast('Could not load catalog', 'err'));
 
       })();
+

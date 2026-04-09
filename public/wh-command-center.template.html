@@ -14,25 +14,25 @@
         min-height: 0 !important;
         overflow: hidden !important;
       }
-      html, body { margin: 0 !important; padding: 0 !important; }
+      html, body { margin: 0 !important; padding: 0 !important; height: 100% !important; overflow: hidden !important; }
       html, body { scrollbar-width: thin; }
       html[data-so-rc-theme="dark"], body[data-so-rc-theme="dark"] { color-scheme: dark; }
       html[data-so-rc-theme="light"], body[data-so-rc-theme="light"] { color-scheme: light; }
-      html[data-so-rc-theme="dark"] { scrollbar-color: #24344d #0b1220; }
+      html[data-so-rc-theme="dark"] { scrollbar-color: #3a404b #171a20; }
       html[data-so-rc-theme="light"] { scrollbar-color: #8ea0b8 #e9eff7; }
-      body[data-so-rc-theme="dark"] { scrollbar-color: #24344d #0b1220; }
+      body[data-so-rc-theme="dark"] { scrollbar-color: #3a404b #171a20; }
       body[data-so-rc-theme="light"] { scrollbar-color: #8ea0b8 #e9eff7; }
       html[data-so-rc-theme="dark"]::-webkit-scrollbar { width: 12px; height: 12px; }
       html[data-so-rc-theme="light"]::-webkit-scrollbar { width: 12px; height: 12px; }
-      html[data-so-rc-theme="dark"]::-webkit-scrollbar-track { background: #0b1220; }
+      html[data-so-rc-theme="dark"]::-webkit-scrollbar-track { background: #171a20; }
       html[data-so-rc-theme="light"]::-webkit-scrollbar-track { background: #e9eff7; }
-      html[data-so-rc-theme="dark"]::-webkit-scrollbar-thumb { background: #24344d; border: 2px solid #0b1220; border-radius: 999px; }
+      html[data-so-rc-theme="dark"]::-webkit-scrollbar-thumb { background: #3a404b; border: 2px solid #171a20; border-radius: 999px; }
       html[data-so-rc-theme="light"]::-webkit-scrollbar-thumb { background: #8ea0b8; border: 2px solid #e9eff7; border-radius: 999px; }
       body[data-so-rc-theme="dark"]::-webkit-scrollbar { width: 12px; height: 12px; }
       body[data-so-rc-theme="light"]::-webkit-scrollbar { width: 12px; height: 12px; }
-      body[data-so-rc-theme="dark"]::-webkit-scrollbar-track { background: #0b1220; }
+      body[data-so-rc-theme="dark"]::-webkit-scrollbar-track { background: #171a20; }
       body[data-so-rc-theme="light"]::-webkit-scrollbar-track { background: #e9eff7; }
-      body[data-so-rc-theme="dark"]::-webkit-scrollbar-thumb { background: #24344d; border: 2px solid #0b1220; border-radius: 999px; }
+      body[data-so-rc-theme="dark"]::-webkit-scrollbar-thumb { background: #3a404b; border: 2px solid #171a20; border-radius: 999px; }
       body[data-so-rc-theme="light"]::-webkit-scrollbar-thumb { background: #8ea0b8; border: 2px solid #e9eff7; border-radius: 999px; }
 
       #so-rc-web {
@@ -60,27 +60,30 @@
           radial-gradient(900px 520px at 82% 0%, rgba(14,124,123,.38) 0%, rgba(14,124,123,0) 60%),
           var(--bg);
         font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+        height: 100% !important;
+        min-height: 100% !important;
+        overflow: hidden !important;
       }
       #so-rc-web[data-theme="light"] {
-        --bg: #f4f6f8;
+        --bg: #f1f5f9;
         --bg2: #ffffff;
-        --line: #d9e0e8;
+        --line: #e2e8f0;
         --text: #0f172a;
         --muted: #5f6f83;
         --muted2: #7b8796;
-        --shadow: 0 12px 30px rgba(0,0,0,.08);
+        --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.08);
         --accent: #2ED3B7;
         --btn-orange-rgb: 46,211,183;
         --btn-orange-solid: #2ED3B7;
         --btn-orange-border: rgba(15, 23, 42, .16);
         --btn-orange-bg: rgba(15, 23, 42, .035);
         --btn-orange-bg-hover: rgba(15, 23, 42, .065);
-        --composer-grad-0: rgba(244,246,248,0);
-        --composer-grad-35: rgba(244,246,248,.9);
-        --composer-grad-70: rgba(244,246,248,1);
+        --composer-grad-0: rgba(241,245,249,0);
+        --composer-grad-35: rgba(241,245,249,.92);
+        --composer-grad-70: rgba(241,245,249,1);
         background:
-          radial-gradient(1200px 700px at 50% -20%, rgba(15,23,42,.06) 0%, rgba(15,23,42,0) 58%),
-          radial-gradient(800px 450px at 90% -8%, rgba(var(--btn-orange-rgb),.06) 0%, rgba(var(--btn-orange-rgb),0) 56%),
+          radial-gradient(1200px 700px at 50% -20%, rgba(15,23,42,.05) 0%, rgba(15,23,42,0) 58%),
+          radial-gradient(800px 450px at 90% -8%, rgba(var(--btn-orange-rgb),.05) 0%, rgba(var(--btn-orange-rgb),0) 56%),
           var(--bg);
       }
 
@@ -103,10 +106,10 @@
 
 
       #so-rc-web * { box-sizing: border-box; }
-      #so-rc-web * { scrollbar-width: thin; scrollbar-color: #24344d #0b1220; }
+      #so-rc-web * { scrollbar-width: thin; scrollbar-color: #3a404b #171a20; }
       #so-rc-web *::-webkit-scrollbar { width: 12px; height: 12px; }
-      #so-rc-web *::-webkit-scrollbar-track { background: #0b1220; }
-      #so-rc-web *::-webkit-scrollbar-thumb { background: #24344d; border: 2px solid #0b1220; border-radius: 999px; }
+      #so-rc-web *::-webkit-scrollbar-track { background: #171a20; }
+      #so-rc-web *::-webkit-scrollbar-thumb { background: #3a404b; border: 2px solid #171a20; border-radius: 999px; }
       #so-rc-web[data-theme="light"] * { scrollbar-color: #8ea0b8 #e9eff7; }
       #so-rc-web[data-theme="light"] *::-webkit-scrollbar-track { background: #e9eff7; }
       #so-rc-web[data-theme="light"] *::-webkit-scrollbar-thumb { background: #8ea0b8; border: 2px solid #e9eff7; }
@@ -127,11 +130,13 @@
         z-index: 20;
       }
       #so-rc-web[data-theme="light"] .soRc__sidebar {
-        background: #f7f8fa;
+        background: #ffffff;
+        border-right-color: #e2e8f0;
       }
 
       #so-rc-web .soRc__brand { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 14px; background: rgba(255,255,255,.03); border: 1px solid var(--line); }
       #so-rc-web .soRc__brandMark { width: 28px; height: 28px; border-radius: 10px; background: linear-gradient(135deg, rgba(46,211,183,.9), rgba(46,211,183,.25)); }
+      #so-rc-web[data-theme="light"] .soRc__brand { background: rgba(241,245,249,.7); }
       #so-rc-web .soRc__brandSub { font-size: 12px; color: var(--muted); }
 #so-rc-web .soRc__brand--row{
   display: flex;
@@ -399,10 +404,10 @@ width: 100%;
 
       #so-rc-web .soRc__main { padding: 18px 18px 0; display: flex; flex-direction: column; min-width: 0; background: transparent; overflow: hidden; position: relative; z-index: 1; }
       #so-rc-web[data-theme="dark"] .soRc__main { background: #141a22; }
-      #so-rc-web .soRc__mainBody { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: #24344d #0b1220; }
+      #so-rc-web .soRc__mainBody { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: #3a404b #171a20; }
       #so-rc-web .soRc__mainBody::-webkit-scrollbar { width: 12px; height: 12px; }
-      #so-rc-web .soRc__mainBody::-webkit-scrollbar-track { background: #0b1220; }
-      #so-rc-web .soRc__mainBody::-webkit-scrollbar-thumb { background: #24344d; border: 2px solid #0b1220; border-radius: 999px; }
+      #so-rc-web .soRc__mainBody::-webkit-scrollbar-track { background: #171a20; }
+      #so-rc-web .soRc__mainBody::-webkit-scrollbar-thumb { background: #3a404b; border: 2px solid #171a20; border-radius: 999px; }
       #so-rc-web[data-theme="light"] .soRc__mainBody { scrollbar-color: #8ea0b8 #e9eff7; }
       #so-rc-web[data-theme="light"] .soRc__mainBody::-webkit-scrollbar-track { background: #e9eff7; }
       #so-rc-web[data-theme="light"] .soRc__mainBody::-webkit-scrollbar-thumb { background: #8ea0b8; border: 2px solid #e9eff7; }
@@ -427,10 +432,10 @@ width: 100%;
       #so-rc-web[data-theme="light"] .soRc__panelStatusPill { background: #ffffff; border-color: #d4dde8; color: #5f6f83; box-shadow: 0 4px 10px rgba(15,23,42,.06); }
 
       #so-rc-web .soRc__chatWrap { display: flex; flex-direction: column; height: calc(100vh - 110px); min-height: 560px; background: transparent; }
-      #so-rc-web .soRc__chat { flex: 1; overflow: auto; padding: 18px 10px 74px; background: transparent; scrollbar-width: thin; scrollbar-color: #24344d #0b1220; }
+      #so-rc-web .soRc__chat { flex: 1; overflow: auto; padding: 18px 10px 74px; background: transparent; scrollbar-width: thin; scrollbar-color: #3a404b #171a20; }
       #so-rc-web .soRc__chat::-webkit-scrollbar { width: 12px; height: 12px; }
-      #so-rc-web .soRc__chat::-webkit-scrollbar-track { background: #0b1220; }
-      #so-rc-web .soRc__chat::-webkit-scrollbar-thumb { background: #24344d; border: 2px solid #0b1220; border-radius: 999px; }
+      #so-rc-web .soRc__chat::-webkit-scrollbar-track { background: #171a20; }
+      #so-rc-web .soRc__chat::-webkit-scrollbar-thumb { background: #3a404b; border: 2px solid #171a20; border-radius: 999px; }
       #so-rc-web[data-theme="light"] .soRc__chat { scrollbar-color: #8ea0b8 #e9eff7; }
       #so-rc-web[data-theme="light"] .soRc__chat::-webkit-scrollbar-track { background: #e9eff7; }
       #so-rc-web[data-theme="light"] .soRc__chat::-webkit-scrollbar-thumb { background: #8ea0b8; border: 2px solid #e9eff7; }
@@ -478,8 +483,8 @@ width: 100%;
   overflow-wrap: break-word;
 }
 
-      #so-rc-web .soRc__thinking { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted2); padding: 2px 0; overflow: hidden; }
-      #so-rc-web .soRc__msg--thinking { margin: 0 auto 10px; max-width: 820px; }
+      #so-rc-web .soRc__thinking { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
+      #so-rc-web .soRc__msg--thinking { display: flex; justify-content: flex-start; }
       #so-rc-web .soRc__thinkingText::after { content: '.'; animation: soThinkDots 1.25s steps(1, end) infinite; }
       #so-rc-web .soRc__thinkingBeam { width: 42px; height: 1px; background: linear-gradient(90deg, transparent, currentColor, transparent); animation: soBeam 1.2s linear infinite; opacity: .65; }
       #so-rc-web .soRc__thinkList { margin: 8px 0 0; padding-left: 16px; color: var(--muted); font-size: 12px; line-height: 1.45; display: grid; gap: 4px; }
@@ -857,11 +862,11 @@ width: 100%;
 #so-rc-web .soRc__emptyQuick { display: none !important; }
       #so-rc-web .soRc__perfBoard { display: flex; flex-direction: column; }
       #so-rc-web .soRc__perfBoard .soRc__upgradeInline { margin-top: 12px; }
-      /* Light-theme readability pass: solid surfaces + subtle depth (no gradients) */
+      /* Light-theme readability pass: pure white cards on cool gray bg */
       #so-rc-web[data-theme="light"] .soRc__card {
-        background: color-mix(in srgb, var(--bg) 84%, var(--bg2));
-        border-color: #d4dde8;
-        box-shadow: 0 10px 24px rgba(15,23,42,.06);
+        background: #ffffff;
+        border-color: #e2e8f0;
+        box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.08);
       }
       #so-rc-web[data-theme="light"] .soRc__kpi,
       #so-rc-web[data-theme="light"] .soRc__usageMetric,
@@ -875,16 +880,16 @@ width: 100%;
       #so-rc-web[data-theme="light"] .soRc__smartRow,
       #so-rc-web[data-theme="light"] .soRc__skuCard,
       #so-rc-web[data-theme="light"] .soRc__table th {
-        background: color-mix(in srgb, var(--bg) 78%, var(--bg2));
-        border-color: #d4dde8;
-        box-shadow: 0 6px 14px rgba(15,23,42,.05), inset 0 1px 0 rgba(255,255,255,.78);
+        background: #ffffff;
+        border-color: #e2e8f0;
+        box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 3px 8px rgba(0,0,0,.06);
       }
       #so-rc-web[data-theme="light"] .soRc__policyTextarea,
       #so-rc-web[data-theme="light"] .soRc__search,
       #so-rc-web[data-theme="light"] .soRc__qty {
         background: #ffffff;
-        border-color: #d1d9e4;
-        box-shadow: 0 4px 10px rgba(15,23,42,.05), inset 0 1px 0 rgba(255,255,255,.92);
+        border-color: #cbd5e1;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,.06);
       }
       /* Innermost tiles/inputs: pure white for fastest numeric readability */
       #so-rc-web[data-theme="light"] .soRc__kpi,
@@ -893,8 +898,8 @@ width: 100%;
       #so-rc-web[data-theme="light"] .soRc__field input,
       #so-rc-web[data-theme="light"] .soRc__field select {
         background: #ffffff;
-        border-color: #d4dde8;
-        box-shadow: 0 4px 10px rgba(15,23,42,.05), inset 0 1px 0 rgba(255,255,255,.92);
+        border-color: #e2e8f0;
+        box-shadow: 0 1px 2px rgba(0,0,0,.04), inset 0 1px 0 rgba(255,255,255,1);
       }
       /* Notes/messages/empty states: white for strongest readability */
       #so-rc-web[data-theme="light"] .soRc__emptyState,
@@ -903,14 +908,19 @@ width: 100%;
       #so-rc-web[data-theme="light"] .soRc__policyListRow,
       #so-rc-web[data-theme="light"] .soRc__composerHelp {
         background: #ffffff;
-        border: 1px solid #d4dde8;
+        border-color: #e2e8f0;
         border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(15,23,42,.04);
+        box-shadow: 0 1px 3px rgba(0,0,0,.05);
       }
       #so-rc-web[data-theme="light"] .soRc__composerHelp {
         padding: 8px 10px;
         color: #475569;
       }
+      /* Sidebar surface items in light mode — subtle gray on white */
+      #so-rc-web[data-theme="light"] .soRc__recentItem { background: rgba(241,245,249,.8); }
+      #so-rc-web[data-theme="light"] .soRc__acctBtn { background: rgba(241,245,249,.8); }
+      #so-rc-web[data-theme="light"] .soRc__toggle { background: rgba(241,245,249,.8); }
+      #so-rc-web[data-theme="light"] .soRc__recentDel { background: rgba(241,245,249,.8); }
       /* Remove top helper pills from nav panels for a cleaner UI */
       #so-rc-web .soRc__panel .soRc__composerHelp { display: none !important; }
       /* Global dark-theme surface contrast pass for all tabs */
@@ -2242,6 +2252,134 @@ width: 100%;
   gap: 8px;
   flex-wrap: wrap;
 }
+#so-rc-web .soRc__perfSignalRow {
+  margin: 0 0 8px;
+}
+#so-rc-web .soRc__perfSignalHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+#so-rc-web .soRc__perfSignalHead span:last-child {
+  font-weight: 700;
+  color: var(--text);
+}
+#so-rc-web .soRc__perfSignalTrack {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  overflow: hidden;
+}
+#so-rc-web .soRc__perfSignalFill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(59,130,246,.45), rgba(59,130,246,.85));
+  transform-origin: left center;
+  animation: soRcPerfGrow .55s ease-out;
+}
+#so-rc-web .soRc__perfSignalFill--teal {
+  background: linear-gradient(90deg, rgba(45,212,191,.45), rgba(20,184,166,.88));
+}
+#so-rc-web .soRc__perfSignalFill--ok {
+  background: linear-gradient(90deg, rgba(34,197,94,.42), rgba(22,163,74,.88));
+}
+#so-rc-web .soRc__perfSignalFill--warn {
+  background: linear-gradient(90deg, rgba(251,191,36,.42), rgba(245,158,11,.88));
+}
+#so-rc-web .soRc__perfMoverChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 10px;
+}
+#so-rc-web .soRc__perfMoverChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 0 9px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--line) 86%, transparent);
+  background: color-mix(in srgb, var(--bg2) 72%, transparent);
+  font-size: 11px;
+  color: var(--muted);
+}
+#so-rc-web .soRc__perfMoverChip b {
+  font-size: 10px;
+  font-weight: 750;
+}
+#so-rc-web .soRc__perfMoverChip.is-up {
+  border-color: rgba(22,163,74,.45);
+  background: rgba(22,163,74,.14);
+  color: #166534;
+}
+#so-rc-web .soRc__perfMoverChip.is-down {
+  border-color: rgba(220,38,38,.45);
+  background: rgba(220,38,38,.12);
+  color: #991b1b;
+}
+#so-rc-web .soRc__perfMoverChip.is-flat {
+  color: var(--muted);
+}
+#so-rc-web .soRc__perfImpactGrid {
+  display: grid;
+  gap: 8px;
+}
+#so-rc-web .soRc__perfImpactRow {
+  border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--bg2) 72%, transparent);
+  padding: 8px 10px;
+}
+#so-rc-web .soRc__perfImpactHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+#so-rc-web .soRc__perfImpactHead b {
+  font-size: 12px;
+  font-weight: 760;
+  color: var(--text);
+}
+#so-rc-web .soRc__perfImpactTrack {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
+  background: color-mix(in srgb, var(--bg) 76%, transparent);
+  overflow: hidden;
+}
+#so-rc-web .soRc__perfImpactFill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(45,212,191,.45), rgba(59,130,246,.88));
+  transform-origin: left center;
+  animation: soRcPerfGrow .6s ease-out;
+}
+@keyframes soRcPerfGrow {
+  from { transform: scaleX(0.05); opacity: .55; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+#so-rc-web[data-theme="dark"] .soRc__perfMoverChip.is-up {
+  color: #86efac;
+}
+#so-rc-web[data-theme="dark"] .soRc__perfMoverChip.is-down {
+  color: #fca5a5;
+}
+#so-rc-web[data-theme="dark"] .soRc__perfImpactRow {
+  background: #20242c;
+  border-color: #353b46;
+}
 #so-rc-web .soRc__perfRiskRows {
   display: grid;
   gap: 8px;
@@ -2274,6 +2412,14 @@ width: 100%;
 }
 #so-rc-web .soRc__perfActions {
   display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;
+}
+#so-rc-web .soRc__perfTopActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+#so-rc-web .soRc__perfTopActions .soRc__eventCta {
+  min-width: 128px;
 }
 #so-rc-web .soRc__perfActions .soRc__skuBtn {
   min-width: 132px;
@@ -2627,6 +2773,7 @@ width: 100%;
   }
   #so-rc-web #soPanel-performance .soRc__perfMenuActions,
   #so-rc-web #soPanel-performance .soRc__perfPrimaryCtaRow,
+  #so-rc-web #soPanel-performance .soRc__perfTopActions,
   #so-rc-web #soPanel-performance .soRc__perfActions {
     display: grid;
     grid-template-columns: 1fr;
@@ -2680,12 +2827,674 @@ width: 100%;
 
     </style>
 
+    <style>
+      /* Retailer UX v2 visual override: keeps existing logic/hooks untouched */
+      #so-rc-web {
+        --ux2-shell: #eef0f3;
+        --ux2-panel: #eceff3;
+        --ux2-main: #ffffff;
+        --ux2-rail: transparent;
+        --ux2-border: #dfe3e8;
+        --ux2-ink: #0f141c;
+        --ux2-muted: #6f7888;
+        --ux2-accent: #5e7cff;
+        background: var(--ux2-shell) !important;
+      }
+
+      #so-rc-web .soRc__app {
+        grid-template-columns: 88px minmax(0, 1fr) !important;
+        gap: 0;
+        min-height: 100vh;
+        padding: 14px;
+        border-radius: 20px;
+        border: 1px solid var(--ux2-border);
+        background: #f1f2f4;
+        box-shadow: 0 16px 44px rgba(14, 20, 31, 0.08);
+        overflow: hidden;
+      }
+
+      #so-rc-web .soRc__sidebar {
+        width: 88px;
+        min-width: 88px;
+        max-width: 88px;
+        border-radius: 0;
+        border: 0 !important;
+        background: transparent !important;
+        padding: 8px 8px !important;
+        align-items: center;
+        box-shadow: none;
+        transition: none;
+        overflow: visible;
+        position: relative;
+        z-index: 30;
+        margin: 0;
+      }
+
+      #so-rc-web .soRc__brandLogo {
+        width: 56px;
+        height: 56px;
+        object-fit: contain;
+      }
+
+      #so-rc-web .soRc__brand--logo {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        background: transparent !important;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 10px;
+        padding: 0 !important;
+        border: 0 !important;
+      }
+
+      #so-rc-web .soRc__brandDivider,
+      #so-rc-web .soRc__navGroupLabel,
+      #so-rc-web .soRc__recent {
+        display: none !important;
+      }
+
+      #so-rc-web .soRc__nav {
+        width: 100%;
+        align-items: center;
+        gap: 8px;
+        overflow: visible;
+        padding-left: 0;
+      }
+
+      #so-rc-web .soRc__navItem {
+        width: 44px;
+        height: 44px;
+        justify-content: center;
+        padding: 0;
+        border-radius: 12px;
+        color: #5f697a !important;
+        border: 1px solid transparent !important;
+        background: transparent !important;
+        transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+        position: relative;
+        z-index: 31;
+        margin-left: auto;
+        margin-right: auto;
+        transform-origin: left center;
+      }
+
+      #so-rc-web .soRc__navLabel {
+        position: absolute !important;
+        left: 54px;
+        top: 50%;
+        transform: translateY(-50%) scale(0.96);
+        transform-origin: left center;
+        display: inline-flex !important;
+        align-items: center;
+        height: 32px;
+        padding: 0 12px;
+        border-radius: 10px;
+        border: 1px solid #d8e0ea;
+        background: #f7f9fc;
+        color: #344054 !important;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        box-shadow: 0 8px 18px rgba(16, 24, 40, 0.1);
+        transition: opacity 140ms ease, transform 160ms ease;
+        z-index: 60;
+      }
+
+      #so-rc-web .soRc__navIcon {
+        width: 22px;
+        height: 22px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 180ms ease, box-shadow 180ms ease;
+      }
+
+      #so-rc-web .soRc__navItem:hover {
+        background: rgba(255, 255, 255, 0.58) !important;
+        border-color: rgba(137, 150, 171, 0.2) !important;
+      }
+
+      #so-rc-web .soRc__navItem:hover .soRc__navIcon {
+        background: rgba(255, 255, 255, 0.78);
+      }
+
+      #so-rc-web .soRc__navItem.is-active {
+        background: #ffffff !important;
+        border-color: #dce2ea !important;
+        box-shadow: 0 4px 10px rgba(16, 24, 40, 0.06);
+      }
+
+      #so-rc-web .soRc__navItem.is-active .soRc__navIcon {
+        background: #f7f9fc;
+      }
+
+      #so-rc-web .soRc__pillSoon,
+      #so-rc-web .soRc__navLockWrap,
+      #so-rc-web .soRc__navCount {
+        display: none !important;
+      }
+
+      #so-rc-web .soRc__account,
+      #so-rc-web .soRc__acctBtn {
+        width: 100%;
+      }
+
+      #so-rc-web .soRc__acctBtn {
+        justify-content: center;
+        padding: 4px;
+        border-radius: 10px;
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        width: 44px;
+        margin: 0 0 0 8px;
+        transform-origin: left center;
+      }
+
+      #so-rc-web .soRc__chev {
+        display: none;
+      }
+
+      #so-rc-web .soRc__acctText {
+        display: inline-flex !important;
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        transition: max-width 220ms ease, opacity 180ms ease;
+      }
+
+      #so-rc-web .soRc__sidebar:hover { width: 88px; }
+      #so-rc-web[data-theme="dark"] .soRc__sidebar:hover { width: 88px; }
+
+      #so-rc-web .soRc__sidebar:hover .soRc__navItem { width: 44px; }
+
+      #so-rc-web .soRc__sidebar:hover .soRc__acctBtn { width: 44px; }
+
+      #so-rc-web .soRc__navItem:hover .soRc__navLabel {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+      }
+
+      #so-rc-web .soRc__sidebar:hover .soRc__acctText {
+        max-width: 0;
+        opacity: 0;
+        margin-left: 0;
+      }
+
+      #so-rc-web .soRc__planBanner {
+        left: 102px !important;
+        right: 18px !important;
+        top: 16px !important;
+        border-radius: 0;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        justify-content: flex-end !important;
+        gap: 18px !important;
+        z-index: 50;
+      }
+
+      #so-rc-web .soRc__planBannerText {
+        color: #7a8494 !important;
+        font-size: 14px !important;
+      }
+
+      #so-rc-web .soRc__planBannerText + .soRc__planBannerText::before {
+        content: "" !important;
+        margin: 0 !important;
+      }
+
+      #so-rc-web .soRc__planBannerText b {
+        color: #111827 !important;
+        font-weight: 600 !important;
+      }
+
+      #so-rc-web .soRc__main {
+        border-radius: 16px;
+        border: 1px solid #e3e7ed !important;
+        background: var(--ux2-main) !important;
+        box-shadow: 0 10px 28px rgba(18, 28, 45, 0.06);
+        margin: 6px 6px 6px 0;
+        padding: 0 !important;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+      }
+
+      #so-rc-web .soRc__main::before {
+        content: none;
+      }
+
+      #so-rc-web .soRc__mainBody {
+        position: relative;
+        z-index: 1;
+        padding: 16px 14px 0 !important;
+      }
+
+      #so-rc-web .soRc__panel {
+        padding: 4px 4px 0 !important;
+        min-height: calc(100vh - 56px) !important;
+        animation: ux2-enter 320ms ease both;
+      }
+
+      #so-rc-web .soRc__card {
+        padding: 12px !important;
+      }
+
+      #so-rc-web .soRc__cardHdr {
+        margin-bottom: 8px !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__chatWrap {
+        background: transparent !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__emptyHeroText {
+        color: var(--ux2-ink) !important;
+        font-size: clamp(28px, 4vw, 46px) !important;
+        letter-spacing: -0.02em;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__logoIntro {
+        filter: drop-shadow(0 10px 30px rgba(94, 124, 255, 0.35));
+        animation: ux2-float 3.8s ease-in-out infinite;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__msg .soRc__bubble {
+        border-radius: 14px !important;
+        border: 1px solid var(--ux2-border) !important;
+        background: #f6f8fb !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__msg--user .soRc__bubble {
+        background: #ffffff !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composerInner {
+        border-radius: 16px !important;
+        border: 1px solid var(--ux2-border) !important;
+        background: #ffffff !important;
+        box-shadow: 0 8px 24px rgba(14, 20, 31, 0.06) !important;
+      }
+
+      #so-rc-web #soPanel-performance .soRc__card,
+      #so-rc-web #soPanel-performance .soRc__perfBoard,
+      #so-rc-web #soPanel-performance .soRc__perfStatCard,
+      #so-rc-web #soPanel-performance .soRc__kpi,
+      #so-rc-web #soPanel-performance .soRc__eventCard,
+      #so-rc-web #soPanel-performance .soRc__perfRiskRow {
+        border-radius: 16px !important;
+        border: 1px solid var(--ux2-border) !important;
+        background: #ffffff !important;
+        box-shadow: 0 8px 18px rgba(14, 20, 31, 0.05);
+      }
+
+      #so-rc-web #soPanel-performance .soRc__kpiVal,
+      #so-rc-web #soPanel-performance .soRc__perfStatValue {
+        color: var(--ux2-ink) !important;
+      }
+
+      #so-rc-web #soPanel-performance .soRc__perfStatusPill--connected,
+      #so-rc-web #soPanel-performance .soRc__perfStatusPill--primary {
+        background: #edf1ff !important;
+        border-color: #cfd8ff !important;
+        color: #2f49cc !important;
+      }
+
+      #so-rc-web[data-theme="dark"] {
+        --ux2-shell: #0c1119;
+        --ux2-panel: #0f1825;
+        --ux2-main: #141f2e;
+        --ux2-rail: transparent;
+        --ux2-border: #293647;
+        --ux2-ink: #e8eef7;
+        --ux2-muted: #9da9b8;
+        background: var(--ux2-shell) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__sidebar {
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__planBanner {
+        background: transparent !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__planBannerText {
+        color: #8f9caf !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__planBannerText b {
+        color: #dde7f5 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navItem {
+        color: #a8b4c4 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navItem:hover {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border-color: rgba(172, 184, 201, 0.22) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navItem:hover .soRc__navIcon {
+        background: rgba(255, 255, 255, 0.07);
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navItem.is-active {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border-color: rgba(172, 184, 201, 0.28) !important;
+        box-shadow: none;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navItem.is-active .soRc__navIcon {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navLabel {
+        border-color: rgba(172, 184, 201, 0.35);
+        background: #1b2737;
+        color: #d7e2f2 !important;
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__main {
+        border-color: rgba(172, 184, 201, 0.2) !important;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__main::before {
+        background: #141f2e;
+        border-bottom-color: rgba(172, 184, 201, 0.15);
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__msg .soRc__bubble {
+        background: #162130 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__msg--user .soRc__bubble {
+        background: #1b2738 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__composerInner,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__card,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfBoard,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfStatCard,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__kpi,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__eventCard,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfRiskRow {
+        background: #121a24 !important;
+      }
+
+      @media (max-width: 1100px) {
+        #so-rc-web .soRc__app {
+          grid-template-columns: 1fr !important;
+          padding: 0;
+          border-radius: 0;
+          border: 0;
+        }
+
+        #so-rc-web .soRc__planBanner {
+          left: 12px !important;
+          right: 12px !important;
+          top: 10px !important;
+        }
+
+        #so-rc-web .soRc__main {
+          border-radius: 0;
+          border: 0 !important;
+        }
+
+        #so-rc-web .soRc__sidebar {
+          width: 100%;
+        }
+
+        #so-rc-web .soRc__navLabel,
+        #so-rc-web .soRc__acctText {
+          max-width: 180px;
+          opacity: 1;
+          margin-left: 10px;
+        }
+      }
+
+      @keyframes ux2-enter {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes ux2-float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-6px); }
+      }
+    </style>
+
+    <style>
+      /* Screenshot-match final pass */
+      #so-rc-web {
+        padding: 18px !important;
+        background: #e9eaec !important;
+      }
+
+      #so-rc-web .soRc__app {
+        min-height: calc(100vh - 36px) !important;
+        border-radius: 22px !important;
+        border: 1px solid #dfe3e8 !important;
+        background: #f2f3f5 !important;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07) !important;
+        padding: 14px !important;
+      }
+
+      #so-rc-web .soRc__sidebar {
+        margin: 0 !important;
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web .soRc__main {
+        margin: 0 0 0 6px !important;
+        border-radius: 18px !important;
+        border: 1px solid #e3e7ed !important;
+        background: #ffffff !important;
+        box-shadow: 0 8px 20px rgba(17, 24, 39, 0.08) !important;
+      }
+
+      #so-rc-web .soRc__surfaceHeader {
+        padding: 14px 16px 8px !important;
+      }
+
+      #so-rc-web .soRc__surfaceTopRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      #so-rc-web .soRc__surfaceTitle {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 30px;
+        font-weight: 760;
+        letter-spacing: -0.02em;
+        color: #111827;
+      }
+
+      #so-rc-web .soRc__surfaceTitleIcon {
+        width: 18px;
+        height: 18px;
+        border-radius: 999px;
+        border: 2px solid #111827;
+        position: relative;
+      }
+
+      #so-rc-web .soRc__surfaceTitleIcon::after {
+        content: "";
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 999px;
+        background: #111827;
+        right: 3px;
+        top: 3px;
+      }
+
+      #so-rc-web .soRc__surfaceDivider {
+        height: 1px;
+        background: #eceff3;
+        margin: 10px -2px 10px;
+      }
+
+      #so-rc-web .soRc__surfaceDate {
+        margin: 0 0 4px;
+        color: #7a8494;
+        font-size: 16px;
+      }
+
+      #so-rc-web .soRc__surfaceWelcome {
+        margin: 0;
+        color: #0f172a;
+        font-size: 48px;
+        line-height: 1.08;
+        font-weight: 760;
+        letter-spacing: -0.03em;
+      }
+
+      #so-rc-web .soRc__planBanner {
+        position: static !important;
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        gap: 18px !important;
+      }
+
+      #so-rc-web .soRc__planBannerText {
+        color: #6f7888 !important;
+        font-size: 14px !important;
+      }
+
+      #so-rc-web .soRc__planBannerText b {
+        color: #111827 !important;
+        font-weight: 600 !important;
+      }
+
+      #so-rc-web .soRc__planBannerText + .soRc__planBannerText::before {
+        content: "" !important;
+        margin: 0 !important;
+      }
+
+      #so-rc-web .soRc__mainBody {
+        padding: 0 14px 0 !important;
+      }
+    </style>
+
+    <style>
+      /* hard lock: screenshot structure */
+      #so-rc-web {
+        padding: 16px !important;
+        background: #e9eaec !important;
+      }
+
+      #so-rc-web .soRc__app {
+        min-height: calc(100vh - 32px) !important;
+        border-radius: 20px !important;
+        border: 1px solid #dde2e8 !important;
+        background: #f1f2f4 !important;
+        box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08) !important;
+      }
+
+      #so-rc-web .soRc__sidebar {
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web .soRc__main {
+        margin: 0 6px 0 8px !important;
+        border-radius: 16px !important;
+        border: 1px solid #e3e7ed !important;
+        background: #ffffff !important;
+        box-shadow: 0 8px 18px rgba(17, 24, 39, 0.09) !important;
+      }
+
+      #so-rc-web .soRc__surfaceHeader {
+        padding: 12px 16px 8px !important;
+      }
+
+      #so-rc-web .soRc__surfaceTopRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      #so-rc-web .soRc__surfaceDivider {
+        height: 1px;
+        margin: 10px -2px 10px;
+        background: #e9edf2;
+      }
+
+      #so-rc-web .soRc__surfaceDate {
+        margin: 0 0 4px;
+        color: #7a8494;
+      }
+
+      #so-rc-web .soRc__surfaceWelcome {
+        margin: 0;
+        font-size: 48px;
+        line-height: 1.08;
+      }
+
+      #so-rc-web .soRc__planBanner,
+      #so-rc-web .soRc__planBannerText {
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web .soRc__planBanner {
+        position: static !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        padding: 0 !important;
+        gap: 18px !important;
+      }
+
+      #so-rc-web .soRc__planBannerText {
+        font-size: 14px !important;
+        color: #6f7888 !important;
+        padding: 0 !important;
+      }
+
+      #so-rc-web .soRc__planBannerText b {
+        color: #111827 !important;
+        font-weight: 600 !important;
+      }
+
+      #so-rc-web .soRc__planBannerText + .soRc__planBannerText::before {
+        content: "" !important;
+        margin: 0 !important;
+      }
+
+      #so-rc-web .soRc__mainBody {
+        padding: 0 14px 0 !important;
+      }
+    </style>
+
     <div class="soRc__app">
       <aside class="soRc__sidebar" aria-label="Coodra navigation">
   <button class="soRc__mobileClose" id="soMobileClose" type="button" aria-label="Close navigation">×</button>
         <a href="/pages/retailer" class="soRc__brand soRc__brand--logo" aria-label="Coodra">
-  <img class="soRc__brandLogo soRc__brandLogo--dark" src="/images/new-logo-dark.png" alt="Coodra" width="180" height="42" loading="eager" decoding="async">
-  <img class="soRc__brandLogo soRc__brandLogo--light" src="/images/new-logo.png" alt="Coodra" width="180" height="42" loading="eager" decoding="async">
+  <img class="soRc__brandLogo soRc__brandLogo--dark" src="/images/logo.png" alt="Coodra" width="60" height="60" loading="eager" decoding="async">
+  <img class="soRc__brandLogo soRc__brandLogo--light" src="/images/logo.png" alt="Coodra" width="60" height="60" loading="eager" decoding="async">
   <span class="soRc__badge soRc__badge--dev" id="soDevBadge" hidden>DEV</span>
 </a>
 
@@ -2717,6 +3526,17 @@ width: 100%;
   </span>
   <span class="soRc__navLabel">Performance Center</span>
 </button>
+          <button class="soRc__navItem" type="button" data-tab="integrations">
+            <span class="soRc__navIcon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="4" y="6" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
+                <rect x="13" y="6" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
+                <rect x="4" y="13" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
+                <rect x="13" y="13" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
+              </svg>
+            </span>
+            <span class="soRc__navLabel">Integrations</span>
+          </button>
           <button class="soRc__navItem" type="button" data-tab="reorders" data-feature-required="reorder_decisions">
             <span class="soRc__navIcon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v6h-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="soRc__navLabel">Reorders</span>
@@ -2749,7 +3569,9 @@ width: 100%;
           <button class="soRc__navItem soRc__navItem--plan" type="button" data-tab="plan">
   <span class="soRc__navIcon" aria-hidden="true">
   <svg viewBox="0 0 24 24" fill="none">
-    <path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <rect x="3.5" y="6" width="17" height="12" rx="2.5" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M3.5 10.2h17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="16.5" cy="14.2" r="1.2" fill="currentColor"/>
   </svg>
 </span>
   <span class="soRc__navLabel">Billing &amp; Limits</span>
@@ -2760,43 +3582,20 @@ width: 100%;
           </button>
         </nav>
 
-        <div class="soRc__recent">
-          <div class="soRc__recentHdr">Recent</div>
-          <div class="soRc__recentList" id="soRecentList"></div>
-        </div>
-
-        <div class="soRc__account">
-          <button class="soRc__acctBtn" id="soAcctBtn" type="button" aria-haspopup="menu" aria-expanded="false">
-            <span class="soRc__avatar" id="soAvatar">SO</span>
-            <span class="soRc__acctText">
-              <span class="soRc__acctName" id="soCompanyName">Your Company</span>
-              <span class="soRc__acctMeta">Retail</span>
-            </span>
-            <span class="soRc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="soRc__recent soRc__recent--flyout">
+          <div class="soRc__recentDockLabel">Recent</div>
+          <button class="soRc__recentDockBtn" type="button" aria-label="Recent chats">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
           </button>
-
-          <div class="soRc__menu" id="soAcctMenu" role="menu" hidden>
-            <button class="soRc__menuItem" id="soMenuAccount" type="button" role="menuitem">Account</button>
-            <button class="soRc__menuItem" id="soMenuBilling" type="button" role="menuitem">Billing &amp; Limits</button>
-            <button class="soRc__menuItem" id="soMenuSettings" type="button" role="menuitem">Settings</button>
-            <div class="soRc__menuSep"></div>
-            <div class="soRc__menuRow">
-              <div class="soRc__menuLabel">Appearance</div>
-              <button class="soRc__toggle" id="soThemeToggle" type="button">
-                <span class="soRc__toggleKnob" aria-hidden="true"></span>
-                <span id="soThemeLabel">Dark</span>
-              </button>
-            </div>
-            <div class="soRc__menuSep"></div>
-            <a class="soRc__menuItem" href="/account/logout" role="menuitem">Logout</a>
+          <div class="soRc__recentFlyout" role="region" aria-label="Recent chats">
+            <div class="soRc__recentHdr">Recent</div>
+            <div class="soRc__recentList" id="soRecentList"></div>
           </div>
         </div>
-      </aside>
 
-      <div class="soRc__planBanner" id="soPlanStatusBanner">
-        <div class="soRc__planBannerText"><b>Plan</b> - Loading plan usage...</div>
-        <div class="soRc__planBannerText" id="soPlanStatusLastSynced"><b>Last synced</b> - Never</div>
-      </div>
+      </aside>
 
       <main class="soRc__main" aria-label="Retailer console">
   <div class="soRc__mobileTop" id="soMobileTop">
@@ -2809,6 +3608,58 @@ width: 100%;
   </div>
 
         <div class="soRc__mainBody">
+          <div class="soRc__surfaceHeader">
+            <div class="soRc__surfaceTopRow">
+              <div class="soRc__surfaceTitle">
+                <span class="soRc__surfaceTitleIcon" aria-hidden="true"></span>
+                <span id="soSurfaceTitleText">Performance Center</span>
+                <span class="soRc__metaText soRc__metaText--inline" id="soPlanStatusLastSynced">Last synced: Never</span>
+              </div>
+              <div class="soRc__surfaceMeta" id="soPlanStatusBanner">
+
+                <div class="soRc__account soRc__account--top">
+                  <button class="soRc__acctBtn" id="soAcctBtn" type="button" aria-haspopup="menu" aria-expanded="false">
+                    <span class="soRc__avatar" id="soAvatar">SO</span>
+                    <span class="soRc__acctText">
+                      <span class="soRc__acctName" id="soCompanyName">Your Company</span>
+                      <span class="soRc__acctMeta">Retail</span>
+                    </span>
+                    <span class="soRc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  </button>
+
+                  <div class="soRc__menu" id="soAcctMenu" role="menu" hidden>
+                    <div class="soRc__menuRow">
+                      <div class="soRc__menuLabel">Plan</div>
+                      <div class="soRc__menuValue" id="soMenuPlanValue">Loading...</div>
+                    </div>
+                    <div class="soRc__menuSep"></div>
+                    <button class="soRc__menuItem" id="soMenuAccountSettings" type="button" role="menuitem">Account Settings</button>
+                    <button class="soRc__menuItem" id="soMenuTeamMembers" type="button" role="menuitem">Team Members</button>
+                    <button class="soRc__menuItem" id="soMenuSecurity" type="button" role="menuitem">Security</button>
+                    <button class="soRc__menuItem" id="soMenuSupport" type="button" role="menuitem">Support</button>
+                    <div class="soRc__menuSep"></div>
+                    <button class="soRc__menuItem" id="soMenuBilling" type="button" role="menuitem">Billing &amp; Limits</button>
+                    <div class="soRc__menuSep"></div>
+                    <div class="soRc__menuRow">
+                      <div class="soRc__menuLabel">Appearance</div>
+                      <button class="soRc__toggle" id="soThemeToggle" type="button">
+                        <span class="soRc__toggleKnob" aria-hidden="true"></span>
+                        <span id="soThemeLabel">Dark</span>
+                      </button>
+                    </div>
+                    <div class="soRc__menuSep"></div>
+                    <a class="soRc__menuItem" href="/account/logout" role="menuitem">Logout</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="soRc__surfaceDivider"></div>
+            <div id="soSurfaceWelcomeWrap">
+              <p class="soRc__surfaceDate" id="soSurfaceDate">Monday, Aug 01, 2025</p>
+              <h1 class="soRc__surfaceWelcome" id="soSurfaceWelcome">Welcome Back !</h1>
+            </div>
+          </div>
+
         <section class="soRc__panel is-active" id="soPanel-chat" data-panel="chat" role="tabpanel">
           <div class="soRc__chatWrap is-empty">
             <div class="soRc__chat" id="soChat" aria-live="polite">
@@ -2816,8 +3667,10 @@ width: 100%;
   <div class="soRc__logoIntro" data-logo-intro="1" data-logo-dark-src="/images/logo.png" data-logo-light-src="/images/logo.png" aria-hidden="true">
     <img class="soRc__logoIntroImg" alt="" loading="eager" decoding="async" />
   </div>
-  <div class="soRc__emptyHeroText">    What's on your mind today?
+  <div class="soRc__emptyHeroText">
+    What's on your mind today?
   </div>
+  <div class="soRc__emptyHeroSub">Type a command or ask a question.</div>
   <div class="soRc__emptyQuick">
     <button class="soRc__emptyQuickBtn" type="button" data-quick-prompt="Build me a starter cart for a $5,000 monthly budget." data-feature-required="reorder_decisions">Starter Cart</button>
     <button class="soRc__emptyQuickBtn" type="button" data-quick-prompt="What should I reorder this week to avoid stockouts?" data-feature-required="reorder_decisions,inventory_risk_alerts">Avoid Stockouts</button>
@@ -2828,14 +3681,21 @@ width: 100%;
             </div>
             <div class="soRc__composer">
               <div class="soRc__composerInner">
-                <button class="soRc__attachBtn" id="soAttachBtn" type="button" aria-label="Attach files">
-                  <svg viewBox="0 0 24 24" fill="none"><path d="M21 12.5 13.5 20a6 6 0 0 1-8.5-8.5l9-9a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.6-8.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
                 <input id="soFiles" type="file" multiple hidden accept=".csv,.xlsx,.xls,.png,.jpg,.jpeg,.webp,.pdf,.txt" />
-                <textarea id="soInput" class="soRc__input" rows="1" placeholder="Message Coodra..."></textarea>
-                <button class="soRc__send" id="soSend" type="button" aria-label="Send">
-                  <svg viewBox="0 0 24 24" fill="none"><path d="M22 2 11 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M22 2 15 22l-4-9-9-4 20-7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-                </button>
+                <div class="soRc__composerInputWrap">
+                  <textarea id="soInput" class="soRc__input" rows="1" placeholder="Ask Coodra a question..."></textarea>
+                </div>
+                <div class="soRc__composerFoot">
+                  <div class="soRc__composerFootLeft">
+                    <button class="soRc__attachBtn" id="soAttachBtn" type="button" aria-label="Attach files">
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M21 12.5 13.5 20a6 6 0 0 1-8.5-8.5l9-9a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.6-8.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                  </div>
+                  <button class="soRc__send" id="soSend" type="button" aria-label="Send">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M22 2 11 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M22 2 15 22l-4-9-9-4 20-7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                    <span>Send</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -2880,6 +3740,7 @@ width: 100%;
     <div class="soRc__card" data-feature-panel="exports">
       <div class="soRc__cardHdr"><div class="soRc__cardTitle">Reports</div></div>
       <div class="soRc__composerHelp">Exports.</div>
+      <div class="soRc__kpis" id="soReportsKpis"></div>
       <div class="soRc__reportsWrap" style="margin-top:10px;">
         <div class="soRc__reportsTitle">Exports</div>
         <div class="soRc__reportsGrid">
@@ -3201,6 +4062,7 @@ width: 100%;
        <section class="soRc__panel" id="soPanel-reorders" data-panel="reorders" hidden role="tabpanel">
   <div class="soRc__card">
     <div class="soRc__cardTitle">Reorders</div>
+    <div class="soRc__kpis" id="soReordersKpis"></div>
     <div class="soRc__list" id="soReordersList">
       <div class="soRc__emptyState">Loading…</div>
     </div>
@@ -3209,18 +4071,7 @@ width: 100%;
 <section class="soRc__panel" id="soPanel-performance" data-panel="performance" hidden role="tabpanel">
   <div class="soRc__grid soRc__grid--single">
     <div class="soRc__card">
-      <div class="soRc__cardHdr">
-        <div class="soRc__cardTitle">Performance Center</div>
-        <div class="soRc__perfConnectWrap">
-          <button class="soRc__perfConnectPill" id="soPerfConnectionsBtn" type="button" aria-expanded="false">
-            Connections
-            <span class="soRc__perfConnectCount" id="soPerfConnectionsCount">0</span>
-          </button>
-          <div class="soRc__perfConnectMenu" id="soPerfConnectionsMenu" hidden></div>
-        </div>
-      </div>
-
-      <div id="soPerfState" class="soRc__emptyState">Loading performance status…</div>
+      <div id="soPerfState" class="soRc__emptyState" hidden>Loading performance status…</div>
 
 <div id="soPerfDisconnected" hidden>
   <div class="soRc__perfHero">
@@ -3231,22 +4082,80 @@ width: 100%;
   <div class="soRc__perfProviders" id="soPerfProviders"></div>
 </div>
 
-<div id="soPerfConnected" hidden>
+  <div id="soPerfConnected" hidden>
+  <div class="soRc__perfTopActions">
+    <button class="soRc__eventCta" type="button" data-perf-action="sync_full">Full Sync</button>
+  </div>
   <div class="soRc__perfKpis" id="soPerfKpis"></div>
   <div class="soRc__perfAlerts" id="soPerfAlerts"></div>
   <div class="soRc__perfCards" id="soPerfCards"></div>
-
-  <div class="soRc__perfControlsLabel">Data controls</div>
-  <div class="soRc__perfActions">
-    <button class="soRc__skuBtn" type="button" data-perf-action="sync_full">Full Sync</button>
-    <button class="soRc__skuBtn" type="button" data-perf-action="sync_orders">Sync Orders</button>
-    <button class="soRc__skuBtn" type="button" data-perf-action="sync_products">Sync Products</button>
-    <button class="soRc__skuBtn" type="button" data-perf-action="sync_inventory">Sync Inventory</button>
-  </div>
 </div>
 
 <div id="soPerfMeta" class="soRc__composerHelp" style="margin-top:10px;"></div>
 
+    </div>
+  </div>
+</section>
+
+<section class="soRc__panel" id="soPanel-integrations" data-panel="integrations" hidden role="tabpanel">
+  <div class="soRc__grid soRc__grid--single">
+    <div class="soRc__integrationsSearchWrap">
+      <svg class="soRc__integrationsSearchIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M21 21l-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <input id="soIntegrationSearch" class="soRc__integrationsSearchInput" type="text" placeholder="Search integrations..." />
+    </div>
+    <div class="soRc__integrationsGrid">
+      <div class="soRc__integrationCard" data-integration-provider="shopify" data-integration-name="Shopify">
+        <div class="soRc__integrationTop">
+          <div class="soRc__integrationLogo soRc__integrationLogo--shopify">
+            <img class="soRc__integrationLogoImg" src="/images/integrations/shopify.ico" alt="Shopify logo" loading="lazy" decoding="async" />
+          </div>
+          <button class="soRc__eventCta soRc__integrationBtn" type="button" data-perf-connect="shopify">Connect</button>
+        </div>
+        <div class="soRc__integrationName">Shopify</div>
+        <div class="soRc__integrationMeta">Commerce Platform</div>
+      </div>
+      <div class="soRc__integrationCard" data-integration-provider="square" data-integration-name="Square">
+        <div class="soRc__integrationTop">
+          <div class="soRc__integrationLogo soRc__integrationLogo--square">
+            <img class="soRc__integrationLogoImg" src="/images/integrations/square.ico" alt="Square logo" loading="lazy" decoding="async" />
+          </div>
+          <button class="soRc__eventCta soRc__integrationBtn" type="button" data-perf-connect="square">Connect</button>
+        </div>
+        <div class="soRc__integrationName">Square</div>
+        <div class="soRc__integrationMeta">POS + Payments</div>
+      </div>
+      <div class="soRc__integrationCard" data-integration-provider="clover" data-integration-name="Clover">
+        <div class="soRc__integrationTop">
+          <div class="soRc__integrationLogo soRc__integrationLogo--clover">
+            <img class="soRc__integrationLogoImg" src="/images/integrations/clover.svg" alt="Clover logo" loading="lazy" decoding="async" />
+          </div>
+          <button class="soRc__eventCta soRc__integrationBtn" type="button" data-perf-connect="clover">Connect</button>
+        </div>
+        <div class="soRc__integrationName">Clover</div>
+        <div class="soRc__integrationMeta">Retail POS</div>
+      </div>
+      <div class="soRc__integrationCard" data-integration-provider="lightspeed" data-integration-name="Lightspeed">
+        <div class="soRc__integrationTop">
+          <div class="soRc__integrationLogo soRc__integrationLogo--lightspeed">
+            <img class="soRc__integrationLogoImg" src="/images/integrations/lightspeed.ico" alt="Lightspeed logo" loading="lazy" decoding="async" />
+          </div>
+          <button class="soRc__eventCta soRc__integrationBtn" type="button" data-perf-connect="lightspeed">Connect</button>
+        </div>
+        <div class="soRc__integrationName">Lightspeed</div>
+        <div class="soRc__integrationMeta">Retail + Restaurant POS</div>
+      </div>
+      <div class="soRc__integrationCard" data-integration-provider="moneris" data-integration-name="Moneris">
+        <div class="soRc__integrationTop">
+          <div class="soRc__integrationLogo soRc__integrationLogo--moneris">
+            <img class="soRc__integrationLogoImg" src="/images/integrations/moneris.ico" alt="Moneris logo" loading="lazy" decoding="async" />
+          </div>
+          <button class="soRc__eventCta soRc__integrationBtn" type="button" data-perf-connect="moneris">Connect</button>
+        </div>
+        <div class="soRc__integrationName">Moneris</div>
+        <div class="soRc__integrationMeta">Payments + POS</div>
+      </div>
     </div>
   </div>
 </section>
@@ -3256,6 +4165,326 @@ width: 100%;
     </div>
 
     <div class="soRc__delModal" id="soDeleteModal" aria-hidden="true"></div>
+
+    <style>
+      /* Final hard override: keep screenshot header visible across tabs */
+      #so-rc-web .soRc__surfaceHeader { display: block; }
+
+      #so-rc-web .soRc__surfaceTopRow {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+      }
+
+      #so-rc-web .soRc__surfaceDivider {
+        height: 1px !important;
+        background: #e9edf2 !important;
+      }
+
+      #so-rc-web .soRc__planBanner {
+        position: static !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 18px !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web .soRc__planBannerText {
+        font-size: 14px !important;
+        color: #6f7888 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+      }
+
+      #so-rc-web .soRc__planBannerText b {
+        color: #111827 !important;
+        font-weight: 600 !important;
+      }
+
+      #so-rc-web .soRc__planBannerText + .soRc__planBannerText::before {
+        content: "" !important;
+        margin: 0 !important;
+      }
+    </style>
+
+    <style>
+      /* Header account + plain status text (global, all tabs) */
+      #so-rc-web .soRc__panel[hidden] {
+        display: none !important;
+      }
+
+      /* Keep white card inset so grey shell is visible at bottom too */
+      #so-rc-web .soRc__app {
+        align-items: start !important;
+        padding: 12px 12px 20px 12px !important;
+        box-sizing: border-box !important;
+      }
+      #so-rc-web .soRc__main {
+        margin: 0 8px 12px 8px !important;
+        height: calc(100% - 20px) !important;
+        max-height: calc(100% - 20px) !important;
+        align-self: start !important;
+      }
+
+      /* Coodra Agent: prevent page-level vertical scroll */
+      #so-rc-web.is-chat-mode .soRc__mainBody {
+        overflow-y: hidden !important;
+      }
+
+      #so-rc-web .soRc__surfaceTitle {
+        font-size: 12px !important;
+        font-weight: 700 !important;
+      }
+
+      #so-rc-web .soRc__surfaceDate {
+        font-size: 11px !important;
+      }
+
+      #so-rc-web .soRc__surfaceWelcome {
+        font-size: 22px !important;
+        line-height: 1.2 !important;
+      }
+
+      #so-rc-web .soRc__metaText--inline {
+        font-size: 9px !important;
+        color: #a5afbe !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.01em !important;
+        margin-left: 8px !important;
+      }
+
+      #so-rc-web .soRc__surfaceMeta {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 16px !important;
+        overflow: visible !important;
+      }
+
+      #so-rc-web .soRc__surfaceTopRow {
+        overflow: visible !important;
+      }
+
+      #so-rc-web .soRc__metaText {
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        color: #6f7888 !important;
+        font-size: 14px !important;
+        line-height: 1.2 !important;
+        padding: 0 !important;
+        white-space: nowrap !important;
+      }
+
+      #so-rc-web .soRc__metaText b {
+        color: #111827 !important;
+        font-weight: 600 !important;
+      }
+
+      #so-rc-web .soRc__account--top {
+        position: relative !important;
+        padding: 0 !important;
+        z-index: 70 !important;
+        overflow: visible !important;
+      }
+
+      #so-rc-web .soRc__account--top .soRc__acctBtn {
+        width: auto !important;
+        height: 38px !important;
+        margin: 0 !important;
+        padding: 4px 10px !important;
+        border-radius: 12px !important;
+        border: 1px solid #dde3eb !important;
+        background: #fff !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 8px !important;
+      }
+
+      #so-rc-web .soRc__account--top .soRc__avatar {
+        width: 28px !important;
+        height: 28px !important;
+        border-radius: 999px !important;
+      }
+
+      #so-rc-web .soRc__account--top .soRc__acctText {
+        display: inline-flex !important;
+        opacity: 1 !important;
+        max-width: 180px !important;
+        overflow: hidden !important;
+      }
+
+      #so-rc-web .soRc__account--top .soRc__acctMeta {
+        display: none !important;
+      }
+
+      #so-rc-web .soRc__account--top .soRc__chev {
+        display: inline-flex !important;
+      }
+
+      #so-rc-web .soRc__account--top .soRc__menu {
+        left: auto !important;
+        right: 0 !important;
+        top: calc(100% + 8px) !important;
+        bottom: auto !important;
+        width: min(280px, calc(100vw - 28px)) !important;
+        max-width: calc(100vw - 28px) !important;
+        min-width: 200px !important;
+        z-index: 9999 !important;
+        transform-origin: top right !important;
+        background: #ffffff !important;
+        border: 1px solid #dbe3ee !important;
+        box-shadow: 0 12px 24px rgba(16, 24, 40, 0.12) !important;
+      }
+
+      #so-rc-web .soRc__account--top .soRc__acctBtn[aria-expanded="true"] + .soRc__menu {
+        display: block !important;
+      }
+
+      #so-rc-web .soRc__account--top .soRc__menuItem,
+      #so-rc-web .soRc__account--top .soRc__menuLabel,
+      #so-rc-web .soRc__account--top .soRc__menuValue,
+      #so-rc-web .soRc__account--top .soRc__menu a {
+        color: var(--text) !important;
+      }
+
+      #so-rc-web .soRc__account--top .soRc__menuItem:hover {
+        background: #f3f7fc !important;
+        border-color: #d7e2ef !important;
+      }
+
+      #so-rc-web .soRc__account--top .soRc__menuValue {
+        font-size: 12px !important;
+        font-weight: 700 !important;
+      }
+
+      #so-rc-web #soPanel-performance > .soRc__grid > .soRc__card {
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+      }
+
+      #so-rc-web .soRc__integrationsGrid {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 14px !important;
+      }
+
+      #so-rc-web .soRc__integrationsSearchWrap {
+        position: relative;
+        margin-bottom: 10px;
+      }
+      #so-rc-web .soRc__integrationsSearchIcon {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        color: #8e99ab;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      #so-rc-web .soRc__integrationsSearchInput {
+        width: 100%;
+        height: 34px;
+        border: 1px solid #dbe2ec;
+        border-radius: 10px;
+        background: #fff;
+        color: #111827;
+        padding: 0 10px 0 30px;
+        font-size: 13px;
+      }
+
+      #so-rc-web .soRc__integrationCard {
+        border: 1px solid #e1e6ee !important;
+        border-radius: 12px !important;
+        background: #ffffff !important;
+        box-shadow: 0 8px 20px rgba(16, 24, 40, 0.06) !important;
+        padding: 10px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+      }
+      #so-rc-web .soRc__integrationTop {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      #so-rc-web .soRc__integrationLogo {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        font-weight: 800;
+        color: #fff;
+        overflow: hidden;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+      }
+      #so-rc-web .soRc__integrationLogoImg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      #so-rc-web .soRc__integrationName {
+        font-size: 13px;
+        font-weight: 700;
+        color: #111827;
+      }
+
+      #so-rc-web .soRc__integrationMeta {
+        font-size: 11px;
+        color: #7b8594;
+        margin-bottom: 0;
+      }
+
+      #so-rc-web .soRc__integrationBtn {
+        height: 28px !important;
+        min-height: 28px !important;
+        padding: 0 10px !important;
+        border-radius: 9px !important;
+        font-size: 12px !important;
+      }
+
+      #so-rc-web .soRc__integrationBtn.is-disconnect {
+        color: #9f2f3d !important;
+        border-color: rgba(159,47,61,.28) !important;
+        background: rgba(159,47,61,.08) !important;
+      }
+
+      @media (max-width: 1080px) {
+        #so-rc-web .soRc__integrationsGrid {
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+      }
+
+      /* Use only the top header title; keep connections control in-panel */
+      #so-rc-web #soPanel-performance .soRc__cardHdr {
+        justify-content: flex-end !important;
+      }
+
+      #so-rc-web #soPanel-performance .soRc__cardHdr .soRc__cardTitle {
+        display: none !important;
+      }
+    </style>
 
     <style>
       /* Final polish pass: consistent dark surfaces across all retailer tabs */
@@ -3464,6 +4693,2446 @@ width: 100%;
       }
     </style>
 
-    
+    <style>
+      /* Stabilize shell/card geometry and kill legacy spacing regressions */
+      #so-rc-web .soRc__app {
+        min-height: var(--so-app-vh, 100dvh) !important;
+        height: var(--so-app-vh, 100dvh) !important;
+        padding: 10px 12px !important;
+        box-sizing: border-box !important;
+      }
 
-  
+      #so-rc-web .soRc__main {
+        margin: 0 0 16px 0 !important; /* keep visible inner-card bottom inset */
+        height: calc(100% - 16px) !important;
+        max-height: calc(100% - 16px) !important;
+        border-radius: 18px !important;
+        overflow: hidden !important;
+      }
+
+      #so-rc-web .soRc__mainBody {
+        min-height: 0 !important;
+      }
+
+      #so-rc-web .soRc__panel {
+        min-height: 0 !important;
+        padding-top: 10px !important;
+        padding-bottom: 28px !important; /* allow slight extra scroll past last card */
+      }
+
+      #so-rc-web.is-chat-mode .soRc__mainBody {
+        overflow-y: hidden !important;
+      }
+
+      #so-rc-web.is-chat-mode #soPanel-chat {
+        min-height: 0 !important;
+        height: 100% !important;
+      }
+
+      #so-rc-web.is-chat-mode #soPanel-chat .soRc__chatWrap {
+        min-height: 0 !important;
+        height: 100% !important;
+      }
+
+      /* Hard lock for top header "Last synced" text size/weight */
+      #so-rc-web .soRc__surfaceTitle {
+        display: grid !important;
+        grid-template-columns: auto minmax(0, 1fr) !important;
+        grid-template-areas:
+          "icon title"
+          "icon synced" !important;
+        align-items: start !important;
+        column-gap: 8px !important;
+        row-gap: 2px !important;
+      }
+
+      #so-rc-web .soRc__surfaceTitleIcon {
+        grid-area: icon !important;
+        width: 16px !important;
+        height: 16px !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        color: #111827 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: relative !important;
+        justify-self: start !important;
+        align-self: center !important;
+      }
+
+      #so-rc-web .soRc__surfaceTitleIcon::after {
+        content: none !important;
+      }
+
+      #so-rc-web .soRc__surfaceTitleIcon svg {
+        width: 15px !important;
+        height: 15px !important;
+        display: block !important;
+      }
+
+      #so-rc-web #soSurfaceTitleText {
+        grid-area: title !important;
+      }
+
+      #so-rc-web #soPlanStatusLastSynced {
+        grid-area: synced !important;
+        display: block !important;
+        margin-left: 0 !important;
+        font-size: 11px !important;
+        line-height: 1.1 !important;
+        font-weight: 400 !important;
+        color: #a8b2c0 !important;
+        letter-spacing: 0.01em !important;
+      }
+
+      /* Chat redesign: glass composer + command-style layout (logic unchanged) */
+      #so-rc-web #soPanel-chat .soRc__chatWrap {
+        padding-top: 18px !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__chatWrap.is-empty {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__chatWrap.is-empty .soRc__chat {
+        width: 100% !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__emptyHero {
+        max-width: 920px !important;
+        margin: 0 auto 16px !important;
+        text-align: center !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__emptyHeroText {
+        font-size: clamp(22px, 2.8vw, 38px) !important;
+        font-weight: 560 !important;
+        line-height: 1.08 !important;
+        letter-spacing: -0.03em !important;
+        color: #6f7d93 !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__emptyHeroSub {
+        display: none !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__emptyQuick {
+        display: none !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__emptyQuickBtn {
+        border-radius: 11px !important;
+        border: 1px solid rgba(255,255,255,.08) !important;
+        background: rgba(255,255,255,.03) !important;
+        color: #c5d0e3 !important;
+        font-size: 12px !important;
+        font-weight: 520 !important;
+        padding: 8px 12px !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__emptyQuickBtn:hover {
+        background: rgba(255,255,255,.08) !important;
+        border-color: rgba(255,255,255,.14) !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composer {
+        max-width: 860px !important;
+        margin: 0 auto !important;
+        padding: 8px 8px 18px !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composerInner {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0 !important;
+        border-radius: 18px !important;
+        border: 1px solid rgba(255,255,255,.08) !important;
+        background: rgba(7, 10, 16, .48) !important;
+        backdrop-filter: blur(18px) saturate(1.15) !important;
+        -webkit-backdrop-filter: blur(18px) saturate(1.15) !important;
+        box-shadow: 0 20px 50px rgba(0,0,0,.34) !important;
+        padding: 0 !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composerInputWrap {
+        padding: 14px 14px 10px !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__input {
+        width: 100% !important;
+        min-height: 68px !important;
+        max-height: 220px !important;
+        padding: 10px 2px 4px !important;
+        font-size: 15px !important;
+        line-height: 1.45 !important;
+        color: #e8effc !important;
+        font-weight: 500 !important;
+        text-align: left !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__input::placeholder {
+        color: rgba(217, 228, 244, .62) !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composerFoot {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 12px !important;
+        border-top: 1px solid rgba(255,255,255,.08) !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 10px 12px !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composerFootLeft {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__attachBtn,
+      #so-rc-web #soPanel-chat .soRc__cmdBtn {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 10px !important;
+        border: 1px solid rgba(255,255,255,.12) !important;
+        background: rgba(255,255,255,.04) !important;
+        color: #d7deeb !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__attachBtn:hover,
+      #so-rc-web #soPanel-chat .soRc__cmdBtn:hover {
+        background: rgba(255,255,255,.09) !important;
+        border-color: rgba(255,255,255,.2) !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__cmdBtn svg {
+        width: 16px !important;
+        height: 16px !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__cmdBtn {
+        display: none !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__send {
+        min-width: 94px !important;
+        height: 34px !important;
+        border-radius: 10px !important;
+        border: 1px solid rgba(255,255,255,.14) !important;
+        background: #f4f8ff !important;
+        color: #0b1220 !important;
+        font-weight: 600 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        padding: 0 12px !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__send svg {
+        display: none !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__send span {
+        display: inline !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__send svg path {
+        display: none !important;
+      }
+
+      #so-rc-web[data-theme="light"] #soPanel-chat .soRc__composerInner {
+        background: rgba(255,255,255,.74) !important;
+        border-color: rgba(15,23,42,.11) !important;
+      }
+
+      #so-rc-web[data-theme="light"] #soPanel-chat .soRc__composerFoot {
+        border-top-color: rgba(15,23,42,.08) !important;
+      }
+
+      #so-rc-web[data-theme="light"] #soPanel-chat .soRc__send {
+        background: #111827 !important;
+        color: #f8fbff !important;
+      }
+
+      #so-rc-web[data-theme="light"] #soPanel-chat .soRc__emptyHeroSub {
+        color: #7b8797 !important;
+      }
+
+      #so-rc-web[data-theme="light"] #soPanel-chat .soRc__emptyQuickBtn {
+        border-color: rgba(15,23,42,.12) !important;
+        background: rgba(15,23,42,.03) !important;
+        color: #5f6c80 !important;
+      }
+
+      #so-rc-web[data-theme="light"] #soPanel-chat .soRc__input {
+        color: #0f172a !important;
+      }
+
+      #so-rc-web[data-theme="light"] #soPanel-chat .soRc__input::placeholder {
+        color: #8b98aa !important;
+      }
+
+      #so-rc-web[data-theme="light"] #soPanel-chat .soRc__attachBtn,
+      #so-rc-web[data-theme="light"] #soPanel-chat .soRc__cmdBtn {
+        border-color: rgba(15,23,42,.14) !important;
+        background: rgba(15,23,42,.03) !important;
+        color: #42506a !important;
+      }
+
+      /* Final hard lock: smaller composer + left-aligned typing */
+      #so-rc-web #soPanel-chat .soRc__composer {
+        max-width: 700px !important;
+        width: calc(100% - 40px) !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composerInner {
+        border-radius: 16px !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composerInputWrap {
+        width: 100% !important;
+        padding: 10px 12px 6px !important;
+        display: block !important;
+        text-align: left !important;
+      }
+
+      #so-rc-web #soPanel-chat #soInput.soRc__input,
+      #so-rc-web #soPanel-chat textarea#soInput {
+        display: block !important;
+        width: 100% !important;
+        min-height: 44px !important;
+        max-height: 160px !important;
+        margin: 0 !important;
+        padding: 6px 2px !important;
+        text-align: left !important;
+        direction: ltr !important;
+        unicode-bidi: plaintext !important;
+        justify-content: flex-start !important;
+      }
+
+      #so-rc-web #soPanel-chat #soInput.soRc__input::placeholder,
+      #so-rc-web #soPanel-chat textarea#soInput::placeholder {
+        text-align: left !important;
+      }
+
+      /* Bring back current chats below nav with divider */
+      #so-rc-web .soRc__recent {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        max-height: 220px !important;
+        overflow: auto !important;
+        margin-top: 10px !important;
+        padding: 12px 6px 8px !important;
+        border-top: 1px solid #dbe3ed !important;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web .soRc__recentHdr {
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        color: #7b8698 !important;
+        letter-spacing: .12em !important;
+        text-transform: uppercase !important;
+        padding: 2px 4px 8px !important;
+      }
+
+      #so-rc-web .soRc__recentList {
+        gap: 6px !important;
+        padding: 0 !important;
+      }
+
+      #so-rc-web .soRc__recentItem {
+        align-items: center !important;
+        gap: 8px !important;
+        border-radius: 10px !important;
+        border: 1px solid #e2e8f1 !important;
+        background: #ffffff !important;
+        padding: 8px 9px !important;
+        transition: border-color .16s ease, box-shadow .16s ease, background .16s ease !important;
+      }
+
+      #so-rc-web .soRc__recentItem:hover {
+        border-color: #b9c8dd !important;
+        box-shadow: 0 6px 16px rgba(17, 24, 39, .08) !important;
+        background: #fbfdff !important;
+      }
+
+      #so-rc-web .soRc__recentItem.is-active {
+        border-color: #d6dde7 !important;
+        background: #eef1f5 !important;
+        box-shadow: 0 8px 18px rgba(17, 24, 39, .10) !important;
+      }
+
+      #so-rc-web .soRc__recentTitle {
+        font-size: 12px !important;
+        font-weight: 560 !important;
+        color: #243245 !important;
+      }
+
+      #so-rc-web .soRc__recentMeta {
+        font-size: 11px !important;
+        color: #7f8ca0 !important;
+      }
+
+      #so-rc-web .soRc__recentDel {
+        width: 22px !important;
+        height: 22px !important;
+        border-radius: 999px !important;
+        border: 1px solid #d6deea !important;
+        background: #ffffff !important;
+        color: #9aa3b2 !important;
+        opacity: .4 !important;
+        transition: opacity .14s ease, color .14s ease, background .14s ease, border-color .14s ease !important;
+      }
+
+      #so-rc-web .soRc__recentItem:hover .soRc__recentDel {
+        opacity: 1 !important;
+      }
+
+      #so-rc-web .soRc__recentDel:hover {
+        color: #9f2a38 !important;
+        border-color: #e7b9c2 !important;
+        background: #fff4f6 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recent {
+        border-top-color: rgba(136, 156, 184, .32) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentItem {
+        border-color: rgba(126, 146, 176, .28) !important;
+        background: rgba(31, 42, 60, .84) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentItem:hover {
+        border-color: rgba(160, 183, 216, .44) !important;
+        background: rgba(37, 50, 70, .92) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentItem.is-active {
+        border-color: #4a5668 !important;
+        background: #313a46 !important;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, .28) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentTitle {
+        color: #edf2fa !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentMeta {
+        color: #9aabc3 !important;
+      }
+
+      /* Chat visual alignment pass: soft grey card, no footer divider line */
+      #so-rc-web #soPanel-chat .soRc__composer {
+        max-width: 760px !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composerInner {
+        background: #eceff3 !important;
+        border: 1px solid #d7dde6 !important;
+        box-shadow: 0 10px 22px rgba(15, 23, 42, .08) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composerInner::before {
+        display: none !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composerFoot {
+        border-top: 0 !important;
+        padding-top: 8px !important;
+      }
+
+      #so-rc-web #soPanel-chat #soInput.soRc__input,
+      #so-rc-web #soPanel-chat textarea#soInput {
+        color: #1f2a3a !important;
+      }
+
+      #so-rc-web #soPanel-chat #soInput.soRc__input::placeholder,
+      #so-rc-web #soPanel-chat textarea#soInput::placeholder {
+        color: #7e8ca1 !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__attachBtn {
+        border-color: #cfd7e3 !important;
+        background: #f6f8fb !important;
+        color: #50607a !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__send {
+        background: #2f3a4d !important;
+        border-color: #2f3a4d !important;
+        color: #f6f9ff !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__send:hover {
+        background: #273245 !important;
+        border-color: #273245 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__composerInner {
+        background: #2a3038 !important;
+        border-color: #414b58 !important;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, .28) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat #soInput.soRc__input,
+      #so-rc-web[data-theme="dark"] #soPanel-chat textarea#soInput {
+        color: #e8eef7 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat #soInput.soRc__input::placeholder,
+      #so-rc-web[data-theme="dark"] #soPanel-chat textarea#soInput::placeholder {
+        color: #9ba9bc !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__attachBtn {
+        border-color: #516073 !important;
+        background: #36404d !important;
+        color: #d7deea !important;
+      }
+
+      /* Recent chats: single bottom icon + right flyout */
+      #so-rc-web .soRc__recent--flyout {
+        margin-top: 8px !important;
+        padding: 10px 0 0 !important;
+        border-top: 1px solid #dbe3ed !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        position: relative !important;
+        overflow: visible !important;
+        flex: 0 0 auto !important;
+      }
+
+      #so-rc-web .soRc__recentDockLabel {
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        color: #7b8698 !important;
+        letter-spacing: .12em !important;
+        text-transform: uppercase !important;
+        margin: 0 0 8px !important;
+      }
+
+      #so-rc-web .soRc__recentDockBtn {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 12px !important;
+        border: 1px solid #d8e0ea !important;
+        background: #ffffff !important;
+        color: #5f697a !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        box-shadow: 0 4px 12px rgba(16, 24, 40, .08) !important;
+      }
+
+      #so-rc-web .soRc__recentDockBtn svg {
+        width: 18px !important;
+        height: 18px !important;
+      }
+
+      #so-rc-web .soRc__recentFlyout {
+        position: absolute !important;
+        left: 52px !important;
+        top: -4px !important;
+        bottom: auto !important;
+        width: 270px !important;
+        max-height: 280px !important;
+        overflow: auto !important;
+        padding: 10px !important;
+        border-radius: 14px !important;
+        border: 1px solid #dbe3ed !important;
+        background: rgba(255, 255, 255, .96) !important;
+        box-shadow: 0 14px 28px rgba(16, 24, 40, .12) !important;
+        opacity: 0 !important;
+        transform: translateX(-6px) scale(.98) !important;
+        transform-origin: left bottom !important;
+        pointer-events: none !important;
+        transition: opacity .14s ease, transform .16s ease !important;
+        z-index: 80 !important;
+      }
+
+      #so-rc-web .soRc__sidebar {
+        overflow: visible !important;
+      }
+
+      #so-rc-web .soRc__recent--flyout:hover .soRc__recentFlyout,
+      #so-rc-web .soRc__recent--flyout:focus-within .soRc__recentFlyout {
+        opacity: 1 !important;
+        transform: translateX(0) scale(1) !important;
+        pointer-events: auto !important;
+      }
+
+      #so-rc-web .soRc__recent--flyout:hover .soRc__recentDockBtn,
+      #so-rc-web .soRc__recent--flyout:focus-within .soRc__recentDockBtn {
+        border-color: #b9c8dd !important;
+        background: #fbfdff !important;
+      }
+
+      #so-rc-web .soRc__recent--flyout .soRc__recentHdr {
+        padding-top: 0 !important;
+      }
+
+      #so-rc-web .soRc__recent--flyout .soRc__recentList {
+        max-height: 228px !important;
+        overflow: auto !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recent--flyout {
+        border-top-color: rgba(136, 156, 184, .32) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentDockBtn {
+        border-color: rgba(136, 156, 184, .38) !important;
+        background: rgba(31, 42, 60, .88) !important;
+        color: #c4d2e8 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentDockLabel {
+        color: #9aabc3 !important;
+      }
+
+      /* Coodra Agent layout: keep content above, center chat box */
+      #so-rc-web.is-chat-mode #soPanel-chat .soRc__chatWrap.is-empty {
+        justify-content: flex-start !important;
+        align-items: center !important;
+        padding-top: 12.2vh !important;
+      }
+
+      #so-rc-web.is-chat-mode #soPanel-chat .soRc__chatWrap.is-empty .soRc__chat {
+        width: 100% !important;
+        max-width: 980px !important;
+        flex: 0 0 auto !important;
+      }
+
+      #so-rc-web.is-chat-mode #soPanel-chat .soRc__chatWrap.is-empty .soRc__emptyHero {
+        margin-bottom: 8px !important;
+      }
+
+      #so-rc-web.is-chat-mode #soPanel-chat .soRc__chatWrap.is-empty .soRc__composer {
+        position: static !important;
+        align-self: center !important;
+        width: 100% !important;
+        max-width: 700px !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentFlyout {
+        border-color: #343a46 !important;
+        background: rgba(26, 29, 35, .97) !important;
+        box-shadow: 0 16px 30px rgba(0, 0, 0, .36) !important;
+      }
+
+      /* Placement lock: keep Recent directly below Billing & Limits */
+      #so-rc-web .soRc__sidebar {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+      }
+
+      #so-rc-web .soRc__nav {
+        flex: 0 0 auto !important;
+      }
+
+      #so-rc-web .soRc__recent--flyout {
+        margin-top: 8px !important;
+        width: 100% !important;
+        align-self: stretch !important;
+      }
+
+      /* Dark Theme Master Pass: unify all surfaces/controls */
+      #so-rc-web[data-theme="dark"] {
+        --bg: #131418 !important;
+        --bg2: #181a20 !important;
+        --line: #2a2d36 !important;
+        --text: #eef1f7 !important;
+        --muted: #adb3bf !important;
+        --muted2: #7f8794 !important;
+        background: radial-gradient(1200px 520px at 50% -120px, rgba(46,211,183,.05), rgba(46,211,183,0) 70%), #131418 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__app {
+        background: #171920 !important;
+        border-color: #2b2f39 !important;
+        box-shadow: 0 16px 36px rgba(0,0,0,.34) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__main {
+        background: #1a1d24 !important;
+        border-color: #2c3039 !important;
+        box-shadow: 0 12px 28px rgba(0,0,0,.28) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__surfaceDivider {
+        background: #2b2f39 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__surfaceTitle,
+      #so-rc-web[data-theme="dark"] #soSurfaceTitleText {
+        color: #e8eef8 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__surfaceDate,
+      #so-rc-web[data-theme="dark"] #soPlanStatusLastSynced {
+        color: #9aa2af !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navItem {
+        color: #a6adba !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navItem:hover {
+        background: rgba(255,255,255,.045) !important;
+        border-color: rgba(166,173,186,.26) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navItem.is-active {
+        background: rgba(255,255,255,.09) !important;
+        border-color: rgba(182,190,204,.34) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navLabel {
+        background: #20232b !important;
+        border-color: #353a46 !important;
+        color: #e2e7f1 !important;
+        box-shadow: 0 10px 22px rgba(0,0,0,.34) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__card,
+      #so-rc-web[data-theme="dark"] .soRc__kpi,
+      #so-rc-web[data-theme="dark"] .soRc__tableWrap,
+      #so-rc-web[data-theme="dark"] .soRc__perfBoard,
+      #so-rc-web[data-theme="dark"] .soRc__perfStatCard,
+      #so-rc-web[data-theme="dark"] .soRc__eventCard,
+      #so-rc-web[data-theme="dark"] .soRc__policyCard,
+      #so-rc-web[data-theme="dark"] .soRc__reportsHistoryRow,
+      #so-rc-web[data-theme="dark"] .soRc__locationsStatus,
+      #so-rc-web[data-theme="dark"] .soRc__locationsAction {
+        background: #1f222b !important;
+        border-color: #333844 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__table th {
+        background: #242833 !important;
+        border-bottom-color: #343947 !important;
+        color: #aab2bf !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__table td {
+        border-bottom-color: #303542 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__acctBtn {
+        background: #21252e !important;
+        border-color: #383e4b !important;
+        color: #e8eef8 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__avatar {
+        background: #2b303b !important;
+        border-color: #404756 !important;
+        color: #e8eef8 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__account--top .soRc__menu {
+        background: #1e222b !important;
+        border-color: #383e4b !important;
+        box-shadow: 0 16px 28px rgba(0,0,0,.4) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__account--top .soRc__menuItem:hover {
+        background: rgba(255,255,255,.06) !important;
+        border-color: #454b59 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__emptyHeroText {
+        color: #cdd3dd !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__composerInner {
+        background: #1f232c !important;
+        border-color: #3a404d !important;
+        box-shadow:
+          0 1px 0 rgba(255,255,255,.08) inset,
+          0 10px 24px rgba(0,0,0,.34),
+          0 18px 30px rgba(0,0,0,.26) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__composerFoot {
+        border-top-color: #353b48 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat textarea#soInput,
+      #so-rc-web[data-theme="dark"] #soPanel-chat #soInput.soRc__input {
+        color: #e9f1ff !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat textarea#soInput::placeholder {
+        color: #8d95a3 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__send {
+        background: #2f3541 !important;
+        border-color: #4b5362 !important;
+        color: #f2f6ff !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__attachBtn {
+        background: #2a303c !important;
+        border-color: #434a58 !important;
+        color: #d8e4f7 !important;
+      }
+
+      /* Dark header polish: visible nav icon + white welcome text */
+      #so-rc-web[data-theme="dark"] .soRc__surfaceTitleIcon {
+        color: #eaf2ff !important;
+        border-color: #eaf2ff !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__surfaceTitleIcon::after {
+        background: #eaf2ff !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__surfaceTitleIcon svg {
+        color: #eaf2ff !important;
+        opacity: 1 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soSurfaceWelcome,
+      #so-rc-web[data-theme="dark"] .soRc__surfaceWelcome {
+        color: #ffffff !important;
+      }
+
+      /* Chat bubble color refresh (brand-aligned, softer) */
+      #so-rc-web #soPanel-chat .soRc__msg:not(.soRc__msg--user) .soRc__bubble {
+        background: #ffffff !important;
+        border: 1px solid rgba(151, 164, 184, .30) !important;
+        color: #1f2a3a !important;
+        box-shadow: 0 2px 8px rgba(20, 36, 62, .06) !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__msg--user .soRc__bubble {
+        background: #f2f4f7 !important;
+        border: 1px solid rgba(160, 171, 188, .34) !important;
+        color: #233044 !important;
+        box-shadow: 0 2px 8px rgba(20, 36, 62, .07) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__msg:not(.soRc__msg--user) .soRc__bubble {
+        background: #ffffff !important;
+        border: 1px solid rgba(151, 164, 184, .28) !important;
+        color: #1d293b !important;
+        box-shadow: 0 2px 10px rgba(8, 18, 36, .22) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__msg--user .soRc__bubble {
+        background: #eef1f5 !important;
+        border: 1px solid rgba(151, 164, 184, .32) !important;
+        color: #223044 !important;
+        box-shadow: 0 2px 10px rgba(8, 18, 36, .20) !important;
+      }
+
+      /* Composer depth polish: lifted card, not neon/drop */
+      #so-rc-web #soPanel-chat .soRc__composerInner {
+        border-radius: 20px !important;
+        box-shadow:
+          0 1px 0 rgba(255,255,255,.55) inset,
+          0 8px 20px rgba(28, 42, 66, .10),
+          0 18px 30px rgba(28, 42, 66, .06) !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composerInner:focus-within {
+        box-shadow:
+          0 1px 0 rgba(255,255,255,.6) inset,
+          0 10px 24px rgba(28, 42, 66, .12),
+          0 20px 34px rgba(28, 42, 66, .08),
+          0 0 0 1px rgba(133, 149, 172, .26) !important;
+      }
+
+      /* Dark hierarchy tuning to match charcoal reference */
+      #so-rc-web[data-theme="dark"] .soRc__app {
+        background: #0f1116 !important; /* outer/nav shell darker */
+        border-color: #232731 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__main {
+        background: #171a20 !important; /* big section container tone */
+        border-color: #2b303a !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__panel > .soRc__card,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfBoard,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__card,
+      #so-rc-web[data-theme="dark"] #soPanel-integrations .soRc__card {
+        background: #171a20 !important;
+        border-color: #2b303a !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__kpi,
+      #so-rc-web[data-theme="dark"] .soRc__perfStatCard,
+      #so-rc-web[data-theme="dark"] .soRc__eventCard,
+      #so-rc-web[data-theme="dark"] .soRc__policyCard,
+      #so-rc-web[data-theme="dark"] .soRc__locationsStatus,
+      #so-rc-web[data-theme="dark"] .soRc__locationsAction,
+      #so-rc-web[data-theme="dark"] .soRc__reportsHistoryRow,
+      #so-rc-web[data-theme="dark"] .soRc__tableWrap {
+        background: #22262e !important; /* lighter than big container */
+        border-color: #343a45 !important;
+      }
+
+      /* Neutralize remaining inner blue-tinted blocks/pills */
+      #so-rc-web[data-theme="dark"] .soRc__perfKpis > .soRc__kpi,
+      #so-rc-web[data-theme="dark"] .soRc__perfRiskRow,
+      #so-rc-web[data-theme="dark"] .soRc__perfAiCard,
+      #so-rc-web[data-theme="dark"] .soRc__perfAiAction,
+      #so-rc-web[data-theme="dark"] .soRc__perfStatusPill,
+      #so-rc-web[data-theme="dark"] .soRc__perfPill,
+      #so-rc-web[data-theme="dark"] .soRc__perfHealthBadge,
+      #so-rc-web[data-theme="dark"] .soRc__numBadge,
+      #so-rc-web[data-theme="dark"] .soRc__badge,
+      #so-rc-web[data-theme="dark"] .soRc__pill,
+      #so-rc-web[data-theme="dark"] .soRc__usageMetric,
+      #so-rc-web[data-theme="dark"] .soRc__policySummaryItem,
+      #so-rc-web[data-theme="dark"] .soRc__policyListItem,
+      #so-rc-web[data-theme="dark"] .soRc__smartRow,
+      #so-rc-web[data-theme="dark"] .soRc__search,
+      #so-rc-web[data-theme="dark"] .soRc__skuCard {
+        background: #22262e !important;
+        border-color: #343a45 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__usageBar,
+      #so-rc-web[data-theme="dark"] .soRc__qty {
+        background: #1d2129 !important;
+        border-color: #333945 !important;
+      }
+
+      /* Performance Center: remove remaining blue-tinted inner cards */
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__card,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfBoard,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfStatCard,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfRiskRow,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__kpi,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__eventCard,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__policySummaryItem,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__smartRow {
+        background: #232831 !important;
+        border-color: #383f4c !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfPill,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfHealthBadge,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfStatusPill,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__numBadge,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__badge,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__pill {
+        background: #2a303b !important;
+        border-color: #404857 !important;
+        color: #d6deec !important;
+      }
+
+      /* Recent dock button should match nav option color in dark mode */
+      #so-rc-web[data-theme="dark"] .soRc__recentDockBtn {
+        width: 44px !important;
+        height: 44px !important;
+        border-radius: 12px !important;
+        border: 1px solid transparent !important;
+        background: transparent !important;
+        color: #a6adba !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recent--flyout:hover .soRc__recentDockBtn,
+      #so-rc-web[data-theme="dark"] .soRc__recent--flyout:focus-within .soRc__recentDockBtn {
+        background: rgba(255,255,255,.045) !important;
+        border-color: rgba(166,173,186,.26) !important;
+      }
+
+      /* Final dark-mode correction:
+         keep Performance section surface clean; make only individual cards charcoal */
+      #so-rc-web[data-theme="dark"] #soPanel-performance > .soRc__grid > .soRc__card {
+        background: transparent !important;
+        border-color: #2b303a !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfHero,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfKpis,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfAlerts,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfCards,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfActions {
+        background: transparent !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfStatCard,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfBoard,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__kpi,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__eventCard {
+        background: #23272f !important;
+        border-color: #3a404b !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfRiskRow,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__smartRow,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__policySummaryItem {
+        background: #20242c !important;
+        border-color: #353b46 !important;
+      }
+
+      /* Recent dock button should use the same dark tokens as nav options */
+      #so-rc-web[data-theme="dark"] .soRc__recentDockBtn {
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        color: #a6adba !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recent--flyout:hover .soRc__recentDockBtn,
+      #so-rc-web[data-theme="dark"] .soRc__recent--flyout:focus-within .soRc__recentDockBtn {
+        background: rgba(255,255,255,.045) !important;
+        border-color: rgba(166,173,186,.26) !important;
+        color: #c3cad7 !important;
+      }
+
+      /* Global dark consistency pass across all nav tabs:
+         shells stay dark-neutral; individual cards are charcoal */
+      #so-rc-web[data-theme="dark"] .soRc__panel > .soRc__grid,
+      #so-rc-web[data-theme="dark"] .soRc__panel > .soRc__grid--single {
+        background: transparent !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__card,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__kpi,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__eventCard,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__policyCard,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__tableWrap,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__reportsWrap,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__reportsHistory,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__reportsHistoryRow,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__locationsStatus,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__locationsAction,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__usageMetric,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__smartRow,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__policySummaryItem,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__policyListItem,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__search,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__skuCard,
+      #so-rc-web[data-theme="dark"] .soRc__integrationCard,
+      #so-rc-web[data-theme="dark"] .soRc__integrationsSearchWrap,
+      #so-rc-web[data-theme="dark"] .soRc__integrationsSearchInput {
+        background: #23272f !important;
+        border-color: #3a404b !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__usageBar,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__qty,
+      #so-rc-web[data-theme="dark"] .soRc__panel .soRc__perfRiskRow {
+        background: #20242c !important;
+        border-color: #353b46 !important;
+      }
+
+      /* Performance tab only: keep the parent container untinted */
+      #so-rc-web[data-theme="dark"] #soPanel-performance > .soRc__grid > .soRc__card {
+        background: transparent !important;
+        border-color: #2b303a !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfHero,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfKpis,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfAlerts,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfCards,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfActions {
+        background: transparent !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfStatCard,
+      #so-rc-web[data-theme="dark"] #soPanel-performance .soRc__perfBoard {
+        background: #23272f !important;
+        border-color: #3a404b !important;
+      }
+
+      /* Requested parity across tabs */
+      #so-rc-web[data-theme="dark"] #soPanel-integrations .soRc__integrationName {
+        color: #eef3fb !important;
+      }
+
+      /* Remove extra outer title-wrapper cards on these tabs */
+      #so-rc-web[data-theme="dark"] #soPanel-reports > .soRc__grid > .soRc__card,
+      #so-rc-web[data-theme="dark"] #soPanel-forecasts > .soRc__grid > .soRc__card,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation > .soRc__grid > .soRc__card,
+      #so-rc-web[data-theme="dark"] #soPanel-classification > .soRc__grid > .soRc__card,
+      #so-rc-web[data-theme="dark"] #soPanel-locations > .soRc__grid > .soRc__card,
+      #so-rc-web[data-theme="dark"] #soPanel-plan > .soRc__grid > .soRc__card,
+      #so-rc-web[data-theme="dark"] #soPanel-reorders > .soRc__card {
+        background: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-reports .soRc__cardHdr,
+      #so-rc-web[data-theme="dark"] #soPanel-forecasts .soRc__cardHdr,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__cardHdr,
+      #so-rc-web[data-theme="dark"] #soPanel-classification .soRc__cardHdr,
+      #so-rc-web[data-theme="dark"] #soPanel-locations .soRc__cardHdr {
+        display: none !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-reorders > .soRc__card > .soRc__cardTitle {
+        display: none !important;
+      }
+
+      /* Inner cards in those tabs should be charcoal (no blue tint) */
+      #so-rc-web[data-theme="dark"] #soPanel-reorders .soRc__emptyState,
+      #so-rc-web[data-theme="dark"] #soPanel-classification .soRc__emptyState,
+      #so-rc-web[data-theme="dark"] #soPanel-forecasts .soRc__emptyState,
+      #so-rc-web[data-theme="dark"] #soPanel-reports .soRc__reportsWrap,
+      #so-rc-web[data-theme="dark"] #soPanel-reports .soRc__reportsHistory,
+      #so-rc-web[data-theme="dark"] #soPanel-reports .soRc__reportsHistoryRow,
+      #so-rc-web[data-theme="dark"] #soPanel-locations .soRc__locationsStatus,
+      #so-rc-web[data-theme="dark"] #soPanel-locations .soRc__locationsAction,
+      #so-rc-web[data-theme="dark"] #soPanel-plan .soRc__billingHead,
+      #so-rc-web[data-theme="dark"] #soPanel-plan .soRc__usageMetric,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__kpi,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__policyCard,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__policySummaryItem,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__policyListItem,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__policySummary,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__policyList {
+        background: #23272f !important;
+        border-color: #3a404b !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__field input,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__field select,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__policyTextarea {
+        background: #20242c !important;
+        border-color: #353b46 !important;
+        color: #e6ecf7 !important;
+      }
+
+      /* Remove remaining blue tint in Policies & Automation */
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__policyCard,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__policySummary,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__policySummaryItem,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__policyList,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__policyListItem,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__kpi,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__emptyState {
+        background: #23272f !important;
+        border-color: #3a404b !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web .soRc__eventCta,
+      #so-rc-web a.soRc__eventCta,
+      #so-rc-web .soRc__menuItem,
+      #so-rc-web .soRc__menu a {
+        text-decoration: none !important;
+      }
+
+      /* Account dropdown panels: consistent button typography + centered labels */
+      #so-rc-web #soSheetBody .soRc__eventCta,
+      #so-rc-web #soSheetBody a.soRc__eventCta {
+        font-size: 13px !important;
+        line-height: 1 !important;
+        font-weight: 600 !important;
+        letter-spacing: 0 !important;
+        text-transform: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+      }
+
+      #so-rc-web #soAcctMenu .soRc__menuItem,
+      #so-rc-web #soAcctMenu .soRc__menuRow,
+      #so-rc-web #soAcctMenu .soRc__menuLabel,
+      #so-rc-web #soAcctMenu .soRc__menuValue {
+        font-size: 13px !important;
+        line-height: 1.2 !important;
+        font-weight: 600 !important;
+        letter-spacing: 0 !important;
+        text-transform: none !important;
+      }
+
+      /* Tighter account dropdown rows so card can be slimmer */
+      #so-rc-web #soAcctMenu .soRc__menuRow {
+        justify-content: flex-start !important;
+        gap: 8px !important;
+        padding: 8px 8px !important;
+      }
+      #so-rc-web #soAcctMenu .soRc__menuValue {
+        margin-left: 4px !important;
+        white-space: nowrap !important;
+      }
+      #so-rc-web #soAcctMenu #soThemeToggle {
+        margin-left: 4px !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__policyStatus,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__numBadge,
+      #so-rc-web[data-theme="dark"] #soPanel-policies-automation .soRc__badge {
+        background: #2b3039 !important;
+        border-color: #404754 !important;
+        color: #d6deec !important;
+      }
+
+      /* Dark scrollbar should be charcoal, not blue */
+      html[data-so-rc-theme="dark"],
+      body[data-so-rc-theme="dark"] {
+        scrollbar-color: #3a404b #171a20 !important;
+      }
+
+      html[data-so-rc-theme="dark"]::-webkit-scrollbar-track,
+      body[data-so-rc-theme="dark"]::-webkit-scrollbar-track,
+      #so-rc-web[data-theme="dark"] *::-webkit-scrollbar-track {
+        background: #171a20 !important;
+      }
+
+      html[data-so-rc-theme="dark"]::-webkit-scrollbar-thumb,
+      body[data-so-rc-theme="dark"]::-webkit-scrollbar-thumb,
+      #so-rc-web[data-theme="dark"] *::-webkit-scrollbar-thumb {
+        background: #3a404b !important;
+        border: 2px solid #171a20 !important;
+        border-radius: 999px !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__mainBody,
+      #so-rc-web[data-theme="dark"] .soRc__chat,
+      #so-rc-web[data-theme="dark"] .soRc__recentFlyout {
+        scrollbar-color: #3a404b #171a20 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__mainBody::-webkit-scrollbar-track,
+      #so-rc-web[data-theme="dark"] .soRc__chat::-webkit-scrollbar-track,
+      #so-rc-web[data-theme="dark"] .soRc__recentFlyout::-webkit-scrollbar-track {
+        background: #171a20 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__mainBody::-webkit-scrollbar-thumb,
+      #so-rc-web[data-theme="dark"] .soRc__chat::-webkit-scrollbar-thumb,
+      #so-rc-web[data-theme="dark"] .soRc__recentFlyout::-webkit-scrollbar-thumb {
+        background: #3a404b !important;
+        border: 2px solid #171a20 !important;
+      }
+
+      /* Recent flyout should be neutral charcoal (no blue cast) */
+      #so-rc-web[data-theme="dark"] .soRc__recentFlyout {
+        background: rgba(26, 29, 35, .97) !important;
+        border-color: #343a46 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentItem {
+        background: #242932 !important;
+        border-color: #39404d !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentItem:hover {
+        background: #2a303a !important;
+        border-color: #454d5d !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentItem.is-active {
+        background: #2d3440 !important;
+        border-color: #4b5466 !important;
+      }
+      /* Performance redesign: animated, dynamic cards and charts */
+      #so-rc-web .soRc__perfStatCard--neo {
+        display: grid;
+        gap: 10px;
+      }
+
+      #so-rc-web .soRc__perfTrendBadge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 22px;
+        padding: 0 10px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: .01em;
+      }
+
+      #so-rc-web .soRc__perfTrendBadge--up {
+        color: #12b981;
+        background: rgba(18, 185, 129, .12);
+        border-color: rgba(18, 185, 129, .26);
+      }
+
+      #so-rc-web .soRc__perfTrendBadge--down {
+        color: #ef6b73;
+        background: rgba(239, 107, 115, .12);
+        border-color: rgba(239, 107, 115, .26);
+      }
+
+      #so-rc-web .soRc__perfTrendBadge--flat {
+        color: #aeb6c4;
+        background: rgba(168, 176, 192, .1);
+        border-color: rgba(168, 176, 192, .2);
+      }
+
+      #so-rc-web .soRc__perfMiniBars {
+        height: 42px;
+        display: grid;
+        grid-template-columns: repeat(10, minmax(0, 1fr));
+        gap: 5px;
+        align-items: end;
+      }
+
+      #so-rc-web .soRc__perfMiniBar {
+        height: var(--h, 30%);
+        border-radius: 6px 6px 3px 3px;
+        opacity: .95;
+        transform: translateY(8px) scaleY(.6);
+        transform-origin: bottom;
+        animation: soPerfBarIn .62s cubic-bezier(.2,.75,.2,1) forwards;
+      }
+
+      #so-rc-web .soRc__perfMiniBar--up {
+        background: linear-gradient(180deg, rgba(52,211,153,.92), rgba(16,185,129,.35));
+      }
+
+      #so-rc-web .soRc__perfMiniBar--down {
+        background: linear-gradient(180deg, rgba(248,113,113,.92), rgba(239,68,68,.35));
+      }
+
+      #so-rc-web .soRc__perfMeter {
+        height: 10px;
+        width: 100%;
+        border-radius: 999px;
+        border: 1px solid #3a404b;
+        background: #1d2128;
+        overflow: hidden;
+      }
+
+      #so-rc-web .soRc__perfMeterFill {
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, rgba(59,130,246,.72), rgba(16,185,129,.9));
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.14);
+        transform-origin: left;
+        animation: soPerfGrow .8s cubic-bezier(.2,.75,.2,1) both;
+      }
+
+      #so-rc-web .soRc__perfBoard--chart {
+        grid-column: span 2;
+      }
+
+      #so-rc-web .soRc__perfChartMeta {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 4px 0 10px;
+      }
+
+      #so-rc-web .soRc__perfChartValue {
+        font-size: 32px;
+        line-height: 1.08;
+        font-weight: 760;
+        letter-spacing: -.01em;
+      }
+
+      #so-rc-web .soRc__perfLegend {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      #so-rc-web .soRc__dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        margin-right: 6px;
+      }
+
+      #so-rc-web .soRc__dot--a { background: #34d399; }
+      #so-rc-web .soRc__dot--b { background: #60a5fa; }
+
+      #so-rc-web .soRc__perfLineSvg {
+        width: 100%;
+        height: 230px;
+        border-radius: 12px;
+        border: 1px solid #343a45;
+        background:
+          linear-gradient(to right, rgba(255,255,255,.02) 1px, transparent 1px) 0 0 / 48px 100%,
+          linear-gradient(to top, rgba(255,255,255,.03) 1px, transparent 1px) 0 0 / 100% 40px,
+          #1f232b;
+      }
+
+      #so-rc-web .soRc__perfLineArea {
+        opacity: .72;
+      }
+
+      #so-rc-web .soRc__perfLine {
+        fill: none;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 100;
+        stroke-dashoffset: 100;
+        animation: soPerfDraw 1s cubic-bezier(.2,.75,.2,1) forwards;
+      }
+
+      #so-rc-web .soRc__perfLine--a {
+        stroke: #34d399;
+      }
+
+      #so-rc-web .soRc__perfLine--b {
+        stroke: #60a5fa;
+        animation-delay: .12s;
+      }
+
+      #so-rc-web .soRc__perfBoard--volume .soRc__perfChartValue {
+        margin-top: 4px;
+      }
+
+      #so-rc-web .soRc__perfVolumeBars {
+        margin-top: 10px;
+        height: 132px;
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 6px;
+        align-items: end;
+      }
+
+      #so-rc-web .soRc__perfVolumeBar {
+        height: var(--h, 30%);
+        border-radius: 8px 8px 4px 4px;
+        background: linear-gradient(180deg, rgba(99,102,241,.95), rgba(99,102,241,.35));
+        opacity: .94;
+        transform: translateY(8px) scaleY(.58);
+        transform-origin: bottom;
+        animation: soPerfBarIn .72s cubic-bezier(.2,.75,.2,1) forwards;
+        animation-delay: var(--d, 0ms);
+      }
+
+      #so-rc-web .soRc__perfVolumeBar--soft {
+        background: linear-gradient(180deg, rgba(52,211,153,.92), rgba(52,211,153,.34));
+      }
+
+      #so-rc-web .soRc__perfSplitMeta {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      @keyframes soPerfDraw {
+        from { stroke-dashoffset: 100; }
+        to { stroke-dashoffset: 0; }
+      }
+
+      @keyframes soPerfGrow {
+        from { transform: scaleX(0); }
+        to { transform: scaleX(1); }
+      }
+
+      @keyframes soPerfBarIn {
+        from { opacity: 0; transform: translateY(8px) scaleY(.58); }
+        to { opacity: .95; transform: translateY(0) scaleY(1); }
+      }
+
+      @media (max-width: 1200px) {
+        #so-rc-web .soRc__perfBoard--chart {
+          grid-column: span 1;
+        }
+      }
+      /* System polish pass: consistent hierarchy + interaction rhythm */
+      #so-rc-web {
+        --radius-shell: 20px;
+        --radius-card: 14px;
+        --radius-pill: 999px;
+      }
+
+      #so-rc-web .soRc__surfaceTitleText,
+      #so-rc-web .soRc__cardTitle,
+      #so-rc-web .soRc__perfBoardTitle {
+        font-size: 14px !important;
+        line-height: 1.25 !important;
+        font-weight: 680 !important;
+        letter-spacing: 0 !important;
+      }
+
+      #so-rc-web .soRc__surfaceWelcome {
+        font-size: clamp(26px, 2.2vw, 34px) !important;
+        line-height: 1.1 !important;
+        font-weight: 700 !important;
+      }
+
+      #so-rc-web .soRc__composerHelp,
+      #so-rc-web .soRc__kpiSub,
+      #so-rc-web .soRc__perfStatSub,
+      #so-rc-web .soRc__policyCardMeta,
+      #so-rc-web .soRc__locationsActionMeta,
+      #so-rc-web .soRc__reportsHistoryMeta {
+        font-size: 12px !important;
+        line-height: 1.4 !important;
+      }
+
+      #so-rc-web .soRc__card,
+      #so-rc-web .soRc__kpi,
+      #so-rc-web .soRc__perfBoard,
+      #so-rc-web .soRc__perfStatCard,
+      #so-rc-web .soRc__eventCard,
+      #so-rc-web .soRc__policyCard,
+      #so-rc-web .soRc__tableWrap,
+      #so-rc-web .soRc__locationsStatus,
+      #so-rc-web .soRc__locationsAction,
+      #so-rc-web .soRc__reportsWrap,
+      #so-rc-web .soRc__reportsHistory,
+      #so-rc-web .soRc__reportsHistoryRow,
+      #so-rc-web .soRc__emptyState {
+        border-radius: var(--radius-card) !important;
+      }
+
+      #so-rc-web .soRc__eventCta,
+      #so-rc-web .soRc__cta,
+      #so-rc-web .soRc__skuBtn,
+      #so-rc-web .soRc__smartAction,
+      #so-rc-web .soRc__send,
+      #so-rc-web .soRc__attachBtn {
+        transition: background .16s ease, border-color .16s ease, box-shadow .16s ease, color .16s ease !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__eventCta:hover,
+      #so-rc-web[data-theme="dark"] .soRc__cta:hover,
+      #so-rc-web[data-theme="dark"] .soRc__skuBtn:hover,
+      #so-rc-web[data-theme="dark"] .soRc__smartAction:hover {
+        background: #2a3039 !important;
+        border-color: #454d5c !important;
+        box-shadow: none !important;
+      }
+      /* Performance chart corrections: compact side-by-side + true chart feel */
+      #so-rc-web .soRc__perfBoardHeadRight {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      #so-rc-web .soRc__perfKpiSplit {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 46%;
+        gap: 12px;
+        align-items: center;
+      }
+
+      #so-rc-web .soRc__perfKpiText {
+        min-width: 0;
+      }
+
+      #so-rc-web .soRc__perfKpiChart {
+        min-width: 0;
+      }
+
+      #so-rc-web .soRc__perfRange {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
+        max-width: 100%;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      #so-rc-web .soRc__perfRange::-webkit-scrollbar {
+        display: none;
+      }
+
+      #so-rc-web .soRc__perfRangeBtn {
+        min-height: 24px;
+        padding: 0 10px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all .18s ease;
+      }
+
+      #so-rc-web .soRc__perfRangeBtn.is-active {
+        color: #ffffff !important;
+        border-color: rgba(46,211,183,.52) !important;
+        background: linear-gradient(180deg, rgba(71,228,200,.92), rgba(41,196,167,.86)) !important;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 0 0 1px rgba(46,211,183,.18);
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__perfRangeBtn.is-active {
+        color: #ffffff !important;
+        border-color: rgba(46,211,183,.56) !important;
+        background: linear-gradient(180deg, rgba(61,220,193,.72), rgba(33,177,150,.68)) !important;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 0 0 1px rgba(46,211,183,.2);
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__perfRangeBtn:not(.is-active) {
+        color: #b4bfd2 !important;
+      }
+
+      #so-rc-web .soRc__perfRangeBtn:hover {
+        border-color: rgba(123, 142, 170, .45) !important;
+        color: var(--text) !important;
+      }
+
+      /* Compact by default: show selected only, expand on hover/focus */
+      #so-rc-web .soRc__perfRange .soRc__perfRangeBtn:not(.is-active) {
+        max-width: 0;
+        opacity: 0;
+        padding-left: 0;
+        padding-right: 0;
+        margin: 0;
+        border-width: 0;
+        overflow: hidden;
+        pointer-events: none;
+        transform: translateX(-4px);
+      }
+
+      #so-rc-web .soRc__perfRange:hover .soRc__perfRangeBtn:not(.is-active),
+      #so-rc-web .soRc__perfRange:focus-within .soRc__perfRangeBtn:not(.is-active) {
+        max-width: 64px;
+        opacity: 1;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-width: 1px;
+        pointer-events: auto;
+        transform: translateX(0);
+      }
+
+      @media (hover: none), (pointer: coarse) {
+        #so-rc-web .soRc__perfRange .soRc__perfRangeBtn:not(.is-active) {
+          max-width: 64px;
+          opacity: 1;
+          padding-left: 10px;
+          padding-right: 10px;
+          border-width: 1px;
+          pointer-events: auto;
+          transform: none;
+        }
+      }
+
+      #so-rc-web .soRc__perfSpark {
+        width: 100%;
+        height: 58px;
+        margin-top: 2px;
+      }
+
+      #so-rc-web .soRc__perfSpark .soRc__perfSparkArea {
+        opacity: .55;
+      }
+
+      #so-rc-web .soRc__perfSpark .soRc__perfSparkLine {
+        fill: none;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 100;
+        stroke-dashoffset: 100;
+        animation: soPerfDraw .9s cubic-bezier(.2,.75,.2,1) forwards;
+      }
+
+      #so-rc-web .soRc__perfSpark.soRc__spark--up .soRc__perfSparkLine {
+        stroke: #34d399;
+      }
+
+      #so-rc-web .soRc__perfSpark.soRc__spark--up .soRc__perfSparkArea {
+        fill: rgba(52,211,153,.18);
+      }
+
+      #so-rc-web .soRc__perfSpark.soRc__spark--down .soRc__perfSparkLine {
+        stroke: #ef6b73;
+      }
+
+      #so-rc-web .soRc__perfSpark.soRc__spark--down .soRc__perfSparkArea {
+        fill: rgba(239,107,115,.15);
+      }
+
+      #so-rc-web .soRc__perfBoard--chart,
+      #so-rc-web .soRc__perfBoard--volume {
+        grid-column: span 1 !important;
+      }
+
+      #so-rc-web .soRc__perfLineSvg {
+        height: 220px !important;
+      }
+
+      #so-rc-web .soRc__perfLineSvg--volume .soRc__perfLine--volume {
+        stroke: #818cf8;
+      }
+
+      #so-rc-web .soRc__perfLineSvg--volume .soRc__perfLineArea--volume {
+        opacity: .62;
+      }
+
+      #so-rc-web .soRc__perfVolumeBars {
+        height: 92px !important;
+      }
+
+      #so-rc-web .soRc__perfAxisTicks {
+        position: relative;
+        height: 18px;
+        margin-top: 8px;
+        color: var(--muted2);
+        font-size: 11px;
+      }
+
+      #so-rc-web .soRc__perfAxisTick {
+        position: absolute;
+        bottom: 0;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        pointer-events: none;
+      }
+
+      #so-rc-web .soRc__perfAxisTick:first-child {
+        transform: translateX(0%);
+      }
+
+      #so-rc-web .soRc__perfAxisTick:last-child {
+        transform: translateX(-100%);
+      }
+
+      #so-rc-web .soRc__perfBoard--chart .soRc__perfChartInteractive,
+      #so-rc-web .soRc__perfBoard--volume .soRc__perfChartInteractive {
+        width: 100%;
+        min-height: 220px;
+      }
+
+      #so-rc-web .soRc__perfBoard--chart,
+      #so-rc-web .soRc__perfBoard--volume {
+        padding: 10px !important;
+      }
+
+      @media (max-width: 1200px) {
+        #so-rc-web .soRc__perfBoardHeadRight {
+          justify-content: flex-end;
+        }
+      }
+
+      @media (max-width: 980px) {
+        #so-rc-web .soRc__perfBoard--chart,
+        #so-rc-web .soRc__perfBoard--volume {
+          grid-column: span 2 !important;
+        }
+
+        #so-rc-web .soRc__perfKpiSplit {
+          grid-template-columns: 1fr;
+        }
+      }
+      /* KPI tile style closer to provided reference */
+      #so-rc-web .soRc__perfKpis {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+      }
+
+      #so-rc-web .soRc__perfStatCard--tile {
+        padding: 12px !important;
+        min-height: 136px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      #so-rc-web .soRc__perfTileTop {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      #so-rc-web .soRc__perfInfoDot {
+        width: 20px;
+        height: 20px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        color: var(--muted2);
+        font-size: 11px;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: transparent;
+      }
+
+      #so-rc-web .soRc__perfInfoWrap {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+      }
+
+      #so-rc-web .soRc__perfInfoBubble {
+        position: absolute;
+        bottom: calc(100% + 10px);
+        right: 0;
+        width: 220px;
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        background: var(--card);
+        color: var(--text);
+        font-size: 12px;
+        line-height: 1.4;
+        box-shadow: 0 12px 24px rgba(0,0,0,.18);
+        z-index: 25;
+      }
+
+      #so-rc-web .soRc__perfInfoBubble::after {
+        content: "";
+        position: absolute;
+        right: 10px;
+        top: 100%;
+        width: 8px;
+        height: 8px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background: var(--card);
+        transform: translateY(-4px) rotate(45deg);
+      }
+
+      #so-rc-web .soRc__perfTileSplit {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 44%;
+        gap: 12px;
+        align-items: center;
+        min-height: 78px;
+      }
+
+      #so-rc-web .soRc__perfTileSplit--stack {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+      }
+
+      #so-rc-web .soRc__perfTileSplit--units {
+        grid-template-columns: minmax(0, 1fr) 44%;
+        align-items: center;
+      }
+
+      #so-rc-web .soRc__perfTileViz {
+        position: relative;
+      }
+
+      #so-rc-web .soRc__perfMiniGain {
+        position: absolute;
+        right: 8px;
+        top: -2px;
+        font-size: 13px;
+        color: #16b989;
+        font-weight: 700;
+      }
+
+      #so-rc-web .soRc__perfTargetText {
+        color: var(--muted);
+        margin-left: 6px;
+      }
+
+      #so-rc-web .soRc__perfSegBar {
+        display: grid;
+        grid-template-columns: repeat(24, minmax(0, 1fr));
+        gap: 4px;
+        margin-top: 8px;
+      }
+
+      #so-rc-web .soRc__perfUnitsRail {
+        min-width: 0;
+      }
+
+      #so-rc-web .soRc__perfSegBar--units {
+        margin-top: 0;
+      }
+
+      #so-rc-web .soRc__perfSeg {
+        height: 36px;
+        border-radius: 3px;
+        background: #d4d9e2;
+      }
+
+      #so-rc-web .soRc__perfSeg.is-on {
+        background: #637ce8;
+      }
+
+      #so-rc-web .soRc__perfCustomersGrid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      #so-rc-web .soRc__perfCustomerCol {
+        min-width: 0;
+      }
+
+      #so-rc-web .soRc__perfDualBars {
+        margin-top: 12px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      #so-rc-web .soRc__perfDualBar {
+        height: 12px;
+        width: var(--w, 50%);
+        border-radius: 4px;
+        display: block;
+      }
+
+      #so-rc-web .soRc__perfDualBar--direct {
+        background: #5eb7d4;
+      }
+
+      #so-rc-web .soRc__perfDualBar--referral {
+        background: #e48e4f;
+      }
+
+      #so-rc-web .soRc__perfMonthBars {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+        align-items: end;
+        height: 92px;
+        margin-top: 4px;
+      }
+
+      #so-rc-web .soRc__perfMonthBarWrap {
+        display: grid;
+        gap: 6px;
+        justify-items: center;
+        align-items: end;
+      }
+
+      #so-rc-web .soRc__perfMonthBar {
+        width: 40px;
+        height: var(--h, 50%);
+        border-radius: 6px;
+        background: rgba(46, 211, 183, .28);
+      }
+
+      #so-rc-web .soRc__perfMonthBar.is-latest {
+        background: linear-gradient(180deg, rgba(46,211,183,.85), rgba(46,211,183,.45));
+      }
+
+      #so-rc-web .soRc__perfMonthLabel {
+        font-size: 11px;
+        color: var(--muted2);
+      }
+
+      #so-rc-web .soRc__perfLineSvg {
+        background:
+          linear-gradient(to right, rgba(255,255,255,.028) 1px, transparent 1px) 0 0 / 46px 100%,
+          linear-gradient(to top, rgba(255,255,255,.03) 1px, transparent 1px) 0 0 / 100% 34px,
+          #161c27 !important;
+      }
+
+      #so-rc-web[data-theme="light"] .soRc__perfLineSvg {
+        background:
+          linear-gradient(to right, rgba(15,23,42,.06) 1px, transparent 1px) 0 0 / 46px 100%,
+          linear-gradient(to top, rgba(15,23,42,.05) 1px, transparent 1px) 0 0 / 100% 34px,
+          #ffffff !important;
+        border-color: #d9e1ec !important;
+      }
+
+      #so-rc-web[data-theme="light"] .soRc__perfLine--a { stroke: #109f74 !important; }
+      #so-rc-web[data-theme="light"] .soRc__perfLine--b { stroke: #3f70e8 !important; }
+      #so-rc-web[data-theme="light"] .soRc__perfLine--volume { stroke: #5f67e6 !important; }
+
+      #so-rc-web .soRc__perfLine--a {
+        stroke: #20c997 !important;
+        stroke-width: 2.05 !important;
+      }
+
+      #so-rc-web .soRc__perfLine--b {
+        stroke: #5b8cff !important;
+        stroke-width: 2.05 !important;
+      }
+
+      #so-rc-web .soRc__perfLine--volume {
+        stroke: #7a89ff !important;
+        stroke-width: 2.05 !important;
+      }
+
+      #so-rc-web .soRc__perfLineArea {
+        opacity: .36 !important;
+      }
+
+      #so-rc-web .soRc__perfSpark .soRc__perfSparkLine {
+        stroke-width: 2.1 !important;
+      }
+
+      #so-rc-web .soRc__perfBoard--chart,
+      #so-rc-web .soRc__perfBoard--volume {
+        min-height: 0 !important;
+      }
+
+      #so-rc-web .soRc__perfBoard--chart .soRc__perfChartMeta,
+      #so-rc-web .soRc__perfBoard--volume .soRc__perfRiskMeta {
+        margin-bottom: 8px !important;
+      }
+
+      #so-rc-web .soRc__perfChartInteractive {
+        position: relative;
+      }
+
+      #so-rc-web .soRc__perfChartHover {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      #so-rc-web .soRc__perfChartCursor {
+        position: absolute;
+        top: 10px;
+        bottom: 10px;
+        width: 1px;
+        background: rgba(148, 163, 184, .72);
+      }
+
+      #so-rc-web .soRc__perfChartTip {
+        position: absolute;
+        top: 8px;
+        transform: translateX(-50%);
+        padding: 6px 8px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 600;
+        border: 1px solid var(--line);
+        background: var(--card);
+        color: var(--text);
+        white-space: nowrap;
+        box-shadow: 0 8px 20px rgba(0,0,0,.18);
+      }
+
+      @media (max-width: 980px) {
+        #so-rc-web .soRc__perfKpis {
+          grid-template-columns: 1fr !important;
+        }
+
+        #so-rc-web .soRc__perfTileSplit {
+          grid-template-columns: 1fr;
+        }
+
+        #so-rc-web .soRc__perfTileSplit--units {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 1300px) {
+        #so-rc-web .soRc__perfKpis {
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+      }
+
+      /* Final chat lock: soft grey input card, no divider line */
+      #so-rc-web #soPanel-chat .soRc__composerInner {
+        background: #f1f2f4 !important;
+        border: 1px solid #d9dde3 !important;
+        box-shadow: 0 8px 18px rgba(31, 35, 40, .08) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__composerInner::before {
+        display: none !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__composerFoot {
+        border-top: 0 !important;
+      }
+      #so-rc-web #soPanel-chat #soInput.soRc__input,
+      #so-rc-web #soPanel-chat textarea#soInput {
+        color: #1f2a3a !important;
+      }
+      #so-rc-web #soPanel-chat #soInput.soRc__input::placeholder,
+      #so-rc-web #soPanel-chat textarea#soInput::placeholder {
+        color: #8b9097 !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__composerInner {
+        background: #2a3038 !important;
+        border-color: #414b58 !important;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, .28) !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat #soInput.soRc__input,
+      #so-rc-web[data-theme="dark"] #soPanel-chat textarea#soInput {
+        color: #e8eef7 !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat #soInput.soRc__input::placeholder,
+      #so-rc-web[data-theme="dark"] #soPanel-chat textarea#soInput::placeholder {
+        color: #9ba9bc !important;
+      }
+
+      /* Top-right history (moved off sidebar) */
+      #so-rc-web .soRc__historyTop {
+        position: relative;
+      }
+      #so-rc-web,
+      #so-rc-web .soRc__surfaceHeader,
+      #so-rc-web .soRc__surfaceTopRow,
+      #so-rc-web .soRc__surfaceMeta,
+      #so-rc-web .soRc__account--top {
+        overflow: visible !important;
+      }
+      #so-rc-web .soRc__historyTopBtn {
+        height: 38px;
+        padding: 0 14px;
+        border-radius: 12px;
+        border: 1px solid #d7dce2;
+        background: #ffffff;
+        color: #1f2a3a;
+        font-size: 13px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+      }
+      #so-rc-web .soRc__historyTopIcon {
+        width: 14px;
+        height: 14px;
+        fill: currentColor;
+        flex: 0 0 14px;
+      }
+      #so-rc-web .soRc__historyTopPanel {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        width: min(340px, 82vw);
+        max-height: 360px;
+        overflow: auto;
+        border-radius: 14px;
+        border: 1px solid rgba(15, 23, 42, .15);
+        background: #ffffff;
+        box-shadow: 0 16px 30px rgba(15, 23, 42, .12);
+        padding: 10px;
+        z-index: 45;
+      }
+      #so-rc-web .soRc__historyTopPanel .soRc__recentItem {
+        background: #f3f4f6 !important;
+        border: 1px solid #e1e5eb !important;
+        box-shadow: 0 6px 14px rgba(17, 24, 39, .08) !important;
+      }
+      #so-rc-web .soRc__historyTopPanel .soRc__recentItem.is-active {
+        background: #eef1f5 !important;
+        border-color: #d6dde7 !important;
+        box-shadow: 0 8px 18px rgba(17, 24, 39, .10) !important;
+      }
+      #so-rc-web[data-theme="dark"] .soRc__historyTopBtn {
+        border-color: #383e4b !important;
+        background: #21252e !important;
+        color: #e8eef8 !important;
+      }
+      #so-rc-web[data-theme="dark"] .soRc__historyTopPanel {
+        border-color: rgba(164, 180, 201, .26);
+        background: #1f2630;
+        box-shadow: 0 18px 34px rgba(0, 0, 0, .34);
+      }
+      #so-rc-web[data-theme="dark"] .soRc__historyTopPanel .soRc__recentItem {
+        background: #2b323c !important;
+        border-color: #3f4958 !important;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, .28) !important;
+      }
+      #so-rc-web[data-theme="dark"] .soRc__historyTopPanel .soRc__recentItem.is-active {
+        background: #313a46 !important;
+        border-color: #4a5668 !important;
+      }
+      #so-rc-web .soRc__recent--flyout {
+        display: none !important;
+      }
+      @media (max-width: 980px) {
+        #so-rc-web .soRc__historyTop {
+          display: none;
+        }
+      }
+
+      /* Chat visual lock to match reference */
+      #so-rc-web #soPanel-chat .soRc__msg {
+        max-width: 920px !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__msg--assistant {
+        justify-content: flex-start !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__msg--assistant .soRc__bubble {
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__text--assistant {
+        font-size: 14px !important;
+        line-height: 1.55 !important;
+        font-weight: 500 !important;
+        color: #1f2937 !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__msg--user .soRc__bubble {
+        background: #f1f3f5 !important;
+        border: 1px solid #d7dce2 !important;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+        padding: 10px 14px !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__msg--user .soRc__text {
+        font-size: 14px !important;
+        color: #253041 !important;
+        font-weight: 500 !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__text--assistant {
+        color: #e5edf8 !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__msg--user .soRc__bubble {
+        background: #2b323c !important;
+        border-color: #3f4958 !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__msg--user .soRc__text {
+        color: #e8eef7 !important;
+      }
+
+      /* Inline dynamic frontend cards in chat */
+      #so-rc-web #soPanel-chat .soRc__chatPerfInline {
+        display: grid !important;
+        gap: 10px !important;
+        margin: 8px 0 16px !important;
+        max-width: 760px !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__chatPerfInline--snapshot {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__chatPerfCard {
+        border: 1px solid #dbe2ea !important;
+        border-radius: 10px !important;
+        background: #ffffff !important;
+        padding: 10px 12px !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__chatPerfLabel {
+        font-size: 12px !important;
+        color: #6a7688 !important;
+        margin-bottom: 4px !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__chatPerfValue {
+        font-size: 22px !important;
+        line-height: 1.15 !important;
+        font-weight: 700 !important;
+        color: #111827 !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__chatPerfInline--trend {
+        grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+        align-items: end !important;
+        border: 1px solid #dbe2ea !important;
+        border-radius: 10px !important;
+        background: #ffffff !important;
+        padding: 12px !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__chatTrendBarWrap {
+        display: grid !important;
+        gap: 6px !important;
+        justify-items: center !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__chatTrendBar {
+        width: 100% !important;
+        max-width: 34px !important;
+        border-radius: 8px !important;
+        background: linear-gradient(180deg, rgba(70, 113, 255, .9), rgba(70, 113, 255, .45)) !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__chatTrendLabel {
+        font-size: 11px !important;
+        color: #738096 !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__chatPerfCard,
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__chatPerfInline--trend {
+        background: #202833 !important;
+        border-color: #374151 !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__chatPerfValue {
+        color: #eaf2ff !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__chatPerfLabel,
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__chatTrendLabel {
+        color: #9fb0c7 !important;
+      }
+
+      /* Inline performance panel — shown in chat when user asks about their own data */
+      #so-rc-web #soPanel-chat .soRc__inlinePerfBoard {
+        border: 1px solid #dbe2ea !important;
+        border-radius: 12px !important;
+        background: #ffffff !important;
+        padding: 14px 16px !important;
+        margin: 10px 0 16px !important;
+        max-width: 760px !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__inlinePerfKpis {
+        display: flex !important;
+        gap: 20px !important;
+        flex-wrap: wrap !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__inlineKpi {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2px !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__inlineKpiVal {
+        font-size: 20px !important;
+        font-weight: 700 !important;
+        color: #111827 !important;
+        line-height: 1.2 !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__inlineKpiLbl {
+        font-size: 11px !important;
+        color: #6a7688 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.04em !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__inlineKpi--alert .soRc__inlineKpiVal {
+        color: #dc2626 !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__inlinePerfDetail {
+        margin-top: 12px !important;
+        padding-top: 10px !important;
+        border-top: 1px solid #e5e8eb !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__inlinePerfRow {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        font-size: 13px !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__inlinePerfRow--risk .soRc__inlinePerfVal {
+        color: #dc2626 !important;
+        font-weight: 600 !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__inlinePerfLabel {
+        color: #374151 !important;
+        font-size: 13px !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__inlinePerfVal {
+        color: #111827 !important;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__inlinePerfBoard {
+        background: #202833 !important;
+        border-color: #374151 !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__inlineKpiVal {
+        color: #eaf2ff !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__inlineKpiLbl {
+        color: #9fb0c7 !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__inlinePerfDetail {
+        border-top-color: #374151 !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__inlinePerfLabel {
+        color: #9fb0c7 !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__inlinePerfVal {
+        color: #eaf2ff !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__inlineKpi--alert .soRc__inlineKpiVal {
+        color: #f87171 !important;
+      }
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__inlinePerfRow--risk .soRc__inlinePerfVal {
+        color: #f87171 !important;
+      }
+
+      /* Final lock: recent delete control contrast */
+      #so-rc-web .soRc__recentDel,
+      #so-rc-web .soRc__historyTopPanel .soRc__recentDel {
+        background: #ffffff !important;   /* white inner circle */
+        color: #111827 !important;        /* black X */
+        border: 1px solid #111827 !important; /* black outer ring */
+      }
+      #so-rc-web[data-theme="dark"] .soRc__recentDel,
+      #so-rc-web[data-theme="dark"] .soRc__historyTopPanel .soRc__recentDel {
+        background: #7f8898 !important;   /* grey inner circle */
+        color: #ffffff !important;        /* white X */
+        border: 1px solid #ffffff !important; /* dark mode outer ring */
+      }
+      #so-rc-web .soRc__recentDel:hover,
+      #so-rc-web .soRc__historyTopPanel .soRc__recentDel:hover,
+      #so-rc-web[data-theme="dark"] .soRc__recentDel:hover,
+      #so-rc-web[data-theme="dark"] .soRc__historyTopPanel .soRc__recentDel:hover {
+        color: #ffffff !important;
+        border-color: #c6283e !important;
+        background: #d84c61 !important;
+      }
+
+      /* Final shell geometry lock: keep inner white card as a true inset card on all sides */
+      #so-rc-web .soRc__app {
+        padding: 8px 12px 10px 12px !important;
+        overflow: hidden !important;
+      }
+      #so-rc-web .soRc__main {
+        margin: 0 0 10px 0 !important;
+        height: calc(100% - 10px) !important;
+        max-height: calc(100% - 10px) !important;
+        border-radius: 18px !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+      }
+      #so-rc-web .soRc__mainBody {
+        min-height: 0 !important;
+      }
+
+      /* Light mode: keep inner surface clearly white so card-within-card reads on all edges */
+      #so-rc-web[data-theme="light"] .soRc__main {
+        background: #ffffff !important;
+        border: 0 !important;
+        box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08) !important;
+      }
+
+      /* Chat mode final lock: keep top snug and preserve rounded white-card bottom */
+      #so-rc-web.is-chat-mode .soRc__app {
+        box-sizing: border-box !important;
+        padding-top: 16px !important;
+        padding-bottom: 16px !important;
+      }
+      #so-rc-web.is-chat-mode .soRc__main {
+        margin: 0 !important;
+        height: auto !important;
+        max-height: none !important;
+        min-height: 0 !important;
+        align-self: stretch !important;
+        border-radius: 18px !important;
+        overflow: hidden !important;
+        position: relative !important;
+      }
+      #so-rc-web.is-chat-mode .soRc__mainBody {
+        min-height: 0 !important;
+        height: 100% !important;
+      }
+      #so-rc-web[data-theme="light"].is-chat-mode .soRc__main::after { content: none !important; }
+
+    </style>
+
