@@ -18,10 +18,6 @@
           mobileMenuBtn: root.querySelector('#soMobileMenuBtn'),
           mobileClose: root.querySelector('#soMobileClose'),
           attachBtn: root.querySelector('#soAttachBtn'),
-          filterVendor: root.querySelector('#soFilterVendor'),
-          filterCategory: root.querySelector('#soFilterCategory'),
-          filterPrice: root.querySelector('#soFilterPrice'),
-          filterSort: root.querySelector('#soFilterSort'),
           newChat: root.querySelector('#soNewChatBtn'),
           recentList: root.querySelector('#soRecentList'),
           recentListTop: root.querySelector('#soRecentListTop'),
@@ -84,8 +80,6 @@ proceedBtn: root.querySelector('#soProceedBtn'),
           missingBadge: root.querySelector('#soMissingBadge'),
           assumptionsList: root.querySelector('#soAssumptionsList'),
           missingList: root.querySelector('#soMissingList'),
-          shopSearch: root.querySelector('#soShopSearch'),
-          shopGrid: root.querySelector('#soShopGrid'),
                     companyName: root.querySelector('#soCompanyName'),
           composer: root.querySelector('.soRc__composer'),
 avatar: root.querySelector('#soAvatar'),
@@ -839,8 +833,8 @@ function normalizeAssistantDisplayText(text = '') {
     .replace(/\*\*([^*]+)\*\*/g, '$1')
     .replace(/__([^_]+)__/g, '$1')
     // Keep list formatting readable
-    .replace(/^\s*[-*]\s+/gm, 'â€¢ ')
-    .replace(/\n(?=(?:\s*â€¢|\s*\d+\.)\s*)/g, '\n\n')
+    .replace(/^\s*[-*]\s+/gm, '• ')
+    .replace(/\n(?=(?:\s*•|\s*\d+\.)\s*)/g, '\n\n')
     .replace(/\be\s*\.\s*g\s*\./gi, 'e.g.')
     .replace(/\bi\s*\.\s*e\s*\./gi, 'i.e.')
     .replace(/\betc\s*\./gi, 'etc.')
@@ -991,7 +985,7 @@ const jumpBtn = document.createElement('button');
 jumpBtn.className = 'soRc__jumpBtn';
 jumpBtn.type = 'button';
 jumpBtn.setAttribute('aria-label', 'Jump to latest');
-jumpBtn.innerHTML = 'â†“';
+  jumpBtn.innerHTML = '&darr;';
 els.chatWrap?.appendChild(jumpBtn);
 
 const toastHost = document.createElement('div');
@@ -1016,15 +1010,6 @@ function updateJumpButton() {
   const nearBottom = (els.chat.scrollHeight - els.chat.scrollTop - els.chat.clientHeight) < 100;
   const hasMessages = !!currentChat()?.messages?.length;
   jumpBtn.classList.toggle('is-open', hasMessages && !nearBottom);
-}
-
-function getShopQty(id) {
-  return Math.max(1, Number(uiPrefs.shopQty?.[id] || 1));
-}
-function setShopQty(id, qty) {
-  uiPrefs.shopQty = uiPrefs.shopQty || {};
-  uiPrefs.shopQty[id] = Math.max(1, Number(qty || 1));
-  saveState();
 }
 
 function toBackendMessages(chat) {
@@ -1563,7 +1548,7 @@ function renderPolicyCard(key) {
       if (summary) {
         summary.innerHTML = policySummaryHtml([
           {
-            label: `Available to buy (Budget ${policyMoney(data.budget)} â€¢ Committed ${policyMoney(data.committed)})`,
+            label: `Available to buy (Budget ${policyMoney(data.budget)} • Committed ${policyMoney(data.committed)})`,
             value: policyMoney(data.available)
           }
         ]);
@@ -1740,7 +1725,7 @@ function renderPoliciesAutomation() {
   const automationSub = root.querySelector('#soPoliciesAutomationSub');
   const totalRulesDisplay = autoRules.length || (automation.enabled ? 1 : 0);
   if (automationKpi) automationKpi.textContent = `${autoCoverage.toFixed(0)}%`;
-  if (automationSub) automationSub.textContent = `${autoEnabled}/${totalRulesDisplay} active rules â€¢ ${automation.cadence || 'Daily'}`;
+  if (automationSub) automationSub.textContent = `${autoEnabled}/${totalRulesDisplay} active rules • ${automation.cadence || 'Daily'}`;
 }
 
 function syncOpenToBuyAvailableFromInputs() {
@@ -2774,11 +2759,6 @@ function renderDeleteModal() {
   els.deleteModal.setAttribute('aria-hidden', 'false');
 }
 
-function renderShopSkeleton(count = 8) {
-  if (!els.shopGrid) return;
-  els.shopGrid.innerHTML = Array.from({ length: count }).map(() => `<div class="soRc__skeleton"></div>`).join('');
-}
-
 function heroIntroText() {
   const n = String(CUSTOMER_FIRST_NAME || '').trim();
   return n ? `Hey ${n}, what's on your mind?` : "Hey, what's on your mind?";
@@ -3139,7 +3119,7 @@ function renderChat() {
       }
     }
 
-    if (stream.stopped && out && !out.endsWith('â€¦')) out += 'â€¦';
+    if (stream.stopped && out && !out.endsWith('...')) out += '...';
     const storedText = normalizeAssistantDisplayText(out);
     if (!storedText) {
       // Stream produced no visible text; remove placeholder bubble.
@@ -3162,10 +3142,6 @@ function renderChat() {
     showStop(false);
     updateSendState();
   }
-}
-
-async function loadShopCatalog(q = '') {
-  state.shop = [];
 }
 
 async function refreshPlanFromBackend() {
@@ -3233,7 +3209,7 @@ async function refreshPlanFromBackend() {
 async function loadReorders() {
   if (!els.reordersList) return;
 
-  els.reordersList.innerHTML = `<div class="soRc__emptyState">Loadingâ€¦</div>`;
+  els.reordersList.innerHTML = `<div class="soRc__emptyState">Loading...</div>`;
   if (els.reordersKpis) els.reordersKpis.innerHTML = '';
 
   try {
@@ -3256,7 +3232,7 @@ const r = await fetch(u.toString(), { headers: authHeaders() });
       const paidCount = items.filter((o) => String(o.financialStatus || '').toLowerCase() === 'paid').length;
       const avgValue = items.length ? (totalValue / items.length) : 0;
       els.reordersKpis.innerHTML = `
-        <div class="soRc__kpi"><div class="soRc__kpiLabel">Open reorder actions</div><div class="soRc__kpiValue">${items.length}</div><div class="soRc__kpiSub">${paidCount} paid â€¢ ${Math.max(0, items.length - paidCount)} pending</div></div>
+        <div class="soRc__kpi"><div class="soRc__kpiLabel">Open reorder actions</div><div class="soRc__kpiValue">${items.length}</div><div class="soRc__kpiSub">${paidCount} paid • ${Math.max(0, items.length - paidCount)} pending</div></div>
         <div class="soRc__kpi"><div class="soRc__kpiLabel">Suggested reorder value</div><div class="soRc__kpiValue">${money(totalValue)}</div><div class="soRc__kpiSub">Current action queue</div></div>
         <div class="soRc__kpi"><div class="soRc__kpiLabel">Average action size</div><div class="soRc__kpiValue">${money(avgValue)}</div><div class="soRc__kpiSub">Per reorder action</div></div>
       `;
@@ -3264,7 +3240,7 @@ const r = await fetch(u.toString(), { headers: authHeaders() });
     els.reordersList.innerHTML = items.length
       ? items.map(o => `
         <div class="soRc__emptyState">
-          ${esc(o.name)} â€” ${Number(o.total || 0).toFixed(2)} ${esc(o.currency || 'CAD')} â€” ${esc(o.financialStatus || 'unknown')}
+${esc(o.name)} - ${Number(o.total || 0).toFixed(2)} ${esc(o.currency || 'CAD')} - ${esc(o.financialStatus || 'unknown')}
         </div>
       `).join('')
       : `<div class="soRc__emptyState">No reorder actions right now.</div>`;
@@ -5252,7 +5228,7 @@ function apiAccessSheetHtml(status = {}) {
     </div>
     <div class="soRc__field">
       <label>Current key</label>
-      <div class="soRc__fieldValue">${last4 ? `â€¢â€¢â€¢â€¢${escapeHtml(last4)}` : 'No API key generated'}</div>
+      <div class="soRc__fieldValue">${last4 ? `****${escapeHtml(last4)}` : 'No API key generated'}</div>
     </div>
     <div class="soRc__field">
       <label>Created</label>
@@ -5683,13 +5659,13 @@ async function handleOpenToBuyUpdateFromChat(text) {
         function setRisk(r) {
           const risk = (r || 'unknown').toLowerCase();
           if (els.riskKpi) els.riskKpi.dataset.risk = risk;
-          if (els.riskVal) els.riskVal.textContent = risk === 'low' ? 'Low' : risk === 'medium' ? 'Moderate' : risk === 'high' ? 'High' : 'â€”';
+  if (els.riskVal) els.riskVal.textContent = risk === 'low' ? 'Low' : risk === 'medium' ? 'Moderate' : risk === 'high' ? 'High' : '-';
         }
 
                 function renderPlan() {
   renderBillingUsageSummary();
   if (els.budgetVal) els.budgetVal.textContent = money(state.plan.budget);
-  if (els.marginVal) els.marginVal.textContent = state.plan.margin == null ? 'â€”' : `${state.plan.margin}%`;
+  if (els.marginVal) els.marginVal.textContent = state.plan.margin == null ? '-' : `${state.plan.margin}%`;
   setRisk(state.plan.risk);
 
   const liveItems = Array.isArray(state.liveCart?.items) ? state.liveCart.items : [];
@@ -5715,7 +5691,7 @@ async function handleOpenToBuyUpdateFromChat(text) {
           </td>
           <td>
             <div class="soRc__qty">
-              <button class="soRc__qtyBtn" type="button" data-qty-dec="${idx}">âˆ’</button>
+              <button class="soRc__qtyBtn" type="button" data-qty-dec="${idx}">-</button>
               <div class="soRc__qtyVal">${item.quantity}</div>
               <button class="soRc__qtyBtn" type="button" data-qty-inc="${idx}">+</button>
             </div>
@@ -6521,98 +6497,7 @@ try {
           updateSendState();
         }
 
-        function ensureShopFilters() {
-  if (!uiPrefs.shopFilters) {
-    uiPrefs.shopFilters = { vendor: 'all', category: 'all', price: 'all', sort: 'relevance' };
-  }
-}
-
-function renderShopFilterControls() {
-  ensureShopFilters();
-  const vendors = [...new Set(state.shop.map(x => x.vendor).filter(Boolean))].sort();
-  const cats = [...new Set(state.shop.map(x => x.category).filter(Boolean))].sort();
-
-  if (els.filterVendor) {
-    els.filterVendor.innerHTML = `<option value="all">All vendors</option>` + vendors.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('');
-    els.filterVendor.value = uiPrefs.shopFilters.vendor || 'all';
-  }
-  if (els.filterCategory) {
-    els.filterCategory.innerHTML = `<option value="all">All categories</option>` + cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
-    els.filterCategory.value = uiPrefs.shopFilters.category || 'all';
-  }
-  if (els.filterPrice) els.filterPrice.value = uiPrefs.shopFilters.price || 'all';
-  if (els.filterSort) els.filterSort.value = uiPrefs.shopFilters.sort || 'relevance';
-}
-
-        function renderShop(q = '') {
-  ensureShopFilters();
-  const query = (q || '').toLowerCase();
-
-  let items = state.shop.filter(x => {
-    const textMatch = !query ||
-      x.name.toLowerCase().includes(query) ||
-      (x.vendor || '').toLowerCase().includes(query) ||
-      (x.category || '').toLowerCase().includes(query);
-
-    const vendorMatch = uiPrefs.shopFilters.vendor === 'all' || x.vendor === uiPrefs.shopFilters.vendor;
-    const categoryMatch = uiPrefs.shopFilters.category === 'all' || x.category === uiPrefs.shopFilters.category;
-
-    let priceMatch = true;
-    const p = Number(x.price || 0);
-    if (uiPrefs.shopFilters.price === '0-25') priceMatch = p >= 0 && p < 25;
-    if (uiPrefs.shopFilters.price === '25-75') priceMatch = p >= 25 && p < 75;
-    if (uiPrefs.shopFilters.price === '75-150') priceMatch = p >= 75 && p < 150;
-    if (uiPrefs.shopFilters.price === '150+') priceMatch = p >= 150;
-
-    return textMatch && vendorMatch && categoryMatch && priceMatch;
-  });
-
-  if (uiPrefs.shopFilters.sort === 'price_asc') items.sort((a,b) => a.price - b.price);
-  if (uiPrefs.shopFilters.sort === 'price_desc') items.sort((a,b) => b.price - a.price);
-  if (uiPrefs.shopFilters.sort === 'name_asc') items.sort((a,b) => a.name.localeCompare(b.name));
-
-  renderShopFilterControls();
-
-  if (!els.shopGrid) return;
-
-    if (!items.length) {
-    els.shopGrid.innerHTML = `
-      <div class="soRc__emptyShop">
-        <div class="soRc__emptyShopIcon">ðŸ”Ž</div>
-        <div class="soRc__emptyShopText">No products found.</div>
-        <button class="soRc__skuBtn" type="button" data-clear-shop-search="1">Clear search</button>
-      </div>
-    `;
-    return;
-  }
-
-  els.shopGrid.innerHTML = items.map(x => `
-    <div class="soRc__skuCard">
-      <div class="soRc__skuMedia">
-        ${x.imageUrl
-          ? `<img class="soRc__skuImg" src="${esc(x.imageUrl)}" alt="${esc(x.name)}" loading="lazy" />`
-          : `<div class="soRc__skuImgFallback">No image</div>`
-        }
-      </div>
-      <div class="soRc__skuTitle">${esc(x.name)}</div>
-      <div class="soRc__skuMeta">
-  <span class="soRc__skuVendor">${esc(x.vendor || '')}</span>
-  <span class="soRc__skuPrice">${money(x.price)}</span>
-</div>
-      <div class="soRc__shopQtyRow">
-  <div class="soRc__qty">
-    <button class="soRc__qtyBtn" type="button" data-shop-qty-dec="${esc(x.id)}">âˆ’</button>
-    <div class="soRc__qtyVal">${getShopQty(x.id)}</div>
-    <button class="soRc__qtyBtn" type="button" data-shop-qty-inc="${esc(x.id)}">+</button>
-  </div>
-</div>
-<div class="soRc__skuActions">
-  <button class="soRc__skuBtn" type="button" data-add="${esc(x.id)}" title="Add to cart">Add to cart</button>
-  <button class="soRc__skuBtn--ask" type="button" data-ask-ai="${esc(x.id)}" title="Ask AI about this product">Ask AI</button>
-</div>
-    </div>
-  `).join('');
-}
+        function ensureShopFilters() {}
 
         /* Attach menu */
 const attachMenu = document.createElement('div');
@@ -7469,15 +7354,7 @@ if (perfAction) {
 
           const clearShop = e.target.closest('[data-clear-shop-search]');
 if (clearShop) {
-  if (els.shopSearch) els.shopSearch.value = '';
-  uiPrefs.shopQuery = '';
-  saveState();
-  try {
-    await loadShopCatalog('');
-    renderShop('');
-  } catch {
-    showToast('Could not load catalog', 'err');
-  }
+  e.preventDefault();
   return;
 }
 
@@ -7628,54 +7505,6 @@ root.addEventListener('mouseleave', (e) => {
   if (hover) hover.hidden = true;
 }, true);
 
-const sInc = e.target.closest('[data-shop-qty-inc]');
-if (sInc) {
-  const id = sInc.getAttribute('data-shop-qty-inc');
-  setShopQty(id, getShopQty(id) + 1);
-  renderShop(uiPrefs.shopQuery || '');
-  return;
-}
-
-const sDec = e.target.closest('[data-shop-qty-dec]');
-if (sDec) {
-  const id = sDec.getAttribute('data-shop-qty-dec');
-  setShopQty(id, Math.max(1, getShopQty(id) - 1));
-  renderShop(uiPrefs.shopQuery || '');
-  return;
-}
-
-                    const add = e.target.closest('[data-add]');
-if (add) {
-  const id = add.getAttribute('data-add');
-  const item = state.shop.find(x => x.id === id);
-  if (!item) return;
-
-  const qtyToAdd = getShopQty(id);
-
-  try {
-    await addSingleVariantToShopifyCart(item.id, qtyToAdd);
-    await getLiveCartContext();
-    renderPlan();
-    showToast('Added to cart', 'ok');
-  } catch {
-    showToast('Could not add to cart', 'err');
-  }
-  return;
-}
-
-          const ask = e.target.closest('[data-ask-ai]');
-          if (ask) {
-            const id = ask.getAttribute('data-ask-ai');
-            const item = state.shop.find(x => x.id === id);
-            if (!item) return;
-            if (!currentChat()) await createChat(`Ask AI ${item.name}`);
-            setActiveTab('chat');
-            addMessage('user', `Should I add "${item.name}" for my current profile and budget?`);
-            await respond();
-            renderChat();
-            return;
-          }
-
           const inc = e.target.closest('[data-qty-inc]');
 if (inc) {
   const i = Number(inc.getAttribute('data-qty-inc'));
@@ -7729,31 +7558,8 @@ els.deleteModal?.addEventListener('click', (e) => {
   }
 });
 
-        els.shopSearch?.addEventListener('input', async () => {
-  uiPrefs.shopQuery = els.shopSearch.value || '';
-  saveState();
-  try {
-    await loadShopCatalog(uiPrefs.shopQuery);
-    renderShop(uiPrefs.shopQuery);
-  } catch {
-    showToast('Could not load catalog', 'err');
-  }
-});
-
 els.integrationSearch?.addEventListener('input', () => {
   renderIntegrationsPanel();
-});
-
-[els.filterVendor, els.filterCategory, els.filterPrice, els.filterSort].forEach(el => {
-  el?.addEventListener('change', () => {
-    ensureShopFilters();
-    uiPrefs.shopFilters.vendor = els.filterVendor?.value || 'all';
-    uiPrefs.shopFilters.category = els.filterCategory?.value || 'all';
-    uiPrefs.shopFilters.price = els.filterPrice?.value || 'all';
-    uiPrefs.shopFilters.sort = els.filterSort?.value || 'relevance';
-    saveState();
-    renderShop(uiPrefs.shopQuery || '');
-  });
 });
 
         function setCompany(name) {
@@ -7888,7 +7694,6 @@ renderChat();
 renderPlan();
 renderPoliciesAutomation();
 renderReportsHistory();
-renderShopSkeleton();
 const urlTab = new URLSearchParams(window.location.search).get('tab');
 const urlConnected = new URLSearchParams(window.location.search).get('connected');
 const urlConnectError = new URLSearchParams(window.location.search).get('connect_error');
@@ -7901,8 +7706,6 @@ saveState();
 setActiveTab(initialTab);
 
 setSub(uiPrefs.activeSubTab || 'cart');
-
-if (els.shopSearch) els.shopSearch.value = uiPrefs.shopQuery || '';
 
 if (urlConnectError) {
   showToast(`Connect error: ${urlConnectError}`, 'err');
@@ -7966,13 +7769,6 @@ renderReportsHistory();
 
 loadPerformanceStatus().catch(() => {});
 loadPoliciesAutomation().catch(() => {});
-
-loadShopCatalog(uiPrefs.shopQuery || '')
-  .then(() => {
-    renderShop(uiPrefs.shopQuery || '');
-    renderPlan(); // refresh cart images once catalog is in memory
-  })
-  .catch(() => showToast('Could not load catalog', 'err'));
 
       })();
 
