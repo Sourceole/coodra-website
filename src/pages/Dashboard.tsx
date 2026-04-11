@@ -16,7 +16,7 @@ type BootPayload = {
 
 type ThemeMode = 'light' | 'dark'
 const GLOBAL_THEME_KEY = 'so_theme_last_v1'
-const RC_ASSET_VERSION = '2026-04-09-uxfix-1'
+const RC_ASSET_VERSION = '2026-04-11-retailer-copy-polish-1'
 
 declare global {
   interface Window {

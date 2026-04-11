@@ -1,5 +1,6 @@
-﻿import { useEffect, type MouseEvent } from 'react'
+import { useEffect, type CSSProperties, type MouseEvent } from 'react'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import './LandingPage.css'
 
 const integrationShowcaseItems = [
@@ -18,24 +19,43 @@ const integrationShowcaseItems = [
   {
     name: 'Lightspeed',
     description: 'Connect POS sell-through and stock movement data.',
-    iconSrc: 'https://www.google.com/s2/favicons?sz=128&domain=lightspeedhq.com',
+    iconSrc: '/images/integrations/lightspeed.png?v=20260410',
     className: 'brand-lightspeed',
   },
   {
     name: 'Clover',
     description: 'Bring transaction and location trends into one view.',
-    iconSrc: 'https://www.google.com/s2/favicons?sz=128&domain=clover.com',
+    iconSrc: '/images/integrations/clover.png?v=20260410',
     className: 'brand-clover',
   },
   {
     name: 'Moneris',
     description: 'Pull payment and sales snapshots into decision workflows.',
-    iconSrc: 'https://www.google.com/s2/favicons?sz=128&domain=moneris.com',
+    iconSrc: '/images/integrations/moneris.png?v=20260410',
     className: 'brand-moneris',
   },
 ]
 
+const heroRotatingPhrases = [
+  'Retail Decisions',
+  'Profitable Actions',
+  'Clear Priorities',
+  'Faster Execution',
+]
+
+const heroGridCells = Array.from({ length: 140 }, (_, index) => ({
+  index,
+  delay: (index % 14) * 45 + Math.floor(index / 14) * 36,
+  accent: index % 17 === 0 || index % 29 === 0,
+}))
+
 export default function LandingPage() {
+  const [phraseIndex, setPhraseIndex] = useState(0)
+  const [typedPhrase, setTypedPhrase] = useState('')
+  const [typingPhase, setTypingPhase] = useState<'typing' | 'holding' | 'deleting'>('typing')
+  const [cursorVisible, setCursorVisible] = useState(true)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   const handleIntegrationVisualMove = (event: MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect()
     const x = event.clientX - rect.left
@@ -74,6 +94,78 @@ export default function LandingPage() {
     }
   }, [])
 
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setCursorVisible((visible) => !visible)
+    }, 520)
+    return () => window.clearInterval(id)
+  }, [])
+
+  useEffect(() => {
+    const phrase = heroRotatingPhrases[phraseIndex]
+    let timeout = 0
+
+    if (typingPhase === 'typing') {
+      if (typedPhrase.length < phrase.length) {
+        timeout = window.setTimeout(() => {
+          setTypedPhrase(phrase.slice(0, typedPhrase.length + 1))
+        }, 58)
+      } else {
+        timeout = window.setTimeout(() => {
+          setTypingPhase('holding')
+        }, 900)
+      }
+    } else if (typingPhase === 'holding') {
+      timeout = window.setTimeout(() => {
+        setTypingPhase('deleting')
+      }, 850)
+    } else if (typedPhrase.length > 0) {
+      timeout = window.setTimeout(() => {
+        setTypedPhrase(phrase.slice(0, typedPhrase.length - 1))
+      }, 36)
+    } else {
+      timeout = window.setTimeout(() => {
+        setPhraseIndex((current) => (current + 1) % heroRotatingPhrases.length)
+        setTypingPhase('typing')
+      }, 240)
+    }
+
+    return () => window.clearTimeout(timeout)
+  }, [phraseIndex, typedPhrase, typingPhase])
+
+  useEffect(() => {
+    const closeOnDesktop = () => {
+      if (window.innerWidth > 760) {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    window.addEventListener('resize', closeOnDesktop, { passive: true })
+    window.addEventListener('keydown', closeOnEscape)
+    return () => {
+      window.removeEventListener('resize', closeOnDesktop)
+      window.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (window.innerWidth <= 760) {
+      document.body.style.overflow = isMobileMenuOpen ? 'hidden' : ''
+    }
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMobileMenuOpen])
+
+  const closeMobileMenu = () => setIsMobileMenuOpen(false)
+
   return (
     <div className="site-shell" id="top">
       {/* Ambient background orbs */}
@@ -93,6 +185,20 @@ export default function LandingPage() {
               className="coodra-logo-img"
             />
           </a>
+
+          <button
+            type="button"
+            className={`nav-toggle${isMobileMenuOpen ? ' is-open' : ''}`}
+            aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-nav-menu"
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+
           <ul className="nav-links">
             <li><a href="/#how-it-works">How it works</a></li>
             <li><a href="/#decision">Decision Engine</a></li>
@@ -103,31 +209,55 @@ export default function LandingPage() {
             <Link to="/login" className="btn btn-ghost">Sign in</Link>
             <Link to="/signup" className="btn btn-primary">Start Free</Link>
           </div>
+
+          <div
+            id="mobile-nav-menu"
+            className={`mobile-nav-menu${isMobileMenuOpen ? ' is-open' : ''}`}
+          >
+            <ul className="mobile-nav-links">
+              <li><a href="/#how-it-works" onClick={closeMobileMenu}>How it works</a></li>
+              <li><a href="/#decision" onClick={closeMobileMenu}>Decision Engine</a></li>
+              <li><a href="/#proof" onClick={closeMobileMenu}>Proof</a></li>
+              <li><Link to="/pricing" onClick={closeMobileMenu}>Pricing</Link></li>
+            </ul>
+            <div className="mobile-nav-actions">
+              <Link to="/login" className="btn btn-ghost" onClick={closeMobileMenu}>Sign in</Link>
+              <Link to="/signup" className="btn btn-primary" onClick={closeMobileMenu}>Start Free</Link>
+            </div>
+          </div>
         </nav>
       </header>
 
       <main>
         {/* Hero */}
         <section className="hero container">
+          <div className="hero-data-grid" aria-hidden="true">
+            {heroGridCells.map((cell) => (
+              <span
+                key={cell.index}
+                className={`hero-data-grid-cell${cell.accent ? ' is-accent' : ''}`}
+                style={{ '--cell-delay': `${cell.delay}ms` } as CSSProperties}
+              />
+            ))}
+          </div>
+
           <div className="hero-copy">
             <p className="eyebrow">Built for retail teams of every size</p>
-            <h1>
-              Turn live store data into
-              <span className="headline-accent">Retail Decisions</span>
-            </h1>
+            <h1 className="hero-main-line">Turn live store data into</h1>
+            <div className="hero-rotate-wrap" aria-live="polite" aria-atomic="true">
+              <span className="hero-rotate-text">
+                {typedPhrase}
+                <span className={`hero-caret${cursorVisible ? ' is-visible' : ''}`} aria-hidden="true">
+                  |
+                </span>
+              </span>
+            </div>
             <p className="hero-subhead">
               Coodra tracks sales, inventory, and demand signals in real time, then recommends exactly what to reorder, replace, remove, and protect so your team can act fast.
             </p>
             <div className="hero-actions">
               <Link to="/signup" className="btn btn-primary">Start Free</Link>
               <a href="/#how-it-works" className="btn btn-secondary">See 3-step flow</a>
-            </div>
-          </div>
-
-          <div className="hero-stage" aria-hidden="true">
-            <div className="hero-globe-wrap">
-              <div className="hero-globe-fallback" />
-              <canvas id="coodra-globe" className="hero-globe-canvas" />
             </div>
           </div>
 
@@ -171,6 +301,23 @@ export default function LandingPage() {
                 <div className="how-trigger is-active" data-how-step="1" data-tag="Step 1" data-title="Connect your data" data-body="Sync POS, catalog, and inventory data so Coodra sees what is happening now." />
                 <div className="how-trigger" data-how-step="2" data-tag="Step 2" data-title="Get ranked actions" data-body="Coodra scores demand shifts, margin pressure, and stock risk to prioritize what matters most." />
                 <div className="how-trigger" data-how-step="3" data-tag="Step 3" data-title="Approve and move" data-body="Approve recommendations fast and keep your team focused on high-impact decisions." />
+              </div>
+              <div className="how-mobile-list" aria-label="Three steps">
+                <article className="how-pill-card">
+                  <p className="how-step-tag">Step 1</p>
+                  <h3>Connect your data</h3>
+                  <p>Sync POS, catalog, and inventory data so Coodra sees what is happening now.</p>
+                </article>
+                <article className="how-pill-card">
+                  <p className="how-step-tag">Step 2</p>
+                  <h3>Get ranked actions</h3>
+                  <p>Coodra scores demand shifts, margin pressure, and stock risk to prioritize what matters most.</p>
+                </article>
+                <article className="how-pill-card">
+                  <p className="how-step-tag">Step 3</p>
+                  <h3>Approve and move</h3>
+                  <p>Approve recommendations fast and keep your team focused on high-impact decisions.</p>
+                </article>
               </div>
             </div>
           </div>
@@ -371,4 +518,9 @@ export default function LandingPage() {
     </div>
   )
 }
+
+
+
+
+
 
