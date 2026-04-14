@@ -22,7 +22,7 @@
   padding: 10px 14px;
   border-radius: 10px;
   font-size: 14px;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-body, 'Nunito', 'Segoe UI', sans-serif);
 }
 
 .dashboard-loading {
@@ -42,4 +42,5 @@
   border: 1px solid rgba(245, 158, 11, 0.42);
   background: rgba(54, 36, 12, 0.92);
 }
+
 

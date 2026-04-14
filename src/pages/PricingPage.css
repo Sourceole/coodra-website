@@ -1,7 +1,8 @@
-﻿.pricing-page {
+.pricing-page {
   --text: #0a1a31;
   --muted: #506786;
   --brand: #2fd7c6;
+  --container: min(1180px, calc(100vw - 4.2rem));
   min-height: 100vh;
   color: var(--text);
   background:
@@ -10,17 +11,31 @@
     linear-gradient(155deg, #f4f8ff, #ecf3ff 52%, #e5eefc);
 }
 
+.pricing-page .container {
+  width: var(--container);
+  margin: 0 auto;
+}
+
 .pricing-header {
   position: sticky;
   top: 0;
   z-index: 30;
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
-  background: rgba(244, 248, 255, 0.78);
-  border-bottom: 1px solid rgba(65, 179, 174, 0.14);
+  padding: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: transparent;
+  border-bottom: 0;
 }
 
 .pricing-nav {
+  position: relative;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   height: 72px;
   padding: 0;
 }
@@ -36,13 +51,17 @@
 }
 
 .pricing-links {
+  display: flex;
+  align-items: center;
   gap: 1.25rem;
 }
 
 .pricing-links a {
   text-decoration: none;
   color: var(--muted);
-  transition: color 0.15s ease;
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: color 220ms cubic-bezier(0.22, 0.8, 0.3, 1);
 }
 
 .pricing-links a:hover,
@@ -51,7 +70,107 @@
 }
 
 .pricing-actions {
+  display: inline-flex;
+  align-items: center;
   gap: 0.58rem;
+}
+
+.btn {
+  --btn-bg: transparent;
+  --btn-border: rgba(125, 177, 255, 0.26);
+  --btn-text: var(--text);
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  padding: 0.68rem 1.2rem;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: transform 220ms cubic-bezier(0.22, 0.8, 0.3, 1), border-color 220ms cubic-bezier(0.22, 0.8, 0.3, 1), box-shadow 220ms cubic-bezier(0.22, 0.8, 0.3, 1), background 220ms cubic-bezier(0.22, 0.8, 0.3, 1);
+  text-shadow: none;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.24), transparent 42%);
+  opacity: 0;
+  transition: opacity 220ms cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-2px) scale(1.01);
+  border-color: rgba(47, 199, 187, 0.56);
+  box-shadow: 0 14px 30px rgba(47, 199, 187, 0.28);
+}
+
+.btn:hover::before,
+.btn:focus-visible::before {
+  opacity: 1;
+}
+
+.btn-primary {
+  --btn-bg: linear-gradient(140deg, #2fd7c6, #7aece0);
+  --btn-border: rgba(116, 255, 224, 0.58);
+  --btn-text: #ffffff;
+  text-shadow: 0 1px 2px rgba(8, 30, 52, 0.34);
+}
+
+.btn-ghost {
+  --btn-bg: rgba(255, 255, 255, 0.84);
+  --btn-text: #142b4d;
+  --btn-border: rgba(86, 138, 217, 0.33);
+}
+
+.pricing-nav-toggle,
+.pricing-mobile-nav-menu {
+  display: none;
+}
+
+.pricing-nav-toggle {
+  appearance: none;
+  cursor: pointer;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.78rem;
+  border: 1px solid rgba(45, 212, 191, 0.32);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 8px 20px rgba(23, 63, 84, 0.12);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.24rem;
+  padding: 0.42rem;
+}
+
+.pricing-nav-toggle span {
+  width: 1.2rem;
+  height: 2px;
+  border-radius: 999px;
+  background: #12324f;
+  transition: transform 220ms cubic-bezier(0.22, 0.8, 0.3, 1), opacity 180ms ease;
+}
+
+.pricing-nav-toggle.is-open span:first-child {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.pricing-nav-toggle.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.pricing-nav-toggle.is-open span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
 }
 
 .pricing-btn {
@@ -377,29 +496,91 @@
   }
 }
 
-@media (max-width: 1040px) {
+@media (max-width: 760px) {
+  .pricing-page {
+    --container: min(1180px, calc(100vw - 1.35rem));
+  }
+
   .pricing-links {
     display: none !important;
+  }
+
+  .pricing-actions {
+    display: none !important;
+  }
+
+  .pricing-nav-toggle {
+    display: inline-flex;
+  }
+
+  .pricing-mobile-nav-menu {
+    display: block;
+    position: absolute;
+    top: calc(100% + 0.55rem);
+    left: 0;
+    right: 0;
+    z-index: 40;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease;
+    background: rgba(243, 249, 255, 0.96);
+    border: 1px solid rgba(45, 212, 191, 0.34);
+    border-radius: 1rem;
+    padding: 0.85rem;
+    box-shadow: 0 20px 36px rgba(16, 47, 72, 0.16);
+  }
+
+  .pricing-mobile-nav-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .pricing-mobile-nav-links {
+    display: grid;
+    gap: 0.2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pricing-mobile-nav-links a {
+    display: block;
+    text-decoration: none;
+    color: #153453;
+    font-size: 0.98rem;
+    font-weight: 700;
+    border-radius: 0.7rem;
+    padding: 0.62rem 0.72rem;
+  }
+
+  .pricing-mobile-nav-links a:hover,
+  .pricing-mobile-nav-links a:focus-visible {
+    background: rgba(45, 212, 191, 0.14);
+  }
+
+  .pricing-mobile-nav-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.58rem;
+    margin-top: 0.72rem;
+    padding-top: 0.72rem;
+    border-top: 1px solid rgba(45, 212, 191, 0.2);
   }
 
   .pricing-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-}
 
-@media (max-width: 760px) {
   .pricing-nav {
-    height: auto;
-    padding: 0.45rem 0;
-    flex-wrap: wrap;
-  }
-
-  .pricing-actions {
-    width: 100%;
-  }
-
-  .pricing-actions .pricing-btn {
-    flex: 1;
+    height: 72px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.2rem 0;
   }
 
   .pricing-grid {

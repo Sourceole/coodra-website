@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router'
 import { supabase, exchangeForBackendJwt } from '../lib/supabase'
+import { trackEvent } from '../lib/analytics'
 import './LoginPage.css'
 
 const RECOMMENDATIONS = [
@@ -156,10 +157,12 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     setError('')
+    trackEvent('form_submit', { form_name: 'login', form_state: 'attempt' })
 
     const { error: authError } = await supabase.auth.signInWithPassword({ email, password })
 
     if (authError) {
+      trackEvent('form_submit', { form_name: 'login', form_state: 'error' })
       setError(authError.message)
       setLoading(false)
       return
@@ -167,6 +170,7 @@ export default function LoginPage() {
 
     const exchanged = await exchangeForBackendJwt()
     if (!exchanged?.token || !exchanged?.exp) {
+      trackEvent('form_submit', { form_name: 'login', form_state: 'error' })
       await supabase.auth.signOut().catch(() => {})
       setError('Sign-in succeeded, but your dashboard session could not be verified. Please try again.')
       setLoading(false)
@@ -181,6 +185,7 @@ export default function LoginPage() {
     }
 
     setLoading(false)
+    trackEvent('form_submit', { form_name: 'login', form_state: 'success' })
     navigate('/dashboard')
   }
 
@@ -202,18 +207,21 @@ export default function LoginPage() {
     e.preventDefault()
     setRecoverState('sending')
     setRecoverError('')
+    trackEvent('form_submit', { form_name: 'password_recovery', form_state: 'attempt' })
 
     const { error: recoverErr } = await supabase.auth.resetPasswordForEmail(recoverEmail, {
       redirectTo: `${window.location.origin}/reset-password`,
     })
 
     if (recoverErr) {
+      trackEvent('form_submit', { form_name: 'password_recovery', form_state: 'error' })
       setRecoverError(recoverErr.message)
       setRecoverState('error')
       return
     }
 
     setRecoverState('sent')
+    trackEvent('form_submit', { form_name: 'password_recovery', form_state: 'success' })
   }
 
   return (
@@ -348,3 +356,5 @@ export default function LoginPage() {
     </div>
   )
 }
+
+

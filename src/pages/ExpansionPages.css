@@ -1,0 +1,388 @@
+.exp-page {
+  --ink-900: #0a1a31;
+  --ink-700: #233a57;
+  --ink-500: #4f6785;
+  --line: rgba(13, 40, 70, 0.14);
+  --line-strong: rgba(21, 84, 110, 0.3);
+  --mint: #2fd7c6;
+  --mint-deep: #0e8f89;
+  --bg: #eef3fa;
+  --ease: cubic-bezier(0.72, 0, 0.12, 1);
+  min-height: 100vh;
+  background:
+    radial-gradient(900px 500px at 5% 2%, rgba(47, 215, 198, 0.13), transparent 72%),
+    radial-gradient(880px 480px at 96% 8%, rgba(11, 95, 135, 0.12), transparent 74%),
+    linear-gradient(180deg, #ecf2fb, var(--bg));
+  color: var(--ink-900);
+  font-family: var(--font-body, 'Nunito', 'Segoe UI', sans-serif);
+}
+
+.exp-page__container {
+  width: min(1120px, calc(100vw - 2.5rem));
+  margin: 0 auto;
+  padding: 1.5rem 0 4rem;
+}
+
+.exp-hero {
+  position: relative;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  padding: clamp(1.2rem, 2vw, 2rem) 0 clamp(1.3rem, 2.2vw, 2.3rem);
+}
+
+.exp-hero::before,
+.exp-hero::after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(16, 58, 88, 0.25), transparent);
+  top: 0;
+  bottom: 0;
+}
+
+.exp-hero::before { left: 0; }
+.exp-hero::after { right: 0; }
+
+.exp-hero__eyebrow {
+  margin: 0;
+  color: #0c7f78;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.exp-hero h1 {
+  margin: 0.5rem 0 0.6rem;
+  max-width: 17ch;
+  font-family: var(--font-heading, 'Bebas Neue', 'Segoe UI', sans-serif);
+  font-size: clamp(2.15rem, 5vw, 4rem);
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+}
+
+.exp-hero p {
+  margin: 0;
+  max-width: 66ch;
+  color: var(--ink-500);
+  line-height: 1.65;
+  font-size: 1.03rem;
+}
+
+.exp-hero__actions {
+  margin-top: 1.05rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.exp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(116, 255, 224, 0.58);
+  background: linear-gradient(140deg, #2fd7c6, #7aece0);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 2px rgba(8, 30, 52, 0.26);
+  padding: 0.62rem 1.08rem;
+  transition: transform 220ms var(--ease), box-shadow 220ms var(--ease);
+}
+
+.exp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(46, 172, 204, 0.28);
+}
+
+.exp-btn--ghost {
+  border-color: rgba(24, 55, 91, 0.22);
+  background: rgba(255, 255, 255, 0.84);
+  color: #142b4d;
+  text-shadow: none;
+}
+
+.exp-pipeline {
+  margin-top: 1.6rem;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.exp-pipeline__step {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: start;
+  border-bottom: 1px solid var(--line);
+  padding: 0.95rem 0;
+}
+
+.exp-pipeline__label {
+  font-family: var(--font-heading, 'Bebas Neue', 'Segoe UI', sans-serif);
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  color: #0d6f8d;
+}
+
+.exp-pipeline__step h2 {
+  margin: 0;
+  font-family: var(--font-heading, 'Bebas Neue', 'Segoe UI', sans-serif);
+  font-size: 1.4rem;
+  letter-spacing: 0.01em;
+}
+
+.exp-pipeline__step p {
+  margin: 0.35rem 0 0;
+  color: var(--ink-500);
+  line-height: 1.6;
+}
+
+.exp-connector-band {
+  margin-top: 1rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 0.95rem 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.exp-connector {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 3rem;
+  border: 1px dashed rgba(13, 83, 108, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.48);
+  padding: 0.32rem 0.8rem;
+}
+
+.exp-connector img {
+  width: 1.15rem;
+  height: 1.15rem;
+  object-fit: contain;
+}
+
+.exp-connector span {
+  color: #274363;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.integration-grid {
+  margin-top: 1.2rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.integration-card {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.9rem;
+}
+
+.integration-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.integration-card__logo {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(43, 118, 162, 0.22);
+  background: linear-gradient(165deg, #fafdff, #ebf4ff);
+  display: grid;
+  place-items: center;
+}
+
+.integration-card__logo img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.integration-card h2 {
+  margin: 0;
+  font-family: var(--font-heading, 'Bebas Neue', 'Segoe UI', sans-serif);
+  font-size: 1.35rem;
+}
+
+.integration-card p {
+  margin: 0.28rem 0 0;
+  color: var(--ink-500);
+  line-height: 1.55;
+}
+
+.integration-card ul {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+  list-style: none;
+}
+
+.integration-card li {
+  border: 1px solid rgba(22, 95, 128, 0.2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.56);
+  color: var(--ink-700);
+  font-size: 0.9rem;
+  padding: 0.55rem 0.64rem;
+}
+
+.integration-card__flow,
+.integration-card__seo {
+  display: none;
+}
+
+.exp-cta {
+  margin-top: 1.2rem;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  padding: 1rem 0;
+}
+
+.exp-cta h2 {
+  margin: 0;
+  font-family: var(--font-heading, 'Bebas Neue', 'Segoe UI', sans-serif);
+  font-size: 1.7rem;
+}
+
+.exp-cta p {
+  margin: 0.32rem 0 0.8rem;
+  color: var(--ink-500);
+}
+
+.security-matrix {
+  margin-top: 1.2rem;
+  border-top: 1px solid var(--line-strong);
+}
+
+.security-matrix__row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr auto;
+  gap: 1rem;
+  align-items: start;
+  border-bottom: 1px solid var(--line);
+  padding: 0.9rem 0;
+}
+
+.security-matrix__row h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ink-900);
+}
+
+.security-matrix__row p {
+  margin: 0;
+  color: var(--ink-500);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0.26rem 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.status-pill--implemented {
+  color: #0f756f;
+  border-color: rgba(18, 163, 148, 0.3);
+  background: rgba(31, 204, 181, 0.14);
+}
+
+.status-pill--in-progress {
+  color: #1f4e8f;
+  border-color: rgba(64, 124, 205, 0.3);
+  background: rgba(76, 148, 227, 0.13);
+}
+
+.status-pill--planned {
+  color: #5b6b83;
+  border-color: rgba(120, 139, 164, 0.35);
+  background: rgba(148, 163, 184, 0.16);
+}
+
+.security-note {
+  margin-top: 0.9rem;
+  color: var(--ink-500);
+}
+
+.security-note a {
+  color: #0f6d8a;
+}
+
+.motion-fade-up {
+  animation: fade-up 620ms var(--ease) both;
+}
+
+.motion-stagger-grid .integration-card {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fade-row 500ms var(--ease) both;
+}
+
+.motion-stagger-grid .integration-card:nth-child(1) { animation-delay: 120ms; }
+.motion-stagger-grid .integration-card:nth-child(2) { animation-delay: 180ms; }
+.motion-stagger-grid .integration-card:nth-child(3) { animation-delay: 240ms; }
+.motion-stagger-grid .integration-card:nth-child(4) { animation-delay: 300ms; }
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(44px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-row {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 980px) {
+  .exp-connector-band {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .integration-card {
+    grid-template-columns: 1fr;
+  }
+
+  .integration-card ul {
+    grid-template-columns: 1fr;
+  }
+
+  .security-matrix__row {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-fade-up,
+  .motion-stagger-grid .integration-card,
+  .exp-btn {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transform: none !important;
+  }
+
+  .motion-stagger-grid .integration-card {
+    opacity: 1 !important;
+  }
+}

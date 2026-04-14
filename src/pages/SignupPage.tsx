@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router'
 import { supabase, resolveApiEndpoint } from '../lib/supabase'
+import { trackEvent } from '../lib/analytics'
 import './SignupPage.css'
 
 export default function SignupPage() {
@@ -10,14 +11,22 @@ export default function SignupPage() {
   const [businessName, setBusinessName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [acceptedLegal, setAcceptedLegal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [googleLoading, setGoogleLoading] = useState(false)
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!acceptedLegal) {
+      setError('Please accept the Privacy Policy and Terms and Conditions to continue.')
+      return
+    }
+
     setLoading(true)
     setError('')
+    trackEvent('form_submit', { form_name: 'signup', form_state: 'attempt' })
 
     const { data, error: authError } = await supabase.auth.signUp({
       email,
@@ -33,6 +42,7 @@ export default function SignupPage() {
     })
 
     if (authError) {
+      trackEvent('form_submit', { form_name: 'signup', form_state: 'error' })
       setError(authError.message)
       setLoading(false)
       return
@@ -61,10 +71,12 @@ export default function SignupPage() {
     setLoading(false)
 
     if (data?.session) {
+      trackEvent('form_submit', { form_name: 'signup', form_state: 'success' })
       navigate('/dashboard')
       return
     }
 
+    trackEvent('form_submit', { form_name: 'signup', form_state: 'success' })
     navigate(`/verify-email?email=${encodeURIComponent(email.trim().toLowerCase())}`)
   }
 
@@ -224,6 +236,19 @@ export default function SignupPage() {
                 />
               </div>
 
+              <label className="signup__legalCheck" htmlFor="reg-legal-accept">
+                <input
+                  id="reg-legal-accept"
+                  type="checkbox"
+                  checked={acceptedLegal}
+                  onChange={(e) => setAcceptedLegal(e.target.checked)}
+                  required
+                />
+                <span>
+                  I agree to the <Link to="/privacy">Privacy Policy</Link> and <Link to="/terms">Terms and Conditions</Link>.
+                </span>
+              </label>
+
               <button type="submit" className="signup__btn" disabled={loading}>
                 {loading ? 'Creating account...' : 'Start Free'}
               </button>
@@ -250,3 +275,5 @@ export default function SignupPage() {
     </div>
   )
 }
+
+

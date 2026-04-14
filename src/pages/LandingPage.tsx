@@ -1,6 +1,6 @@
-import { useEffect, type CSSProperties, type MouseEvent } from 'react'
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useRef, useState, type MouseEvent } from 'react'
+import { Link } from 'react-router'
+import { trackEvent } from '../lib/analytics'
 import './LandingPage.css'
 
 const integrationShowcaseItems = [
@@ -36,25 +36,23 @@ const integrationShowcaseItems = [
   },
 ]
 
-const heroRotatingPhrases = [
-  'Retail Decisions',
-  'Profitable Actions',
-  'Clear Priorities',
-  'Faster Execution',
+const heroIncomingSignals = [
+  { title: 'POS', meta: 'Live sell-through' },
+  { title: 'Inventory', meta: 'Stock depth' },
+  { title: 'Demand', meta: 'Forecast signal' },
 ]
 
-const heroGridCells = Array.from({ length: 140 }, (_, index) => ({
-  index,
-  delay: (index % 14) * 45 + Math.floor(index / 14) * 36,
-  accent: index % 17 === 0 || index % 29 === 0,
-}))
+const heroOutgoingDecisions = [
+  { tag: 'Priority 1', title: 'Reorder 142 units' },
+  { tag: 'Priority 2', title: 'Markdown 8 SKUs' },
+  { tag: 'Priority 3', title: 'Hold 23 SKUs' },
+]
 
 export default function LandingPage() {
-  const [phraseIndex, setPhraseIndex] = useState(0)
-  const [typedPhrase, setTypedPhrase] = useState('')
-  const [typingPhase, setTypingPhase] = useState<'typing' | 'holding' | 'deleting'>('typing')
-  const [cursorVisible, setCursorVisible] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [coreBoosted, setCoreBoosted] = useState(false)
+  const [isLiteHero, setIsLiteHero] = useState(false)
+  const radarRef = useRef<HTMLDivElement | null>(null)
 
   const handleIntegrationVisualMove = (event: MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect()
@@ -73,7 +71,7 @@ export default function LandingPage() {
     // Set theme on <html> so CSS vars cascade correctly
     document.documentElement.setAttribute('data-theme', 'light')
 
-    // Load landing page JS for globe/particles animations
+    // Defer landing canvas/animation script until after load to protect LCP.
     const loadScript = () => {
       if (document.getElementById('landing-app-script')) return
       const script = document.createElement('script')
@@ -83,55 +81,30 @@ export default function LandingPage() {
       document.body.appendChild(script)
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', loadScript)
+    const scheduleScriptLoad = () => {
+      const w = window as Window & {
+        requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number
+        cancelIdleCallback?: (id: number) => void
+      }
+
+      if (typeof w.requestIdleCallback === 'function') {
+        w.requestIdleCallback(loadScript, { timeout: 2400 })
+      } else {
+        window.setTimeout(loadScript, 1200)
+      }
+    }
+
+    if (document.readyState === 'complete') {
+      scheduleScriptLoad()
     } else {
-      loadScript()
+      window.addEventListener('load', scheduleScriptLoad, { once: true })
     }
 
     return () => {
+      window.removeEventListener('load', scheduleScriptLoad)
       document.documentElement.removeAttribute('data-theme')
     }
   }, [])
-
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setCursorVisible((visible) => !visible)
-    }, 520)
-    return () => window.clearInterval(id)
-  }, [])
-
-  useEffect(() => {
-    const phrase = heroRotatingPhrases[phraseIndex]
-    let timeout = 0
-
-    if (typingPhase === 'typing') {
-      if (typedPhrase.length < phrase.length) {
-        timeout = window.setTimeout(() => {
-          setTypedPhrase(phrase.slice(0, typedPhrase.length + 1))
-        }, 58)
-      } else {
-        timeout = window.setTimeout(() => {
-          setTypingPhase('holding')
-        }, 900)
-      }
-    } else if (typingPhase === 'holding') {
-      timeout = window.setTimeout(() => {
-        setTypingPhase('deleting')
-      }, 850)
-    } else if (typedPhrase.length > 0) {
-      timeout = window.setTimeout(() => {
-        setTypedPhrase(phrase.slice(0, typedPhrase.length - 1))
-      }, 36)
-    } else {
-      timeout = window.setTimeout(() => {
-        setPhraseIndex((current) => (current + 1) % heroRotatingPhrases.length)
-        setTypingPhase('typing')
-      }, 240)
-    }
-
-    return () => window.clearTimeout(timeout)
-  }, [phraseIndex, typedPhrase, typingPhase])
 
   useEffect(() => {
     const closeOnDesktop = () => {
@@ -164,21 +137,108 @@ export default function LandingPage() {
     }
   }, [isMobileMenuOpen])
 
+  useEffect(() => {
+    const section = document.getElementById('proof')
+    if (!section) return
+
+    let fired = false
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!fired && entry.isIntersecting && entry.intersectionRatio >= 0.35) {
+            fired = true
+            trackEvent('testimonial_section_visible', {
+              page_path: '/',
+              section_id: 'proof',
+            })
+          }
+        })
+      },
+      { threshold: [0.35] }
+    )
+
+    observer.observe(section)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const checkLiteHero = () => {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      const isNarrowViewport = window.matchMedia('(max-width: 900px)').matches
+      const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+      const isSaveData = Boolean(connection?.saveData)
+      setIsLiteHero(prefersReducedMotion || isNarrowViewport || isSaveData)
+    }
+
+    checkLiteHero()
+    window.addEventListener('resize', checkLiteHero, { passive: true })
+    return () => window.removeEventListener('resize', checkLiteHero)
+  }, [])
+
   const closeMobileMenu = () => setIsMobileMenuOpen(false)
 
+  const handleRadarMove = (event: MouseEvent<HTMLDivElement>) => {
+    const radarEl = radarRef.current
+    if (!radarEl) return
+    const coreEl = radarEl.querySelector('.hero-radar-core') as HTMLElement | null
+    if (!coreEl) return
+
+    const coreRect = coreEl.getBoundingClientRect()
+    const coreX = coreRect.left + coreRect.width / 2
+    const coreY = coreRect.top + coreRect.height / 2
+
+    const tokens = radarEl.querySelectorAll<HTMLElement>('.hero-signal-token')
+    tokens.forEach((token) => {
+      const rect = token.getBoundingClientRect()
+      const tokenX = rect.left + rect.width / 2
+      const tokenY = rect.top + rect.height / 2
+
+      const pointerDx = event.clientX - tokenX
+      const pointerDy = event.clientY - tokenY
+      const pointerDistance = Math.hypot(pointerDx, pointerDy)
+      const influence = Math.max(0, 1 - pointerDistance / 220)
+
+      const toCoreX = coreX - tokenX
+      const toCoreY = coreY - tokenY
+      const toCoreDistance = Math.max(1, Math.hypot(toCoreX, toCoreY))
+      const nx = toCoreX / toCoreDistance
+      const ny = toCoreY / toCoreDistance
+      const pull = 14 * influence
+
+      token.style.setProperty('--token-attract', influence.toFixed(3))
+      token.style.setProperty('--token-tx', `${(nx * pull).toFixed(2)}px`)
+      token.style.setProperty('--token-ty', `${(ny * pull).toFixed(2)}px`)
+    })
+  }
+
+  const handleRadarLeave = () => {
+    const radarEl = radarRef.current
+    if (!radarEl) return
+    const tokens = radarEl.querySelectorAll<HTMLElement>('.hero-signal-token')
+    tokens.forEach((token) => {
+      token.style.setProperty('--token-attract', '0')
+      token.style.setProperty('--token-tx', '0px')
+      token.style.setProperty('--token-ty', '0px')
+    })
+  }
+
   return (
-    <div className="site-shell" id="top">
+    <div className={`site-shell${isLiteHero ? ' is-lite-hero' : ''}`} id="top">
       {/* Ambient background orbs */}
-      <div className="ambient ambient-a" aria-hidden="true" />
-      <div className="ambient ambient-b" aria-hidden="true" />
-      <div className="ambient ambient-c" aria-hidden="true" />
-      <div className="mesh-grid" aria-hidden="true" />
-      <div className="noise-layer" aria-hidden="true" />
+      {!isLiteHero ? (
+        <>
+          <div className="ambient ambient-a" aria-hidden="true" />
+          <div className="ambient ambient-b" aria-hidden="true" />
+          <div className="ambient ambient-c" aria-hidden="true" />
+          <div className="mesh-grid" aria-hidden="true" />
+          <div className="noise-layer" aria-hidden="true" />
+        </>
+      ) : null}
 
       {/* Header / Nav */}
       <header className="site-header">
-        <nav className="nav container" aria-label="Primary">
-          <a className="brand" href="/#top" aria-label="Coodra home">
+        <nav className="nav nav-desktop container surface-glass" aria-label="Primary">
+          <a className="brand" href="#top" aria-label="Coodra home">
             <img
               src="/images/coodra-logo.png"
               alt="Coodra"
@@ -200,9 +260,9 @@ export default function LandingPage() {
           </button>
 
           <ul className="nav-links">
-            <li><a href="/#how-it-works">How it works</a></li>
-            <li><a href="/#decision">Decision Engine</a></li>
-            <li><a href="/#proof">Proof</a></li>
+            <li><a href="#how-it-works">How it works</a></li>
+            <li><a href="#decision">Decision Engine</a></li>
+            <li><a href="#proof">Proof</a></li>
             <li><Link to="/pricing">Pricing</Link></li>
           </ul>
           <div className="nav-actions">
@@ -210,14 +270,23 @@ export default function LandingPage() {
             <Link to="/signup" className="btn btn-primary">Start Free</Link>
           </div>
 
+          <button
+            type="button"
+            className={`mobile-nav-overlay${isMobileMenuOpen ? ' is-open' : ''}`}
+            aria-hidden={!isMobileMenuOpen}
+            tabIndex={isMobileMenuOpen ? 0 : -1}
+            onClick={closeMobileMenu}
+          />
+
           <div
             id="mobile-nav-menu"
-            className={`mobile-nav-menu${isMobileMenuOpen ? ' is-open' : ''}`}
+            className={`mobile-nav-menu nav-mobile surface-glass${isMobileMenuOpen ? ' is-open' : ''}`}
           >
+            <p className="mobile-nav-kicker">Navigation</p>
             <ul className="mobile-nav-links">
-              <li><a href="/#how-it-works" onClick={closeMobileMenu}>How it works</a></li>
-              <li><a href="/#decision" onClick={closeMobileMenu}>Decision Engine</a></li>
-              <li><a href="/#proof" onClick={closeMobileMenu}>Proof</a></li>
+              <li><a href="#how-it-works" onClick={closeMobileMenu}>How it works</a></li>
+              <li><a href="#decision" onClick={closeMobileMenu}>Decision Engine</a></li>
+              <li><a href="#proof" onClick={closeMobileMenu}>Proof</a></li>
               <li><Link to="/pricing" onClick={closeMobileMenu}>Pricing</Link></li>
             </ul>
             <div className="mobile-nav-actions">
@@ -230,44 +299,89 @@ export default function LandingPage() {
 
       <main>
         {/* Hero */}
-        <section className="hero container">
-          <div className="hero-data-grid" aria-hidden="true">
-            {heroGridCells.map((cell) => (
-              <span
-                key={cell.index}
-                className={`hero-data-grid-cell${cell.accent ? ' is-accent' : ''}`}
-                style={{ '--cell-delay': `${cell.delay}ms` } as CSSProperties}
-              />
-            ))}
-          </div>
-
+        <section className="hero container" data-aos="fade-up">
           <div className="hero-copy">
             <p className="eyebrow">Built for retail teams of every size</p>
-            <h1 className="hero-main-line">Turn live store data into</h1>
-            <div className="hero-rotate-wrap" aria-live="polite" aria-atomic="true">
-              <span className="hero-rotate-text">
-                {typedPhrase}
-                <span className={`hero-caret${cursorVisible ? ' is-visible' : ''}`} aria-hidden="true">
-                  |
-                </span>
-              </span>
-            </div>
+            <h1 className="hero-headline">Your store, on autopilot.</h1>
             <p className="hero-subhead">
-              Coodra tracks sales, inventory, and demand signals in real time, then recommends exactly what to reorder, replace, remove, and protect so your team can act fast.
+              Coodra reads sales, inventory, and demand in real time, then recommends the next best move to protect margin and cash flow.
             </p>
-            <div className="hero-actions">
+            <div
+              className="hero-actions"
+              onMouseEnter={() => setCoreBoosted(true)}
+              onMouseLeave={() => setCoreBoosted(false)}
+            >
               <Link to="/signup" className="btn btn-primary">Start Free</Link>
-              <a href="/#how-it-works" className="btn btn-secondary">See 3-step flow</a>
+              <a href="#how-it-works" className="btn btn-secondary">See 3-step flow</a>
             </div>
           </div>
 
-          <div className="hero-atmosphere" aria-hidden="true">
-            <canvas id="hero-particles" className="hero-particles-canvas" />
+          <div
+            className="hero-radar"
+            aria-hidden="true"
+            ref={radarRef}
+            onMouseMove={handleRadarMove}
+            onMouseLeave={handleRadarLeave}
+          >
+            <svg className="hero-radar-flows" viewBox="0 0 560 330" preserveAspectRatio="none">
+              <path className="hero-flow-path hero-flow-path--in" d="M64 64 C 180 56, 220 105, 278 163" />
+              <path className="hero-flow-path hero-flow-path--in" d="M64 163 C 190 163, 214 163, 278 163" />
+              <path className="hero-flow-path hero-flow-path--in" d="M64 264 C 176 272, 224 220, 278 163" />
+              <path className="hero-flow-path hero-flow-path--out" d="M282 163 C 338 112, 380 73, 492 64" />
+              <path className="hero-flow-path hero-flow-path--out" d="M282 163 C 340 163, 384 163, 492 163" />
+              <path className="hero-flow-path hero-flow-path--out" d="M282 163 C 340 214, 382 256, 492 264" />
+              <circle className="hero-flow-dot hero-flow-dot--a" r="5" />
+              <circle className="hero-flow-dot hero-flow-dot--b" r="5" />
+              <circle className="hero-flow-dot hero-flow-dot--c" r="5" />
+            </svg>
+
+            <div className="hero-signal-tokens">
+              <span className="hero-signal-token token-pos">POS</span>
+              <span className="hero-signal-token token-sku">SKU</span>
+              <span className="hero-signal-token token-margin">Margin</span>
+              <span className="hero-signal-token token-sellthrough">Sell-through</span>
+            </div>
+
+            <div className="hero-radar-column hero-radar-column--incoming">
+              {heroIncomingSignals.map((signal) => (
+                <article key={signal.title} className="hero-radar-card hero-radar-card--incoming">
+                  <p>{signal.title}</p>
+                  <span>{signal.meta}</span>
+                </article>
+              ))}
+            </div>
+
+            <div className={`hero-radar-core${coreBoosted ? ' is-boosted' : ''}`}>
+              <span className="hero-radar-ring hero-radar-ring--a" />
+              <span className="hero-radar-ring hero-radar-ring--b" />
+              <span className="hero-radar-ring hero-radar-ring--pulse" />
+              <img src="/images/logo.png" alt="" className="hero-radar-logo" />
+              <div className="hero-radar-terminal">
+                <span className="hero-radar-terminal-label">Decision:</span>
+                <span className="hero-radar-terminal-line">Reorder 142 units</span>
+                <span className="hero-radar-terminal-caret" />
+              </div>
+            </div>
+
+            <div className="hero-radar-column hero-radar-column--outgoing">
+              {heroOutgoingDecisions.map((decision) => (
+                <article key={decision.tag} className="hero-radar-card hero-radar-card--outgoing">
+                  <p>{decision.tag}</p>
+                  <span>{decision.title}</span>
+                </article>
+              ))}
+            </div>
           </div>
+
+          {!isLiteHero ? (
+            <div className="hero-atmosphere" aria-hidden="true">
+              <canvas id="hero-particles" className="hero-particles-canvas" />
+            </div>
+          ) : null}
         </section>
 
         {/* Video placeholder */}
-        <section id="media-expand" className="media-expand container" aria-label="Coodra product reel placeholder">
+        <section id="media-expand" className="media-expand container" aria-label="Coodra product reel placeholder" data-aos="fade-up" data-aos-delay="100">
           <div className="media-expand-stage" data-reveal="up">
             <div className="media-expand-frame" aria-hidden="true">
               <div className="media-expand-placeholder">
@@ -281,9 +395,9 @@ export default function LandingPage() {
         </section>
 
         {/* How it works */}
-        <section id="how-it-works" className="how-it-works container">
-          <div className="how-scroll">
-            <header className="how-sticky-head">
+        <section id="how-it-works" className="how-it-works container" data-aos="fade-up" data-aos-delay="150">
+          <div className="how-scroll" data-reveal="up">
+            <header className="how-sticky-head" data-reveal="up">
               <p className="eyebrow">How it works</p>
               <h2>Three steps from signal to action.</h2>
               <p className="how-scroll-sub">Connect your systems, review AI recommendations, and approve decisions in minutes.</p>
@@ -324,7 +438,7 @@ export default function LandingPage() {
         </section>
 
         {/* Integrations */}
-        <section id="integrations" className="integrations container">
+        <section id="integrations" className="integrations container" data-aos="fade-up" data-aos-delay="200">
           <div className="integrations-showcase">
             <div className="integrations-showcase-head">
               <div className="integrations-copy">
@@ -351,7 +465,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="integrations-list" role="list" aria-label="Coodra POS integrations">
+            <div className="integrations-list" data-stagger role="list" aria-label="Coodra POS integrations">
               {integrationShowcaseItems.map((item) => (
                 <article key={item.name} className="integration-row" role="listitem">
                   <div className={`integration-logo ${item.className}`}>
@@ -368,9 +482,9 @@ export default function LandingPage() {
         </section>
 
         {/* Decision Engine */}
-        <section id="decision" className="decision-band container">
+        <section id="decision" className="decision-band container" data-aos="fade-up" data-aos-delay="250">
           <div className="decision-layout">
-            <header className="decision-copy">
+            <header className="decision-copy" data-reveal="up">
               <p className="eyebrow">Why teams switch to Coodra</p>
               <h2>Decisions that are fast, clear, and measurable.</h2>
               <p>
@@ -409,12 +523,15 @@ export default function LandingPage() {
         </section>
 
         {/* Proof / Testimonials */}
-        <section id="proof" className="proof testimonials-section container">
+        <section id="proof" className="proof testimonials-section container" data-aos="fade-up" data-aos-delay="300" data-reveal="up">
           <p className="eyebrow">Real business outcomes</p>
-          <h2>Teams move faster and miss fewer opportunities.</h2>
+          <h2 className="proof-title-lines">
+            <span className="proof-title-line">Teams move faster and</span>
+            <span className="proof-title-line">miss fewer opportunities.</span>
+          </h2>
           <p className="proof-subline">See how retailers use Coodra to act earlier and protect revenue.</p>
 
-          <div className="testimonials-viewport" aria-label="Customer outcomes">
+          <div className="testimonials-viewport" data-reveal="up" aria-label="Customer outcomes">
             <div className="testimonials-marquee" data-marquee>
               <article className="t-card">
                 <div className="t-author"><span className="t-avatar">SJ</span><div><p>Sophie J.</p><small>Multi-location grocery</small></div></div>
@@ -447,12 +564,12 @@ export default function LandingPage() {
         </section>
 
         {/* CTA */}
-        <section id="cta" className="cta container">
+        <section id="cta" className="cta container surface-contrast" data-aos="fade-up" data-aos-delay="350" data-reveal="up">
           <h2>Ready to make better retail decisions this week?</h2>
           <p>Connect your data, review AI-ranked actions, and approve your first decision in minutes.</p>
           <div className="cta-actions">
             <Link to="/signup" className="btn btn-primary">Start Free</Link>
-            <Link to="/login" className="btn btn-secondary">Book a Demo</Link>
+            <Link to="/pricing" className="btn btn-secondary">View Pricing</Link>
           </div>
         </section>
       </main>
@@ -466,9 +583,9 @@ export default function LandingPage() {
               <p className="footer-kicker">Retail Decision Intelligence</p>
               <p className="footer-summary">Coodra helps any retail business turn live data into high-confidence actions.</p>
               <div className="footer-socials">
-                <a href="#" aria-label="LinkedIn">in</a>
-                <a href="#" aria-label="X">x</a>
-                <a href="#" aria-label="YouTube">yt</a>
+                <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">in</a>
+                <a href="https://x.com" target="_blank" rel="noreferrer">x</a>
+                <a href="https://www.youtube.com" target="_blank" rel="noreferrer">yt</a>
               </div>
             </section>
 
@@ -476,7 +593,7 @@ export default function LandingPage() {
               <h3>Product</h3>
               <a href="#">Decision Engine</a>
               <a href="#">Performance Center</a>
-              <a href="#">Integrations</a>
+              <Link to="/integrations">Integrations</Link>
               <Link to="/pricing">Pricing</Link>
             </section>
 
@@ -490,18 +607,19 @@ export default function LandingPage() {
 
             <section className="footer-link-col">
               <h3>Resources</h3>
+              <Link to="/blog">Blog</Link>
               <a href="#">Docs</a>
-              <a href="#">Case Studies</a>
+              <Link to="/case-studies">Case Studies</Link>
               <a href="#">API Status</a>
-              <a href="#">Security</a>
+              <Link to="/security">Security</Link>
             </section>
 
             <section className="footer-link-col">
               <h3>Company</h3>
-              <a href="#">About</a>
-              <a href="#">Careers</a>
-              <a href="#">Privacy</a>
-              <a href="#">Contact</a>
+              <Link to="/about">About</Link>
+              <Link to="/terms">Terms</Link>
+              <Link to="/privacy">Privacy</Link>
+              <Link to="/contact">Contact</Link>
             </section>
           </div>
 
@@ -518,6 +636,7 @@ export default function LandingPage() {
     </div>
   )
 }
+
 
 
 

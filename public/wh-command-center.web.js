@@ -2241,7 +2241,22 @@ async function addSingleVariantToShopifyCart(variantId, quantity) {
   return j;
 }
 
+function canUseShopifyAjaxCart() {
+  try {
+    const host = String(window?.location?.hostname || '').toLowerCase();
+    const isShopifyHost = host.endsWith('.myshopify.com');
+    const hasShopifyGlobals = typeof window?.Shopify !== 'undefined' || typeof window?.__st !== 'undefined';
+    return isShopifyHost || hasShopifyGlobals;
+  } catch (e) {
+    return false;
+  }
+}
+
 async function fetchShopifyCart() {
+  if (!canUseShopifyAjaxCart()) {
+    return { item_count: 0, total_price: 0, items: [] };
+  }
+
   const r = await fetch('/cart.js', {
     method: 'GET',
     headers: { 'Accept': 'application/json' }

@@ -1,5 +1,5 @@
 ﻿import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { supabase, exchangeForBackendJwt, getCachedBackendJwt } from '../lib/supabase'
 import './Dashboard.css'
 
@@ -16,7 +16,7 @@ type BootPayload = {
 
 type ThemeMode = 'light' | 'dark'
 const GLOBAL_THEME_KEY = 'so_theme_last_v1'
-const RC_ASSET_VERSION = '2026-04-11-retailer-copy-polish-1'
+const RC_ASSET_VERSION = '2026-04-11-retailer-cart-guard-2'
 
 declare global {
   interface Window {
@@ -204,3 +204,4 @@ export default function Dashboard() {
     </div>
   )
 }
+

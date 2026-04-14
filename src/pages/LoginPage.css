@@ -1,4 +1,4 @@
-/* ─── LoginPage ─── 1-for-1 with coodra-login.liquid ─── */
+/* --- LoginPage --- 1-for-1 with coodra-login.liquid --- */
 .login {
   --bg: #EFF3F8;
   --line: #D6DEE8;
@@ -10,7 +10,7 @@
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
-  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-body, 'Nunito', 'Segoe UI', sans-serif);
   display: flex;
   align-items: stretch;
 }
@@ -358,14 +358,14 @@
   }
 }
 
-/* ── Live Widget ── */
+/* -- Live Widget -- */
 .live-widget {
   margin-top: 20px;
   background: #ffffff;
   border-radius: 14px;
   padding: 16px;
   color: #0F172A;
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-body, 'Nunito', 'Segoe UI', sans-serif);
   position: relative;
   overflow: hidden;
   box-shadow: 0 4px 24px rgba(15, 23, 42, 0.1), 0 1px 4px rgba(15, 23, 42, 0.06);
@@ -439,7 +439,7 @@
 .live-widget__bar {
   height: 100%;
   border-radius: 99px;
-  transition: width 0.8s ease, background 0.5s ease;
+  transition: background 0.5s ease;
 }
 
 .live-widget__metric-sub {
@@ -555,3 +555,4 @@
   0%   { transform: translateY(0) rotate(0deg); }
   100% { transform: translateY(-6px) rotate(8deg); }
 }
+

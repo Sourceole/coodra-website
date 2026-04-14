@@ -1,4 +1,4 @@
-/* ─── SignupPage ─── 1-for-1 with coodra-start-free-register.liquid ─── */
+/* --- SignupPage --- 1-for-1 with coodra-start-free-register.liquid --- */
 .signup {
   --bg: #EFF3F8;
   --line: #D6DEE8;
@@ -12,7 +12,7 @@
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
-  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-body, 'Nunito', 'Segoe UI', sans-serif);
   display: flex;
   align-items: stretch;
   overflow: hidden;
@@ -303,6 +303,34 @@
   transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
 }
 
+.signup__legalCheck {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.62rem;
+  margin: 0.1rem 0 0.8rem;
+  color: #475569;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.signup__legalCheck input[type='checkbox'] {
+  margin-top: 0.15rem;
+  width: 15px;
+  height: 15px;
+  accent-color: #1fae99;
+  cursor: pointer;
+}
+
+.signup__legalCheck a {
+  color: #0f172a;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.signup__legalCheck a:hover {
+  text-decoration: underline;
+}
+
 .signup__btn:hover:not(:disabled) {
   background: #35D9BE;
   transform: translateY(-1px);
@@ -493,3 +521,4 @@
     border-right: 0;
   }
 }
+

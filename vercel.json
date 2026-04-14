@@ -1,7 +1,10 @@
 {
   "buildCommand": "vite build",
-  "outputDirectory": "dist",
-  "framework": "vite",
+  "outputDirectory": "build/client",
+  "framework": null,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/index" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -15,7 +18,7 @@
         { "key": "X-Permitted-Cross-Domain-Policies", "value": "none" },
         { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
         { "key": "Cross-Origin-Resource-Policy", "value": "same-site" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.jsdelivr.net https://www.google.com https://*.google.com; font-src 'self' data:; connect-src 'self' https://api.coodra.com https://*.supabase.co wss://*.supabase.co https://*.ingest.sentry.io https://*.sentry.io; worker-src 'self' blob:; object-src 'none'; upgrade-insecure-requests" }
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://api.fontshare.com; img-src 'self' data: blob: https://cdn.jsdelivr.net https://www.google.com https://*.google.com https://www.google-analytics.com; font-src 'self' data: https://cdn.fontshare.com; connect-src 'self' https://api.coodra.com https://*.supabase.co wss://*.supabase.co https://*.ingest.sentry.io https://*.sentry.io https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com; worker-src 'self' blob:; object-src 'none'; upgrade-insecure-requests" }
       ]
     }
   ]

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Navigate } from 'react-router-dom'
+﻿import { useEffect, useState } from 'react'
+import { Navigate } from 'react-router'
 import { exchangeForBackendJwt, getCachedBackendJwt } from '../lib/supabase'
 
 interface AdminGuardProps {
@@ -44,4 +44,5 @@ export function AdminGuard({ children }: AdminGuardProps) {
   if (!isAdmin) return <Navigate to="/" replace />
   return <>{children}</>
 }
+
 

@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+﻿import { useEffect, useMemo, useState } from 'react'
+import { Link, useNavigate, useSearchParams } from 'react-router'
 import { supabase } from '../lib/supabase'
 import './VerifyEmailPage.css'
 
@@ -14,12 +14,12 @@ export default function VerifyEmailPage() {
   useEffect(() => {
     let active = true
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }: { data: { session: any } }) => {
       if (!active) return
       if (session) navigate('/dashboard', { replace: true })
     })
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
       if (session) {
         navigate('/dashboard', { replace: true })
       }
@@ -81,4 +81,3 @@ export default function VerifyEmailPage() {
     </div>
   )
 }
-

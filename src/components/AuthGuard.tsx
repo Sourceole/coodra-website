@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Navigate } from 'react-router-dom'
+﻿import { useEffect, useState } from 'react'
+import { Navigate } from 'react-router'
 import { supabase } from '../lib/supabase'
 
 interface AuthGuardProps {
@@ -11,13 +11,13 @@ export function AuthGuard({ children }: AuthGuardProps) {
   const [hasSession, setHasSession] = useState(false)
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
       setHasSession(!!session)
       setLoading(false)
     })
 
     // Check current session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }: { data: { session: any } }) => {
       setHasSession(!!session)
       setLoading(false)
     })

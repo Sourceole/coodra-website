@@ -2,6 +2,16 @@ import { type RouteConfig, index, route } from '@react-router/dev/routes'
 
 export default [
   index('../src/routes/_index.tsx'),
+  route('about', '../src/routes/about.tsx'),
+  route('contact', '../src/routes/contact.tsx'),
+  route('integrations', '../src/routes/integrations.tsx'),
+  route('security', '../src/routes/security.tsx'),
+  route('case-studies', '../src/routes/case-studies.tsx'),
+  route('case-studies/:slug', '../src/routes/case-studies-slug.tsx'),
+  route('blog', '../src/routes/blog.tsx'),
+  route('blog/:slug', '../src/routes/blog-slug.tsx'),
+  route('privacy', '../src/routes/privacy.tsx'),
+  route('terms', '../src/routes/terms.tsx'),
   route('pricing', '../src/routes/pricing.tsx'),
   route('login', '../src/routes/login.tsx'),
   route('signup', '../src/routes/signup.tsx'),

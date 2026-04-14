@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png?v=3" />
-    <link rel="shortcut icon" href="/favicon.png?v=3" />
-    <link rel="apple-touch-icon" href="/favicon.png?v=3" />
+    <link rel="icon" type="image/png" href="/favicon.png?v=4" />
+    <link rel="shortcut icon" href="/favicon.png?v=4" />
+    <link rel="apple-touch-icon" href="/favicon.png?v=4" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Coodra tracks sales, inventory, and demand signals in real time, then recommends exactly what to reorder, replace, remove, and protect so your retail team can act faster." />
     <meta name="robots" content="index, follow" />
@@ -20,24 +20,11 @@
     <meta name="twitter:image" content="https://www.coodra.com/og-image.png" />
     <link rel="canonical" href="https://www.coodra.com/" />
     <title>Coodra — Retail Decision Intelligence</title>
-    <script>
-      (function () {
-        try {
-          var raw = localStorage.getItem('so_theme_last_v1') || '';
-          var mode = String(raw).trim().toLowerCase() === 'dark' ? 'dark' : 'light';
-          var bg = mode === 'dark' ? '#0b1220' : '#f4f5f7';
-          document.documentElement.setAttribute('data-so-rc-theme', mode);
-          document.documentElement.style.backgroundColor = bg;
-          if (document.body) {
-            document.body.setAttribute('data-so-rc-theme', mode);
-            document.body.style.backgroundColor = bg;
-          }
-        } catch (_) {}
-      })();
-    </script>
+    <script src="/theme-init.js"></script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
+

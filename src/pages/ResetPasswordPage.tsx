@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { supabase } from '../lib/supabase'
+import { trackEvent } from '../lib/analytics'
 import './ResetPasswordPage.css'
 
 export default function ResetPasswordPage() {
@@ -15,12 +16,15 @@ export default function ResetPasswordPage() {
     e.preventDefault()
     setError('')
     setMessage('')
+    trackEvent('form_submit', { form_name: 'reset_password', form_state: 'attempt' })
 
     if (password.length < 8) {
+      trackEvent('form_submit', { form_name: 'reset_password', form_state: 'error' })
       setError('Password must be at least 8 characters.')
       return
     }
     if (password !== confirmPassword) {
+      trackEvent('form_submit', { form_name: 'reset_password', form_state: 'error' })
       setError('Passwords do not match.')
       return
     }
@@ -30,10 +34,12 @@ export default function ResetPasswordPage() {
     setLoading(false)
 
     if (updateError) {
+      trackEvent('form_submit', { form_name: 'reset_password', form_state: 'error' })
       setError(updateError.message || 'Could not update password.')
       return
     }
 
+    trackEvent('form_submit', { form_name: 'reset_password', form_state: 'success' })
     setMessage('Password updated. You can now log in.')
     setTimeout(() => navigate('/login', { replace: true }), 1000)
   }
@@ -82,4 +88,6 @@ export default function ResetPasswordPage() {
     </div>
   )
 }
+
+
 

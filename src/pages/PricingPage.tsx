@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useMemo, useState } from 'react'
+import { Link } from 'react-router'
+import MarketingHeader from '../components/MarketingHeader'
 import './PricingPage.css'
 
 type Tier = {
@@ -127,13 +128,6 @@ export default function PricingPage() {
   const [isYearly, setIsYearly] = useState(false)
   const toggleBillingPeriod = () => setIsYearly((prev) => !prev)
 
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', 'light')
-    return () => {
-      document.documentElement.removeAttribute('data-theme')
-    }
-  }, [])
-
   const displayTiers = useMemo(
     () =>
       tiers.map((tier) => ({
@@ -145,29 +139,7 @@ export default function PricingPage() {
 
   return (
     <div className="pricing-page">
-      <header className="site-header pricing-header">
-        <nav className="nav container pricing-nav" aria-label="Pricing navigation">
-          <Link className="brand pricing-brand" to="/">
-            <img className="coodra-logo-img" src="/images/coodra-logo.png" alt="Coodra" />
-          </Link>
-          <div className="nav-links pricing-links">
-            <a href="/#how-it-works">How it works</a>
-            <a href="/#decision">Decision Engine</a>
-            <a href="/#proof">Proof</a>
-            <Link className="is-active" to="/pricing">
-              Pricing
-            </Link>
-          </div>
-          <div className="nav-actions pricing-actions">
-            <Link className="btn btn-ghost pricing-btn" to="/login">
-              Sign in
-            </Link>
-            <Link className="btn btn-primary pricing-btn" to="/signup">
-              Start Free
-            </Link>
-          </div>
-        </nav>
-      </header>
+      <MarketingHeader />
 
       <main className="container pricing-main">
         <section className="pricing-hero">
@@ -251,4 +223,7 @@ export default function PricingPage() {
     </div>
   )
 }
+
+
+
 
