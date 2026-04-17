@@ -1,21 +1,39 @@
 import ContactPage from '../pages/ContactPage'
 import type { ActionFunctionArgs, MetaFunction } from 'react-router'
 
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.coodra.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Contact', item: 'https://www.coodra.com/contact' },
+  ],
+}
+
 export const meta: MetaFunction = () => [
-  { title: 'Contact - Coodra' },
+  { title: 'Contact | Coodra' },
   { name: 'description', content: 'Contact Coodra for support, privacy requests, partnerships, and product questions.' },
-  { property: 'og:title', content: 'Contact - Coodra' },
+  { property: 'og:title', content: 'Contact | Coodra' },
   { property: 'og:description', content: 'Contact Coodra for support, privacy requests, partnerships, and product questions.' },
   { property: 'og:image', content: 'https://www.coodra.com/og-image.png' },
   { property: 'og:url', content: 'https://www.coodra.com/contact' },
   { property: 'og:type', content: 'website' },
   { property: 'og:site_name', content: 'Coodra' },
   { name: 'twitter:card', content: 'summary_large_image' },
-  { name: 'twitter:title', content: 'Contact - Coodra' },
+  { name: 'twitter:title', content: 'Contact | Coodra' },
   { name: 'twitter:description', content: 'Contact Coodra for support, privacy requests, partnerships, and product questions.' },
   { name: 'twitter:image', content: 'https://www.coodra.com/og-image.png' },
   { name: 'robots', content: 'index, follow' },
   { tagName: 'link', rel: 'canonical', href: 'https://www.coodra.com/contact' },
+  {
+    tagName: 'script',
+    type: 'application/ld+json',
+    props: {
+      dangerouslySetInnerHTML: {
+        __html: JSON.stringify(breadcrumbSchema),
+      },
+    },
+  },
 ]
 
 const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email)
