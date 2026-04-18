@@ -22,7 +22,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: '5 inventory mistakes that kill margin (and how to catch them before they do)',
     excerpt:
       'A practical framework for spotting hidden inventory drag early and turning signals into high-confidence actions.',
-    coverImage: '/images/blog/inventory-mistakes-infographic.webp',
+    coverImage: '/images/blog/inventory-mistakes-infographic.svg',
     coverImageAlt: 'Inventory mistakes infographic',
     category: 'Inventory',
     readingTime: '7 min read',
@@ -43,7 +43,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'image',
-        src: '/images/blog/inventory-mistakes-infographic.webp',
+        src: '/images/blog/inventory-mistakes-infographic.svg',
         alt: 'Five inventory management mistakes that erode retail margin, with icons for each mistake',
         caption: 'The five most compounding inventory mistakes in independent retail.',
       },
@@ -145,6 +145,10 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
+        text: 'One metric that surfaces this cleanly: the <a href="/blog/stock-to-sales-ratio-guide">stock-to-sales ratio</a>. If you have more than 4 weeks of supply on hand on a SKU, the carrying cost is quietly eroding your margin — whether or not you have tracked it explicitly. <a href="/case-studies">See how retailers have caught this early</a>.',
+      },
+      {
+        type: 'paragraph',
         text: 'These five mistakes are not unique to one type of retailer. The specifics vary — the pattern is the same across jewelry, grocery, pharmacy, and specialty retail.',
       },
       {
@@ -166,7 +170,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: 'Shopify vs Square vs Lightspeed: which POS data should you trust for inventory decisions?',
     excerpt:
       'How to evaluate signal quality across POS platforms and avoid making critical inventory calls on noisy data.',
-    coverImage: '/images/blog/erp-vs-pos-comparison.webp',
+    coverImage: '/images/blog/erp-vs-pos-comparison.svg',
     coverImageAlt: 'ERP versus POS planning comparison',
     category: 'Industry Trends',
     readingTime: '8 min read',
@@ -227,7 +231,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'image',
-        src: '/images/blog/erp-vs-pos-comparison.webp',
+        src: '/images/blog/erp-vs-pos-comparison.svg',
         alt: 'Comparison of ERP-first inventory planning vs POS-connected demand intelligence for independent retailers',
         caption: 'Enterprise inventory planning requires months of setup. POS-direct intelligence goes live in a day.',
       },
@@ -266,6 +270,550 @@ export const blogPosts: BlogPostRecord[] = [
       {
         type: 'paragraph',
         text: 'If you are running Shopify, Square, or Lightspeed and you are spending time wondering whether you need an ERP to do inventory planning justice, the honest answer is: probably not. <a href="/signup">Connect your POS to Coodra</a> and see what your data has been telling you.',
+      },
+      {
+        type: 'paragraph',
+        text: 'For a direct comparison with one specific ERP-adjacent alternative, <a href="/blog/coodra-vs-netstock">see how Coodra and Netstock stack up for independent retailers</a>.',
+      },
+    ],
+  },
+  {
+    slug: 'dead-inventory-signs',
+    title: '5 Signs Your Store Has Too Much Dead Inventory',
+    excerpt:
+      'Dead stock quietly drains margin every week it sits. Here are the five signals that tell you it is happening in your store before the damage compounds.',
+    coverImage: '/images/blog/dead-inventory-signs.svg',
+    coverImageAlt: 'Five warning signs of dead inventory in independent retail stores',
+    category: 'Inventory',
+    readingTime: '6 min read',
+    author: 'Michael Shahid (CEO)',
+    publishedAt: 'April 17, 2026',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'Dead inventory is not a catastrophe. It is a quiet, compounding drain. A SKU that should have been marked down in January sits on the shelf until April. The margin on that product erodes a little more every week — not in a dramatic collapse, but in the slow math of capital tied up in inventory that is not turning.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The hardest part about dead stock is that it does not announce itself. You have to know what to look for. Here are the five signals that tell you it is happening in your store.',
+      },
+      {
+        type: 'image',
+        src: '/images/blog/dead-inventory-signs.svg',
+        alt: 'Five warning signs of dead inventory: shelf space, stock count mismatch, reorder fear, clearance sales, and margin drops',
+        caption: 'The five most reliable signals of dead inventory accumulation.',
+      },
+      {
+        type: 'callout',
+        text: 'Sign 1: You have shelf space that used to be full and is still full three weeks later',
+      },
+      {
+        type: 'paragraph',
+        text: 'Every retailer has a sense of which SKUs are slow. The signal worth acting on is not a product that has always been slow — it is a product that used to move and stopped. If a shelf space that was consistently replenished is now sitting at the same count for three or more weeks, that is not a temporary pause. That is a trend. And trends that go unaddressed become dead stock.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The action: pull the sales history on that SKU for the last 12 weeks. If velocity has dropped meaningfully and you have more than 6-8 weeks of supply on hand, initiate a mark-down conversation now — before it becomes a clearance problem at end of season.',
+      },
+      {
+        type: 'callout',
+        text: 'Sign 2: Your stock count is regularly different from what your POS says it should be',
+      },
+      {
+        type: 'paragraph',
+        text: 'Small stock count discrepancies are normal — mis-picks, return logging errors, a breakroom snack that walks out. Large, consistent discrepancies are a different problem. If your actual count is regularly 10-15% higher than what your POS shows, it means products are leaving your system without being sold. They are either being lost, stolen, or — most commonly — being returned to inventory but logged to the wrong SKU.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The result either way is the same: you reorder based on a phantom inventory position that does not exist. You over-order, the dead stock accumulates, and the cycle continues.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra flags SKUs with anomalous movement — the ones where your count and your sales history tell different stories. <a href="/integrations">See how inventory reconciliation works with your POS</a>.',
+      },
+      {
+        type: 'callout',
+        text: 'Sign 3: You are afraid to reorder some products because you are not sure they are selling',
+      },
+      {
+        type: 'paragraph',
+        text: 'This is the behavioral signal. If your buyers — whether it is the owner or a purchasing manager — have a mental block on reordering certain SKUs because they are not confident in the data, that uncertainty is itself a symptom. It means the sales signals are noisy or contradictory. And noisy signals lead to under-ordering on things that are actually selling while over-ordering on things that are not.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The fix is not more intuition. It is cleaner data: a weekly sales velocity per SKU that your team can trust, reviewed consistently, so the reorder decision is not a guess but a data point.',
+      },
+      {
+        type: 'callout',
+        text: 'Sign 4: Your clearance or mark-down sales are increasing as a percentage of total revenue',
+      },
+      {
+        type: 'paragraph',
+        text: 'Every retailer marks down product. The warning sign is when mark-down revenue starts growing faster than total revenue — meaning you are generating a larger share of your sales from discounted product. This is the clearest financial signal that dead stock is accumulating faster than you are clearing it.',
+      },
+      {
+        type: 'paragraph',
+        text: 'A healthy ratio for most specialty retailers: mark-down sales should represent no more than 8-12% of total revenue. If it is climbing above that consistently, your buying cycle is running ahead of your actual sell-through. You are ordering more than your store can naturally move.',
+      },
+      {
+        type: 'callout',
+        text: 'Sign 5: Your gross margin is declining without a corresponding change in your pricing',
+      },
+      {
+        type: 'paragraph',
+        text: 'This is the compound signal. Margin erosion without a pricing change usually has two causes: the cost of your product went up (not a dead stock issue), or you are moving too much inventory at a discount to clear it. The second cause is dead stock behavior, and it compounds because the urgency to clear dead stock leads to discounting that further erodes net margin.',
+      },
+      {
+        type: 'paragraph',
+        text: 'If your margin is trending down and you have not changed your pricing or supplier costs, look at your inventory age report. The products with the most weeks of supply on hand are the ones dragging your margin.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra surfaces the inventory decisions worth acting on every week — including which SKUs are accumulating dead stock before they force a mark-down. <a href="/pricing">See how it works</a>.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The retailers who manage inventory best do not have better intuition. They have a weekly review rhythm — a consistent look at what is running, what is stalling, and what needs action before it compounds. The five signals above are your trigger for that review. The question is whether you have a system that surfaces them automatically, or whether you are waiting until they become impossible to miss.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The <a href="/blog/inventory-mistakes-that-kill-margin">five compounding inventory mistakes</a> that drive dead stock accumulation follow the same pattern. Knowing the signals is the first step — having a system that acts on them is what protects your margin.',
+      },
+    ],
+  },
+  {
+    slug: 'reorder-points-without-excel',
+    title: 'How to Calculate Reorder Points Without Excel',
+    excerpt:
+      'The reorder point formula is simple. The hard part is getting the data and applying it consistently. Here is how to do it with your POS data.',
+    coverImage: '/images/blog/reorder-points-formula.svg',
+    coverImageAlt: 'Reorder point formula for independent retailers without Excel or ERP',
+    category: 'Inventory',
+    readingTime: '7 min read',
+    author: 'Michael Shahid (CEO)',
+    publishedAt: 'April 17, 2026',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'The reorder point is one of the most practical concepts in retail inventory management. It tells you exactly when to place a replenishment order so that you do not run out of stock before the new product arrives. Simple in theory. Hard in practice — because most independent retailers do not have a clean way to calculate and track it consistently.',
+      },
+      {
+        type: 'paragraph',
+        text: 'This post is about the formula, what each variable means for an independent retailer, and how to apply it without building a spreadsheet that requires an accounting degree to maintain.',
+      },
+      {
+        type: 'image',
+        src: '/images/blog/reorder-points-formula.svg',
+        alt: 'Reorder point equals average weekly sales times lead time in weeks plus safety stock',
+        caption: 'The three variables you need: average weekly sales, supplier lead time, and safety stock.',
+      },
+      {
+        type: 'callout',
+        text: 'The reorder point formula',
+      },
+      {
+        type: 'paragraph',
+        text: 'Reorder Point = Average Weekly Sales × Lead Time (in weeks) + Safety Stock',
+      },
+      {
+        type: 'paragraph',
+        text: 'That is it. Three numbers. The result is the inventory level at which you should trigger your next purchase order — not when the shelf is empty, not when it looks low, but at a specific number that accounts for how long it takes your supplier to get the product to you.',
+      },
+      {
+        type: 'callout',
+        text: 'Variable 1: Average weekly sales',
+      },
+      {
+        type: 'paragraph',
+        text: 'Pull the total units sold of a SKU over the last 8-12 weeks from your POS. Divide by the number of weeks. That is your average weekly sales for that product.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Do not use last week alone — one week is too noisy. A consistent 8-12 week view smooths out the variation from promotions, seasonality, or one-time events. If you are in a seasonal business, use the same season from last year as your primary window.',
+      },
+      {
+        type: 'paragraph',
+        text: 'For a product that sells 20 units a week on average, that number is 20.',
+      },
+      {
+        type: 'callout',
+        text: 'Variable 2: Lead time in weeks',
+      },
+      {
+        type: 'paragraph',
+        text: 'Lead time is the number of weeks between placing your purchase order and the product being available to sell on your shelf. Ask your supplier directly if you are not sure — most will give you a range. Use the longer end of that range for conservative planning.',
+      },
+      {
+        type: 'paragraph',
+        text: 'If your supplier says 5-7 days, that is approximately 1 week. If they say 3-4 weeks, use 3 or 4. If it varies by product — which is common when you have multiple vendors — calculate this per product or per vendor group.',
+      },
+      {
+        type: 'paragraph',
+        text: 'For a product with a 3-week lead time and 20 units/week average sales, the first part of your calculation is 20 × 3 = 60.',
+      },
+      {
+        type: 'callout',
+        text: 'Variable 3: Safety stock',
+      },
+      {
+        type: 'paragraph',
+        text: 'Safety stock is your buffer — the extra inventory you hold to protect against unexpected demand spikes or delayed shipments. The simplest safety stock formula for an independent retailer: average weekly sales × 2.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Using the same example: 20 units/week × 2 = 40 units of safety stock.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Your safety stock is not your reorder quantity. It is the minimum buffer you want to maintain above zero. When your inventory hits 40 units on this example SKU, you reorder — you do not wait until it hits zero.',
+      },
+      {
+        type: 'callout',
+        text: 'Putting it together',
+      },
+      {
+        type: 'paragraph',
+        text: 'Average weekly sales: 20 units\nLead time: 3 weeks\nSafety stock: 40 units\n\nReorder Point = 20 × 3 + 40 = 100 units',
+      },
+      {
+        type: 'paragraph',
+        text: 'When this SKU drops to 100 units on your inventory count, you place your purchase order. You sell through your remaining stock during the 3-week lead time. By the time you hit your safety stock buffer of 40 units, your reorder is arriving. You should never run out.',
+      },
+      {
+        type: 'paragraph',
+        text: 'This is the theory. The practice problem is doing it for 300, 500, or 1,000 SKUs without living in a spreadsheet. <a href="/pricing">Coodra calculates this for every SKU automatically</a> from your POS sales history, updated weekly, so the reorder decision is not a calculation — it is a review.',
+      },
+      {
+        type: 'callout',
+        text: 'Where retailers get this wrong',
+      },
+      {
+        type: 'paragraph',
+        text: 'The most common mistake is using last week\'s sales as the average. A single week can be wildly unrepresentative — a big one-off order from a single customer, a local event that drove traffic, a promotion that distorted baseline demand. One week of data tells you almost nothing about consistent velocity.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The second mistake is confusing safety stock with reorder quantity. Safety stock is the floor — the point at which you trigger a reorder. Your reorder quantity is how much you order each time. These are two different decisions and should not be the same number.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The third mistake: not updating the calculation when supplier lead times change. If your lead time extends from 2 weeks to 4 weeks, your reorder point changes even if sales velocity is the same. Treat lead time as a live variable, not a fixed one.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra monitors your top sellers every week and flags when a product is approaching its reorder point before a stockout happens. <a href="/integrations">Connect your POS to get started</a>.',
+      },
+      {
+        type: 'paragraph',
+        text: 'For a deeper walkthrough of the five questions your POS can answer every week to support this kind of decision-making, <a href="/blog/how-to-read-pos-data">see our guide to reading POS data</a>.',
+      },
+    ],
+  },
+  {
+    slug: 'coodra-vs-netstock',
+    title: 'Coodra vs Netstock: Which Is Right for Independent Retailers?',
+    excerpt:
+      'Netstock serves mid-market planning teams with ERP integrations and weeks-long onboarding. Coodra is built for independent retailers who want decisions, not dashboards. Here is how they compare.',
+    coverImage: '/images/blog/coodra-vs-netstock-comparison.svg',
+    coverImageAlt: 'Coodra vs Netstock comparison for independent retailers without ERP',
+    category: 'Comparisons',
+    readingTime: '8 min read',
+    author: 'Michael Shahid (CEO)',
+    publishedAt: 'April 17, 2026',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'Netstock is one of the most visible names in inventory optimization for SMB and mid-market businesses. If you are researching inventory planning tools, you have probably found their content, their benchmark reports, and their comparison pages. They are good at being found.',
+      },
+      {
+        type: 'paragraph',
+        text: 'This post is not about declaring a winner. It is about being direct about where each product fits and who it actually serves — so you can make the right decision for your store.',
+      },
+      {
+        type: 'image',
+        src: '/images/blog/coodra-vs-netstock-comparison.svg',
+        alt: 'Side-by-side comparison of Coodra and Netstock across key features for independent retailers',
+        caption: 'Key differences between Coodra and Netstock for independent retailers.',
+      },
+      {
+        type: 'callout',
+        text: 'Who Netstock is built for',
+      },
+      {
+        type: 'paragraph',
+        text: 'Netstock is an inventory optimization platform designed for businesses with existing ERP systems — NetSuite, Sage, Microsoft Dynamics, SAP Business One, and similar enterprise platforms. Their product assumes you have clean, structured inventory data inside an ERP, a dedicated person or team doing planning, and a multi-week implementation process to get the system configured.',
+      },
+      {
+        type: 'paragraph',
+        text: 'If that describes your business, Netstock is worth evaluating seriously. Their demand forecasting, S&OP tooling, and supplier performance features are built for that operational complexity.',
+      },
+      {
+        type: 'paragraph',
+        text: 'If it does not describe your business — if you are running Shopify or Square, have one to five locations, and are making inventory decisions between serving customers, Netstock\'s feature set is designed for a different problem than the one you have.',
+      },
+      {
+        type: 'callout',
+        text: 'Who Coodra is built for',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra is built for independent retailers who do not have an ERP and do not want one. You connect your POS — Shopify, Square, Lightspeed, or Clover — and Coodra turns your sales and inventory data into a weekly ranked list of inventory decisions: what to reorder, what to reduce, what to hold.',
+      },
+      {
+        type: 'paragraph',
+        text: 'There is no ERP required, no implementation project, no dedicated planner needed. The outcome is the same — better inventory decisions — but the path there is designed for a smaller, faster-moving business.',
+      },
+      {
+        type: 'callout',
+        text: 'Setup and time to value',
+      },
+      {
+        type: 'paragraph',
+        text: 'Netstock\'s implementation typically involves an ERP integration, data mapping, and a planning process that takes weeks to months to fully configure. For businesses that already have the ERP infrastructure in place, this is part of the cost of doing business. For independent retailers who do not have that infrastructure, it is a significant investment before seeing any value.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra connects directly to your POS with no ERP dependency. Most retailers are live and receiving their first set of recommendations within one business day. The time from signing up to seeing a ranked inventory decision list is measured in hours, not weeks.',
+      },
+      {
+        type: 'paragraph',
+        text: 'For a full side-by-side view of how Coodra and other alternatives compare on features, pricing, and setup time, <a href="/comparisons">see the comparison table</a>.',
+      },
+      {
+        type: 'callout',
+        text: 'Pricing transparency',
+      },
+      {
+        type: 'paragraph',
+        text: 'Netstock does not publish pricing on their website — it requires a demo request and a sales conversation. For a business evaluating options quickly, this is a friction point. You cannot easily compare cost without committing to a conversation first.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra publishes pricing on the website. You can evaluate whether the plan fits your store\'s volume without speaking to anyone. <a href="/pricing">See Coodra pricing</a>.',
+      },
+      {
+        type: 'callout',
+        text: 'The independent retailer question',
+      },
+      {
+        type: 'paragraph',
+        text: 'If you are an independent retailer — jewelry, pet supply, pharmacy, grocery, specialty retail — and you are running Shopify, Square, or Lightspeed, the honest answer to "is Netstock right for me?" is: probably not in its current form. Netstock\'s market positioning, pricing structure, and product complexity are all built around ERP-first businesses.',
+      },
+      {
+        type: 'paragraph',
+        text: 'That does not mean Netstock is a bad product. It means they are solving a different problem. The question is whether that problem is the one you actually have.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra was built specifically for independent retailers who have a POS, have sales data, and want to make better inventory decisions without adding enterprise software. If that is your situation, <a href="/signup">start your free trial</a> and see what your POS data has been telling you.',
+      },
+    ],
+  },
+  {
+    slug: 'how-to-read-pos-data',
+    title: 'How to Read Your POS Data to Make Smarter Buying Decisions',
+    excerpt:
+      'Your POS logs everything you need — sales velocity, stock position, demand trends. Here is how to turn transaction data into a weekly buying strategy without a spreadsheet.',
+    coverImage: '/images/blog/pos-data-buying-decisions.svg',
+    coverImageAlt: 'How to read POS data for smarter retail buying decisions',
+    category: 'Inventory',
+    readingTime: '7 min read',
+    author: 'Michael Shahid (CEO)',
+    publishedAt: 'April 17, 2026',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'Every transaction your POS processes is a data point. Most independent retailers never look at it beyond confirming the sale went through. That is a significant missed opportunity — because the data your POS generates every week contains everything you need to make better, more confident buying decisions.',
+      },
+      {
+        type: 'paragraph',
+        text: 'This is not about building dashboards. It is about knowing which five questions to ask your POS data every week, and knowing where to find the answers.',
+      },
+      {
+        type: 'image',
+        src: '/images/blog/pos-data-buying-decisions.svg',
+        alt: 'POS data sources on the left, weekly buying decisions on the right',
+        caption: 'Your POS already captures the data. The question is whether you are using it.',
+      },
+      {
+        type: 'callout',
+        text: 'The five questions your POS can answer every week',
+      },
+      {
+        type: 'paragraph',
+        text: 'These are the questions that separate retailers who manage inventory by instinct from retailers who manage it by data. You do not need a BI tool or a spreadsheet to answer any of them — most POS systems surface all of this in their reporting sections.',
+      },
+      {
+        type: 'callout',
+        text: 'Question 1: What sold the most, compared to last week and last month?',
+      },
+      {
+        type: 'paragraph',
+        text: 'Most POS systems have a "top sellers" or "sales by item" report. Run it for the last 7 days and compare it to the prior 7-day period. Look for products that have moved into the top 20% by units sold — that is a velocity signal. It means something changed: a new customer type found it, a display drove attention, or seasonal demand shifted.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Acting on this signal does not mean doubling your order. It means making sure you do not under-order the same product this cycle and run out at the worst moment. <a href="/integrations">Coodra tracks this automatically every week</a> and flags products that are trending up before you miss a reorder window.',
+      },
+      {
+        type: 'callout',
+        text: 'Question 2: What is my current stock position per SKU, and which SKUs are below my reorder point?',
+      },
+      {
+        type: 'paragraph',
+        text: 'Your POS knows your on-hand inventory by SKU. The question is whether you are checking it before you reorder. Most retailers order when the shelf is empty — not when the data says it will be empty in 10 days.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The fix: run an inventory by item report once a week. Sort by quantity on hand, ascending. The SKUs at the bottom are your most urgent replenishment needs. Cross-reference with your sales velocity — a SKU at 10 units with a 3-unit-per-week velocity needs a reorder now. A SKU at 10 units with a 0.5-unit-per-week velocity does not.',
+      },
+      {
+        type: 'paragraph',
+        text: '<a href="/blog/reorder-points-without-excel">How to calculate reorder points without a spreadsheet</a> — and how to apply them consistently across your top SKUs.',
+      },
+      {
+        type: 'callout',
+        text: 'Question 3: Which products sold faster this week than the prior 4-week average?',
+      },
+      {
+        type: 'paragraph',
+        text: 'This is a demand trend question. One week is noisy. Four weeks gives you a pattern. Products selling at twice their 4-week average are telling you something: a trend is forming, or a supply constraint is about to bite.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Acting on this signal early — before the shortage becomes a stockout — is one of the highest-value inventory decisions you can make. The retailers who never run out of their best sellers are the ones who are watching velocity trends, not just stock counts.',
+      },
+      {
+        type: 'callout',
+        text: 'Question 4: What is my sell-through rate by category?',
+      },
+      {
+        type: 'paragraph',
+        text: 'Sell-through rate = units sold ÷ units received in a given period. Run this by category — not by total store — every 4 weeks. It tells you which categories are performing and which are accumulating inventory relative to the volume you are bringing in.',
+      },
+      {
+        type: 'paragraph',
+        text: 'A category with a 15% sell-through over 30 days is a warning sign: you are bringing in far more than you are moving. A category with a 60% sell-through is healthy — inventory is turning and you are likely not holding excess.',
+      },
+      {
+        type: 'paragraph',
+        text: 'This question is especially important before you place a large purchase order. If a category has been trending at 20% sell-through, adding more inventory will not fix it. <a href="/pricing">See how Coodra surfaces category health every week</a>.',
+      },
+      {
+        type: 'callout',
+        text: 'Question 5: What is my best-seller mix by revenue versus by units?',
+      },
+      {
+        type: 'paragraph',
+        text: 'These are different lists. Your top sellers by units might be low-ticket items — a $5 accessory that moves 20 units a week. Your top sellers by revenue might be $200 pieces that move 2 units a week. Both matter. But they tell you different things.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The units list tells you what drives traffic and repeat visits. The revenue list tells you what pays the bills. A healthy store has products in both lists. If your revenue list is full of items that are also your slowest movers by velocity, you have a margin mix problem that no amount of traffic will solve.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The weekly review does not need to take more than 20 minutes. Pull the five reports above, note the three most important changes, and act on the one decision that has the highest margin impact. That is the discipline. Everything else is detail.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra consolidates all five questions into a single weekly view — your top movers, your reorder flags, your slow categories, and your velocity trends — pulled automatically from your POS. <a href="/signup">Connect your POS once</a> and get the weekly view without running a single report manually.',
+      },
+      {
+        type: 'paragraph',
+        text: 'If you are evaluating whether your POS data is clean enough to trust for these decisions, <a href="/blog/pos-data-trust-guide">this guide covers how to assess signal quality</a> before you act on any single data point.',
+      },
+    ],
+  },
+  {
+    slug: 'stock-to-sales-ratio-guide',
+    title: 'The Stock-to-Sales Ratio: The Simple Metric Most Independent Retailers Skip',
+    excerpt:
+      'It tells you how many days of inventory you have on hand at any given time. Lower is better. Most retailers do not track it — and pay for it in margin.',
+    coverImage: '/images/blog/stock-to-sales-ratio.svg',
+    coverImageAlt: 'Stock-to-sales ratio guide for independent retailers showing healthy, caution, and danger zones',
+    category: 'Inventory',
+    readingTime: '6 min read',
+    author: 'Michael Shahid (CEO)',
+    publishedAt: 'April 17, 2026',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'The stock-to-sales ratio is one of the simplest and most useful metrics in retail. It answers one question: how long does inventory sit in my store before it sells? Lower is better — because inventory that sits ties up capital, takes up shelf space, and eventually forces a discounted clearance.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Most independent retailers do not track it. They track sell-through in vague terms ("we moved a lot of that") and they track inventory levels in the same vague terms ("we have a lot of that in the back"). The stock-to-sales ratio makes the conversation precise.',
+      },
+      {
+        type: 'image',
+        src: '/images/blog/stock-to-sales-ratio.svg',
+        alt: 'Stock-to-sales ratio formula with healthy, caution, and danger zone examples',
+        caption: 'The ratio reveals where your capital is sitting — and for how long.',
+      },
+      {
+        type: 'callout',
+        text: 'How to calculate it',
+      },
+      {
+        type: 'paragraph',
+        text: 'Stock-to-Sales Ratio = Average Inventory on Hand ÷ Net Sales (units or dollars)',
+      },
+      {
+        type: 'paragraph',
+        text: 'To get your average inventory on hand: take the beginning and ending inventory count for a period (your POS can give you this), add them, divide by 2. Then divide your net sales for that period by that average.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The result is a multiplier. A ratio of 2.0x means you have approximately twice your average weekly sales in inventory on hand — or about 14 days of supply at current velocity. A ratio of 4.0x means you have roughly 28 days of supply. The higher the number, the longer inventory sits.',
+      },
+      {
+        type: 'callout',
+        text: 'What the numbers mean in practice',
+      },
+      {
+        type: 'paragraph',
+        text: 'For most specialty retail categories, a healthy stock-to-sales ratio is between 1.5x and 2.5x — meaning you have roughly 10-18 days of supply on hand at any given time. This is low enough that inventory is turning fast and you are not holding excess, but high enough that you have buffer to handle a week of unexpectedly strong traffic.',
+      },
+      {
+        type: 'paragraph',
+        text: 'A ratio between 2.5x and 4.0x is a caution zone. Inventory is sitting longer than ideal. You are probably ordering too much relative to your sell-through rate. At this ratio, you want to start reducing order quantities and watching for products that are clearly dead weight.',
+      },
+      {
+        type: 'paragraph',
+        text: 'A ratio above 4.0x is a danger zone. This is where dead stock compounds. You are holding more than four weeks of supply, which means you have products on your shelves that are not selling at a rate that justifies the capital. At this ratio, markdowns are coming, and they will hurt more because the inventory has been sitting long enough that it may be seasonally stale by the time you clear it.',
+      },
+      {
+        type: 'paragraph',
+        text: '<a href="/blog/dead-inventory-signs">Five signs your store has too much dead inventory</a> — including what to look for before the ratio climbs this high.',
+      },
+      {
+        type: 'callout',
+        text: 'Calculate it by category, not just store-wide',
+      },
+      {
+        type: 'paragraph',
+        text: 'A store-wide ratio hides problems. Your overall stock-to-sales might be 2.2x — healthy — while your jewelry category is at 5.1x and your accessories category is at 1.1x. The store-wide number makes the jewelry problem invisible.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Calculate the ratio by category every 4 weeks. This is where the metric becomes genuinely actionable. A category running at 4.5x tells you to reduce incoming orders on that category, accept that some markdowns may be coming, and stop buying at the same rate until the ratio improves.',
+      },
+      {
+        type: 'callout',
+        text: 'The connection to buying decisions',
+      },
+      {
+        type: 'paragraph',
+        text: 'Your stock-to-sales ratio should directly influence your purchase order size. When you are entering a new season or receiving a new shipment, look at your current ratio by category before confirming the order. If the category is already at 3.5x, adding more inventory will push it higher. The smarter move is to wait — let the existing inventory turn before adding more.',
+      },
+      {
+        type: 'paragraph',
+        text: 'This is the discipline that separates retailers with healthy cash flow from retailers who are constantly over-extended on inventory. It is not about buying less. It is about buying at the right time in the cycle.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra tracks your stock-to-sales ratio per category automatically and flags when a category drifts into the caution or danger zone — before it becomes dead stock. <a href="/integrations">See it connected to your POS data</a>.',
       },
     ],
   },
