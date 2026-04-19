@@ -1,0 +1,57 @@
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#f4f5f7"/>
+  <text x="40" y="50" font-family="sans-serif" font-size="22" font-weight="700" fill="#0a1a31">Safety Stock: The 2-Week Buffer</text>
+  <text x="40" y="75" font-family="sans-serif" font-size="14" fill="#506786">Simple method for independent retailers</text>
+
+  <!-- Inventory level bars -->
+  <!-- Bar 1: No buffer -->
+  <rect x="40" y="120" width="160" height="60" rx="4" fill="#ef4444" opacity="0.15"/>
+  <rect x="40" y="155" width="160" height="25" rx="4" fill="#ef4444"/>
+  <text x="40" y="148" font-family="sans-serif" font-size="11" fill="#ef4444" font-weight="700">TOO THIN</text>
+  <text x="40" y="210" font-family="sans-serif" font-size="11" fill="#0a1a31">0 weeks buffer</text>
+  <text x="40" y="225" font-family="sans-serif" font-size="11" fill="#506786">Constant stockouts</text>
+
+  <!-- Bar 2: 2-week buffer (recommended) -->
+  <rect x="240" y="120" width="160" height="60" rx="4" fill="#2fd7c6" opacity="0.15"/>
+  <rect x="240" y="120" width="160" height="20" rx="4" fill="#2fd7c6"/>
+  <rect x="240" y="155" width="160" height="25" rx="4" fill="#2fd7c6" opacity="0.5"/>
+  <text x="240" y="148" font-family="sans-serif" font-size="11" fill="#2fd7c6" font-weight="700">JUST RIGHT</text>
+  <text x="240" y="210" font-family="sans-serif" font-size="11" fill="#0a1a31">2-week buffer</text>
+  <text x="240" y="225" font-family="sans-serif" font-size="11" fill="#506786">No stockouts, no excess</text>
+
+  <!-- Bar 3: 4-week buffer -->
+  <rect x="440" y="120" width="160" height="60" rx="4" fill="#f59e0b" opacity="0.15"/>
+  <rect x="440" y="120" width="160" height="35" rx="4" fill="#f59e0b"/>
+  <rect x="440" y="155" width="160" height="25" rx="4" fill="#f59e0b" opacity="0.5"/>
+  <text x="440" y="148" font-family="sans-serif" font-size="11" fill="#f59e0b" font-weight="700">TOO HIGH</text>
+  <text x="440" y="210" font-family="sans-serif" font-size="11" fill="#0a1a31">4+ weeks buffer</text>
+  <text x="440" y="225" font-family="sans-serif" font-size="11" fill="#506786">Ties up too much capital</text>
+
+  <!-- Formula box -->
+  <rect x="640" y="120" width="140" height="60" rx="4" fill="#0a1a31"/>
+  <text x="656" y="148" font-family="sans-serif" font-size="11" fill="#ffffff" font-weight="700">FORMULA</text>
+  <text x="656" y="168" font-family="sans-serif" font-size="12" fill="#2fd7c6">Safety Stock =</text>
+  <text x="656" y="185" font-family="sans-serif" font-size="13" fill="#ffffff" font-weight="700">Avg Weekly Sales × 2</text>
+
+  <!-- Bottom section: when to hold more -->
+  <rect x="40" y="265" width="720" height="110" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="60" y="290" font-family="sans-serif" font-size="14" font-weight="700" fill="#0a1a31">When to hold MORE than 2 weeks</text>
+
+  <circle cx="70" cy="320" r="8" fill="#2fd7c6"/>
+  <text x="70" y="324" font-family="sans-serif" font-size="11" fill="#ffffff" text-anchor="middle">1</text>
+  <text x="90" y="318" font-family="sans-serif" font-size="12" fill="#0a1a31">Top 3-5 hero products</text>
+  <text x="90" y="333" font-family="sans-serif" font-size="11" fill="#506786">Anchor SKUs customers come in for</text>
+  <text x="270" y="318" font-family="sans-serif" font-size="12" fill="#0a1a31">→ Hold 3-4 weeks</text>
+
+  <circle cx="370" cy="320" r="8" fill="#2fd7c6"/>
+  <text x="370" y="324" font-family="sans-serif" font-size="11" fill="#ffffff" text-anchor="middle">2</text>
+  <text x="390" y="318" font-family="sans-serif" font-size="12" fill="#0a1a31">Erratic supplier lead times</text>
+  <text x="390" y="333" font-family="sans-serif" font-size="11" fill="#506786">Unpredictable delivery windows</text>
+  <text x="570" y="318" font-family="sans-serif" font-size="12" fill="#0a1a31">→ Hold 3-4 weeks</text>
+
+  <circle cx="70" cy="355" r="8" fill="#2fd7c6"/>
+  <text x="70" y="359" font-family="sans-serif" font-size="11" fill="#ffffff" text-anchor="middle">3</text>
+  <text x="90" y="353" font-family="sans-serif" font-size="12" fill="#0a1a31">Seasonal entering peak</text>
+  <text x="90" y="368" font-family="sans-serif" font-size="11" fill="#506786">Before a known demand spike</text>
+  <text x="270" y="353" font-family="sans-serif" font-size="12" fill="#0a1a31">→ Hold extra buffer</text>
+</svg>
