@@ -12,7 +12,10 @@ export default [
   route('blog/:slug', '../src/routes/blog-slug.tsx'),
   route('privacy', '../src/routes/privacy.tsx'),
   route('terms', '../src/routes/terms.tsx'),
+  route('comparisons', '../src/routes/comparisons.tsx'),
   route('pricing', '../src/routes/pricing.tsx'),
+  route('resources', '../src/routes/resources.tsx'),
+  route('inventory-management', '../src/routes/inventory-management.tsx'),
   route('login', '../src/routes/login.tsx'),
   route('signup', '../src/routes/signup.tsx'),
   route('verify-email', '../src/routes/verify-email.tsx'),
@@ -20,3 +23,4 @@ export default [
   route('dashboard', '../src/routes/dashboard.tsx'),
   route('admin', '../src/routes/admin.tsx'),
 ] satisfies RouteConfig
+

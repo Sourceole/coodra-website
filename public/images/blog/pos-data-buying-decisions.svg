@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1a31"/>
+      <stop offset="100%" stop-color="#0f2744"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2fd7c6"/>
+      <stop offset="100%" stop-color="#1fb5a3"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1" fill="#1a3560" opacity="0.5"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <rect x="0" y="0" width="1200" height="4" fill="url(#teal)"/>
+
+  <!-- Header -->
+  <text x="600" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2fd7c6" text-anchor="middle" letter-spacing="3">POS DATA · WEEKLY WORKFLOW · INVENTORY</text>
+  <text x="600" y="120" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">How to Read Your POS Data</text>
+  <text x="600" y="165" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">to Make Smarter Buying Decisions</text>
+  <text x="600" y="202" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#7aa8c4" text-anchor="middle">Your POS already logs everything you need. Here is how to turn transactions into a buying strategy.</text>
+  <line x1="180" y1="225" x2="1020" y2="225" stroke="#1e3a6e" stroke-width="1"/>
+
+  <!-- ── Left panel: POS data sources ── -->
+  <g transform="translate(60, 248)">
+    <rect x="0" y="0" width="360" height="300" rx="12" fill="#0d2040"/>
+    <rect x="0" y="0" width="360" height="300" rx="12" fill="none" stroke="#1e3a6e" stroke-width="1"/>
+    <!-- Header -->
+    <rect x="0" y="0" width="360" height="44" rx="12" fill="#0a1830"/>
+    <rect x="0" y="22" width="360" height="22" fill="#0a1830"/>
+    <text x="16" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#2fd7c6" text-anchor="start">YOUR POS ALREADY CAPTURES</text>
+
+    <!-- Data points -->
+    <g transform="translate(16, 56)">
+      <!-- Sales by SKU -->
+      <circle cx="10" cy="10" r="8" fill="#2fd7c6"/>
+      <text x="10" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="700" fill="#0a1a31" text-anchor="middle">✓</text>
+      <text x="28" y="8" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Units sold per SKU, per week</text>
+      <text x="28" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#64748b">Velocity = your demand signal</text>
+    </g>
+
+    <g transform="translate(16, 100)">
+      <circle cx="10" cy="10" r="8" fill="#2fd7c6"/>
+      <text x="10" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="700" fill="#0a1a31" text-anchor="middle">✓</text>
+      <text x="28" y="8" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Current inventory on hand</text>
+      <text x="28" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#64748b">Stock position at any given moment</text>
+    </g>
+
+    <g transform="translate(16, 144)">
+      <circle cx="10" cy="10" r="8" fill="#2fd7c6"/>
+      <text x="10" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="700" fill="#0a1a31" text-anchor="middle">✓</text>
+      <text x="28" y="8" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Day-of-week and time patterns</text>
+      <text x="28" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#64748b">Know your traffic by day and season</text>
+    </g>
+
+    <g transform="translate(16, 188)">
+      <circle cx="10" cy="10" r="8" fill="#2fd7c6"/>
+      <text x="10" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="700" fill="#0a1a31" text-anchor="middle">✓</text>
+      <text x="28" y="8" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Cost per item from PO history</text>
+      <text x="28" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#64748b">True margin per SKU</text>
+    </g>
+
+    <g transform="translate(16, 232)">
+      <circle cx="10" cy="10" r="8" fill="#2fd7c6"/>
+      <text x="10" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="700" fill="#0a1a31" text-anchor="middle">✓</text>
+      <text x="28" y="8" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Co-purchasing relationships</text>
+      <text x="28" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#64748b">What sells together — bundle signals</text>
+    </g>
+  </g>
+
+  <!-- ── Center arrow ── -->
+  <g transform="translate(420, 395)">
+    <line x1="0" y1="0" x2="60" y2="0" stroke="#2fd7c6" stroke-width="2"/>
+    <polyline points="52,-6 62,0 52,6" fill="none" stroke="#2fd7c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- ── Right panel: decisions ── -->
+  <g transform="translate(520, 248)">
+    <rect x="0" y="0" width="360" height="300" rx="12" fill="#0d2040"/>
+    <rect x="0" y="0" width="360" height="300" rx="12" fill="none" stroke="#2fd7c6" stroke-width="2" opacity="0.5"/>
+    <rect x="0" y="0" width="360" height="44" rx="12" fill="#0a2a1a"/>
+    <rect x="0" y="22" width="360" height="22" fill="#0a2a1a"/>
+    <text x="16" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#2fd7c6" text-anchor="start">EVERY WEEK, YOU CAN ANSWER</text>
+
+    <!-- Decisions -->
+    <g transform="translate(16, 56)">
+      <circle cx="10" cy="10" r="8" fill="#f59e0b"/>
+      <text x="10" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" fill="#0a1a31" text-anchor="middle">→</text>
+      <text x="28" y="8" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Which SKUs am I over-ordering?</text>
+      <text x="28" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#64748b">Slow movers consuming capital</text>
+    </g>
+
+    <g transform="translate(16, 100)">
+      <circle cx="10" cy="10" r="8" fill="#f59e0b"/>
+      <text x="10" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" fill="#0a1a31" text-anchor="middle">→</text>
+      <text x="28" y="8" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Which SKUs am I under-ordering?</text>
+      <text x="28" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#64748b">Stockouts on fast movers = lost margin</text>
+    </g>
+
+    <g transform="translate(16, 144)">
+      <circle cx="10" cy="10" r="8" fill="#f59e0b"/>
+      <text x="10" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" fill="#0a1a31" text-anchor="middle">→</text>
+      <text x="28" y="8" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">What should I mark down now?</text>
+      <text x="28" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#64748b">Before end-of-season clearance math</text>
+    </g>
+
+    <g transform="translate(16, 188)">
+      <circle cx="10" cy="10" r="8" fill="#f59e0b"/>
+      <text x="10" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" fill="#0a1a31" text-anchor="middle">→</text>
+      <text x="28" y="8" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">What new SKUs should I test?</text>
+      <text x="28" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#64748b">Velocitiy patterns indicate demand fit</text>
+    </g>
+
+    <g transform="translate(16, 232)">
+      <circle cx="10" cy="10" r="8" fill="#f59e0b"/>
+      <text x="10" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" fill="#0a1a31" text-anchor="middle">→</text>
+      <text x="28" y="8" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">What is my real best-seller ranking?</text>
+      <text x="28" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#64748b">Not gut feel — actual velocity rank</text>
+    </g>
+  </g>
+
+  <!-- ── Bottom: POS icon + CTA ── -->
+  <rect x="0" y="565" width="1200" height="65" fill="#081828"/>
+  <rect x="0" y="565" width="1200" height="2" fill="url(#teal)"/>
+  <!-- POS receipt icon -->
+  <g transform="translate(80, 573)">
+    <rect x="0" y="0" width="40" height="48" rx="4" fill="none" stroke="#2fd7c6" stroke-width="1.5"/>
+    <line x1="8" y1="14" x2="32" y2="14" stroke="#2fd7c6" stroke-width="1.5"/>
+    <line x1="8" y1="22" x2="32" y2="22" stroke="#2fd7c6" stroke-width="1.5"/>
+    <line x1="8" y1="30" x2="24" y2="30" stroke="#2fd7c6" stroke-width="1.5"/>
+  </g>
+  <text x="140" y="598" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="#ffffff">Coodra turns your POS data into a weekly buying decision list.</text>
+  <text x="140" y="616" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#7aa8c4">No Excel. No ERP. No manual export.</text>
+  <rect x="900" y="575" width="200" height="44" rx="8" fill="#2fd7c6"/>
+  <text x="1000" y="602" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#0a1a31" text-anchor="middle">Connect your POS →</text>
+</svg>

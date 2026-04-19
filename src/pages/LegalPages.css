@@ -15,6 +15,8 @@
 }
 
 .legal-page__shell {
+  width: 100%;
+  margin: 0;
   display: grid;
   grid-template-columns: 240px minmax(0, 1fr);
   gap: 1.35rem;
@@ -43,7 +45,7 @@
 }
 
 .legal-page__sidebar a {
-  color: #506786;
+  color: #0a1a31;
   text-decoration: none;
   font-weight: 700;
   padding: 0.32rem 0.45rem;
@@ -107,6 +109,14 @@
 
 .legal-page a {
   color: #0f6d8a;
+}
+
+.legal-page .legal-page__sidebar a {
+  color: #0a1a31;
+}
+
+.legal-page .legal-page__sidebar a:hover {
+  color: #0a1a31;
 }
 
 .legal-page__grid {

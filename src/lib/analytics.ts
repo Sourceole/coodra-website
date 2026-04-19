@@ -10,6 +10,7 @@ declare global {
 const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined
 
 let initialized = false
+let scriptInjected = false
 
 const isEnabled = () => typeof window !== 'undefined' && Boolean(GA_MEASUREMENT_ID)
 
@@ -22,8 +23,24 @@ const ensureGtag = () => {
   }
 }
 
+const injectGaScript = () => {
+  if (!GA_MEASUREMENT_ID || scriptInjected) return
+  if (document.getElementById('ga-gtag-script')) {
+    scriptInjected = true
+    return
+  }
+
+  const script = document.createElement('script')
+  script.id = 'ga-gtag-script'
+  script.async = true
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`
+  document.head.appendChild(script)
+  scriptInjected = true
+}
+
 export const initAnalytics = () => {
   if (!isEnabled() || initialized || !GA_MEASUREMENT_ID) return
+  injectGaScript()
   ensureGtag()
   window.gtag?.('js', new Date())
   // Disable automatic page_view so router-driven page tracking stays accurate.

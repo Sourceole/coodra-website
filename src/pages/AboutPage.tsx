@@ -1,109 +1,193 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router'
+import { Compass, Sparkles, Target, Users } from 'lucide-react'
 import MarketingHeader from '../components/MarketingHeader'
-import './LegalPages.css'
+import MarketingFooter from '../components/MarketingFooter'
+import './AboutPage.css'
 
-const team = [
+const principles = [
   {
-    name: 'Michael R.',
-    title: 'Founder & CEO',
-    bio: 'Leads product vision and retail strategy with a focus on practical, measurable outcomes.',
-    linkedin: 'https://www.linkedin.com',
+    icon: Users,
+    title: 'Built with operators',
+    body: 'We design by watching how store teams actually work, then remove friction from daily decisions.',
   },
   {
-    name: 'Product Engineering',
-    title: 'Platform Team',
-    bio: 'Builds the decision engine, integrations, and approval flows used by daily retail operators.',
-    linkedin: 'https://www.linkedin.com',
+    icon: Target,
+    title: 'Action over noise',
+    body: 'Coodra focuses on clear next moves, not endless dashboards. Teams should know what to do now.',
   },
   {
-    name: 'Customer Operations',
-    title: 'Implementation Team',
-    bio: 'Helps stores connect systems, onboard quickly, and operationalize recommendations with confidence.',
-    linkedin: 'https://www.linkedin.com',
+    icon: Compass,
+    title: 'Practical AI',
+    body: 'Recommendations stay understandable and reviewable so teams can move fast with confidence.',
+  },
+]
+
+const leadership = [
+  {
+    initials: 'MS',
+    name: 'Michael Shahid',
+    role: 'Founder',
+    body: 'Leads Coodra product direction and operational strategy for independent retail teams.',
+    image: '/images/michael.jpg',
+  },
+  {
+    initials: 'PE',
+    name: 'Platform Leadership',
+    role: 'Product & Engineering',
+    body: 'Owns recommendation quality, reliability, and the day-to-day operator experience.',
+    image: '',
+  },
+  {
+    initials: 'CO',
+    name: 'Customer Leadership',
+    role: 'Implementation & Success',
+    body: 'Partners with stores to launch quickly and operationalize outcomes with minimal lift.',
+    image: '',
   },
 ]
 
 export default function AboutPage() {
+  useEffect(() => {
+    const nodes = Array.from(document.querySelectorAll<HTMLElement>('.about-reveal'))
+    if (!nodes.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
+    )
+
+    nodes.forEach((node) => observer.observe(node))
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <div className="legal-page">
-      <div className="legal-page__container">
-        <MarketingHeader />
+    <div className="about-v2-page">
+      <MarketingHeader />
 
-        <div className="legal-page__shell">
-          <aside className="legal-page__sidebar">
-            <p className="legal-page__sidebarTitle">Company</p>
-            <nav className="legal-page__sidebarLinks" aria-label="Company pages">
-              <Link to="/about">About</Link>
-              <Link to="/contact">Contact</Link>
-              <Link to="/integrations">Integrations</Link>
-              <Link to="/security">Security</Link>
-              <Link to="/privacy">Privacy</Link>
-              <Link to="/terms">Terms</Link>
-            </nav>
-          </aside>
-
-          <article className="legal-page__card">
-            <p className="legal-page__eyebrow">Company</p>
-            <h1>About Coodra</h1>
-
-            <p>
-              Coodra exists because too many retail teams are overloaded with data but under-supported on decisions.
-              We turn live sales, inventory, and demand signals into clear, ranked actions that operators can approve in minutes.
+      <main className="about-v2-main">
+        <section className="about-v2-hero about-reveal is-visible" aria-label="About hero">
+          <div className="about-v2-hero__bg" aria-hidden="true" />
+          <div className="about-v2-section-inner">
+            <p className="about-v2-badge">
+              <Sparkles size={14} aria-hidden="true" />
+              About Coodra
             </p>
-
-            <h2>Founding story</h2>
-            <p>
-              We built Coodra to become the operational decision layer between a retail business and what customers need next.
-              Instead of dashboards that require interpretation, we focus on direct recommendations teams can trust and act on quickly.
+            <h1>
+              OPERATIONS CLARITY FOR
+              <br />
+              <em>INDEPENDENT RETAIL.</em>
+            </h1>
+            <p className="about-v2-hero__sub">
+              Coodra helps store teams move from scattered signals to clear, reviewable decisions in one workflow.
             </p>
+          </div>
+          <div className="about-v2-hero-scroll" aria-hidden="true">
+            <span>Scroll to explore</span>
+            <div className="about-v2-hero-scroll-line" />
+          </div>
+        </section>
 
-            <h2>What we believe</h2>
-            <div className="legal-page__grid">
-              <div className="legal-page__tile">
-                <h3>Clear over complex</h3>
-                <p>A recommendation is only useful if teams can understand and approve it quickly.</p>
-              </div>
-              <div className="legal-page__tile">
-                <h3>Human in control</h3>
-                <p>Coodra supports operators with decision intelligence; your team remains in charge.</p>
-              </div>
-              <div className="legal-page__tile">
-                <h3>Measurable outcomes</h3>
-                <p>Every action should map to tangible improvements in sell-through, margin, and stock health.</p>
-              </div>
-              <div className="legal-page__tile">
-                <h3>Practical speed</h3>
-                <p>Retail moves fast. Teams need useful answers now, not analysis after the opportunity is gone.</p>
-              </div>
+        <section className="about-v2-manifesto about-reveal" aria-label="Manifesto">
+          <div className="about-v2-section-inner">
+            <p className="about-v2-eyebrow about-v2-eyebrow--teal">Our Belief</p>
+            <blockquote>
+              "Every <span>jeweler</span>, every <span>grocery owner</span>, every <span>pharmacist</span> deserves the same AI
+              muscle that runs <em>Walmart</em>."
+            </blockquote>
+            <p>
+              Independent retailers are not small because they lack intelligence. They are underserved because big-tech built tools
+              for enterprises first. Coodra flips that - starting with the independent retailer, building outward.
+            </p>
+          </div>
+        </section>
+
+        <section className="about-v2-founding about-reveal" aria-label="Founding story">
+          <div className="about-v2-section-inner about-v2-founding__inner">
+            <div className="about-v2-founding__media" aria-hidden="true">
+              <img src="/images/coodra_dashboard_1.png" alt="" className="about-v2-founding__image" loading="lazy" />
             </div>
+            <div className="about-v2-founding__copy">
+              <p className="about-v2-eyebrow">Founding Story</p>
+              <h2>Built to support the pace of real stores.</h2>
+              <p>
+                Coodra started with one focus: help independent retailers make stronger operational decisions without extra
+                complexity. The product direction has stayed the same, practical workflows, clear rationale, measurable outcomes.
+              </p>
+              <p>
+                Instead of replacing operators, Coodra gives teams a better operating layer for inventory, margin, and decision
+                approvals.
+              </p>
+            </div>
+          </div>
+        </section>
 
-            <h2>Team</h2>
-            <div className="legal-page__teamGrid">
-              {team.map((person) => (
-                <article key={person.name} className="legal-page__teamCard">
-                  <div className="legal-page__avatar" aria-hidden="true">
-                    {person.name.slice(0, 1)}
+        <section className="about-v2-principles about-reveal" aria-label="Principles">
+          <div className="about-v2-section-inner">
+            <header>
+              <p className="about-v2-eyebrow">Principles</p>
+              <h2>How we build product at Coodra.</h2>
+            </header>
+            <div className="about-v2-principles__grid">
+              {principles.map((item) => (
+                <article key={item.title}>
+                  <div className="about-v2-principles__icon" aria-hidden="true">
+                    <item.icon size={18} />
                   </div>
-                  <div>
-                    <h3>{person.name}</h3>
-                    <p className="legal-page__teamRole">{person.title}</p>
-                    <p>{person.bio}</p>
-                    <a href={person.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-                  </div>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
                 </article>
               ))}
             </div>
+          </div>
+        </section>
 
-            <h2>Locations</h2>
-            <p>Serving retailers across Canada and the United States.</p>
+        <section className="about-v2-leadership about-reveal" aria-label="Leadership">
+          <div className="about-v2-section-inner">
+            <header>
+              <p className="about-v2-eyebrow">The People</p>
+              <h2>LEADERSHIP</h2>
+            </header>
+            <div className="about-v2-leadership__grid">
+              {leadership.map((person) => (
+                <article key={person.name}>
+                  <div className="about-v2-leadership__avatar" aria-hidden="true">
+                    {person.image ? (
+                      <img src={person.image} alt={`${person.name} portrait`} loading="lazy" />
+                    ) : (
+                      person.initials
+                    )}
+                  </div>
+                  <h3>{person.name}</h3>
+                  <p className="about-v2-leadership__role">{person.role}</p>
+                  <p>{person.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
 
-            <h2>Get in touch</h2>
-            <p>
-              We&apos;d love to hear from you. Reach us at <a href="mailto:admin@coodra.com">admin@coodra.com</a>.
-            </p>
-          </article>
-        </div>
-      </div>
+        <section className="about-v2-cta about-reveal" aria-label="Call to action">
+          <div className="about-v2-section-inner">
+            <h2>READY TO RUN YOUR STORE ON AUTOPILOT?</h2>
+            <p>Join independent retailers who use Coodra to protect margin and make smarter decisions every day.</p>
+            <div className="about-v2-cta__actions">
+              <Link to="/signup" className="about-v2-btn about-v2-btn--primary">
+                Start For Free
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <MarketingFooter />
     </div>
   )
 }

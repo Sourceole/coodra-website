@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1a31"/>
+      <stop offset="100%" stop-color="#0f2744"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2fd7c6"/>
+      <stop offset="100%" stop-color="#1fb5a3"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1" fill="#1a3560" opacity="0.5"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <rect x="0" y="0" width="1200" height="4" fill="url(#teal)"/>
+
+  <!-- Header -->
+  <text x="600" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2fd7c6" text-anchor="middle" letter-spacing="3">INVENTORY MANAGEMENT · WEEKLY WORKFLOW</text>
+  <text x="600" y="120" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">The Reorder Point Formula</text>
+  <text x="600" y="165" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">Without Excel or ERP</text>
+  <text x="600" y="202" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#7aa8c4" text-anchor="middle">Three numbers from your POS. Updated every week. No spreadsheet required.</text>
+  <line x1="180" y1="225" x2="1020" y2="225" stroke="#1e3a6e" stroke-width="1"/>
+
+  <!-- ── Central formula box ── -->
+  <rect x="140" y="245" width="920" height="90" rx="12" fill="#0d2040"/>
+  <rect x="140" y="245" width="920" height="90" rx="12" fill="none" stroke="#2fd7c6" stroke-width="1.5" filter="url(#glow)"/>
+
+  <!-- Formula text layout -->
+  <text x="200" y="278" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#ffffff">Reorder Point</text>
+  <text x="340" y="278" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#64748b">=</text>
+  <text x="370" y="278" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#2fd7c6">(Avg Weekly Sales × Lead Time)</text>
+  <text x="760" y="278" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#64748b">+</text>
+  <text x="790" y="278" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#f59e0b">Safety Stock</text>
+
+  <!-- Sub-labels below formula -->
+  <text x="600" y="318" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Trigger your reorder when inventory hits this number — not when the shelf looks empty.</text>
+
+  <!-- ── Card 1: Average Weekly Sales ── -->
+  <g transform="translate(80, 360)">
+    <rect x="0" y="0" width="280" height="170" rx="10" fill="#0d2040"/>
+    <rect x="0" y="0" width="280" height="170" rx="10" fill="none" stroke="#1e3a6e" stroke-width="1"/>
+    <!-- Card accent top -->
+    <rect x="0" y="0" width="280" height="5" rx="3" fill="#2fd7c6"/>
+    <!-- Number badge -->
+    <circle cx="28" cy="42" r="18" fill="#2fd7c6"/>
+    <text x="28" y="48" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#0a1a31" text-anchor="middle">1</text>
+    <!-- Title -->
+    <text x="56" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#ffffff">Average Weekly Sales</text>
+    <text x="56" y="54" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">From your POS sales history</text>
+    <!-- Divider -->
+    <line x1="16" y1="68" x2="264" y2="68" stroke="#1e3a6e" stroke-width="1"/>
+    <!-- Icon: chart bar -->
+    <g transform="translate(16, 76)">
+      <line x1="0" y1="50" x2="0" y2="0" stroke="#1e3a6e" stroke-width="1"/>
+      <line x1="0" y1="50" x2="100" y2="50" stroke="#1e3a6e" stroke-width="1"/>
+      <rect x="4" y="28" width="16" height="22" rx="2" fill="#2fd7c6" opacity="0.7"/>
+      <rect x="26" y="18" width="16" height="32" rx="2" fill="#2fd7c6" opacity="0.85"/>
+      <rect x="48" y="22" width="16" height="28" rx="2" fill="#2fd7c6" opacity="0.75"/>
+      <rect x="70" y="12" width="16" height="38" rx="2" fill="#2fd7c6"/>
+    </g>
+    <!-- Formula for this -->
+    <text x="16" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748b">Total units sold ÷ weeks in period</text>
+    <text x="16" y="162" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#475569">Use 8–12 weeks for accuracy</text>
+  </g>
+
+  <!-- ── Card 2: Lead Time ── -->
+  <g transform="translate(400, 360)">
+    <rect x="0" y="0" width="280" height="170" rx="10" fill="#0d2040"/>
+    <rect x="0" y="0" width="280" height="170" rx="10" fill="none" stroke="#1e3a6e" stroke-width="1"/>
+    <rect x="0" y="0" width="280" height="5" rx="3" fill="#2fd7c6"/>
+    <circle cx="28" cy="42" r="18" fill="#2fd7c6"/>
+    <text x="28" y="48" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#0a1a31" text-anchor="middle">2</text>
+    <text x="56" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#ffffff">Lead Time (weeks)</text>
+    <text x="56" y="54" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">Days from PO to shelf-ready</text>
+    <line x1="16" y1="68" x2="264" y2="68" stroke="#1e3a6e" stroke-width="1"/>
+    <!-- Icon: truck with clock -->
+    <g transform="translate(16, 74)">
+      <rect x="0" y="14" width="56" height="36" rx="4" fill="none" stroke="#2fd7c6" stroke-width="1.8"/>
+      <rect x="56" y="24" width="20" height="26" rx="3" fill="none" stroke="#2fd7c6" stroke-width="1.8"/>
+      <circle cx="18" cy="50" r="8" fill="none" stroke="#2fd7c6" stroke-width="1.8"/>
+      <circle cx="18" cy="50" r="3" fill="#2fd7c6"/>
+      <circle cx="66" cy="50" r="8" fill="none" stroke="#2fd7c6" stroke-width="1.8"/>
+      <circle cx="66" cy="50" r="3" fill="#2fd7c6"/>
+    </g>
+    <text x="16" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748b">Days from order to receipt ÷ 7</text>
+    <text x="16" y="162" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#475569">Use your supplier's longer estimate</text>
+  </g>
+
+  <!-- ── Card 3: Safety Stock ── -->
+  <g transform="translate(720, 360)">
+    <rect x="0" y="0" width="280" height="170" rx="10" fill="#0d2040"/>
+    <rect x="0" y="0" width="280" height="170" rx="10" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.6"/>
+    <rect x="0" y="0" width="280" height="5" rx="3" fill="#f59e0b"/>
+    <circle cx="28" cy="42" r="18" fill="#f59e0b"/>
+    <text x="28" y="48" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#0a1a31" text-anchor="middle">3</text>
+    <text x="56" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#ffffff">Safety Stock</text>
+    <text x="56" y="54" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">Your buffer above zero</text>
+    <line x1="16" y1="68" x2="264" y2="68" stroke="#1e3a6e" stroke-width="1"/>
+    <!-- Icon: shield -->
+    <g transform="translate(16, 72)">
+      <path d="M50 4 L88 16 L88 44 Q88 66 50 82 Q12 66 12 44 L12 16 Z" fill="none" stroke="#f59e0b" stroke-width="1.8"/>
+      <polyline points="32,42 44,54 68,30" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="16" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748b">Avg weekly sales × 2</text>
+    <text x="16" y="162" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#475569">Simple buffer — no complex math</text>
+  </g>
+
+  <!-- Bottom CTA -->
+  <rect x="0" y="545" width="1200" height="85" fill="#081828"/>
+  <rect x="0" y="545" width="1200" height="3" fill="url(#teal)"/>
+  <text x="600" y="568" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="#ffffff" text-anchor="middle">Coodra calculates all three variables automatically — from your POS data.</text>
+  <text x="600" y="590" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#7aa8c4" text-anchor="middle">Your weekly review shows which SKUs have hit their reorder point, ranked by margin impact.</text>
+  <rect x="900" y="548" width="200" height="44" rx="8" fill="#2fd7c6"/>
+  <text x="1000" y="575" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#0a1a31" text-anchor="middle">Start free →</text>
+  <text x="1150" y="620" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#1e3a6e" text-anchor="end">coodra.com</text>
+</svg>

@@ -4,7 +4,7 @@ import { getCaseStudyBySlug } from '../data/caseStudies'
 
 export const meta: MetaFunction = ({ params }) => {
   const study = getCaseStudyBySlug(params.slug || '')
-  const title = study ? `${study.title} - Case Study - Coodra` : 'Case Study - Coodra'
+  const title = study ? `${study.title} - Case Study | Coodra` : 'Case Study | Coodra'
   const description = study
     ? `${study.industry} case study: ${study.challenge}`
     : 'Retail case study from Coodra.'

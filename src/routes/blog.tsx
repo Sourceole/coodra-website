@@ -2,28 +2,25 @@ import type { MetaFunction } from 'react-router'
 import BlogIndexPage from '../pages/BlogIndexPage'
 
 export const meta: MetaFunction = () => [
-  { title: 'Blog - Coodra' },
+  { title: 'Retail Inventory Intelligence | Coodra Blog' },
   {
     name: 'description',
-    content:
-      'Retail decision intelligence articles on inventory, margin protection, POS signal quality, and faster store operations.',
+    content: 'Practical guides and analysis on inventory management, margin protection, POS data, and smarter retail operations — written for independent retailers.',
   },
-  { property: 'og:title', content: 'Blog - Coodra' },
+  { property: 'og:title', content: 'Retail Inventory Intelligence | Coodra Blog' },
   {
     property: 'og:description',
-    content:
-      'Retail decision intelligence articles on inventory, margin protection, POS signal quality, and faster store operations.',
+    content: 'Practical guides and analysis on inventory management, margin protection, POS data, and smarter retail operations — written for independent retailers.',
   },
   { property: 'og:image', content: 'https://www.coodra.com/og-image.png' },
   { property: 'og:url', content: 'https://www.coodra.com/blog' },
   { property: 'og:type', content: 'website' },
   { property: 'og:site_name', content: 'Coodra' },
   { name: 'twitter:card', content: 'summary_large_image' },
-  { name: 'twitter:title', content: 'Blog - Coodra' },
+  { name: 'twitter:title', content: 'Retail Inventory Intelligence | Coodra Blog' },
   {
     name: 'twitter:description',
-    content:
-      'Retail decision intelligence articles on inventory, margin protection, POS signal quality, and faster store operations.',
+    content: 'Practical guides and analysis on inventory management, margin protection, POS data, and smarter retail operations — written for independent retailers.',
   },
   { name: 'twitter:image', content: 'https://www.coodra.com/og-image.png' },
   { name: 'robots', content: 'index, follow' },

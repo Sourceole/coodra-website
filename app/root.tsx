@@ -11,7 +11,6 @@ import { useEffect } from 'react'
 import '../src/index.css'
 import { initAnalytics, trackEvent, trackPageView } from '../src/lib/analytics'
 
-const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined
 const SITE_URL = 'https://www.coodra.com'
 
 const organizationJsonLd = {
@@ -22,7 +21,7 @@ const organizationJsonLd = {
   url: SITE_URL,
   logo: `${SITE_URL}/images/coodra-logo.png`,
   email: 'admin@coodra.com',
-  sameAs: [],
+  sameAs: ['https://www.linkedin.com/company/coodra/'],
 }
 
 const websiteJsonLd = {
@@ -65,32 +64,11 @@ export const meta: MetaFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-so-rc-theme="light" style={{ backgroundColor: '#f4f5f7' }}>
+    <html lang="en" data-so-rc-theme="light" style={{ backgroundColor: '#f4f5f7' }} suppressHydrationWarning>
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#0b1220" />
-        {GA_MEASUREMENT_ID ? (
-          <>
-            <script
-              async
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-            />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  window.gtag = gtag;
-                  gtag('js', new Date());
-                  gtag('config', '${GA_MEASUREMENT_ID}', {
-                    send_page_view: false
-                  });
-                `,
-              }}
-            />
-          </>
-        ) : null}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
@@ -102,7 +80,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body data-so-rc-theme="light" style={{ backgroundColor: '#f4f5f7' }}>
+      <body data-so-rc-theme="light" style={{ backgroundColor: '#f4f5f7' }} suppressHydrationWarning>
         {children}
         <ScrollRestoration />
         <Scripts />

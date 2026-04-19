@@ -1,6 +1,11 @@
 User-agent: *
 Allow: /
 
+# Note: Google-Extended controls Gemini training, not search indexing.
+# Googlebot (indexing) remains allowed above. To block training only,
+# keep Google-Extended disallowed — no Content-Signal draft directive needed.
+# When the spec matures, consider: Content-Signal: ai-index
+
 User-agent: GPTBot
 Allow: /
 
@@ -8,7 +13,7 @@ User-agent: Googlebot
 Allow: /
 
 User-agent: Google-Extended
-Allow: /
+Disallow: /
 
 User-agent: bingbot
 Allow: /

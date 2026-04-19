@@ -1,117 +1,194 @@
+﻿import { useMemo, useState } from 'react'
 import { Link } from 'react-router'
+import { Search, ShieldCheck, Sparkles } from 'lucide-react'
 import MarketingHeader from '../components/MarketingHeader'
-import './ExpansionPages.css'
+import MarketingFooter from '../components/MarketingFooter'
+import './IntegrationsPage.css'
 
-const integrations = [
+type IntegrationItem = {
+  name: string
+  logo: string
+  summary: string
+  bullets: string[]
+  category: string
+  pricing: string
+  rating: string
+  reviews: string
+}
+
+const integrations: IntegrationItem[] = [
   {
     name: 'Shopify',
     logo: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/shopify.svg',
-    summary: 'Sync products, orders, and inventory in real time.',
-    bullets: ['Catalog + product sync', 'Orders + transactions sync', 'Inventory + stock sync'],
+    summary: 'Sync catalog, orders, and inventory from Shopify into decision-ready workflows.',
+    bullets: ['Catalog sync', 'Order signal sync', 'Inventory updates'],
+    category: 'Commerce',
+    pricing: 'Free plan available',
+    rating: '4.9',
+    reviews: '1,248',
   },
   {
     name: 'Square',
     logo: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/square.svg',
-    summary: 'Unify in-store sales and catalog performance signals.',
-    bullets: ['Catalog + modifiers sync', 'Sales + payment signal sync', 'Stock + location sync'],
+    summary: 'Connect in-store sales and payment events to improve stock and margin actions.',
+    bullets: ['POS sales feed', 'Payment events', 'Store-level stock'],
+    category: 'POS',
+    pricing: 'Free plan available',
+    rating: '4.8',
+    reviews: '986',
   },
   {
     name: 'Lightspeed',
     logo: '/images/integrations/lightspeed.png?v=20260410',
-    summary: 'Connect POS sell-through and stock movement data.',
-    bullets: ['Items + variants sync', 'Daily sell-through signal', 'Store-level inventory sync'],
+    summary: 'Bring sell-through and product movement into one operating intelligence layer.',
+    bullets: ['Sell-through stream', 'Variant inventory', 'Location performance'],
+    category: 'POS',
+    pricing: 'Free plan available',
+    rating: '4.7',
+    reviews: '612',
   },
   {
     name: 'Clover',
     logo: '/images/integrations/clover.png?v=20260410',
-    summary: 'Bring transaction and location trends into one view.',
-    bullets: ['Products + categories sync', 'Order + payment signal sync', 'Inventory + branch sync'],
+    summary: 'Track transaction trends and branch-level movement to prioritize actions fast.',
+    bullets: ['Branch sync', 'Transactions stream', 'Category performance'],
+    category: 'POS',
+    pricing: 'Free plan available',
+    rating: '4.8',
+    reviews: '734',
+  },
+  {
+    name: 'Moneris',
+    logo: '/images/integrations/moneris.png?v=20260410',
+    summary: 'Feed payment and settlement data into Coodra for cleaner cash and margin signals.',
+    bullets: ['Payment snapshots', 'Settlement sync', 'Revenue trend feed'],
+    category: 'Payments',
+    pricing: 'Free plan available',
+    rating: '4.6',
+    reviews: '211',
   },
 ]
 
+const filterOptions = ['All', 'POS', 'Commerce', 'Payments']
+
+function renderStars(rating: string) {
+  const rounded = Math.round(Number(rating))
+  return '★'.repeat(Math.max(1, Math.min(5, rounded)))
+}
+
 export default function IntegrationsPage() {
+  const [activeFilter, setActiveFilter] = useState('All')
+  const [query, setQuery] = useState('')
+
+  const filteredIntegrations = useMemo(() => {
+    const lowered = query.trim().toLowerCase()
+
+    return integrations.filter((item) => {
+      const byFilter = activeFilter === 'All' || item.category === activeFilter
+      const byQuery =
+        lowered.length === 0 ||
+        item.name.toLowerCase().includes(lowered) ||
+        item.summary.toLowerCase().includes(lowered) ||
+        item.bullets.some((bullet) => bullet.toLowerCase().includes(lowered))
+
+      return byFilter && byQuery
+    })
+  }, [activeFilter, query])
+
   return (
-    <div className="exp-page">
-      <div className="exp-page__container">
-        <MarketingHeader />
+    <div className="integrations-v2-page">
+      <MarketingHeader />
 
-        <section className="exp-hero motion-fade-up" data-aos="fade-up">
-          <p className="exp-hero__eyebrow">Integrations</p>
-          <h1>Works with the tools you already run.</h1>
-          <p>
-            Connect your current POS stack and let Coodra transform live operational data
-            into ranked, high-confidence retail actions.
-          </p>
-          <div className="exp-hero__actions">
-            <Link to="/contact" className="exp-btn">Start an integration review</Link>
-            <Link to="/security" className="exp-btn exp-btn--ghost">See data controls</Link>
+      <main className="integrations-v2-main">
+        <section className="integrations-v2-hero" aria-label="Integrations hero">
+          <div className="integrations-v2-inner">
+            <p className="integrations-v2-eyebrow">
+              <Sparkles size={14} aria-hidden="true" />
+              Coodra Integrations
+            </p>
+            <h1>Connect the tools you already use.</h1>
+            <p>Browse available connectors and launch quickly with clean, reliable operational data.</p>
           </div>
         </section>
 
-        <section className="exp-pipeline" aria-label="How integration works">
-          <article className="exp-pipeline__step">
-            <p className="exp-pipeline__label">Step 01</p>
-            <div>
-              <h2>Connect your systems in one pass.</h2>
-              <p>We map POS, inventory, and transaction feeds into one clean operating model.</p>
-            </div>
-          </article>
-          <article className="exp-pipeline__step">
-            <p className="exp-pipeline__label">Step 02</p>
-            <div>
-              <h2>Normalize and score signal quality.</h2>
-              <p>Coodra checks incoming feed reliability before recommendations are generated.</p>
-            </div>
-          </article>
-          <article className="exp-pipeline__step">
-            <p className="exp-pipeline__label">Step 03</p>
-            <div>
-              <h2>Push approved actions back to operations.</h2>
-              <p>Teams can approve next moves with clear rationale and expected impact.</p>
-            </div>
-          </article>
-        </section>
-
-        <section className="exp-connector-band" aria-label="Connector coverage">
-          {integrations.map((item) => (
-            <div key={`${item.name}-connector`} className="exp-connector">
-              <img src={item.logo} alt="" aria-hidden="true" />
-              <span>{item.name}</span>
-            </div>
-          ))}
-        </section>
-
-        <section className="integration-grid motion-stagger-grid" aria-label="Coodra POS integrations">
-          {integrations.map((item) => (
-            <article key={item.name} className="integration-card">
-              <div className="integration-card__head">
-                <div className="integration-card__logo">
-                  <img src={item.logo} alt={`${item.name} logo`} />
-                </div>
-                <div>
-                  <h2>{item.name}</h2>
-                  <p>{item.summary}</p>
-                </div>
-              </div>
-
-              <ul>
-                {item.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
+        <section className="integrations-v2-directory" aria-label="All integration listings">
+          <div className="integrations-v2-inner">
+            <div className="integrations-v2-toolbar">
+              <label className="integrations-v2-search" aria-label="Search integrations">
+                <Search size={16} aria-hidden="true" />
+                <input
+                  type="search"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Search integrations"
+                />
+              </label>
+              <div className="integrations-v2-filters" role="tablist" aria-label="Integration filters">
+                {filterOptions.map((filter) => (
+                  <button
+                    key={filter}
+                    type="button"
+                    role="tab"
+                    aria-selected={activeFilter === filter}
+                    className={activeFilter === filter ? 'is-active' : ''}
+                    onClick={() => setActiveFilter(filter)}
+                  >
+                    {filter}
+                  </button>
                 ))}
-              </ul>
-            </article>
-          ))}
-        </section>
+              </div>
+            </div>
 
-        <section className="exp-cta motion-fade-up" data-aos="fade-up">
-          <h2>Don&apos;t see your POS?</h2>
-          <p>We can still help. Tell us what you run and we&apos;ll map the cleanest path to connect.</p>
-          <div className="exp-cta__actions">
-            <Link to="/contact" className="exp-btn">Contact us</Link>
-            <Link to="/case-studies" className="exp-btn exp-btn--ghost">View case studies</Link>
+            <div className="integrations-v2-list">
+              {filteredIntegrations.map((item) => (
+                <article key={item.name} className="integrations-v2-row">
+                  <div className="integrations-v2-row__title">
+                    <span className="integrations-v2-row__logo">
+                      <img src={item.logo} alt={`${item.name} logo`} />
+                    </span>
+                    <div>
+                      <h3>{item.name}</h3>
+                      <p>{item.summary}</p>
+                      <p className="integrations-v2-row__rating">
+                        {renderStars(item.rating)} {item.rating} · {item.reviews} reviews
+                      </p>
+                    </div>
+                  </div>
+                  <ul>
+                    {item.bullets.map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
+                  <div className="integrations-v2-row__meta">
+                    <span>{item.pricing}</span>
+                    <p>
+                      <ShieldCheck size={14} aria-hidden="true" />
+                      Verified connector
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
-      </div>
+
+        <section className="integrations-v2-cta" aria-label="Integrations CTA">
+          <div className="integrations-v2-inner">
+            <h2>Need a connector that is not listed yet?</h2>
+            <p>Tell us your stack and we will map a rollout plan with timeline and ownership.</p>
+            <div className="integrations-v2-cta__actions">
+              <Link to="/contact" className="integrations-v2-btn integrations-v2-btn--primary">
+                Request integration
+              </Link>
+              <Link to="/security" className="integrations-v2-btn integrations-v2-btn--ghost">
+                Review security
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <MarketingFooter />
     </div>
   )
 }

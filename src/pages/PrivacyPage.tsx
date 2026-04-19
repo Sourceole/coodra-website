@@ -1,13 +1,14 @@
 import MarketingHeader from '../components/MarketingHeader'
+import MarketingFooter from '../components/MarketingFooter'
 import './LegalPages.css'
 
 export default function PrivacyPage() {
   return (
-    <div className="legal-page">
-      <div className="legal-page__container">
-        <MarketingHeader />
-
-        <div className="legal-page__shell">
+    <>
+      <MarketingHeader />
+      <div className="legal-page">
+        <div className="legal-page__container">
+          <div className="legal-page__shell">
           <aside className="legal-page__sidebar">
             <p className="legal-page__sidebarTitle">On this page</p>
             <nav className="legal-page__sidebarLinks" aria-label="Privacy sections">
@@ -126,8 +127,10 @@ export default function PrivacyPage() {
               </p>
             </section>
           </article>
+          </div>
         </div>
       </div>
-    </div>
+      <MarketingFooter />
+    </>
   )
 }

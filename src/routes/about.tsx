@@ -1,15 +1,6 @@
 import type { MetaFunction } from 'react-router'
 import AboutPage from '../pages/AboutPage'
 
-const breadcrumbSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.coodra.com/' },
-    { '@type': 'ListItem', position: 2, name: 'About', item: 'https://www.coodra.com/about' },
-  ],
-}
-
 const aboutDescription =
   'Coodra is AI-powered retail intelligence for independent stores. We turn your POS sales and inventory data into clear daily actions - reorder, replace, remove, protect.'
 
@@ -28,15 +19,6 @@ export const meta: MetaFunction = () => [
   { name: 'twitter:image', content: 'https://www.coodra.com/og-image.png' },
   { name: 'robots', content: 'index, follow' },
   { tagName: 'link', rel: 'canonical', href: 'https://www.coodra.com/about' },
-  {
-    tagName: 'script',
-    type: 'application/ld+json',
-    props: {
-      dangerouslySetInnerHTML: {
-        __html: JSON.stringify(breadcrumbSchema),
-      },
-    },
-  },
 ]
 
 export default AboutPage

@@ -1,46 +1,93 @@
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router'
-import { caseStudies, consentNotice } from '../data/caseStudies'
+import { caseStudies } from '../data/caseStudies'
 import MarketingHeader from '../components/MarketingHeader'
-import './CaseStudiesPage.css'
+import MarketingFooter from '../components/MarketingFooter'
+import './CaseStudiesIndexPage.css'
+
+type CaseCategory = 'All' | 'Jewelry' | 'Grocery' | 'Pet Supply' | 'Pharmacy' | 'Multi-location'
+
+const filters: CaseCategory[] = ['All', 'Jewelry', 'Grocery', 'Pet Supply', 'Pharmacy', 'Multi-location']
+
+const categoryBySlug: Record<string, Exclude<CaseCategory, 'All'>> = {
+  'multi-location-grocery-margin-recovery': 'Grocery',
+  'specialty-retail-inventory-risk-control': 'Multi-location',
+}
 
 export default function CaseStudiesIndexPage() {
+  const [activeFilter, setActiveFilter] = useState<CaseCategory>('All')
+
+  const filteredStudies = useMemo(() => {
+    if (activeFilter === 'All') return caseStudies
+
+    return caseStudies.filter((study) => {
+      const category = categoryBySlug[study.slug]
+      return category === activeFilter
+    })
+  }, [activeFilter])
+
   return (
-    <div className="case-page">
-      <div className="case-page__container">
-        <MarketingHeader />
+    <div className="case-index-page">
+      <MarketingHeader />
 
-        <section className="case-hero">
-          <p className="case-hero__eyebrow">Case Studies</p>
-          <h1>How retail teams act faster with Coodra.</h1>
-          <p>
-            Two implementation-ready case study templates are live now so your team can evaluate
-            challenge, approach, and measurable impact in one structure.
-          </p>
+      <main>
+        <section className="case-index-hero" aria-label="Customer stories hero">
+          <div className="case-index-container case-index-hero-inner">
+            <p className="case-index-eyebrow">Customer Stories</p>
+            <h1>Retailers making smarter moves, every day.</h1>
+            <p>
+              Real implementation stories showing how teams move from signal to action with clearer priorities and faster approvals.
+            </p>
+          </div>
         </section>
 
-        <p className="case-consent">{consentNotice}</p>
+        <section className="case-index-library" aria-label="Case studies library">
+          <div className="case-index-container">
+            <div className="case-filter-bar" role="tablist" aria-label="Case study filters">
+              {filters.map((filter) => (
+                <button
+                  key={filter}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeFilter === filter}
+                  className={`case-filter-pill${activeFilter === filter ? ' active' : ''}`}
+                  onClick={() => setActiveFilter(filter)}
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
 
-        <section className="case-grid" aria-label="Case study list">
-          {caseStudies.map((study) => (
-            <article key={study.slug} className="case-card">
-              <p className="case-card__meta">{study.industry} - {study.footprint}</p>
-              <h2>{study.title}</h2>
-              <p>{study.challenge}</p>
-              <div className="case-metrics">
-                {study.results.map((metric) => (
-                  <div key={metric.label} className="case-metric">
-                    <strong>{metric.value}</strong>
-                    <span>{metric.label}</span>
+            <div className="case-study-grid">
+              {filteredStudies.map((study) => (
+                <article key={study.slug} className="case-study-card">
+                  <div className="case-study-img" aria-hidden="true">
+                    <span>{study.industry}</span>
                   </div>
-                ))}
-              </div>
-              <Link to={`/case-studies/${study.slug}`} className="case-card__link">
-                Read case study
-              </Link>
-            </article>
-          ))}
+
+                  <div className="case-study-body">
+                    <p className="case-study-industry">{study.industry}</p>
+                    <h3>{study.title}</h3>
+                    <p>{study.challenge}</p>
+                    <Link to={`/case-studies/${study.slug}`} className="case-study-link">
+                      Read story &rarr;
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
         </section>
-      </div>
+
+        <section className="case-index-cta" aria-label="Case studies CTA">
+          <div className="case-index-container case-index-cta-inner">
+            <h2>Your story could be next.</h2>
+            <Link to="/contact" className="case-index-cta-btn">Talk to our team</Link>
+          </div>
+        </section>
+      </main>
+
+      <MarketingFooter />
     </div>
   )
 }

@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1a31"/>
+      <stop offset="100%" stop-color="#0f2744"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2fd7c6"/>
+      <stop offset="100%" stop-color="#1fb5a3"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1" fill="#1a3560" opacity="0.5"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <rect x="0" y="0" width="1200" height="4" fill="url(#teal)"/>
+
+  <!-- Header -->
+  <text x="600" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2fd7c6" text-anchor="middle" letter-spacing="3">INDEPENDENT RETAIL · INVENTORY PLANNING</text>
+  <text x="600" y="120" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">Coodra vs Netstock</text>
+  <text x="600" y="165" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">Which Independent Retailers Actually Need</text>
+  <text x="600" y="202" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#7aa8c4" text-anchor="middle">A direct comparison — no marketing spin, no demo required.</text>
+  <line x1="180" y1="225" x2="1020" y2="225" stroke="#1e3a6e" stroke-width="1"/>
+
+  <!-- ── Table header ── -->
+  <rect x="60" y="240" width="1080" height="44" rx="8" fill="#0a1830"/>
+  <text x="380" y="268" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#64748b" text-anchor="middle">Feature</text>
+  <text x="700" y="268" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#2fd7c6" text-anchor="middle">Coodra</text>
+  <text x="960" y="268" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#64748b" text-anchor="middle">Netstock</text>
+
+  <!-- Row 1 -->
+  <rect x="60" y="288" width="1080" height="50" fill="#0d2040"/>
+  <text x="100" y="319" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#cbd5e1">Built for independent retailers</text>
+  <text x="700" y="319" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#2fd7c6" text-anchor="middle">✓ Yes</text>
+  <text x="960" y="319" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">Mid-market focus</text>
+
+  <!-- Row 2 — highlighted band -->
+  <rect x="60" y="338" width="1080" height="50" fill="#0a2040"/>
+  <text x="100" y="369" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#cbd5e1">No ERP required</text>
+  <text x="700" y="369" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#2fd7c6" text-anchor="middle">✓ Yes — POS-direct</text>
+  <text x="960" y="369" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">ERP integration expected</text>
+
+  <!-- Row 3 -->
+  <rect x="60" y="388" width="1080" height="50" fill="#0d2040"/>
+  <text x="100" y="419" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#cbd5e1">Connects Shopify, Square, Lightspeed, Clover</text>
+  <text x="700" y="419" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#2fd7c6" text-anchor="middle">✓ Yes — direct</text>
+  <text x="960" y="419" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">ERP-first approach</text>
+
+  <!-- Row 4 — highlighted band -->
+  <rect x="60" y="438" width="1080" height="50" fill="#0a2040"/>
+  <text x="100" y="469" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#cbd5e1">Setup time</text>
+  <text x="700" y="469" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#2fd7c6" text-anchor="middle">Same day</text>
+  <text x="960" y="469" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">Weeks to months</text>
+
+  <!-- Row 5 -->
+  <rect x="60" y="488" width="1080" height="50" fill="#0d2040"/>
+  <text x="100" y="519" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#cbd5e1">Transparent pricing</text>
+  <text x="700" y="519" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#2fd7c6" text-anchor="middle">✓ Public pricing page</text>
+  <text x="960" y="519" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">Demo required</text>
+
+  <!-- Row 6 — highlighted -->
+  <rect x="60" y="538" width="1080" height="50" fill="#0a2040"/>
+  <text x="100" y="569" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#cbd5e1">Weekly ranked inventory decisions</text>
+  <text x="700" y="569" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#2fd7c6" text-anchor="middle">Core product</text>
+  <text x="960" y="569" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">Planning suite</text>
+
+  <!-- Bottom CTA band -->
+  <rect x="0" y="595" width="1200" height="35" fill="#081828"/>
+  <rect x="0" y="595" width="1200" height="2" fill="url(#teal)"/>
+  <text x="600" y="618" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#1e3a6e" text-anchor="middle">coodra.com · No ERP required · Start free in one day</text>
+</svg>

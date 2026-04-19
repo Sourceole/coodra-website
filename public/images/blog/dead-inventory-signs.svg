@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1a31"/>
+      <stop offset="100%" stop-color="#0f2744"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2fd7c6"/>
+      <stop offset="100%" stop-color="#1fb5a3"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle dot grid -->
+  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1" fill="#1a3560" opacity="0.5"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Top accent line -->
+  <rect x="0" y="0" width="1200" height="4" fill="url(#teal)"/>
+
+  <!-- Header -->
+  <text x="600" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2fd7c6" text-anchor="middle" letter-spacing="3">INDEPENDENT RETAIL · INVENTORY MANAGEMENT</text>
+  <text x="600" y="120" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">5 Signs Your Store Has</text>
+  <text x="600" y="165" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">Too Much Dead Inventory</text>
+  <text x="600" y="202" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#7aa8c4" text-anchor="middle">Each sign compounds quietly. Here is what to look for.</text>
+
+  <!-- Divider -->
+  <line x1="180" y1="225" x2="1020" y2="225" stroke="#1e3a6e" stroke-width="1"/>
+
+  <!-- ── Sign 1: Stale shelf ── -->
+  <g transform="translate(120, 248)">
+    <!-- Card bg -->
+    <rect x="0" y="0" width="160" height="140" rx="10" fill="#0d2040"/>
+    <rect x="0" y="0" width="160" height="140" rx="10" fill="none" stroke="#1e3a6e" stroke-width="1"/>
+    <!-- Icon: shelf with stale items -->
+    <rect x="36" y="22" width="88" height="60" rx="5" fill="none" stroke="#2fd7c6" stroke-width="1.8"/>
+    <line x1="36" y1="40" x2="124" y2="40" stroke="#2fd7c6" stroke-width="1.8"/>
+    <line x1="36" y1="58" x2="124" y2="58" stroke="#2fd7c6" stroke-width="1.8"/>
+    <!-- X on shelf item 1 -->
+    <line x1="44" y1="28" x2="50" y2="34" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    <line x1="50" y1="28" x2="44" y2="34" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    <!-- stale bar on shelf item 2 -->
+    <line x1="70" y1="48" x2="100" y2="48" stroke="#64748b" stroke-width="2" stroke-linecap="round"/>
+    <!-- arrow down on item 3 -->
+    <polyline points="108,62 112,68 118,66" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Number badge -->
+    <circle cx="80" cy="100" r="18" fill="#2fd7c6"/>
+    <text x="80" y="106" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#0a1a31" text-anchor="middle">1</text>
+    <!-- Label -->
+    <text x="80" y="130" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">Stale shelf space</text>
+  </g>
+
+  <!-- ── Sign 2: Count mismatch ── -->
+  <g transform="translate(320, 248)">
+    <rect x="0" y="0" width="160" height="140" rx="10" fill="#0d2040"/>
+    <rect x="0" y="0" width="160" height="140" rx="10" fill="none" stroke="#1e3a6e" stroke-width="1"/>
+    <!-- Icon: clipboard with check and X -->
+    <rect x="42" y="20" width="76" height="64" rx="4" fill="none" stroke="#2fd7c6" stroke-width="1.8"/>
+    <rect x="56" y="14" width="48" height="12" rx="3" fill="#0d2040" stroke="#2fd7c6" stroke-width="1.8"/>
+    <!-- Check -->
+    <polyline points="52,48 56,52 64,44" fill="none" stroke="#2fd7c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- X mark -->
+    <line x1="88" y1="44" x2="104" y2="60" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    <line x1="104" y1="44" x2="88" y2="60" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    <!-- Question marks below -->
+    <text x="52" y="76" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#f59e0b">?</text>
+    <text x="62" y="76" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#f59e0b">?</text>
+    <circle cx="80" cy="100" r="18" fill="#2fd7c6"/>
+    <text x="80" y="106" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#0a1a31" text-anchor="middle">2</text>
+    <text x="80" y="130" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">Count mismatch</text>
+  </g>
+
+  <!-- ── Sign 3: Reorder hesitation ── -->
+  <g transform="translate(520, 248)">
+    <rect x="0" y="0" width="160" height="140" rx="10" fill="#0d2040"/>
+    <rect x="0" y="0" width="160" height="140" rx="10" fill="none" stroke="#1e3a6e" stroke-width="1"/>
+    <!-- Icon: reorder box / truck arrow -->
+    <rect x="40" y="24" width="80" height="56" rx="5" fill="none" stroke="#2fd7c6" stroke-width="1.8"/>
+    <!-- Question replacing reorder arrow -->
+    <text x="80" y="60" font-family="system-ui, -apple-system, sans-serif" font-size="40" font-weight="700" fill="#f59e0b" text-anchor="middle">?</text>
+    <!-- exclamation -->
+    <rect x="73" y="66" width="14" height="10" rx="2" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+    <circle cx="80" cy="81" r="2.5" fill="#f59e0b"/>
+    <circle cx="80" cy="100" r="18" fill="#2fd7c6"/>
+    <text x="80" y="106" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#0a1a31" text-anchor="middle">3</text>
+    <text x="80" y="130" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">Reorder hesitation</text>
+  </g>
+
+  <!-- ── Sign 4: More markdowns ── -->
+  <g transform="translate(720, 248)">
+    <rect x="0" y="0" width="160" height="140" rx="10" fill="#0d2040"/>
+    <rect x="0" y="0" width="160" height="140" rx="10" fill="none" stroke="#1e3a6e" stroke-width="1"/>
+    <!-- Icon: price tag with % -->
+    <path d="M50 28 L80 20 L110 28 L110 62 Q110 72 100 72 L60 72 Q50 72 50 62 Z" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linejoin="round"/>
+    <circle cx="80" cy="40" r="6" fill="#f59e0b"/>
+    <text x="80" y="60" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#f59e0b" text-anchor="middle">%</text>
+    <!-- arrow pointing down = more discounts -->
+    <line x1="120" y1="30" x2="120" y2="50" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+    <polyline points="116,46 120,54 124,46" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="80" cy="100" r="18" fill="#2fd7c6"/>
+    <text x="80" y="106" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#0a1a31" text-anchor="middle">4</text>
+    <text x="80" y="130" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">More markdowns</text>
+  </g>
+
+  <!-- ── Sign 5: Margin erosion ── -->
+  <g transform="translate(920, 248)">
+    <rect x="0" y="0" width="160" height="140" rx="10" fill="#0d2040"/>
+    <rect x="0" y="0" width="160" height="140" rx="10" fill="none" stroke="#1e3a6e" stroke-width="1"/>
+    <!-- Icon: line chart trending down -->
+    <line x1="44" y1="26" x2="116" y2="26" stroke="#475569" stroke-width="1.5"/>
+    <line x1="44" y1="26" x2="44" y2="68" stroke="#475569" stroke-width="1.5"/>
+    <!-- Up arrow first then down -->
+    <polyline points="52,52 60,44 68,48 76,36" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline points="76,36 88,52 96,46 116,62" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline points="110,62 116,62 116,56" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="80" cy="100" r="18" fill="#2fd7c6"/>
+    <text x="80" y="106" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#0a1a31" text-anchor="middle">5</text>
+    <text x="80" y="130" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">Margin erosion</text>
+  </g>
+
+  <!-- Bottom CTA band -->
+  <rect x="0" y="420" width="1200" height="210" fill="#081828"/>
+  <rect x="0" y="420" width="1200" height="3" fill="url(#teal)"/>
+
+  <!-- Warning triangle icon -->
+  <g transform="translate(100, 485)">
+    <polygon points="50,10 92,86 8,86" fill="none" stroke="#2fd7c6" stroke-width="2" stroke-linejoin="round"/>
+    <line x1="50" y1="40" x2="50" y2="60" stroke="#2fd7c6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="50" cy="72" r="3.5" fill="#2fd7c6"/>
+  </g>
+
+  <text x="230" y="510" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#ffffff">Dead stock compounds quietly — until it is all you can see.</text>
+  <text x="230" y="535" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#7aa8c4">Each of these signs is a weekly decision waiting to happen. Caught early,</text>
+  <text x="230" y="556" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#7aa8c4">you can act. Left alone, they compound into margin damage that takes a</text>
+  <text x="230" y="577" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#7aa8c4">quarter to recover — if you recover it at all.</text>
+
+  <text x="230" y="602" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2fd7c6">Coodra surfaces all five signals automatically — every week, from your POS data.</text>
+
+  <!-- CTA button -->
+  <rect x="880" y="490" width="210" height="52" rx="8" fill="#2fd7c6"/>
+  <text x="985" y="520" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#0a1a31" text-anchor="middle">Start free trial →</text>
+
+  <!-- Footer -->
+  <text x="1150" y="618" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#1e3a6e" text-anchor="end">coodra.com</text>
+</svg>

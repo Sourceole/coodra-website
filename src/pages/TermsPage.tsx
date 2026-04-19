@@ -1,25 +1,26 @@
 import { Link } from 'react-router'
 import MarketingHeader from '../components/MarketingHeader'
+import MarketingFooter from '../components/MarketingFooter'
 import './LegalPages.css'
 
 export default function TermsPage() {
   return (
-    <div className="legal-page">
-      <div className="legal-page__container">
-        <MarketingHeader />
-
-        <div className="legal-page__shell">
-          <aside className="legal-page__sidebar">
-            <p className="legal-page__sidebarTitle">On this page</p>
-            <nav className="legal-page__sidebarLinks" aria-label="Terms sections">
-              <a href="#eligibility">Eligibility and accounts</a>
-              <a href="#service-scope">Service scope</a>
-              <a href="#acceptable-use">Acceptable use</a>
-              <a href="#billing">Fees and billing</a>
-              <a href="#liability">Liability</a>
-              <a href="#contact">Contact</a>
-            </nav>
-          </aside>
+    <>
+      <MarketingHeader />
+      <div className="legal-page">
+        <div className="legal-page__container">
+          <div className="legal-page__shell">
+            <aside className="legal-page__sidebar">
+              <p className="legal-page__sidebarTitle">On this page</p>
+              <nav className="legal-page__sidebarLinks" aria-label="Terms sections">
+                <a href="#eligibility">Eligibility and accounts</a>
+                <a href="#service-scope">Service scope</a>
+                <a href="#acceptable-use">Acceptable use</a>
+                <a href="#billing">Fees and billing</a>
+                <a href="#liability">Liability</a>
+                <a href="#contact">Contact</a>
+              </nav>
+            </aside>
 
           <article className="legal-page__card">
             <p className="legal-page__eyebrow">Legal</p>
@@ -139,9 +140,11 @@ export default function TermsPage() {
                 Questions about these Terms: <a href="mailto:admin@coodra.com">admin@coodra.com</a>
               </p>
             </section>
-          </article>
+            </article>
+          </div>
         </div>
       </div>
-    </div>
+      <MarketingFooter />
+    </>
   )
 }

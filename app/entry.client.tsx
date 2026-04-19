@@ -4,6 +4,8 @@ import { HydratedRouter } from "react-router/dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+const RECOVERY_KEY = "__coodra_once_recovered__";
+
 const shouldSilenceHydrationNoise = (value: unknown) => {
   const text = String(value || "");
   return (
@@ -14,12 +16,30 @@ const shouldSilenceHydrationNoise = (value: unknown) => {
   );
 };
 
+const attemptOneTimeRecoveryReload = () => {
+  try {
+    if (sessionStorage.getItem(RECOVERY_KEY) === "1") return;
+    sessionStorage.setItem(RECOVERY_KEY, "1");
+    window.location.reload();
+  } catch {
+    window.location.reload();
+  }
+};
+
+try {
+  // Reset the marker on clean loads so future real failures can still self-heal once.
+  sessionStorage.removeItem(RECOVERY_KEY);
+} catch {
+  // ignore storage failures
+}
+
 window.addEventListener(
   "error",
   (event) => {
     if (shouldSilenceHydrationNoise(event.error || event.message)) {
       event.preventDefault();
       event.stopImmediatePropagation();
+      attemptOneTimeRecoveryReload();
     }
   },
   true,
@@ -31,10 +51,17 @@ window.addEventListener(
     if (shouldSilenceHydrationNoise(event.reason)) {
       event.preventDefault();
       event.stopImmediatePropagation();
+      attemptOneTimeRecoveryReload();
     }
   },
   true,
 );
+
+// Vite emits this when a route chunk cannot be loaded (common right after deploys with stale tabs).
+window.addEventListener("vite:preloadError", (event) => {
+  event.preventDefault();
+  attemptOneTimeRecoveryReload();
+});
 
 // Hydrate immediately. Deferring was causing Rakuten extension to fully inject
 // DOM nodes before hydration ran, making hydration mismatches fatal instead of recoverable.

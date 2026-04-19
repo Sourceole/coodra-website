@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1a31"/>
+      <stop offset="100%" stop-color="#0f2744"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2fd7c6"/>
+      <stop offset="100%" stop-color="#1fb5a3"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1" fill="#1a3560" opacity="0.5"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <rect x="0" y="0" width="1200" height="4" fill="url(#teal)"/>
+
+  <!-- Header -->
+  <text x="600" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2fd7c6" text-anchor="middle" letter-spacing="3">INVENTORY PLANNING · DEMAND INTELLIGENCE</text>
+  <text x="600" y="120" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="700" fill="#ffffff" text-anchor="middle">ERP-First vs POS-Direct:</text>
+  <text x="600" y="165" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="700" fill="#ffffff" text-anchor="middle">Which Path Does Your Store Actually Need?</text>
+  <text x="600" y="202" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#7aa8c4" text-anchor="middle">Independent retailers do not need months of setup. Here is what each path actually looks like.</text>
+  <line x1="180" y1="225" x2="1020" y2="225" stroke="#1e3a6e" stroke-width="1"/>
+
+  <!-- ── LEFT: ERP path ── -->
+  <g transform="translate(60, 248)">
+    <rect x="0" y="0" width="520" height="340" rx="12" fill="#0d2040"/>
+    <rect x="0" y="0" width="520" height="340" rx="12" fill="none" stroke="#1e3a6e" stroke-width="1"/>
+
+    <!-- ERP header bar -->
+    <rect x="0" y="0" width="520" height="44" rx="12" fill="#0a1830"/>
+    <rect x="0" y="22" width="520" height="22" fill="#0a1830"/>
+    <text x="20" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#94a3b8" text-anchor="start">ERP-FIRST PATH</text>
+
+    <!-- Step nodes -->
+    <!-- Step 1 -->
+    <g transform="translate(20, 58)">
+      <circle cx="16" cy="16" r="14" fill="#dc2626"/>
+      <text x="16" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+      <text x="42" y="13" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#94a3b8">Choose and purchase ERP system</text>
+      <text x="42" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748b">SAP, NetSuite, Dynamics — 6-12 months eval</text>
+    </g>
+    <line x1="36" y1="90" x2="36" y2="116" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+    <!-- Step 2 -->
+    <g transform="translate(20, 118)">
+      <circle cx="16" cy="16" r="14" fill="#dc2626"/>
+      <text x="16" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+      <text x="42" y="13" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#94a3b8">Implementation + data mapping</text>
+      <text x="42" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748b">IT consultant, cycle counts, SKU cleanup</text>
+    </g>
+    <line x1="36" y1="150" x2="36" y2="176" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+    <!-- Step 3 -->
+    <g transform="translate(20, 178)">
+      <circle cx="16" cy="16" r="14" fill="#dc2626"/>
+      <text x="16" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+      <text x="42" y="13" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#94a3b8">ERP → POS integration configured</text>
+      <text x="42" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748b">Middleware, API work, data pipelines</text>
+    </g>
+    <line x1="36" y1="210" x2="36" y2="236" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+    <!-- Step 4 -->
+    <g transform="translate(20, 238)">
+      <circle cx="16" cy="16" r="14" fill="#dc2626"/>
+      <text x="16" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+      <text x="42" y="13" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#94a3b8">Staff training on ERP workflows</text>
+      <text x="42" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748b">Weeks of training before first insight</text>
+    </g>
+    <line x1="36" y1="270" x2="36" y2="296" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+    <!-- Step 5: finally -->
+    <g transform="translate(20, 298)">
+      <circle cx="16" cy="16" r="14" fill="#dc2626"/>
+      <text x="16" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+      <text x="42" y="13" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#94a3b8">First planning insight — months later</text>
+      <text x="42" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748b">Complex dashboards, dedicated planner needed</text>
+    </g>
+
+    <!-- Time badge -->
+    <rect x="340" y="280" width="160" height="44" rx="8" fill="#0a1830"/>
+    <text x="420" y="302" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#dc2626" text-anchor="middle">3–12 mo</text>
+    <text x="420" y="318" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">before first insight</text>
+  </g>
+
+  <!-- ── CENTER: VS divider ── -->
+  <g transform="translate(580, 380)">
+    <line x1="0" y1="-130" x2="0" y2="130" stroke="#1e3a6e" stroke-width="1" stroke-dasharray="6 4"/>
+    <circle cx="0" cy="0" r="28" fill="#0a1a31" stroke="#2fd7c6" stroke-width="2"/>
+    <text x="0" y="8" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" fill="#2fd7c6" text-anchor="middle">VS</text>
+  </g>
+
+  <!-- ── RIGHT: POS path ── -->
+  <g transform="translate(620, 248)">
+    <rect x="0" y="0" width="520" height="340" rx="12" fill="#0d2040"/>
+    <rect x="0" y="0" width="520" height="340" rx="12" fill="none" stroke="#2fd7c6" stroke-width="2" opacity="0.4"/>
+
+    <!-- POS header bar -->
+    <rect x="0" y="0" width="520" height="44" rx="12" fill="#0a2a1a"/>
+    <rect x="0" y="22" width="520" height="22" fill="#0a2a1a"/>
+    <text x="20" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#2fd7c6" text-anchor="start">POS-DIRECT PATH (COODRA)</text>
+
+    <!-- Step 1 -->
+    <g transform="translate(20, 58)">
+      <circle cx="16" cy="16" r="14" fill="#2fd7c6"/>
+      <text x="16" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#0a1a31" text-anchor="middle">1</text>
+      <text x="42" y="13" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Connect your POS</text>
+      <text x="42" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">Shopify, Square, Lightspeed, or Clover</text>
+    </g>
+    <line x1="36" y1="90" x2="36" y2="116" stroke="#2fd7c6" stroke-width="1.5"/>
+
+    <!-- Step 2 -->
+    <g transform="translate(20, 118)">
+      <circle cx="16" cy="16" r="14" fill="#2fd7c6"/>
+      <text x="16" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#0a1a31" text-anchor="middle">2</text>
+      <text x="42" y="13" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">90-day sales history pulled</text>
+      <text x="42" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">Automatic — no manual export required</text>
+    </g>
+    <line x1="36" y1="150" x2="36" y2="176" stroke="#2fd7c6" stroke-width="1.5"/>
+
+    <!-- Step 3 -->
+    <g transform="translate(20, 178)">
+      <circle cx="16" cy="16" r="14" fill="#2fd7c6"/>
+      <text x="16" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#0a1a31" text-anchor="middle">3</text>
+      <text x="42" y="13" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Weekly ranked decisions delivered</text>
+      <text x="42" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">What to reorder, reduce, protect, remove</text>
+    </g>
+    <line x1="36" y1="210" x2="36" y2="236" stroke="#2fd7c6" stroke-width="1.5"/>
+
+    <!-- Step 4 -->
+    <g transform="translate(20, 238)">
+      <circle cx="16" cy="16" r="14" fill="#2fd7c6"/>
+      <text x="16" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#0a1a31" text-anchor="middle">4</text>
+      <text x="42" y="13" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">No dedicated planner required</text>
+      <text x="42" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">Owner or manager reviews in minutes</text>
+    </g>
+    <line x1="36" y1="270" x2="36" y2="296" stroke="#2fd7c6" stroke-width="1.5"/>
+
+    <!-- Step 5 -->
+    <g transform="translate(20, 298)">
+      <circle cx="16" cy="16" r="14" fill="#2fd7c6"/>
+      <text x="16" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#0a1a31" text-anchor="middle">5</text>
+      <text x="42" y="13" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Better decisions — same day you sign up</text>
+      <text x="42" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">No ERP. No consultant. No months of setup.</text>
+    </g>
+
+    <!-- Time badge -->
+    <rect x="340" y="280" width="160" height="44" rx="8" fill="#0a2a1a"/>
+    <text x="420" y="302" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#2fd7c6" text-anchor="middle">1 day</text>
+    <text x="420" y="318" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#7aa8c4" text-anchor="middle">from signup to first decision</text>
+  </g>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="600" width="1200" height="30" fill="#081828"/>
+  <rect x="0" y="600" width="1200" height="2" fill="url(#teal)"/>
+  <text x="600" y="620" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#1e3a6e" text-anchor="middle">coodra.com · No ERP required · Starts in one day</text>
+</svg>

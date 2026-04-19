@@ -6,7 +6,7 @@ export const meta: MetaFunction = () => [
   {
     name: 'description',
     content:
-      'Coodra tracks sales, inventory, and demand signals in real time, then recommends exactly what to reorder, replace, remove, and protect so your retail team can act faster.',
+      'Coodra inventory management tracks sales, inventory, and demand signals in real time, then recommends exactly what to reorder, replace, remove, and protect so your retail team can act faster.',
   },
   { tagName: 'link', rel: 'canonical', href: 'https://www.coodra.com/' },
   { property: 'og:title', content: 'Retail Inventory Intelligence | Coodra' },
