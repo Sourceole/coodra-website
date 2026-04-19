@@ -83,7 +83,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'A simple safety stock calculation for a consistent seller: multiply your average weekly velocity by two. That is your reorder threshold, not your reorder quantity. Use it to set a trigger, not a target.',
+        text: 'A simple safety stock calculation for a consistent seller: multiply your average weekly velocity by two. That is your reorder threshold, not your reorder quantity. Use it to set a trigger, not a target. <a href="/blog/safety-stock-without-overcomplicating-it">See the full safety stock method without the complexity</a>.',
       },
       {
         type: 'paragraph',
@@ -462,7 +462,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'Safety stock is your buffer — the extra inventory you hold to protect against unexpected demand spikes or delayed shipments. The simplest safety stock formula for an independent retailer: average weekly sales × 2.',
+        text: 'Safety stock is your buffer — the extra inventory you hold to protect against unexpected demand spikes or delayed shipments. The simplest safety stock formula for an independent retailer: average weekly sales × 2. <a href="/blog/safety-stock-without-overcomplicating-it">See the full guide to setting safety stock levels without overcomplicating it</a>.',
       },
       {
         type: 'paragraph',
@@ -502,7 +502,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'The third mistake: not updating the calculation when supplier lead times change. If your lead time extends from 2 weeks to 4 weeks, your reorder point changes even if sales velocity is the same. Treat lead time as a live variable, not a fixed one.',
+        text: 'The third mistake: not updating the calculation when supplier lead times change. If your lead time extends from 2 weeks to 4 weeks, your reorder point changes even if sales velocity is the same. Treat lead time as a live variable, not a fixed one. <a href="/blog/lead-time-and-why-it-breaks-every-reorder-formula">Lead time is the variable that quietly destroys most reorder formulas</a>.',
       },
       {
         type: 'paragraph',
@@ -924,7 +924,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'The fix is not a better forecast. It is knowing your true replenishment cycle: how long from order to receipt, including the time it takes to process, receive, and put away stock. If your effective lead time is 4 weeks and your safety stock only covers 1 week, you are under-buffered for every single reorder cycle, guaranteed.',
+        text: 'The fix is not a better forecast. It is knowing your true replenishment cycle: how long from order to receipt, including the time it takes to process, receive, and put away stock. If your effective lead time is 4 weeks and your safety stock only covers 1 week, you are under-buffered for every single reorder cycle, guaranteed. <a href="/blog/lead-time-and-why-it-breaks-every-reorder-formula">This is the lead-time gap and it is more common than any forecasting error</a>.',
       },
       {
         type: 'paragraph',
@@ -953,6 +953,204 @@ export const blogPosts: BlogPostRecord[] = [
       {
         type: 'paragraph',
         text: '<a href="/inventory-management">Coodra builds a 90-day demand baseline automatically from your POS data</a> and uses it to generate reorder recommendations that account for lead time, seasonal position, and velocity trend — without requiring an ERP, a data team, or a manual spreadsheet. <a href="/signup">Start free and connect your POS in 5 minutes</a>.',
+      },
+    ],
+  },
+  {
+    slug: 'lead-time-and-why-it-breaks-every-reorder-formula',
+    title: 'Lead Time and Why It Breaks Every Reorder Formula',
+    excerpt:
+      'Most demand forecasting mistakes are not bad forecasts. They are lead-time errors. Here is why lead time is the variable that quietly destroys most inventory planning — and how to account for it.',
+    coverImage: '/images/blog/lead-time-reorder-formula.svg',
+    coverImageAlt: 'Lead time gap in retail inventory replenishment cycle',
+    category: 'Inventory',
+    readingTime: '6 min read',
+    author: 'Michael Shahid (CEO)',
+    publishedAt: 'April 19, 2026',
+    isoPublishedAt: '2026-04-19',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'The most common inventory planning mistake has nothing to do with demand forecasting. It is a lead-time mistake. And it is quietly costing independent retailers more than any other single error in their replenishment process.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Here is how it works. A retailer looks at their stock, sees they have 20 units on hand, and places a reorder. The problem: they placed the order based on what demand looks like right now. By the time the product arrives — in 2 weeks, 3 weeks, 5 weeks — demand will have moved. The reorder that felt right when they placed it is wrong by the time it lands.',
+      },
+      {
+        type: 'paragraph',
+        text: 'This is the lead-time gap. It is the distance between the moment you decide to reorder and the moment the product is on your shelf. And it is where most inventory planning falls apart.',
+      },
+      {
+        type: 'callout',
+        text: 'Why the formula works in theory but fails in practice',
+      },
+      {
+        type: 'paragraph',
+        text: 'The standard reorder point formula is: Reorder Point = (Average Weekly Sales × Lead Time in Weeks) + Safety Stock. Most retailers know this. Many even use it. And yet their reorder points are still wrong most of the time.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The failure is almost never the math. It is the lead time number. When retailers plug in lead time, they use the supplier\'s quoted lead time: 2 weeks, 3 weeks, 10 weeks. But the supplier\'s quoted lead time is not your actual replenishment cycle. Your actual replenishment cycle includes order processing time, shipping, receiving, inspection, and put-away. The real cycle is almost always longer than what the supplier quotes.',
+      },
+      {
+        type: 'paragraph',
+        text: 'If your supplier says 2 weeks but your actual cycle is 3.5 weeks, and you are reordering based on a 2-week lead time, you are under-buffered by a full week on every single order. Guaranteed. Every time.',
+      },
+      {
+        type: 'callout',
+        text: 'The week-zero problem: reordering for now instead of for then',
+      },
+      {
+        type: 'paragraph',
+        text: 'The fundamental error is thinking of reorder decisions as responses to current inventory. They are not. A replenishment order is a forecast about what demand will do during the time between now and when the product arrives. You are not ordering for today. You are ordering for 3 weeks from now.',
+      },
+      {
+        type: 'paragraph',
+        text: 'This shifts the question entirely. The right question is not "do I have enough stock?" The right question is "given where demand is trending and how long it will take to arrive, will I have enough stock?" These are different questions. The first one gets you a reorder that is always slightly too late.',
+      },
+      {
+        type: 'paragraph',
+        text: '<a href="/blog/reorder-points-without-excel">The reorder point formula</a> makes this exact adjustment when you use it correctly. The key is using your actual lead time, not your nominal one.',
+      },
+      {
+        type: 'callout',
+        text: 'How to find your actual lead time',
+      },
+      {
+        type: 'paragraph',
+        text: 'Your POS data has this already. Look at the gap between when you placed a purchase order and when the product was available to sell. Average that across your last 10 purchase orders per SKU or per category. That is your actual lead time. It will almost always be longer than what your supplier quotes — because suppliers quote their processing time, not your receiving and put-away time.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Do this by category if you can, because lead times vary significantly across categories. A product you dropship might have a 2-week quoted lead time and a 2.5-week actual cycle. A product you import might have a 6-week quoted lead time and a 9-week actual cycle. Treating them the same way is where the errors compound.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra tracks your actual replenishment cycle per SKU automatically from your PO and receiving data, and uses that to calculate whether your current reorder point is appropriately buffered for the real cycle, not the quoted one. <a href="/integrations">See how it connects to your POS and purchase data</a>.',
+      },
+      {
+        type: 'callout',
+        text: 'What happens when lead time changes',
+      },
+      {
+        type: 'paragraph',
+        text: 'The most invisible lead-time error is a change in supplier lead time that goes unaccounted for. A supplier who was reliably 2 weeks starts running 4 weeks. No one updates the reorder points. The retailer keeps placing the same orders at the same trigger points and keeps running out — blaming the supplier, blaming demand, blaming the POS. It is none of those. It is a lead time change that was never updated in the reorder calculation.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The fix is to treat lead time as a live variable, not a fixed assumption. Check it every quarter. If it has drifted more than a few days from your last measurement, update your reorder points. This one habit prevents a large percentage of the stockouts that feel inexplicable.',
+      },
+      {
+        type: 'paragraph',
+        text: 'When you are placing a large seasonal order — before a holiday season, before a known local event that drives traffic, before a category reset — is exactly when you need to double-check your lead time assumption. Seasonal orders are bigger and the cost of being wrong is larger. If your normal cycle is 3 weeks and the seasonal order is going in during a period when the supplier is overloaded, your actual lead time might be 5 or 6 weeks. Build that in before you confirm the PO.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Lead time is not a number to set once and forget. It is the most dynamic variable in your entire replenishment system, and the one that independent retailers most consistently underestimate. <a href="/inventory-management">Coodra monitors your lead time per SKU and flags when it has drifted</a> from your baseline — before that drift turns into a stockout on your best sellers.',
+      },
+    ],
+  },
+  {
+    slug: 'safety-stock-without-overcomplicating-it',
+    title: 'How to Set Safety Stock Levels Without Overcomplicating It',
+    excerpt:
+      'Most retailers either hold too much safety stock or none at all. Here is the practical middle ground: a simple method that actually gets used.',
+    coverImage: '/images/blog/safety-stock-guide.svg',
+    coverImageAlt: 'Safety stock calculation for independent retailers',
+    category: 'Inventory',
+    readingTime: '5 min read',
+    author: 'Michael Shahid (CEO)',
+    publishedAt: 'April 19, 2026',
+    isoPublishedAt: '2026-04-19',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'Safety stock is one of those concepts that sounds more complicated than it is. The definition is simple: it is the buffer between your reorder point and the amount you actually want to have on hand when a reorder arrives. The implementation is also simple — until retailers either ignore it entirely or try to calculate it with statistical models designed for supply chain engineers.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Most independent retailers fall into one of two camps. Camp one: no safety stock at all. They reorder when the shelf is empty or when the POS says they are at zero. They are always running just-in-time, which means they are frequently running short. Camp two: excessive safety stock. They over-order everything "just in case" and end up with too much dead stock and capital tied up in inventory that is not selling.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Neither is right. Here is the practical approach that works for independent retail specifically.',
+      },
+      {
+        type: 'callout',
+        text: 'The simple method: 2-week velocity buffer',
+      },
+      {
+        type: 'paragraph',
+        text: 'For any SKU that sells consistently — not a novelty item, not a seasonal item, but a consistent performer — your safety stock should equal two weeks of average sales. That is your buffer. It covers the gap between when your stock runs out and when your reorder arrives, plus a small cushion for demand variability.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Two weeks of average sales as a safety stock floor is not a statistical model. It is a practical rule of thumb that works because it matches the reality of most independent retail supply chains. Your lead time is probably 1-3 weeks. Two weeks of buffer means you almost never hit zero before a replenishment order arrives, without holding so much buffer that you are over-extended on capital.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The calculation is: Safety Stock = Average Weekly Sales × 2. Then your Reorder Point = (Average Weekly Sales × Lead Time in Weeks) + Safety Stock. And your Reorder Quantity is how much you order each time — a separate decision from safety stock, and one that should be based on your supplier\'s minimum order quantity and your physical storage capacity.',
+      },
+      {
+        type: 'paragraph',
+        text: '<a href="/blog/reorder-points-without-excel">See the full reorder point formula applied to real POS data</a>.',
+      },
+      {
+        type: 'callout',
+        text: 'When to hold more than 2 weeks',
+      },
+      {
+        type: 'paragraph',
+        text: 'Two weeks is the baseline. Some SKUs warrant more. The criteria: how critical is this product to your store, how variable is your supply lead time, and how expensive is a stockout relative to the cost of holding slightly more buffer.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Your top 3-5 hero products — the ones customers come in specifically asking for, the ones that anchor a category — probably deserve 3-4 weeks of safety stock. The cost of running out on your best seller is higher than the carrying cost of holding an extra week of inventory. For these SKUs, the buffer should be explicitly set higher.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Products with erratic or unpredictable lead times also deserve more buffer. If a supplier runs 2 weeks most of the time but occasionally stretches to 5, a 2-week safety stock will leave you short half the time. Push it to 3-4 weeks for these suppliers.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Seasonal products entering their selling season should also carry more buffer initially — because you are building inventory for a known demand curve, not filling ongoing orders. If you are buying for holiday and the selling season is 8 weeks, your safety stock at the start of the season should reflect not just lead time variability but the cost of running out mid-season when reordering is no longer an option.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra flags high-velocity SKUs that are running below a 2-week buffer and surfaces them before they hit the danger zone. <a href="/integrations">Connect your POS to see which of your SKUs are under-buffered</a>.',
+      },
+      {
+        type: 'callout',
+        text: 'When you can get away with less than 2 weeks',
+      },
+      {
+        type: 'paragraph',
+        text: 'Two weeks is the right default. There are exactly two situations where less makes sense: ultra-reliable, ultra-fast suppliers, and low-criticality products where a stockout has no lasting cost.',
+      },
+      {
+        type: 'paragraph',
+        text: 'If your supplier consistently delivers in 3-5 days and you can count on that reliability, you might drop to a 1-week buffer on consistent sellers. But only if you are actually watching your inventory levels weekly and willing to place emergency orders without penalty. If you are not checking weekly, do not reduce the buffer.',
+      },
+      {
+        type: 'paragraph',
+        text: 'If a product is truly low-stakes — a product a customer can substitute easily, a product that represents less than 1% of your revenue — a zero safety stock might be fine. The cost of a stockout is low and the capital tied up in buffer is not worth it. The key is being honest about whether a product is genuinely low-stakes or whether you are just underweighting the cost of a stockout because it has not happened yet.',
+      },
+      {
+        type: 'callout',
+        text: 'The review cadence: how often to update safety stock levels',
+      },
+      {
+        type: 'paragraph',
+        text: 'Once a quarter is enough for most retailers. Pull your average weekly sales for the last 4-6 weeks on each SKU and update the safety stock calculation. If the average has moved meaningfully — more than 20% in either direction — update the reorder point. If it has not moved meaningfully, leave it.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The retailers who get this right are not doing more work than everyone else. They are doing the same work — reviewing their top SKUs weekly — but they are running the calculation, not just eyeballing it. The calculation takes 30 seconds per SKU once you have the data. That is the difference between a safety stock that works and one that is either too thin to prevent stockouts or too thick to tie up capital unnecessarily.',
+      },
+      {
+        type: 'paragraph',
+        text: '<a href="/inventory-management">Coodra calculates and monitors safety stock levels automatically</a> for every SKU in your POS, updated every week, so the buffer is always based on recent velocity rather than a number set once and forgotten. <a href="/signup">Connect your POS and see which SKUs are under-buffered this week</a>.',
       },
     ],
   },
