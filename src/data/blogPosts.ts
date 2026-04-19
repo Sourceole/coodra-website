@@ -345,7 +345,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'The fix is not more intuition. It is cleaner data: a weekly sales velocity per SKU that your team can trust, reviewed consistently, so the reorder decision is not a guess but a data point.',
+        text: 'The fix is not more intuition. It is cleaner data: a weekly sales velocity per SKU that your team can trust, reviewed consistently, so the reorder decision is not a guess but a data point. <a href="/blog/reorder-points-without-excel">See how to calculate reorder points without a spreadsheet</a> and apply them to every SKU where your team has historically hesitated to reorder.',
       },
       {
         type: 'callout',
@@ -660,7 +660,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'Acting on this signal does not mean doubling your order. It means making sure you do not under-order the same product this cycle and run out at the worst moment. <a href="/integrations">Coodra tracks this automatically every week</a> and flags products that are trending up before you miss a reorder window.',
+        text: 'Acting on this signal does not mean doubling your order. It means making sure you do not under-order the same product this cycle and run out at the worst moment. <a href="/integrations">Coodra tracks this automatically every week</a> and flags products that are trending up before you miss a reorder window. For a full list of velocity signals to watch, <a href="/blog/dead-inventory-signs">see the five signs your store has too much dead inventory</a>.',
       },
       {
         type: 'callout',
@@ -700,7 +700,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'A category with a 15% sell-through over 30 days is a warning sign: you are bringing in far more than you are moving. A category with a 60% sell-through is healthy — inventory is turning and you are likely not holding excess.',
+        text: 'A category with a 15% sell-through over 30 days is a warning sign: you are bringing in far more than you are moving. A category with a 60% sell-through is healthy — inventory is turning and you are likely not holding excess. The <a href="/blog/stock-to-sales-ratio-guide">stock-to-sales ratio</a> is another way to track the same signal — and works especially well for monitoring category health at a glance.',
       },
       {
         type: 'paragraph',
