@@ -30,3 +30,22 @@ dist-ssr
 !.env.example
 .aidesigner/*
 !.aidesigner/.gitkeep
+
+# Build/runtime generated
+build/
+.react-router/
+
+# Local analysis/scratch outputs
+tmp-*
+preview/
+AiDesigner/
+*.heapsnapshot
+
+# Local screenshot/debug artifacts
+*-updated.png
+*-current.png
+decision-section.png
+contact-updated.png
+
+# Local one-off scripts
+extract-react-*.mjs

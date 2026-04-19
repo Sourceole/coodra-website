@@ -830,7 +830,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: 'Demand Forecasting Without an ERP: What Independent Retailers Can Actually Do',
     excerpt:
       'Most inventory forecasting tools assume you have an ERP, a data team, and years of clean records. Here is what independent retailers can do with the data they already have.',
-    coverImage: '/images/blog/demand-forecasting-erp.jpg',
+    coverImage: '/images/blog/erp-vs-pos-comparison.svg',
     coverImageAlt: 'Retailer reviewing POS data on a tablet',
     category: 'Demand Forecasting',
     readingTime: '6 min read',
