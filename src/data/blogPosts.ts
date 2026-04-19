@@ -13,6 +13,7 @@ export type BlogPostRecord = {
   readingTime: string
   author: string
   publishedAt: string
+  isoPublishedAt: string
   content: ContentBlock[]
 }
 
@@ -28,6 +29,7 @@ export const blogPosts: BlogPostRecord[] = [
     readingTime: '7 min read',
     author: 'Michael Shahid (CEO)',
     publishedAt: 'April 13, 2026',
+    isoPublishedAt: '2026-04-13',
     content: [
       {
         type: 'paragraph',
@@ -153,11 +155,11 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'The question is not whether these mistakes are happening in your store. The question is whether you have a system that catches them before they compound into margin damage you cannot recover in the same quarter.',
+        text: 'The question is not whether these mistakes are happening in your store. The question is whether you have a system that catches them before they compound into margin damage you cannot recover in the same quarter. <a href="/blog/dead-inventory-signs">See the five signals that dead stock is already accumulating</a>.',
       },
       {
         type: 'paragraph',
-        text: 'Coodra reviews your sales, inventory, and demand signals every week and surfaces the five decisions most worth acting on — ranked by impact on your margin, not by urgency alone.',
+        text: 'Coodra reviews your sales, inventory, and demand signals every week and <a href="/inventory-management">surfaces the five decisions most worth acting on</a> — ranked by impact on your margin, not by urgency alone.',
       },
       {
         type: 'paragraph',
@@ -176,6 +178,7 @@ export const blogPosts: BlogPostRecord[] = [
     readingTime: '8 min read',
     author: 'Michael Shahid (CEO)',
     publishedAt: 'April 13, 2026',
+    isoPublishedAt: '2026-04-13',
     content: [
       {
         type: 'paragraph',
@@ -227,7 +230,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'What POS-first demand intelligence does is surface those signals automatically. Coodra pulls your last 90 days of sales and inventory data and generates a ranked list of inventory decisions — which SKUs to reorder now, which to hold, which to reduce. Updated weekly, based on fresh data from your POS.',
+        text: 'What POS-first demand intelligence does is surface those signals automatically. <a href="/inventory-management">Coodra pulls your last 90 days of sales and inventory data</a> and generates a ranked list of inventory decisions — which SKUs to reorder now, which to hold, which to reduce. Updated weekly, based on fresh data from your POS.',
       },
       {
         type: 'image',
@@ -265,7 +268,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'The ERP market is built for complexity. Coodra is built for the retailer who wants the outcome — better inventory decisions, protected margin, less firefighting — without the overhead of enterprise software.',
+        text: 'The ERP market is built for complexity. Coodra is built for the retailer who wants the outcome — better inventory decisions, protected margin, less firefighting — without the overhead of enterprise software. For a full breakdown of how Coodra builds demand forecasts from POS data alone, <a href="/blog/demand-forecasting-without-an-erp">see our guide to demand forecasting without an ERP</a>.',
       },
       {
         type: 'paragraph',
@@ -288,6 +291,7 @@ export const blogPosts: BlogPostRecord[] = [
     readingTime: '6 min read',
     author: 'Michael Shahid (CEO)',
     publishedAt: 'April 17, 2026',
+    isoPublishedAt: '2026-04-17',
     content: [
       {
         type: 'paragraph',
@@ -369,7 +373,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'Coodra surfaces the inventory decisions worth acting on every week — including which SKUs are accumulating dead stock before they force a mark-down. <a href="/pricing">See how it works</a>.',
+        text: 'Coodra <a href="/inventory-management">surfaces the inventory decisions worth acting on every week</a> — including which SKUs are accumulating dead stock before they force a mark-down. <a href="/pricing">See how it works</a>.',
       },
       {
         type: 'paragraph',
@@ -392,6 +396,7 @@ export const blogPosts: BlogPostRecord[] = [
     readingTime: '7 min read',
     author: 'Michael Shahid (CEO)',
     publishedAt: 'April 17, 2026',
+    isoPublishedAt: '2026-04-17',
     content: [
       {
         type: 'paragraph',
@@ -481,7 +486,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'This is the theory. The practice problem is doing it for 300, 500, or 1,000 SKUs without living in a spreadsheet. <a href="/pricing">Coodra calculates this for every SKU automatically</a> from your POS sales history, updated weekly, so the reorder decision is not a calculation — it is a review.',
+        text: 'This is the theory. The practice problem is doing it for 300, 500, or 1,000 SKUs without living in a spreadsheet. <a href="/inventory-management">Coodra calculates this for every SKU automatically</a> from your POS sales history, updated weekly, so the reorder decision is not a calculation — it is a review.',
       },
       {
         type: 'callout',
@@ -505,7 +510,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'For a deeper walkthrough of the five questions your POS can answer every week to support this kind of decision-making, <a href="/blog/how-to-read-pos-data">see our guide to reading POS data</a>.',
+        text: 'For a deeper walkthrough of the five questions your POS can answer every week to support this kind of decision-making, <a href="/blog/how-to-read-pos-data">see our guide to reading POS data</a>. <a href="/blog/demand-forecasting-without-an-erp">Demand forecasting without an ERP</a> covers how to build a reliable demand baseline from your POS data alone — no enterprise software required.',
       },
     ],
   },
@@ -520,6 +525,7 @@ export const blogPosts: BlogPostRecord[] = [
     readingTime: '8 min read',
     author: 'Michael Shahid (CEO)',
     publishedAt: 'April 17, 2026',
+    isoPublishedAt: '2026-04-17',
     content: [
       {
         type: 'paragraph',
@@ -605,7 +611,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'Coodra was built specifically for independent retailers who have a POS, have sales data, and want to make better inventory decisions without adding enterprise software. If that is your situation, <a href="/signup">start your free trial</a> and see what your POS data has been telling you.',
+        text: 'Coodra was built specifically for independent retailers who have a POS, have sales data, and want to make better inventory decisions without adding enterprise software. <a href="/case-studies">See how retailers have caught inventory problems before they compound</a>. If that is your situation, <a href="/signup">start your free trial</a> and see what your POS data has been telling you.',
       },
     ],
   },
@@ -620,6 +626,7 @@ export const blogPosts: BlogPostRecord[] = [
     readingTime: '7 min read',
     author: 'Michael Shahid (CEO)',
     publishedAt: 'April 17, 2026',
+    isoPublishedAt: '2026-04-17',
     content: [
       {
         type: 'paragraph',
@@ -717,7 +724,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'Coodra consolidates all five questions into a single weekly view — your top movers, your reorder flags, your slow categories, and your velocity trends — pulled automatically from your POS. <a href="/signup">Connect your POS once</a> and get the weekly view without running a single report manually.',
+        text: 'Coodra consolidates all five questions into <a href="/inventory-management">a single weekly view</a> — your top movers, your reorder flags, your slow categories, and your velocity trends — pulled automatically from your POS. <a href="/signup">Connect your POS once</a> and get the weekly view without running a single report manually.',
       },
       {
         type: 'paragraph',
@@ -736,6 +743,7 @@ export const blogPosts: BlogPostRecord[] = [
     readingTime: '6 min read',
     author: 'Michael Shahid (CEO)',
     publishedAt: 'April 17, 2026',
+    isoPublishedAt: '2026-04-17',
     content: [
       {
         type: 'paragraph',
@@ -813,7 +821,138 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'Coodra tracks your stock-to-sales ratio per category automatically and flags when a category drifts into the caution or danger zone — before it becomes dead stock. <a href="/integrations">See it connected to your POS data</a>.',
+        text: '<a href="/inventory-management">Coodra tracks your stock-to-sales ratio per category automatically</a> and flags when a category drifts into the caution or danger zone — before it becomes dead stock. <a href="/integrations">See it connected to your POS data</a>.',
+      },
+    ],
+  },
+  {
+    slug: 'demand-forecasting-without-an-erp',
+    title: 'Demand Forecasting Without an ERP: What Independent Retailers Can Actually Do',
+    excerpt:
+      'Most inventory forecasting tools assume you have an ERP, a data team, and years of clean records. Here is what independent retailers can do with the data they already have.',
+    coverImage: '/images/blog/demand-forecasting-erp.jpg',
+    coverImageAlt: 'Retailer reviewing POS data on a tablet',
+    category: 'Demand Forecasting',
+    readingTime: '6 min read',
+    author: 'Michael Shahid (CEO)',
+    publishedAt: 'April 18, 2026',
+    isoPublishedAt: '2026-04-18',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'Most inventory forecasting tools were designed for companies that already have ERP systems. The pitch is compelling: let our software predict your demand, automate your replenishment, and eliminate stockouts. What the pitch leaves out is the prerequisite: you need clean, structured, historical data that most independent retailers do not have.',
+      },
+      {
+        type: 'paragraph',
+        text: 'If you run a jewelry store, a pet supply shop, or a specialty grocery, you probably do not have 24 months of organized SKU-level sell-through data. You have your POS data — pulled from Shopify, Square, Lightspeed, or Clover — and whatever you have manually tracked in spreadsheets. That is not nothing. But it is also not an ERP.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Here is the good news: you do not need an ERP to forecast demand better than you currently are. You need two things. Enough clean signal. And a consistent process to review it.',
+      },
+      {
+        type: 'callout',
+        text: 'The ERP assumption gap in inventory software',
+      },
+      {
+        type: 'paragraph',
+        text: 'The gap between what enterprise forecasting tools expect and what independent retailers actually have is significant. ERP systems maintain continuous, SKU-level inventory and sales records with accurate cost data, supplier lead times, and seasonal adjustments. Most independent retailers have none of that in a structured form.',
+      },
+      {
+        type: 'paragraph',
+        text: 'When you buy a forecasting tool that assumes ERP data, you end up spending the first three months cleaning up imports, correcting SKU mismatches, and building the infrastructure the software was designed to work with. By the time you are ready to forecast, you have spent more time on data preparation than on any actual decision.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra was built to work with POS data directly — Shopify, Square, Lightspeed, Clover, Moneris — without requiring a data team or a months-long onboarding. <a href="/integrations">See how the POS connection works</a>.',
+      },
+      {
+        type: 'callout',
+        text: 'Signal 1: Weekly sales velocity per SKU',
+      },
+      {
+        type: 'paragraph',
+        text: 'The foundation of any demand forecast — ERP or no ERP — is a reliable weekly sales velocity per SKU. Not last month\'s total. Not what you vaguely remember selling. Weekly velocity: units sold per SKU per week, calculated over a rolling 4-to-6-week window.',
+      },
+      {
+        type: 'paragraph',
+        text: 'This is the number that tells you what demand actually looks like right now, not three months ago. A SKU that averaged 3 units a week over the last month is in a different demand position than one that averaged 3 units a week over the last quarter — the recent window matters more for planning the next reorder.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra calculates this automatically for every SKU in your POS, updated weekly. <a href="/inventory-management">See the demand signals Coodra surfaces for every product</a>.',
+      },
+      {
+        type: 'callout',
+        text: 'Signal 2: Seasonal position — same period last year',
+      },
+      {
+        type: 'paragraph',
+        text: 'Most independent retailers skip seasonal analysis because they think it requires statistical expertise. It does not. It requires pulling the same period from last year.',
+      },
+      {
+        type: 'paragraph',
+        text: 'What did you sell in April last year? Your POS almost certainly has that data. Compare it to this April. If you sold 140 units in April 2025 and 115 units in April 2026, that is a 18% demand decline in the same seasonal period — not explained by a one-time promotion or a new competitor opening. That is signal worth acting on before you place your next purchase order.',
+      },
+      {
+        type: 'paragraph',
+        text: 'You do not need a statistical model for this. You need last year\'s POS report and a basic spreadsheet. The model is a comparison. The insight is whether your current year is tracking above, below, or in line with last year\'s seasonal pattern.',
+      },
+      {
+        type: 'callout',
+        text: 'Signal 3: Category-level trend direction',
+      },
+      {
+        type: 'paragraph',
+        text: 'SKU-level forecasting is noisy for low-velocity products. If you sell 3 units of a SKU per week, any single week\'s data is almost random. Category-level trends are more stable and more useful for high-level buying decisions.',
+      },
+      {
+        type: 'paragraph',
+        text: 'If your accessories category is running 12% ahead of last year while your jewelry category is running 4% behind, that is meaningful signal for how to allocate your next purchase budget — even without knowing exactly which specific SKU within jewelry is underperforming.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra tracks category-level performance automatically and flags when a category is trending meaningfully above or below its prior-year position.',
+      },
+      {
+        type: 'callout',
+        text: 'The real reason demand forecasting fails: lead time',
+      },
+      {
+        type: 'paragraph',
+        text: 'Most demand forecasting mistakes are not actually forecasting errors. They are lead-time errors. When you place a purchase order with a 3-week lead time, you are not forecasting what demand looks like right now. You are forecasting what demand will look like 3 weeks from now. Most retailers are accidentally forecasting their current inventory position — what they think they have on hand — rather than what demand will do while they wait for the order to arrive.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The fix is not a better forecast. It is knowing your true replenishment cycle: how long from order to receipt, including the time it takes to process, receive, and put away stock. If your effective lead time is 4 weeks and your safety stock only covers 1 week, you are under-buffered for every single reorder cycle, guaranteed.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra calculates per-SKU safety stock based on your actual lead time and your sales velocity — automatically, from your POS data. <a href="/inventory-management">See how the reorder point calculation works</a>.',
+      },
+      {
+        type: 'callout',
+        text: 'The 90-day demand baseline',
+      },
+      {
+        type: 'paragraph',
+        text: 'If you only have one number to track, track a 90-day rolling average of weekly sales per SKU. Ninety days smooths out the noise from a single slow week or a promotional spike, while still being recent enough to reflect actual demand trends rather than seasonal patterns that may have shifted.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Thirty days is too short for most retail products — one slow week can make a 2-unit-per-week SKU look like a 1-unit-per-week SKU. Six months is too long if you have changed your product mix, moved locations, or had a competitor open nearby.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The 90-day average is most reliable for products that sell at least 4 units per week consistently. For slower-moving SKUs, your signal-to-noise ratio is lower regardless of what tool you use. The practical advice: track it, but trust it less, and lean toward supplier minimums as your reorder quantity.',
+      },
+      {
+        type: 'paragraph',
+        text: 'This is not a perfect system. No demand forecast is. But it is better than reordering on instinct, and it is more reliable than extrapolating from a single month of data. The gap between what independent retailers are doing now and what they could be doing with this approach is significant.',
+      },
+      {
+        type: 'paragraph',
+        text: '<a href="/inventory-management">Coodra builds a 90-day demand baseline automatically from your POS data</a> and uses it to generate reorder recommendations that account for lead time, seasonal position, and velocity trend — without requiring an ERP, a data team, or a manual spreadsheet. <a href="/signup">Start free and connect your POS in 5 minutes</a>.',
       },
     ],
   },

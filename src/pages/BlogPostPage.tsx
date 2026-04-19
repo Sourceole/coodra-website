@@ -44,6 +44,30 @@ export default function BlogPostPage() {
 
   const related = blogPosts.filter((item) => item.slug !== post.slug).slice(0, 2)
 
+  const SITE_URL = 'https://www.coodra.com'
+  const authorPerson = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${SITE_URL}/#person`,
+    name: post.author,
+    jobTitle: 'CEO',
+    url: SITE_URL,
+    sameAs: ['https://www.linkedin.com/company/coodra/'],
+  }
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    image: `${SITE_URL}/og-image.png`,
+    datePublished: post.isoPublishedAt,
+    author: { '@id': `${SITE_URL}/#person` },
+    publisher: { '@id': `${SITE_URL}/#organization` },
+    url: `${SITE_URL}/blog/${post.slug}`,
+    inLanguage: 'en',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/blog/${post.slug}` },
+  }
+
   return (
     <div className="blog-page">
       <div className="blog-page__container">
@@ -135,6 +159,14 @@ export default function BlogPostPage() {
             </ul>
           </section>
         </article>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(authorPerson) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        />
       </div>
     </div>
   )
