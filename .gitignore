@@ -39,6 +39,7 @@ build/
 tmp-*
 preview/
 AiDesigner/
+hyperframes/
 *.heapsnapshot
 
 # Local screenshot/debug artifacts
