@@ -1,0 +1,71 @@
+﻿<svg width="1280" height="800" viewBox="0 0 1280 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1280" y2="800" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FAFDFF"/>
+      <stop offset="1" stop-color="#EEF6FF"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#2FD7C6"/>
+      <stop offset="1" stop-color="#8DEEE5"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0A1A31" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="800" rx="26" fill="url(#bg)"/>
+  <rect x="40" y="40" width="1200" height="64" rx="14" fill="#FFFFFF" stroke="#DDE8F5"/>
+  <text x="72" y="80" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#0A1A31">Integrations / Action Surfaced</text>
+  <text x="1180" y="80" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#2FD7C6">Approval-ready next move</text>
+
+  <rect x="84" y="140" width="1112" height="600" rx="20" fill="#FFFFFF" stroke="#DDE8F5" filter="url(#shadow)"/>
+
+  <rect x="124" y="180" width="680" height="520" rx="18" fill="#FFFFFF" stroke="#D3E2F2"/>
+  <text x="156" y="228" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#0A1A31">Recommended action</text>
+
+  <rect x="156" y="254" width="616" height="124" rx="16" fill="#EFFBF8" stroke="#BAE8DC"/>
+  <text x="190" y="300" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700" fill="#0A1A31">Reorder 4 cases from main distributor</text>
+  <text x="190" y="334" font-family="Inter, Arial, sans-serif" font-size="18" fill="#4F6785">Reason: demand up 24%, stock cover down to 2.1 days</text>
+
+  <rect x="156" y="402" width="616" height="158" rx="16" fill="#F8FBFF" stroke="#D3E2F2"/>
+  <text x="190" y="442" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="700" fill="#0A1A31">Why this action</text>
+  <text x="190" y="474" font-family="Inter, Arial, sans-serif" font-size="17" fill="#4F6785">• Avoid projected stockout before weekend peak</text>
+  <text x="190" y="502" font-family="Inter, Arial, sans-serif" font-size="17" fill="#4F6785">• Protect +$220 monthly margin at current velocity</text>
+  <text x="190" y="530" font-family="Inter, Arial, sans-serif" font-size="17" fill="#4F6785">• Keep days of cover in target range (5–7 days)</text>
+
+  <rect x="156" y="586" width="300" height="74" rx="37" fill="url(#teal)"/>
+  <text x="306" y="632" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="#FFFFFF">Approve action</text>
+
+  <rect x="824" y="180" width="332" height="520" rx="18" fill="#F9FCFF" stroke="#D3E2F2"/>
+  <text x="856" y="228" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#0A1A31">Source connectors</text>
+
+  <g>
+    <rect x="856" y="252" width="268" height="74" rx="14" fill="#FFFFFF" stroke="#D3E2F2"/>
+    <circle cx="892" cy="289" r="18" fill="#F4FAF8" stroke="#D3E7E3"/>
+    <image href="data:image/png;base64,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" x="880" y="277" width="24" height="24"/>
+    <text x="922" y="296" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="700" fill="#0A1A31">Shopify</text>
+    <circle cx="1100" cy="289" r="7" fill="#2FD7C6"/>
+  </g>
+
+  <g>
+    <rect x="856" y="342" width="268" height="74" rx="14" fill="#FFFFFF" stroke="#D3E2F2"/>
+    <circle cx="892" cy="379" r="18" fill="#F5F9FE" stroke="#D3E2F2"/>
+    <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABgElEQVRYhe3Xv0ocURQG8N+uo5uoBG0sBBsfQxQiCGJjcBsb30IfQF/DRuy0UJCQIkEUsfIxLAOBRPC/qClmB+LuzDgzzs5a5INbne+e75t7z71zbs1LLGIJo3jCs/IQ4ALfsBsX3GsJVjG+o/Gvgf0KxaNxHInP9kA8Gs06mu37USGWA4ynEJ5xhb6CAo8YQi0hPhSkJD/AKq7faGAQ61iJid+RXP2TBUXjMNISa9fYq6dMGijRQD8e4gJVGWgkaaUZqARBTn4NC/ikc0n7cYkfuO+WgTnhXZ6GRXzNmjDvFoxl4AznSZjXwG0GTublL2KgdPw3kNfAxwycxuuU4gbOM3B+50mY9x44xWfhL7y92gfwC0fdNAAnBeYk4l0X4U2JOrfCNj+XgaJdUByehD+rDgSS62ATa7Jdv2kIsCGhvwgkdCqYwdkbxV9Doy7b2e4W/sCU3j1M5iMn2z0Q72hatioU39E6Ze0vlml8wQQ+CB8WZaBPeJp+Cr/8MAr8Bb7H5luNxN1qAAAAAElFTkSuQmCC" x="880" y="367" width="24" height="24"/>
+    <text x="922" y="386" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="700" fill="#0A1A31">Square</text>
+    <circle cx="1100" cy="379" r="7" fill="#2FD7C6"/>
+  </g>
+
+  <g>
+    <rect x="856" y="432" width="268" height="74" rx="14" fill="#FFFFFF" stroke="#D3E2F2"/>
+    <circle cx="892" cy="469" r="18" fill="#F4FAFF" stroke="#D3E2F2"/>
+    <image href="data:image/png;base64,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" x="880" y="457" width="24" height="24"/>
+    <text x="922" y="476" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="700" fill="#0A1A31">Moneris</text>
+    <circle cx="1100" cy="469" r="7" fill="#2FD7C6"/>
+  </g>
+
+  <rect x="856" y="552" width="268" height="108" rx="16" fill="#EFFFFB" stroke="#BDEADB"/>
+  <text x="888" y="594" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#0A1A31">Decision confidence</text>
+  <text x="1088" y="594" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="800" fill="#0C7E73">92%</text>
+  <text x="888" y="624" font-family="Inter, Arial, sans-serif" font-size="16" fill="#4F6785">Reasoning attached · Approval ready</text>
+</svg>
+
