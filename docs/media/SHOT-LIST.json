@@ -1,0 +1,152 @@
+{
+  "version": "1.0",
+  "profile": {
+    "base_resolution": "1920x1080",
+    "clip_duration_seconds": [6, 12],
+    "formats": {
+      "still": ["webp", "png"],
+      "video": ["mp4", "webm"]
+    }
+  },
+  "core_prompts": [
+    "What changed in my store in the last 7 days that needs attention first?",
+    "Show me products with rising demand and low stock cover.",
+    "Where is margin leaking right now and why?",
+    "What action should I take today to avoid a weekend stockout?",
+    "Draft the best reorder move and explain your reasoning."
+  ],
+  "shots": [
+    {
+      "id": "landing-hero-main-loop-01",
+      "scene": "S1_SHIFT",
+      "page": "landing",
+      "section": "hero",
+      "assets": {
+        "video_mp4": "public/media/landing-hero-main-loop-v1.mp4",
+        "video_webm": "public/media/landing-hero-main-loop-v1.webm",
+        "poster_png": "public/images/coodra_dashboard_1.png"
+      }
+    },
+    {
+      "id": "landing-how-shift-01",
+      "scene": "S1_SHIFT",
+      "page": "landing",
+      "section": "how",
+      "assets": {
+        "video_mp4": "public/media/landing-how-shift-01-v1.mp4",
+        "video_webm": "public/media/landing-how-shift-01-v1.webm",
+        "poster_png": "public/images/coodra_dashboard_1.png"
+      }
+    },
+    {
+      "id": "landing-how-risk-01",
+      "scene": "S2_RISK",
+      "page": "landing",
+      "section": "how",
+      "assets": {
+        "video_mp4": "public/media/landing-how-risk-01-v1.mp4",
+        "video_webm": "public/media/landing-how-risk-01-v1.webm",
+        "poster_png": "public/images/coodra_dashboard_1.png"
+      }
+    },
+    {
+      "id": "landing-how-action-01",
+      "scene": "S3_ACTION",
+      "page": "landing",
+      "section": "how",
+      "assets": {
+        "video_mp4": "public/media/landing-how-action-01-v1.mp4",
+        "video_webm": "public/media/landing-how-action-01-v1.webm",
+        "poster_png": "public/images/coodra_dashboard_1.png"
+      }
+    },
+    {
+      "id": "landing-proof-decision-context-01",
+      "scene": "S2_RISK",
+      "page": "landing",
+      "section": "decision",
+      "assets": {
+        "video_mp4": "public/media/landing-proof-decision-context-01-v1.mp4",
+        "video_webm": "public/media/landing-proof-decision-context-01-v1.webm",
+        "poster_png": "public/images/coodra_dashboard_1.png"
+      }
+    },
+    {
+      "id": "landing-proof-approval-flow-01",
+      "scene": "S3_ACTION",
+      "page": "landing",
+      "section": "decision",
+      "assets": {
+        "video_mp4": "public/media/landing-proof-approval-flow-01-v1.mp4",
+        "video_webm": "public/media/landing-proof-approval-flow-01-v1.webm",
+        "poster_png": "public/images/coodra_dashboard_1.png"
+      }
+    },
+    {
+      "id": "about-product-story-01",
+      "scene": "S2_RISK",
+      "page": "about",
+      "section": "founding-story",
+      "assets": {
+        "video_mp4": "public/media/about-product-story-01-v1.mp4",
+        "video_webm": "public/media/about-product-story-01-v1.webm",
+        "poster_png": "public/images/coodra_dashboard_1.png"
+      }
+    },
+    {
+      "id": "integrations-connected-state-01",
+      "scene": "S1_SHIFT",
+      "page": "integrations",
+      "section": "media-strip",
+      "assets": {
+        "video_mp4": "public/media/integrations-connected-state-01-v1.mp4",
+        "video_webm": "public/media/integrations-connected-state-01-v1.webm",
+        "poster_png": "public/images/coodra_dashboard_1.png"
+      }
+    },
+    {
+      "id": "integrations-signal-flow-01",
+      "scene": "S2_RISK",
+      "page": "integrations",
+      "section": "media-strip",
+      "assets": {
+        "video_mp4": "public/media/integrations-signal-flow-01-v1.mp4",
+        "video_webm": "public/media/integrations-signal-flow-01-v1.webm",
+        "poster_png": "public/images/coodra_dashboard_1.png"
+      }
+    },
+    {
+      "id": "integrations-action-surfaced-01",
+      "scene": "S3_ACTION",
+      "page": "integrations",
+      "section": "media-strip",
+      "assets": {
+        "video_mp4": "public/media/integrations-action-surfaced-01-v1.mp4",
+        "video_webm": "public/media/integrations-action-surfaced-01-v1.webm",
+        "poster_png": "public/images/coodra_dashboard_1.png"
+      }
+    },
+    {
+      "id": "comparisons-context-01",
+      "scene": "S1_SHIFT",
+      "page": "comparisons",
+      "section": "evidence",
+      "assets": {
+        "video_mp4": "public/media/comparisons-context-01-v1.mp4",
+        "video_webm": "public/media/comparisons-context-01-v1.webm",
+        "poster_png": "public/images/coodra_dashboard_1.png"
+      }
+    },
+    {
+      "id": "comparisons-approval-flow-01",
+      "scene": "S3_ACTION",
+      "page": "comparisons",
+      "section": "evidence",
+      "assets": {
+        "video_mp4": "public/media/comparisons-approval-flow-01-v1.mp4",
+        "video_webm": "public/media/comparisons-approval-flow-01-v1.webm",
+        "poster_png": "public/images/coodra_dashboard_1.png"
+      }
+    }
+  ]
+}

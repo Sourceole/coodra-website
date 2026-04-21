@@ -3655,8 +3655,13 @@ width: 100%;
             </div>
             <div class="soRc__surfaceDivider"></div>
             <div id="soSurfaceWelcomeWrap">
-              <p class="soRc__surfaceDate" id="soSurfaceDate">Monday, Aug 01, 2025</p>
-              <h1 class="soRc__surfaceWelcome" id="soSurfaceWelcome">Welcome Back !</h1>
+              <div class="soRc__surfaceWelcomeRow">
+                <div class="soRc__surfaceWelcomeGroup">
+                  <p class="soRc__surfaceDate" id="soSurfaceDate">Monday, Aug 01, 2025</p>
+                  <h1 class="soRc__surfaceWelcome" id="soSurfaceWelcome">Welcome back!</h1>
+                </div>
+                <button class="soRc__eventCta soRc__eventCta--headerSync" type="button" data-perf-action="sync_full">Full Sync</button>
+              </div>
             </div>
           </div>
 
@@ -4050,9 +4055,6 @@ width: 100%;
 </div>
 
   <div id="soPerfConnected" hidden>
-  <div class="soRc__perfTopActions">
-    <button class="soRc__eventCta" type="button" data-perf-action="sync_full">Full Sync</button>
-  </div>
   <div class="soRc__perfKpis" id="soPerfKpis"></div>
   <div class="soRc__perfAlerts" id="soPerfAlerts"></div>
   <div class="soRc__perfCards" id="soPerfCards"></div>
@@ -7103,5 +7105,429 @@ width: 100%;
       }
       #so-rc-web[data-theme="light"].is-chat-mode .soRc__main::after { content: none !important; }
 
+      /* Dashboard header polish: welcome row + reliable recent click target */
+      #so-rc-web .soRc__surfaceWelcomeRow {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 12px !important;
+      }
+      #so-rc-web .soRc__surfaceWelcomeGroup {
+        min-width: 0 !important;
+      }
+      #so-rc-web .soRc__surfaceWelcome {
+        font-family: inherit !important;
+        font-weight: 650 !important;
+        letter-spacing: -0.01em !important;
+      }
+      #so-rc-web .soRc__eventCta--headerSync {
+        flex: 0 0 auto !important;
+        margin-left: auto !important;
+      }
+
+      #so-rc-web .soRc__surfaceHeader {
+        position: relative !important;
+        z-index: 220 !important;
+      }
+
+      /* Kill persistent left gutter strip between sidebar and header */
+      #so-rc-web .soRc__mainBody {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+
+      #so-rc-web .soRc__surfaceHeader {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__mainBody,
+      #so-rc-web[data-theme="dark"] .soRc__surfaceHeader {
+        background: #11161d !important;
+      }
+      #so-rc-web .soRc__surfaceMeta,
+      #so-rc-web .soRc__historyTop,
+      #so-rc-web .soRc__historyTopBtn {
+        position: relative !important;
+        z-index: 240 !important;
+        pointer-events: auto !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__chatWrap {
+        position: relative !important;
+        z-index: 1 !important;
+      }
+
+      @media (max-width: 860px) {
+        #so-rc-web .soRc__surfaceWelcomeRow {
+          flex-wrap: wrap !important;
+          align-items: flex-start !important;
+        }
+        #so-rc-web .soRc__eventCta--headerSync {
+          margin-left: 0 !important;
+        }
+      }
+
+      /* Final dark theme normalization (v2) */
+      #so-rc-web[data-theme="dark"] {
+        --bg: #0a0d12 !important;
+        --bg2: #10151c !important;
+        --line: #2a313c !important;
+        --text: #e9eff8 !important;
+        --muted: #a8b4c6 !important;
+        --muted2: #8794a8 !important;
+        --accent: #2ed3b7 !important;
+        --shadow: 0 16px 34px rgba(0, 0, 0, 0.38) !important;
+        background:
+          radial-gradient(1300px 520px at 52% -220px, rgba(46, 211, 183, 0.07) 0%, rgba(46, 211, 183, 0) 74%),
+          #0a0d12 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__app {
+        background: #0c1016 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__sidebar {
+        background: #090d12 !important;
+        border-right: 1px solid #1e2630 !important;
+      }
+
+      /* Fix: remove black brand tile block in left nav */
+      #so-rc-web[data-theme="dark"] .soRc__brand--logo {
+        background: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__brand {
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__main {
+        background: #11161d !important;
+        border: 1px solid #222a35 !important;
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.33) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__surfaceHeader {
+        background: #11161d !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__surfaceDivider {
+        background: #242d39 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__surfaceTitle,
+      #so-rc-web[data-theme="dark"] .soRc__surfaceTitleText,
+      #so-rc-web[data-theme="dark"] .soRc__surfaceWelcome,
+      #so-rc-web[data-theme="dark"] .soRc__cardTitle,
+      #so-rc-web[data-theme="dark"] .soRc__perfBoardTitle,
+      #so-rc-web[data-theme="dark"] .soRc__acctName,
+      #so-rc-web[data-theme="dark"] .soRc__recentTitle {
+        color: #e9eff8 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__surfaceDate,
+      #so-rc-web[data-theme="dark"] .soRc__metaText--inline,
+      #so-rc-web[data-theme="dark"] .soRc__composerHelp,
+      #so-rc-web[data-theme="dark"] .soRc__kpiSub,
+      #so-rc-web[data-theme="dark"] .soRc__perfMeta,
+      #so-rc-web[data-theme="dark"] .soRc__emptyState,
+      #so-rc-web[data-theme="dark"] .soRc__acctMeta,
+      #so-rc-web[data-theme="dark"] .soRc__recentMeta,
+      #so-rc-web[data-theme="dark"] .soRc__menuLabel {
+        color: #a8b4c6 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__card,
+      #so-rc-web[data-theme="dark"] .soRc__kpi,
+      #so-rc-web[data-theme="dark"] .soRc__perfBoard,
+      #so-rc-web[data-theme="dark"] .soRc__perfStatCard,
+      #so-rc-web[data-theme="dark"] .soRc__eventCard,
+      #so-rc-web[data-theme="dark"] .soRc__policyCard,
+      #so-rc-web[data-theme="dark"] .soRc__tableWrap,
+      #so-rc-web[data-theme="dark"] .soRc__locationsStatus,
+      #so-rc-web[data-theme="dark"] .soRc__locationsAction,
+      #so-rc-web[data-theme="dark"] .soRc__reportsWrap,
+      #so-rc-web[data-theme="dark"] .soRc__reportsHistory,
+      #so-rc-web[data-theme="dark"] .soRc__recentFlyout,
+      #so-rc-web[data-theme="dark"] .soRc__historyTopPanel,
+      #so-rc-web[data-theme="dark"] .soRc__menu {
+        background: #1a2029 !important;
+        border-color: #2e3745 !important;
+        box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentItem,
+      #so-rc-web[data-theme="dark"] .soRc__historyTopPanel .soRc__recentItem,
+      #so-rc-web[data-theme="dark"] .soRc__acctBtn {
+        background: #1d2430 !important;
+        border-color: #333d4d !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentItem.is-active,
+      #so-rc-web[data-theme="dark"] .soRc__historyTopPanel .soRc__recentItem.is-active {
+        background: #212a37 !important;
+        border-color: #3b495e !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__avatar,
+      #so-rc-web[data-theme="dark"] .soRc__toggle,
+      #so-rc-web[data-theme="dark"] .soRc__historyTopBtn {
+        background: #1b2230 !important;
+        border-color: #333d4d !important;
+        color: #dce7f5 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__toggleKnob {
+        background: rgba(255, 255, 255, 0.16) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__toggleKnob:after {
+        background: #f3f8ff !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navItem {
+        color: #d2deee !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navItem:hover {
+        background: rgba(46, 211, 183, 0.11) !important;
+        border-color: rgba(46, 211, 183, 0.28) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navItem.is-active {
+        background: rgba(46, 211, 183, 0.16) !important;
+        border-color: rgba(46, 211, 183, 0.4) !important;
+        box-shadow: inset 2px 0 0 #2ed3b7 !important;
+        color: #eafffb !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__eventCta,
+      #so-rc-web[data-theme="dark"] .soRc__cta,
+      #so-rc-web[data-theme="dark"] .soRc__smartAction,
+      #so-rc-web[data-theme="dark"] .soRc__skuBtn,
+      #so-rc-web[data-theme="dark"] .soRc__subTab,
+      #so-rc-web[data-theme="dark"] .soRc__recentDockBtn,
+      #so-rc-web[data-theme="dark"] .soRc__menuItem {
+        background: #1c2431 !important;
+        border-color: #354152 !important;
+        color: #dce7f5 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__eventCta:hover,
+      #so-rc-web[data-theme="dark"] .soRc__historyTopBtn:hover,
+      #so-rc-web[data-theme="dark"] .soRc__recentDockBtn:hover,
+      #so-rc-web[data-theme="dark"] .soRc__menuItem:hover {
+        background: #222c3a !important;
+        border-color: #415063 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__composerInner,
+      #so-rc-web[data-theme="dark"] .soRc__input,
+      #so-rc-web[data-theme="dark"] .soRc__composer {
+        background: #1a2230 !important;
+        border-color: #35465b !important;
+        color: #e9eff8 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soInput::placeholder,
+      #so-rc-web[data-theme="dark"] .soRc__input::placeholder {
+        color: #90a2bb !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__send {
+        background: #2ed3b7 !important;
+        border-color: #2ed3b7 !important;
+        color: #082033 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__send:hover,
+      #so-rc-web[data-theme="dark"] .soRc__send:focus-visible {
+        background: #26c0a8 !important;
+        border-color: #26c0a8 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__msg--user .soRc__bubble {
+        background: #1c2938 !important;
+        border-color: #344a62 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__msg--assistant .soRc__text,
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__text,
+      #so-rc-web[data-theme="dark"] .soRc__table td,
+      #so-rc-web[data-theme="dark"] .soRc__table th {
+        color: #dce6f5 !important;
+      }
+
+    </style>
+
+    <style>
+      /* final brand tile kill */
+      #so-rc-web .soRc__sidebar .soRc__brand.soRc__brand--logo,
+      #so-rc-web[data-theme="dark"] .soRc__sidebar .soRc__brand.soRc__brand--logo,
+      #so-rc-web[data-theme="light"] .soRc__sidebar .soRc__brand.soRc__brand--logo {
+        background: transparent !important;
+        border: 0 !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+        outline: 0 !important;
+        overflow: visible !important;
+        isolation: auto !important;
+      }
+
+      #so-rc-web .soRc__sidebar .soRc__brand.soRc__brand--logo::before,
+      #so-rc-web .soRc__sidebar .soRc__brand.soRc__brand--logo::after {
+        content: none !important;
+        display: none !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+      }
+
+      #so-rc-web .soRc__sidebar .soRc__brand,
+      #so-rc-web[data-theme="dark"] .soRc__sidebar .soRc__brand,
+      #so-rc-web[data-theme="light"] .soRc__sidebar .soRc__brand {
+        background: transparent !important;
+        box-shadow: none !important;
+        border-color: transparent !important;
+      }
+
+      #so-rc-web .soRc__sidebar .soRc__brandLogo {
+        display: block !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        border: 0 !important;
+      }
+
+      /* final lock: one logo only + no sidebar/main seam */
+      #so-rc-web[data-theme="dark"] .soRc__sidebar .soRc__brandLogo--dark { display: block !important; }
+      #so-rc-web[data-theme="dark"] .soRc__sidebar .soRc__brandLogo--light { display: none !important; }
+      #so-rc-web[data-theme="light"] .soRc__sidebar .soRc__brandLogo--dark { display: none !important; }
+      #so-rc-web[data-theme="light"] .soRc__sidebar .soRc__brandLogo--light { display: block !important; }
+
+      #so-rc-web .soRc__nav .soRc__brandLogo,
+      #so-rc-web .soRc__nav .soRc__logoIntro,
+      #so-rc-web .soRc__nav img[src*="logo"] {
+        display: none !important;
+      }
+
+      #so-rc-web .soRc__app {
+        gap: 0 !important;
+        column-gap: 0 !important;
+      }
+      #so-rc-web .soRc__main {
+        margin: 0 !important;
+      }
+      #so-rc-web .soRc__sidebar {
+        margin-right: 0 !important;
+      }
+    </style>
+
+    <style>
+      /* final chat center + color lock */
+      #so-rc-web #soPanel-chat .soRc__chatWrap.is-empty,
+      #so-rc-web.is-chat-mode #soPanel-chat .soRc__chatWrap.is-empty {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding-top: 0 !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__chatWrap.is-empty .soRc__chat,
+      #so-rc-web.is-chat-mode #soPanel-chat .soRc__chatWrap.is-empty .soRc__chat {
+        width: 100% !important;
+        max-width: 980px !important;
+        margin: 0 auto !important;
+        flex: 0 0 auto !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__emptyHero,
+      #so-rc-web.is-chat-mode #soPanel-chat .soRc__emptyHero {
+        width: 100% !important;
+        max-width: 980px !important;
+        margin: 0 auto 10px !important;
+        text-align: center !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__logoIntro {
+        margin: 0 auto 12px !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__emptyHeroText {
+        text-align: center !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composer,
+      #so-rc-web.is-chat-mode #soPanel-chat .soRc__chatWrap.is-empty .soRc__composer {
+        position: static !important;
+        width: 100% !important;
+        max-width: 760px !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composerInner {
+        border-radius: 16px !important;
+        border: 1px solid #d7dde6 !important;
+        background: #eceff3 !important;
+        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__composerFoot {
+        border-top: 0 !important;
+      }
+
+      #so-rc-web #soPanel-chat textarea#soInput,
+      #so-rc-web #soPanel-chat #soInput.soRc__input {
+        color: #1f2a3a !important;
+      }
+
+      #so-rc-web #soPanel-chat textarea#soInput::placeholder,
+      #so-rc-web #soPanel-chat #soInput.soRc__input::placeholder {
+        color: #7e8ca1 !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__attachBtn {
+        border-color: #cfd7e3 !important;
+        background: #f6f8fb !important;
+        color: #50607a !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__send {
+        background: #2f3a4d !important;
+        border-color: #2f3a4d !important;
+        color: #f6f9ff !important;
+      }
+
+      #so-rc-web #soPanel-chat .soRc__send:hover {
+        background: #273245 !important;
+        border-color: #273245 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__composerInner {
+        background: #2a3038 !important;
+        border-color: #414b58 !important;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat textarea#soInput,
+      #so-rc-web[data-theme="dark"] #soPanel-chat #soInput.soRc__input {
+        color: #e8eef7 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat textarea#soInput::placeholder,
+      #so-rc-web[data-theme="dark"] #soPanel-chat #soInput.soRc__input::placeholder {
+        color: #9ba9bc !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__attachBtn {
+        border-color: #516073 !important;
+        background: #36404d !important;
+        color: #d7deea !important;
+      }
     </style>
 

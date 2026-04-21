@@ -3655,8 +3655,13 @@ width: 100%;
             </div>
             <div class="soRc__surfaceDivider"></div>
             <div id="soSurfaceWelcomeWrap">
-              <p class="soRc__surfaceDate" id="soSurfaceDate">Monday, Aug 01, 2025</p>
-              <h1 class="soRc__surfaceWelcome" id="soSurfaceWelcome">Welcome Back !</h1>
+              <div class="soRc__surfaceWelcomeRow">
+                <div class="soRc__surfaceWelcomeGroup">
+                  <p class="soRc__surfaceDate" id="soSurfaceDate">Monday, Aug 01, 2025</p>
+                  <h1 class="soRc__surfaceWelcome" id="soSurfaceWelcome">Welcome back!</h1>
+                </div>
+                <button class="soRc__eventCta soRc__eventCta--headerSync" type="button" data-perf-action="sync_full">Full Sync</button>
+              </div>
             </div>
           </div>
 
@@ -4050,9 +4055,6 @@ width: 100%;
 </div>
 
   <div id="soPerfConnected" hidden>
-  <div class="soRc__perfTopActions">
-    <button class="soRc__eventCta" type="button" data-perf-action="sync_full">Full Sync</button>
-  </div>
   <div class="soRc__perfKpis" id="soPerfKpis"></div>
   <div class="soRc__perfAlerts" id="soPerfAlerts"></div>
   <div class="soRc__perfCards" id="soPerfCards"></div>
@@ -7102,6 +7104,234 @@ width: 100%;
         height: 100% !important;
       }
       #so-rc-web[data-theme="light"].is-chat-mode .soRc__main::after { content: none !important; }
+
+      /* Dashboard header polish: welcome row + reliable recent click target */
+      #so-rc-web .soRc__surfaceWelcomeRow {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 12px !important;
+      }
+      #so-rc-web .soRc__surfaceWelcomeGroup {
+        min-width: 0 !important;
+      }
+      #so-rc-web .soRc__surfaceWelcome {
+        font-family: inherit !important;
+        font-weight: 650 !important;
+        letter-spacing: -0.01em !important;
+      }
+      #so-rc-web .soRc__eventCta--headerSync {
+        flex: 0 0 auto !important;
+        margin-left: auto !important;
+      }
+
+      #so-rc-web .soRc__surfaceHeader {
+        position: relative !important;
+        z-index: 220 !important;
+      }
+      #so-rc-web .soRc__surfaceMeta,
+      #so-rc-web .soRc__historyTop,
+      #so-rc-web .soRc__historyTopBtn {
+        position: relative !important;
+        z-index: 240 !important;
+        pointer-events: auto !important;
+      }
+      #so-rc-web #soPanel-chat .soRc__chatWrap {
+        position: relative !important;
+        z-index: 1 !important;
+      }
+
+      @media (max-width: 860px) {
+        #so-rc-web .soRc__surfaceWelcomeRow {
+          flex-wrap: wrap !important;
+          align-items: flex-start !important;
+        }
+        #so-rc-web .soRc__eventCta--headerSync {
+          margin-left: 0 !important;
+        }
+      }
+
+      /* Final dark theme normalization (v2) */
+      #so-rc-web[data-theme="dark"] {
+        --bg: #0d1118 !important;
+        --bg2: #131a24 !important;
+        --line: #2b3646 !important;
+        --text: #e9eff8 !important;
+        --muted: #a8b4c6 !important;
+        --muted2: #8794a8 !important;
+        --accent: #2ed3b7 !important;
+        --shadow: 0 16px 34px rgba(0, 0, 0, 0.38) !important;
+        background:
+          radial-gradient(1300px 520px at 52% -220px, rgba(46, 211, 183, 0.11) 0%, rgba(46, 211, 183, 0) 72%),
+          radial-gradient(800px 380px at 100% 0%, rgba(62, 130, 255, 0.09) 0%, rgba(62, 130, 255, 0) 65%),
+          #0d1118 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__app {
+        background: #0f1520 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__sidebar {
+        background: #0b1119 !important;
+        border-right: 1px solid #222d3d !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__main {
+        background: #121b27 !important;
+        border: 1px solid #253346 !important;
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.33) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__surfaceHeader {
+        background: #121b27 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__surfaceDivider {
+        background: #253447 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__surfaceTitle,
+      #so-rc-web[data-theme="dark"] .soRc__surfaceTitleText,
+      #so-rc-web[data-theme="dark"] .soRc__surfaceWelcome,
+      #so-rc-web[data-theme="dark"] .soRc__cardTitle,
+      #so-rc-web[data-theme="dark"] .soRc__perfBoardTitle,
+      #so-rc-web[data-theme="dark"] .soRc__acctName,
+      #so-rc-web[data-theme="dark"] .soRc__recentTitle {
+        color: #e9eff8 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__surfaceDate,
+      #so-rc-web[data-theme="dark"] .soRc__metaText--inline,
+      #so-rc-web[data-theme="dark"] .soRc__composerHelp,
+      #so-rc-web[data-theme="dark"] .soRc__kpiSub,
+      #so-rc-web[data-theme="dark"] .soRc__perfMeta,
+      #so-rc-web[data-theme="dark"] .soRc__emptyState,
+      #so-rc-web[data-theme="dark"] .soRc__acctMeta,
+      #so-rc-web[data-theme="dark"] .soRc__recentMeta,
+      #so-rc-web[data-theme="dark"] .soRc__menuLabel {
+        color: #a8b4c6 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__card,
+      #so-rc-web[data-theme="dark"] .soRc__kpi,
+      #so-rc-web[data-theme="dark"] .soRc__perfBoard,
+      #so-rc-web[data-theme="dark"] .soRc__perfStatCard,
+      #so-rc-web[data-theme="dark"] .soRc__eventCard,
+      #so-rc-web[data-theme="dark"] .soRc__policyCard,
+      #so-rc-web[data-theme="dark"] .soRc__tableWrap,
+      #so-rc-web[data-theme="dark"] .soRc__locationsStatus,
+      #so-rc-web[data-theme="dark"] .soRc__locationsAction,
+      #so-rc-web[data-theme="dark"] .soRc__reportsWrap,
+      #so-rc-web[data-theme="dark"] .soRc__reportsHistory,
+      #so-rc-web[data-theme="dark"] .soRc__recentFlyout,
+      #so-rc-web[data-theme="dark"] .soRc__historyTopPanel,
+      #so-rc-web[data-theme="dark"] .soRc__menu {
+        background: #182332 !important;
+        border-color: #2a3a4f !important;
+        box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentItem,
+      #so-rc-web[data-theme="dark"] .soRc__historyTopPanel .soRc__recentItem,
+      #so-rc-web[data-theme="dark"] .soRc__acctBtn {
+        background: #1d2a3b !important;
+        border-color: #31445c !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__recentItem.is-active,
+      #so-rc-web[data-theme="dark"] .soRc__historyTopPanel .soRc__recentItem.is-active {
+        background: #23344a !important;
+        border-color: #406186 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__avatar,
+      #so-rc-web[data-theme="dark"] .soRc__toggle,
+      #so-rc-web[data-theme="dark"] .soRc__historyTopBtn {
+        background: #1b2737 !important;
+        border-color: #31445c !important;
+        color: #dce7f5 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__toggleKnob {
+        background: rgba(255, 255, 255, 0.16) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__toggleKnob:after {
+        background: #f3f8ff !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navItem {
+        color: #d2deee !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navItem:hover {
+        background: rgba(46, 211, 183, 0.11) !important;
+        border-color: rgba(46, 211, 183, 0.28) !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__navItem.is-active {
+        background: rgba(46, 211, 183, 0.16) !important;
+        border-color: rgba(46, 211, 183, 0.4) !important;
+        box-shadow: inset 2px 0 0 #2ed3b7 !important;
+        color: #eafffb !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__eventCta,
+      #so-rc-web[data-theme="dark"] .soRc__cta,
+      #so-rc-web[data-theme="dark"] .soRc__smartAction,
+      #so-rc-web[data-theme="dark"] .soRc__skuBtn,
+      #so-rc-web[data-theme="dark"] .soRc__subTab,
+      #so-rc-web[data-theme="dark"] .soRc__recentDockBtn,
+      #so-rc-web[data-theme="dark"] .soRc__menuItem {
+        background: #1b2a3b !important;
+        border-color: #334963 !important;
+        color: #dce7f5 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__eventCta:hover,
+      #so-rc-web[data-theme="dark"] .soRc__historyTopBtn:hover,
+      #so-rc-web[data-theme="dark"] .soRc__recentDockBtn:hover,
+      #so-rc-web[data-theme="dark"] .soRc__menuItem:hover {
+        background: #21334a !important;
+        border-color: #3d5a7d !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__composerInner,
+      #so-rc-web[data-theme="dark"] .soRc__input,
+      #so-rc-web[data-theme="dark"] .soRc__composer {
+        background: #1a2636 !important;
+        border-color: #334960 !important;
+        color: #e9eff8 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soInput::placeholder,
+      #so-rc-web[data-theme="dark"] .soRc__input::placeholder {
+        color: #90a2bb !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__send {
+        background: #2ed3b7 !important;
+        border-color: #2ed3b7 !important;
+        color: #082033 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] .soRc__send:hover,
+      #so-rc-web[data-theme="dark"] .soRc__send:focus-visible {
+        background: #26c0a8 !important;
+        border-color: #26c0a8 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__msg--user .soRc__bubble {
+        background: #1c2938 !important;
+        border-color: #344a62 !important;
+      }
+
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__msg--assistant .soRc__text,
+      #so-rc-web[data-theme="dark"] #soPanel-chat .soRc__text,
+      #so-rc-web[data-theme="dark"] .soRc__table td,
+      #so-rc-web[data-theme="dark"] .soRc__table th {
+        color: #dce6f5 !important;
+      }
 
     </style>
 

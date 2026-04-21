@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { Search, ShieldCheck, Sparkles } from 'lucide-react'
 import MarketingHeader from '../components/MarketingHeader'
 import MarketingFooter from '../components/MarketingFooter'
+import MarketingMedia from '../components/MarketingMedia'
 import './IntegrationsPage.css'
 
 type IntegrationItem = {
@@ -71,6 +72,30 @@ const integrations: IntegrationItem[] = [
 
 const filterOptions = ['All', 'POS', 'Commerce', 'Payments']
 
+const integrationMediaStates = [
+  {
+    id: 'connected',
+    title: 'Connected state',
+    body: 'Store connectors are live and continuously syncing sales plus stock movement.',
+    posterPng: '/images/media/integrations-connected-state-scene.png',
+    objectPosition: 'center center',
+  },
+  {
+    id: 'signal',
+    title: 'Signal received',
+    body: 'Coodra detects change and surfaces risk context before it becomes operational pain.',
+    posterPng: '/images/media/integrations-signal-received-scene.png',
+    objectPosition: 'center center',
+  },
+  {
+    id: 'action',
+    title: 'Action surfaced',
+    body: 'Operators get an approval-ready next move with rationale attached to the recommendation.',
+    posterPng: '/images/media/integrations-action-surfaced-scene.png',
+    objectPosition: 'center center',
+  },
+]
+
 function renderStars(rating: string) {
   const rounded = Math.round(Number(rating))
   return '★'.repeat(Math.max(1, Math.min(5, rounded)))
@@ -113,6 +138,22 @@ export default function IntegrationsPage() {
 
         <section className="integrations-v2-directory" aria-label="All integration listings">
           <div className="integrations-v2-inner">
+            <div className="integrations-v2-media-strip" aria-label="Live integration capture states">
+              {integrationMediaStates.map((state) => (
+                <article key={state.id} className="integrations-v2-media-card">
+                  <div className="integrations-v2-media-frame">
+                    <MarketingMedia
+                      alt={`${state.title} dashboard capture`}
+                      posterPng={state.posterPng}
+                      objectPosition={state.objectPosition}
+                    />
+                  </div>
+                  <h3>{state.title}</h3>
+                  <p>{state.body}</p>
+                </article>
+              ))}
+            </div>
+
             <div className="integrations-v2-toolbar">
               <label className="integrations-v2-search" aria-label="Search integrations">
                 <Search size={16} aria-hidden="true" />

@@ -10,6 +10,7 @@ export default [
   route('case-studies/:slug', '../src/routes/case-studies-slug.tsx'),
   route('blog', '../src/routes/blog.tsx'),
   route('blog/:slug', '../src/routes/blog-slug.tsx'),
+  route('author/michael-shahid', '../src/routes/author-michael-shahid.tsx'),
   route('privacy', '../src/routes/privacy.tsx'),
   route('terms', '../src/routes/terms.tsx'),
   route('comparisons', '../src/routes/comparisons.tsx'),
@@ -23,4 +24,3 @@ export default [
   route('dashboard', '../src/routes/dashboard.tsx'),
   route('admin', '../src/routes/admin.tsx'),
 ] satisfies RouteConfig
-

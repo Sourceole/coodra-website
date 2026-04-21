@@ -1,0 +1,165 @@
+/* Cross-page mobile polish layer */
+
+html,
+body {
+  overflow-x: clip;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+@media (max-width: 900px) {
+  .about-v2-section-inner,
+  .integrations-v2-inner,
+  .security-v2-inner,
+  .resources-container,
+  .case-page__container,
+  .legal-page__container,
+  .exp-page__container,
+  .author-main,
+  .blog-page__container,
+  .cs-studies__container,
+  .inv-container,
+  .cmp-page .container {
+    width: min(100%, calc(100vw - 1.2rem)) !important;
+  }
+
+  .blog-page__container,
+  .author-main,
+  .case-page__container,
+  .legal-page__container,
+  .exp-page__container {
+    padding-bottom: 2.4rem !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .about-v2-page [class*="grid"],
+  .integrations-v2-page [class*="grid"],
+  .security-v2-page [class*="grid"],
+  .resources-page [class*="grid"],
+  .cmp-page [class*="grid"],
+  .case-page [class*="grid"],
+  .cs-index-page [class*="grid"],
+  .csd-page [class*="grid"],
+  .exp-page [class*="grid"],
+  .inv-page [class*="grid"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .about-v2-page [class*="inner"],
+  .integrations-v2-page [class*="inner"],
+  .security-v2-page [class*="inner"],
+  .resources-page [class*="inner"],
+  .cmp-page [class*="inner"],
+  .case-page [class*="inner"],
+  .cs-index-page [class*="inner"],
+  .csd-page [class*="inner"],
+  .exp-page [class*="inner"],
+  .inv-page [class*="inner"] {
+    gap: 0.9rem !important;
+  }
+
+  .about-v2-page section,
+  .integrations-v2-page section,
+  .security-v2-page section,
+  .resources-page section,
+  .cmp-page section,
+  .case-page section,
+  .cs-index-page section,
+  .csd-page section,
+  .exp-page section,
+  .inv-page section {
+    padding-top: clamp(2rem, 6vw, 2.8rem) !important;
+    padding-bottom: clamp(2rem, 6vw, 2.8rem) !important;
+  }
+
+  .about-v2-page h1,
+  .integrations-v2-page h1,
+  .security-v2-page h1,
+  .resources-page h1,
+  .cmp-page h1,
+  .case-page h1,
+  .cs-index-page h1,
+  .csd-page h1,
+  .exp-page h1,
+  .inv-page h1 {
+    line-height: 0.92 !important;
+    font-size: clamp(2rem, 11vw, 3rem) !important;
+  }
+
+  .about-v2-page p,
+  .integrations-v2-page p,
+  .security-v2-page p,
+  .resources-page p,
+  .cmp-page p,
+  .case-page p,
+  .cs-index-page p,
+  .csd-page p,
+  .exp-page p,
+  .inv-page p,
+  .about-v2-page li,
+  .integrations-v2-page li,
+  .security-v2-page li,
+  .resources-page li,
+  .cmp-page li,
+  .case-page li,
+  .cs-index-page li,
+  .csd-page li,
+  .exp-page li,
+  .inv-page li {
+    font-size: 0.98rem !important;
+    line-height: 1.62 !important;
+  }
+
+  .blog-filter {
+    align-items: stretch;
+    gap: 0.55rem;
+  }
+
+  .blog-filter__pill {
+    min-height: 38px;
+  }
+
+  .blog-filter__search-wrap,
+  .blog-filter__search-input {
+    width: 100% !important;
+  }
+
+  .cmp-table {
+    min-width: 760px !important;
+  }
+
+  .cmp-table__feature,
+  .cmp-table__cell {
+    white-space: normal;
+  }
+
+  .cmp-tabs-bar {
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+
+  .cmp-tab {
+    flex: 0 0 auto;
+  }
+
+  .login,
+  .signup {
+    overflow: visible;
+  }
+
+  .login__layout,
+  .signup__layout {
+    min-height: auto;
+  }
+
+  .login__panel,
+  .signup__panel {
+    padding: 1.25rem 1rem 2rem;
+  }
+}

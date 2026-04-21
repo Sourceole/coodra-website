@@ -162,6 +162,65 @@ export default function InventoryManagementPage() {
 
   return (
     <div className="inv-page">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              {
+                '@type': 'Question',
+                name: 'What does Coodra\'s inventory management software track?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Coodra tracks five signals that directly protect retail margin: days-to-stockout on every SKU using 90-day sales velocity and current on-hand inventory; margin score that flags products where cost has risen or price has stayed flat; weeks-of-cover patterns that identify slow-moving excess inventory; a velocity-based 30-day demand forecast with upper and lower bands; and ranked purchase order candidates generated against distributor lead times, MOQ constraints, and available budget.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'How does Coodra rank inventory decisions?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Coodra surfaces the highest-impact inventory decisions each week — ranked by urgency, margin contribution, and stockout risk. Not alphabetical. Not by category. The top five decisions most worth acting on this week appear first, with the reasoning behind each recommendation. You approve or skip — no dashboard exploration required.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'Does Coodra work with Shopify, Square, and Lightspeed?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Yes. Coodra connects directly to Shopify, Square, Lightspeed, Clover, and Moneris. It pulls 90 days of sales history, current inventory levels, and catalog data automatically — no ERP required, no importer scripts, and no manual data entry. Setup is designed to complete in under five minutes per POS connection.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'How long does it take to set up Coodra\'s inventory management?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Coodra is designed to deliver its first ranked decision list the same day you connect your POS. There is no implementation project, no data cleanup exercise, and no consultant. You connect Shopify, Square, Lightspeed, or Clover; Coodra pulls 90 days of sales and inventory data; and your first weekly decision list is ready — typically within the same business day.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'Does Coodra require an ERP to use?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'No. Coodra is built specifically for independent retailers who do not have an ERP and do not want one. It uses your actual POS sales and inventory data — pulled directly from Shopify, Square, Lightspeed, or Clover — to generate replenishment recommendations. You do not need Netstock, Cin7, DEAR, or any other ERP platform to use Coodra.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'How does Coodra handle seasonal demand forecasting?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Coodra\'s velocity-based demand forecast runs across your top SKUs every week, flagging unusual seasonality as a separate signal — not conflating it with baseline demand. Items with a seasonal velocity spike are flagged distinctly from items with a consistent reorder pattern. This lets independent retailers distinguish between a product that is seasonally hot and one that is genuinely accelerating in baseline demand.',
+                },
+              },
+            ],
+          }),
+        }}
+      />
       <MarketingHeader />
       <main>
 

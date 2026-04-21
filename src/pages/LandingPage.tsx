@@ -6,6 +6,7 @@ import { trackEvent } from '../lib/analytics'
 import MarketingHeader from '../components/MarketingHeader'
 import MarketingFooter from '../components/MarketingFooter'
 import BackgroundPaths from '../components/BackgroundPaths'
+import MarketingMedia from '../components/MarketingMedia'
 import './LandingPage.css'
 
 const integrationShowcaseItems = [
@@ -105,20 +106,79 @@ const testimonials = [
   },
 ]
 
+const howSteps = [
+  {
+    title: 'See what changed',
+    body: 'Spot unusual demand, low stock, margin pressure, and slow movers without digging through reports or guessing where the problem started.',
+  },
+  {
+    title: 'Understand why it matters',
+    body: 'A signal on its own is not that useful. Coodra connects it to the real consequence, like a stockout, a margin leak, or cash stuck in the wrong product.',
+  },
+  {
+    title: 'Take the next best action',
+    body: 'Review what deserves attention first, along with the reasoning behind it, so you can move faster without second-guessing every call.',
+  },
+]
+
+const howScenes = [
+  {
+    kind: 'shift',
+    headline: 'First, see the shift.',
+    body: 'Your store is always telling you something. A product starts moving faster. Stock cover gets thinner. A margin gap opens up. Coodra pulls that signal out of the noise so you see it before it turns into a bigger problem.',
+    note: 'You should not have to babysit reports to catch what changed.',
+    chips: ['Oatly +24% sell-through', 'Stock cover down 2.8 days', 'Margin pressure in dairy'],
+  },
+  {
+    kind: 'risk',
+    headline: 'Then, understand the risk.',
+    body: 'A spike in demand is not just a spike in demand. Sometimes it means you are about to run out. Sometimes it means you are putting cash in the wrong place. Coodra helps make the consequence obvious.',
+    note: 'Good operators already think this way. Coodra just helps them do it faster and more consistently.',
+    chips: ['Risk: Stockout by Friday', 'Cash tied in slow movers', 'Gross margin impact: -3.1%'],
+  },
+  {
+    kind: 'action',
+    headline: 'Then, make the move.',
+    body: 'Instead of leaving you with more charts, Coodra points to the next thing worth doing. Reorder sooner. Cut the next PO. Check a price. You still decide. You just start from a much clearer place.',
+    note: 'That is the whole idea: less guesswork, fewer blind spots, better calls.',
+    chips: ['Reorder 4 cases now', 'Reduce PO on low-velocity SKU', 'Review weekend price change'],
+  },
+]
+
+const howSceneMedia = {
+  shift: {
+    posterPng: '/images/how/how-shift-illustration.svg',
+    videoMp4: undefined,
+    objectPosition: 'center center',
+  },
+  risk: {
+    posterPng: '/images/how/how-risk-illustration.svg',
+    videoMp4: undefined,
+    objectPosition: 'center center',
+  },
+  action: {
+    posterPng: '/images/how/how-action-illustration.svg',
+    videoMp4: undefined,
+    objectPosition: 'center center',
+  },
+} as const
+
 export default function LandingPage() {
   const [isLiteHero, setIsLiteHero] = useState(false)
   const [activeTestimonial, setActiveTestimonial] = useState(0)
-  const [introStream, setIntroStream] = useState('')
-  const [inputDraft, setInputDraft] = useState('')
-  const [isSendingPrompt, setIsSendingPrompt] = useState(false)
-  const [showUserPrompt, setShowUserPrompt] = useState(false)
-  const [decisionTitleStream, setDecisionTitleStream] = useState('')
-  const [decisionBodyStream, setDecisionBodyStream] = useState('')
+  const [, setIntroStream] = useState('')
+  const [, setInputDraft] = useState('')
+  const [, setIsSendingPrompt] = useState(false)
+  const [, setShowUserPrompt] = useState(false)
+  const [, setDecisionTitleStream] = useState('')
+  const [, setDecisionBodyStream] = useState('')
+  const [activeHowScene, setActiveHowScene] = useState(0)
   const [outgoingTestimonial, setOutgoingTestimonial] = useState<number | null>(null)
   const reduceMotion = useReducedMotion()
   const testimonialDeckDepth = 4
   const outgoingTimerRef = useRef<number | null>(null)
   const ctaCardRef = useRef<HTMLElement | null>(null)
+  const howSectionRef = useRef<HTMLElement | null>(null)
 
   const transitionToTestimonial = (resolveNext: (current: number) => number) => {
     setActiveTestimonial((current) => {
@@ -212,6 +272,33 @@ export default function LandingPage() {
     checkLiteHero()
     window.addEventListener('resize', checkLiteHero, { passive: true })
     return () => window.removeEventListener('resize', checkLiteHero)
+  }, [])
+
+  useEffect(() => {
+    const sectionNode = howSectionRef.current
+    if (!sectionNode) return
+
+    const scenes = Array.from(sectionNode.querySelectorAll<HTMLElement>('[data-how-scene-index]'))
+    if (!scenes.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          const sceneIndex = Number((entry.target as HTMLElement).dataset.howSceneIndex)
+          if (!Number.isNaN(sceneIndex)) {
+            setActiveHowScene(sceneIndex)
+          }
+        })
+      },
+      {
+        threshold: 0.55,
+        rootMargin: '-20% 0px -20% 0px',
+      }
+    )
+
+    scenes.forEach((scene) => observer.observe(scene))
+    return () => observer.disconnect()
   }, [])
 
   useEffect(() => {
@@ -399,110 +486,19 @@ export default function LandingPage() {
               <Link to="/integrations" className="hero-v5-cta hero-v5-cta-secondary">See Integrations</Link>
             </div>
 
-            <article className="hero-v5-mockup" aria-label="Coodra assistant preview">
-              <header className="hero-v5-mockup-bar">
-                <span className="hero-v5-dot is-red" />
-                <span className="hero-v5-dot is-yellow" />
-                <span className="hero-v5-dot is-green" />
-                <div className="hero-v5-bar-ghost" aria-hidden="true" />
-              </header>
-
-              <div className="hero-v5-mockup-body">
-                <section className="hero-v5-chat-panel">
-                  <header className="hero-v5-chat-head">
-                    <div className="hero-v5-chat-avatar">
-                      <img src="/images/logo.png" alt="" aria-hidden="true" />
-                    </div>
-                    <div>
-                      <p>Corner Street Market</p>
-                      <span>3 active conversations</span>
-                    </div>
-                    <span className="hero-v5-chat-live">Live</span>
-                  </header>
-
-                  <div className="hero-v5-chat-feed">
-                    <article className="hero-v5-msg hero-v5-msg-assistant">
-                      <div className="hero-v5-msg-avatar">
-                        <img src="/images/logo.png" alt="" aria-hidden="true" />
-                      </div>
-                      <p>{introStream}</p>
-                    </article>
-
-                    {showUserPrompt ? (
-                      <article className="hero-v5-msg hero-v5-msg-user">
-                        <p>{chatUserPrompt}</p>
-                      </article>
-                    ) : null}
-
-                    {decisionTitleStream ? (
-                      <article className="hero-v5-msg hero-v5-msg-assistant hero-v5-msg-decision">
-                        <div className="hero-v5-msg-avatar">
-                          <img src="/images/logo.png" alt="" aria-hidden="true" />
-                        </div>
-                        <div className="hero-v5-decision-copy">
-                          <strong>{decisionTitleStream}</strong>
-                          <p>{decisionBodyStream}</p>
-                        </div>
-                      </article>
-                    ) : null}
-                  </div>
-
-                  <footer className="hero-v5-chat-input">
-                    <div className="hero-v5-chat-field">
-                      {inputDraft || 'Ask Coodra anything...'}
-                    </div>
-                    <button type="button" className={`hero-v5-send${isSendingPrompt ? ' is-sending' : ''}`} aria-label="Send" />
-                  </footer>
-                </section>
-
-                <aside className="hero-v5-metrics-panel" aria-label="Store metrics">
-                  <div className="hero-v5-metrics-top">
-                    <article className="hero-v5-metric-card">
-                      <p className="metric-kicker">Gross Margin</p>
-                      <h4>42.8%</h4>
-                      <span className="metric-pill mint">+4.2%</span>
-                    </article>
-                    <article className="hero-v5-metric-card">
-                      <p className="metric-kicker">Low Stock</p>
-                      <h4>3 ITEMS</h4>
-                      <span className="metric-pill amber">Action needed</span>
-                    </article>
-                  </div>
-
-                  <div className="hero-v5-margin-alert">
-                    <h4>Margin Alert - Last 30 Days</h4>
-                    <article className="alert-row red">
-                      <div>
-                        <p>Blue Buffalo Dog Food</p>
-                        <span>Cost +8% &middot; Price unchanged</span>
-                      </div>
-                      <div className="alert-value">
-                        <strong>-$340/mo</strong>
-                        <span>margin erosion</span>
-                      </div>
-                    </article>
-                    <article className="alert-row amber">
-                      <div>
-                        <p>Fiddlehead Coffee</p>
-                        <span>Cost +5% &middot; Price unchanged</span>
-                      </div>
-                      <div className="alert-value">
-                        <strong>-$186/mo</strong>
-                        <span>margin erosion</span>
-                      </div>
-                    </article>
-                    <article className="alert-row green">
-                      <div>
-                        <p>Oatly Barista Ed.</p>
-                        <span>Price updated +6% &middot; Cost flat</span>
-                      </div>
-                      <div className="alert-value">
-                        <strong>+$220/mo</strong>
-                        <span>protected</span>
-                      </div>
-                    </article>
-                  </div>
-                </aside>
+            <article className="hero-v5-mockup hero-v5-mockup-media" aria-label="Coodra dashboard preview">
+              <MarketingMedia
+                className="hero-v5-media-frame"
+                alt="Coodra dashboard with chat, metrics, and margin alerts"
+                posterPng="/images/media/landing-hero-dashboard-real-v2.png"
+                videoMp4="/media/landing-hero-main-loop-v1.mp4"
+                videoWebm="/media/landing-hero-main-loop-v1.webm"
+                objectPosition="center center"
+                priority
+              />
+              <div className="hero-v5-media-caption" aria-hidden="true">
+                <span>Live dashboard capture</span>
+                <strong>{'Signal to risk to action'}</strong>
               </div>
             </article>
           </div>
@@ -510,54 +506,84 @@ export default function LandingPage() {
         </section>
 
         {/* How it works */}
-        <section id="how-it-works" className="how-it-works container" data-aos="fade-up" data-aos-delay="150">
-          <div className="how-scroll">
-            <div className="how-stage-track" aria-label="Three connected steps">
-              <div className="how-stage-shell">
-                <header className="how-sticky-head">
-                <p className="eyebrow how-eyebrow">
-                  <span className="how-eyebrow-icon" aria-hidden="true">
-                    <svg viewBox="0 0 16 16">
-                      <path d="M8 2.2c.3 1.7 1.6 3 3.3 3.3-1.7.3-3 1.6-3.3 3.3-.3-1.7-1.6-3-3.3-3.3 1.7-.3 3-1.6 3.3-3.3Zm4.4 6.3c.2.9.9 1.6 1.8 1.8-.9.2-1.6.9-1.8 1.8-.2-.9-.9-1.6-1.8-1.8.9-.2 1.6-.9 1.8-1.8Z" />
-                    </svg>
-                  </span>
-                  How it works
-                </p>
-                <h2>Three steps from signal to action.</h2>
-                <p className="how-scroll-sub">Connect your systems, review AI recommendations, and approve decisions in minutes.</p>
-                </header>
-                <div className="how-flip-stage">
-                  <article className="how-pill-card how-flip-card" id="howFlipCard">
-                    <p className="how-step-tag" id="howFlipTag">Step 1</p>
-                    <h3 id="howFlipTitle">Connect your data</h3>
-                    <p id="howFlipBody">Sync POS, catalog, and inventory data so Coodra sees what is happening now.</p>
-                  </article>
-                </div>
-              </div>
-              <div className="how-trigger-rail">
-                <div className="how-trigger is-active" data-how-step="1" data-tag="Step 1" data-title="Connect your data" data-body="Sync POS, catalog, and inventory data so Coodra sees what is happening now." />
-                <div className="how-trigger" data-how-step="2" data-tag="Step 2" data-title="Get ranked actions" data-body="Coodra scores demand shifts, margin pressure, and stock risk to prioritize what matters most." />
-                <div className="how-trigger" data-how-step="3" data-tag="Step 3" data-title="Approve and move" data-body="Approve recommendations fast and keep your team focused on high-impact decisions." />
-              </div>
-            </div>
-            <div className="how-scroll-track">
-              <div className="how-mobile-list" aria-label="Three steps">
-                <article className="how-pill-card">
-                  <p className="how-step-tag">Step 1</p>
-                  <h3>Connect your data</h3>
-                  <p>Sync POS, catalog, and inventory data so Coodra sees what is happening now.</p>
+        <section id="how-it-works" ref={howSectionRef} className="how-it-works container" data-aos="fade-up" data-aos-delay="150">
+          <div className="how-editorial-head">
+            <p className="eyebrow how-eyebrow">
+              <span className="how-eyebrow-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16">
+                  <path d="M8 2.2c.3 1.7 1.6 3 3.3 3.3-1.7.3-3 1.6-3.3 3.3-.3-1.7-1.6-3-3.3-3.3 1.7-.3 3-1.6 3.3-3.3Zm4.4 6.3c.2.9.9 1.6 1.8 1.8-.9.2-1.6.9-1.8 1.8-.2-.9-.9-1.6-1.8-1.8.9-.2 1.6-.9 1.8-1.8Z" />
+                </svg>
+              </span>
+              How it works
+            </p>
+            <h2>See the shift. Read the risk. Make the move.</h2>
+            <p className="how-editorial-intro">
+              Most inventory tools stop at showing you numbers. Coodra goes one step further. It shows what changed, why it matters, and what you should look at next.
+            </p>
+          </div>
+
+          <div className="how-editorial-layout" aria-label="How Coodra helps operators decide faster">
+            <aside className="how-editorial-steps" aria-label="How it works steps">
+              {howSteps.map((step, index) => (
+                <article key={step.title} className={`how-editorial-step${activeHowScene === index ? ' is-active' : ''}`}>
+                  <p className="how-step-index">{index + 1}. {step.title}</p>
+                  <p>{step.body}</p>
                 </article>
-                <article className="how-pill-card">
-                  <p className="how-step-tag">Step 2</p>
-                  <h3>Get ranked actions</h3>
-                  <p>Coodra scores demand shifts, margin pressure, and stock risk to prioritize what matters most.</p>
+              ))}
+            </aside>
+
+            <div className="how-editorial-scenes">
+              {howScenes.map((scene, index) => (
+                <article
+                  key={scene.headline}
+                  className={`how-editorial-scene scene-${scene.kind}${activeHowScene === index ? ' is-active' : ''}`}
+                  data-how-scene-index={index}
+                >
+                  <div className={`how-editorial-stage stage-${scene.kind}`} aria-hidden="true">
+                    {scene.kind === 'shift' ? (
+                      <div className="how-stage-visual is-shift">
+                        <MarketingMedia
+                          className="how-stage-media"
+                          alt="Coodra dashboard showing inventory signal changes"
+                          posterPng={howSceneMedia.shift.posterPng}
+                          videoMp4={howSceneMedia.shift.videoMp4}
+                          objectPosition={howSceneMedia.shift.objectPosition}
+                        />
+                      </div>
+                    ) : null}
+
+                    {scene.kind === 'risk' ? (
+                      <div className="how-stage-visual is-risk">
+                        <MarketingMedia
+                          className="how-stage-media"
+                          alt="Coodra dashboard showing margin and stockout risk"
+                          posterPng={howSceneMedia.risk.posterPng}
+                          videoMp4={howSceneMedia.risk.videoMp4}
+                          objectPosition={howSceneMedia.risk.objectPosition}
+                        />
+                      </div>
+                    ) : null}
+
+                    {scene.kind === 'action' ? (
+                      <div className="how-stage-visual is-action">
+                        <MarketingMedia
+                          className="how-stage-media"
+                          alt="Coodra dashboard showing approval-ready next actions"
+                          posterPng={howSceneMedia.action.posterPng}
+                          videoMp4={howSceneMedia.action.videoMp4}
+                          objectPosition={howSceneMedia.action.objectPosition}
+                        />
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <div className="how-editorial-copy">
+                    <h3>{scene.headline}</h3>
+                    <p>{scene.body}</p>
+                    <p className="how-scene-note">{scene.note}</p>
+                  </div>
                 </article>
-                <article className="how-pill-card">
-                  <p className="how-step-tag">Step 3</p>
-                  <h3>Approve and move</h3>
-                  <p>Approve recommendations fast and keep your team focused on high-impact decisions.</p>
-                </article>
-              </div>
+              ))}
             </div>
           </div>
         </section>
@@ -634,29 +660,37 @@ export default function LandingPage() {
               </p>
             </header>
             <div className="decision-stack-wrap">
-              <div className="display-cards-stack decision-stack" aria-label="Coodra operating layers">
-                <article className="display-card decision-layer-1">
-                  <div className="display-card-top">
+              <div className="decision-stack display-cards-stack" aria-label="Decision rationale cards">
+                <article className="display-card decision-layer-1 stack-1" aria-label="Clear rationale">
+                  <header className="display-card-top">
                     <span className="display-icon">A</span>
-                    <p className="display-title">Clear rationale</p>
-                  </div>
-                  <p className="display-body">See the exact data signals behind each recommendation.</p>
-                  <p className="display-date">No black box</p>
+                    <h3 className="display-title">Clear rationale</h3>
+                  </header>
+                  <p className="display-body">
+                    See the data signals behind each recommendation.
+                  </p>
+                  <p className="display-date">No black-box outputs</p>
                 </article>
-                <article className="display-card decision-layer-2">
-                  <div className="display-card-top">
+
+                <article className="display-card decision-layer-2 stack-2" aria-label="Human approval">
+                  <header className="display-card-top">
                     <span className="display-icon">B</span>
-                    <p className="display-title">Human approval</p>
-                  </div>
-                  <p className="display-body">Your team approves actions before anything changes.</p>
-                  <p className="display-date">Always in control</p>
+                    <h3 className="display-title">Human approval</h3>
+                  </header>
+                  <p className="display-body">
+                    Your team stays in control before anything changes.
+                  </p>
+                  <p className="display-date">Always operator-approved</p>
                 </article>
-                <article className="display-card decision-layer-3">
-                  <div className="display-card-top">
+
+                <article className="display-card decision-layer-3 stack-3" aria-label="Measured outcomes">
+                  <header className="display-card-top">
                     <span className="display-icon">C</span>
-                    <p className="display-title">Measured outcomes</p>
-                  </div>
-                  <p className="display-body">Track what decisions improve sell-through, margin, and stock health.</p>
+                    <h3 className="display-title">Measured outcomes</h3>
+                  </header>
+                  <p className="display-body">
+                    Track what decisions improve sell-through, margin, and stock health.
+                  </p>
                   <p className="display-date">Impact you can prove</p>
                 </article>
               </div>
@@ -794,6 +828,7 @@ export default function LandingPage() {
     </div>
   )
 }
+
 
 
 

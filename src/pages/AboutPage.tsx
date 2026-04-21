@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { Compass, Sparkles, Target, Users } from 'lucide-react'
 import MarketingHeader from '../components/MarketingHeader'
 import MarketingFooter from '../components/MarketingFooter'
+import MarketingMedia from '../components/MarketingMedia'
 import './AboutPage.css'
 
 const principles = [
@@ -48,6 +49,17 @@ const leadership = [
 ]
 
 export default function AboutPage() {
+  const aboutPageJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'About Coodra',
+    url: 'https://www.coodra.com/about',
+    description:
+      'Coodra is AI-powered retail intelligence for independent stores, turning POS and inventory data into clear daily actions.',
+    mainEntity: { '@id': 'https://www.coodra.com/#organization' },
+    inLanguage: 'en',
+  }
+
   useEffect(() => {
     const nodes = Array.from(document.querySelectorAll<HTMLElement>('.about-reveal'))
     if (!nodes.length) return
@@ -112,7 +124,13 @@ export default function AboutPage() {
         <section className="about-v2-founding about-reveal" aria-label="Founding story">
           <div className="about-v2-section-inner about-v2-founding__inner">
             <div className="about-v2-founding__media" aria-hidden="true">
-              <img src="/images/coodra_dashboard_1.png" alt="" className="about-v2-founding__image" loading="lazy" />
+              <MarketingMedia
+                className="about-v2-founding__image"
+                alt="Coodra dashboard product story capture"
+                posterPng="/images/media/about-founding-story-scene.svg"
+                objectPosition="center center"
+              />
+              <p className="about-v2-founding__media-label">Founding story visual</p>
             </div>
             <div className="about-v2-founding__copy">
               <p className="about-v2-eyebrow">Founding Story</p>
@@ -186,6 +204,11 @@ export default function AboutPage() {
           </div>
         </section>
       </main>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageJsonLd) }}
+      />
 
       <MarketingFooter />
     </div>

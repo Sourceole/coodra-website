@@ -1,0 +1,61 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Signal shift visualization</title>
+  <desc id="desc">Abstract chart with rising trend, moving points, and signal pulses.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#ecfbf8"/>
+    </linearGradient>
+    <linearGradient id="trend" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8fa4bd"/>
+      <stop offset="100%" stop-color="#2fd7c6"/>
+    </linearGradient>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="700" rx="34" fill="url(#bg)"/>
+
+  <g opacity="0.55">
+    <path d="M90 560 C 240 520, 350 520, 470 470 C 590 420, 720 430, 830 360 C 930 300, 1020 300, 1110 250" stroke="#d7e4f2" stroke-width="6" fill="none"/>
+    <path d="M90 610 C 240 575, 350 570, 470 530 C 590 485, 720 500, 830 440 C 930 390, 1020 380, 1110 345" stroke="#e1edf7" stroke-width="4" fill="none"/>
+  </g>
+
+  <path d="M90 590 C 240 550, 350 550, 470 500 C 590 450, 720 460, 830 390 C 930 330, 1020 330, 1110 280"
+        stroke="url(#trend)" stroke-width="8" stroke-linecap="round" fill="none"
+        stroke-dasharray="14 12">
+    <animate attributeName="stroke-dashoffset" from="0" to="-260" dur="7s" repeatCount="indefinite"/>
+  </path>
+
+  <g filter="url(#softGlow)">
+    <circle cx="300" cy="548" r="16" fill="#2fd7c6">
+      <animate attributeName="cy" values="548;541;548" dur="3.6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="620" cy="456" r="16" fill="#2fd7c6">
+      <animate attributeName="cy" values="456;448;456" dur="4.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="905" cy="344" r="16" fill="#2fd7c6">
+      <animate attributeName="cy" values="344;336;344" dur="3.8s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <g opacity="0.7">
+    <circle cx="300" cy="548" r="30" fill="none" stroke="#2fd7c6" stroke-width="3">
+      <animate attributeName="r" values="20;48" dur="2.4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;0" dur="2.4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="620" cy="456" r="30" fill="none" stroke="#2fd7c6" stroke-width="3">
+      <animate attributeName="r" values="20;52" dur="2.8s" begin="0.7s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.75;0" dur="2.8s" begin="0.7s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <g fill="#506786" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="600">
+    <text x="92" y="112">Change detected across SKUs</text>
+  </g>
+</svg>

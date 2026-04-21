@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1a31"/>
+      <stop offset="100%" stop-color="#0f2744"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2fd7c6"/>
+      <stop offset="100%" stop-color="#1fb5a3"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1" fill="#1a3560" opacity="0.5"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <rect x="0" y="0" width="1200" height="4" fill="url(#teal)"/>
+
+  <!-- Header -->
+  <text x="600" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2fd7c6" text-anchor="middle" letter-spacing="3">REPLENISHMENT PLANNING · 90-DAY CALENDAR</text>
+  <text x="600" y="120" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">The 90-Day Replenishment Calendar</text>
+  <text x="600" y="165" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#7aa8c4" text-anchor="middle">Turn your POS data into a concrete, weekly buying schedule — no spreadsheet required.</text>
+  <line x1="180" y1="198" x2="1020" y2="198" stroke="#1e3a6e" stroke-width="1"/>
+
+  <!-- Calendar grid header (week labels) -->
+  <g transform="translate(60, 220)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#64748b">WEEK 1</text>
+    <text x="180" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#64748b">WEEK 2</text>
+    <text x="360" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#64748b">WEEK 3</text>
+    <text x="540" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#64748b">WEEK 4</text>
+    <text x="720" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#64748b">WEEK 5–8</text>
+    <text x="900" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#64748b">WEEK 9–12</text>
+  </g>
+
+  <!-- Vertical grid lines -->
+  <line x1="240" y1="210" x2="240" y2="430" stroke="#1e3a6e" stroke-width="1"/>
+  <line x1="420" y1="210" x2="420" y2="430" stroke="#1e3a6e" stroke-width="1"/>
+  <line x1="600" y1="210" x2="600" y2="430" stroke="#1e3a6e" stroke-width="1"/>
+  <line x1="780" y1="210" x2="780" y2="430" stroke="#1e3a6e" stroke-width="1"/>
+  <line x1="960" y1="210" x2="960" y2="430" stroke="#1e3a6e" stroke-width="1"/>
+
+  <!-- Horizontal divider: tier rows -->
+  <line x1="60" y1="322" x2="1140" y2="322" stroke="#1e3a6e" stroke-width="1"/>
+
+  <!-- Row 1: Hero SKUs -->
+  <g transform="translate(60, 230)">
+    <!-- Hero card -->
+    <rect x="0" y="0" width="180" height="80" rx="8" fill="#0d2040"/>
+    <rect x="0" y="0" width="180" height="80" rx="8" fill="none" stroke="#2fd7c6" stroke-width="2"/>
+    <rect x="0" y="0" width="180" height="28" rx="8" fill="#0a2a1a"/>
+    <rect x="0" y="14" width="180" height="14" fill="#0a2a1a"/>
+    <text x="12" y="19" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" fill="#2fd7c6">HERO SKUs (TOP 5)</text>
+    <text x="12" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Place order</text>
+    <text x="12" y="58" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">Arrive in 3–4 weeks</text>
+    <text x="12" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#2fd7c6">Always on PO</text>
+  </g>
+
+  <!-- Row 1: 2-wk lead time indicator -->
+  <g transform="translate(240, 230)">
+    <rect x="0" y="0" width="180" height="80" rx="8" fill="#0d2040"/>
+    <rect x="0" y="0" width="180" height="80" rx="8" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4"/>
+    <text x="12" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" fill="#f59e0b">2-WK LEAD TIME</text>
+    <text x="12" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">Orders placed now</text>
+    <text x="12" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">arrive Week 4</text>
+    <line x1="0" y1="66" x2="180" y2="66" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3"/>
+    <text x="90" y="78" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#f59e0b" text-anchor="middle">Covered by hero buffer</text>
+  </g>
+
+  <!-- Future weeks (faded) -->
+  <g transform="translate(420, 230)">
+    <rect x="0" y="0" width="720" height="80" rx="8" fill="#081828" opacity="0.5"/>
+    <text x="360" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#1e3a6e" text-anchor="middle">Future orders · planned in sequence</text>
+  </g>
+
+  <!-- Row 2: Secondary SKUs -->
+  <g transform="translate(60, 334)">
+    <rect x="0" y="0" width="540" height="76" rx="8" fill="#0d2040"/>
+    <rect x="0" y="0" width="540" height="76" rx="8" fill="none" stroke="#1e3a6e" stroke-width="1.5"/>
+    <rect x="0" y="0" width="540" height="24" rx="8" fill="#0a1830"/>
+    <rect x="0" y="12" width="540" height="12" fill="#0a1830"/>
+    <text x="12" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" fill="#94a3b8">SECONDARY SKUs</text>
+    <text x="12" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Reorder when stock hits reorder point</text>
+    <text x="12" y="58" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">Standard reorder formula: (Avg Weekly Sales × Lead Time) + Safety Stock</text>
+    <text x="380" y="50" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748b">Monitor weekly</text>
+  </g>
+
+  <!-- Row 2: Tail SKUs -->
+  <g transform="translate(620, 334)">
+    <rect x="0" y="0" width="480" height="76" rx="8" fill="#0d2040" opacity="0.6"/>
+    <rect x="0" y="0" width="480" height="76" rx="8" fill="none" stroke="#1e3a6e" stroke-width="1" stroke-dasharray="5 4"/>
+    <rect x="0" y="0" width="480" height="24" rx="8" fill="#0a1830"/>
+    <rect x="0" y="12" width="480" height="12" fill="#0a1830"/>
+    <text x="12" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" fill="#64748b">TAIL SKUs</text>
+    <text x="12" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#94a3b8">Order when stock hits reorder point</text>
+    <text x="12" y="58" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748b">Low urgency. Supplier minimums apply. Resist over-ordering.</text>
+  </g>
+
+  <!-- Formula callout -->
+  <rect x="60" y="432" width="1080" height="48" rx="8" fill="#0d2040"/>
+  <rect x="60" y="432" width="1080" height="48" rx="8" fill="none" stroke="#2fd7c6" stroke-width="1.5"/>
+  <text x="86" y="456" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#2fd7c6">REORDER POINT</text>
+  <text x="86" y="472" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#ffffff">= (Avg Weekly Sales × Lead Time in Weeks) + Safety Stock</text>
+  <text x="700" y="456" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#7aa8c4">Coodra calculates this automatically for every SKU — updated weekly from your actual POS data.</text>
+  <text x="700" y="472" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748b">No spreadsheet. No manual review. Just the decision and the data behind it.</text>
+
+  <!-- Bottom CTA band -->
+  <rect x="0" y="490" width="1200" height="140" fill="#081828"/>
+  <rect x="0" y="490" width="1200" height="3" fill="url(#teal)"/>
+
+  <text x="600" y="515" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">The calendar creates one discipline: order before you need it, not after.</text>
+
+  <!-- Three insight boxes -->
+  <g transform="translate(80, 530)">
+    <rect x="0" y="0" width="320" height="80" rx="8" fill="#0d2040"/>
+    <circle cx="24" cy="40" r="14" fill="#2fd7c6"/>
+    <text x="24" y="45" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#0a1a31" text-anchor="middle">1</text>
+    <text x="50" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#ffffff">Divide SKUs by role, not category</text>
+    <text x="50" y="48" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">Heroes, secondary, and tail have</text>
+    <text x="50" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">different reorder cadences and buffers.</text>
+  </g>
+
+  <g transform="translate(440, 530)">
+    <rect x="0" y="0" width="320" height="80" rx="8" fill="#0d2040"/>
+    <circle cx="24" cy="40" r="14" fill="#2fd7c6"/>
+    <text x="24" y="45" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#0a1a31" text-anchor="middle">2</text>
+    <text x="50" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#ffffff">Use actual lead time, not quoted</text>
+    <text x="50" y="48" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">Quoted lead time is a forecast.</text>
+    <text x="50" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">Actual lead time is a number you own.</text>
+  </g>
+
+  <g transform="translate(800, 530)">
+    <rect x="0" y="0" width="320" height="80" rx="8" fill="#0d2040"/>
+    <circle cx="24" cy="40" r="14" fill="#2fd7c6"/>
+    <text x="24" y="45" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#0a1a31" text-anchor="middle">3</text>
+    <text x="50" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#ffffff">Build the PO before you need it</text>
+    <text x="50" y="48" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">A 90-day calendar means you never</text>
+    <text x="50" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4">race the clock on a replenishment.</text>
+  </g>
+
+  <text x="1140" y="618" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#1e3a6e" text-anchor="end">coodra.com</text>
+</svg>

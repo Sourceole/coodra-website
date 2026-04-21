@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1a31"/>
+      <stop offset="100%" stop-color="#0f2744"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2fd7c6"/>
+      <stop offset="100%" stop-color="#1fb5a3"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid dots -->
+  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1" fill="#1a3560" opacity="0.5"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="1200" height="4" fill="url(#teal)"/>
+
+  <!-- Header -->
+  <text x="600" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2fd7c6" text-anchor="middle" letter-spacing="3">AI INVENTORY MANAGEMENT</text>
+  <text x="600" y="120" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">What AI Actually Does</text>
+  <text x="600" y="165" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">For Your Retail Inventory</text>
+  <text x="600" y="202" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#7aa8c4" text-anchor="middle">Three signals that separate real AI from dashboard decoration. No ERP required.</text>
+  <line x1="180" y1="225" x2="1020" y2="225" stroke="#1e3a6e" stroke-width="1"/>
+
+  <!-- ── Three AI signal cards ── -->
+  <!-- Signal 1: Velocity anomaly detection -->
+  <g transform="translate(140, 260)">
+    <rect x="0" y="0" width="240" height="170" rx="10" fill="#0d2040"/>
+    <rect x="0" y="0" width="240" height="170" rx="10" fill="none" stroke="#1e3a6e" stroke-width="1"/>
+    <!-- Icon: trend line with spike -->
+    <polyline points="30,60 60,55 90,58 120,45 150,35 180,15" fill="none" stroke="#2fd7c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="180" cy="15" r="5" fill="#f59e0b" filter="url(#glow)"/>
+    <polyline points="30,65 60,68 90,62 120,70 150,72 180,75" fill="none" stroke="#2fd7c6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+    <circle cx="120" cy="108" r="18" fill="#2fd7c6"/>
+    <text x="120" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#0a1a31" text-anchor="middle">1</text>
+    <text x="120" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Velocity anomalies</text>
+    <text x="120" y="163" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#7aa8c4" text-anchor="middle">Catches demand spikes early</text>
+  </g>
+
+  <!-- Arrow 1→2 -->
+  <g transform="translate(390, 330)">
+    <line x1="0" y1="0" x2="50" y2="0" stroke="#2fd7c6" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <polygon points="50,-5 60,0 50,5" fill="#2fd7c6"/>
+  </g>
+
+  <!-- Signal 2: Lead time drift -->
+  <g transform="translate(450, 260)">
+    <rect x="0" y="0" width="240" height="170" rx="10" fill="#0d2040"/>
+    <rect x="0" y="0" width="240" height="170" rx="10" fill="none" stroke="#1e3a6e" stroke-width="1"/>
+    <!-- Icon: clock with drift arrow -->
+    <circle cx="120" cy="50" r="26" fill="none" stroke="#2fd7c6" stroke-width="1.8"/>
+    <circle cx="120" cy="50" r="26" fill="#2fd7c6" opacity="0.08"/>
+    <line x1="120" y1="50" x2="120" y2="32" stroke="#2fd7c6" stroke-width="2" stroke-linecap="round"/>
+    <line x1="120" y1="50" x2="136" y2="56" stroke="#2fd7c6" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="120" cy="50" r="3" fill="#2fd7c6"/>
+    <!-- Drift indicator -->
+    <path d="M 155 35 Q 165 28 175 35" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
+    <polygon points="175,35 168,30 170,38" fill="#f59e0b"/>
+    <text x="120" y="108" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#2fd7c6" text-anchor="middle">LT: 2 wks → 3.5 wks</text>
+    <circle cx="120" cy="108" r="18" fill="#2fd7c6"/>
+    <text x="120" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#0a1a31" text-anchor="middle">2</text>
+    <text x="120" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Lead time drift</text>
+    <text x="120" y="163" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#7aa8c4" text-anchor="middle">Flags supplier delays automatically</text>
+  </g>
+
+  <!-- Arrow 2→3 -->
+  <g transform="translate(700, 330)">
+    <line x1="0" y1="0" x2="50" y2="0" stroke="#2fd7c6" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <polygon points="50,-5 60,0 50,5" fill="#2fd7c6"/>
+  </g>
+
+  <!-- Signal 3: Margin-weighted ranking -->
+  <g transform="translate(760, 260)">
+    <rect x="0" y="0" width="240" height="170" rx="10" fill="#0d2040"/>
+    <rect x="0" y="0" width="240" height="170" rx="10" fill="none" stroke="#1e3a6e" stroke-width="1"/>
+    <!-- Icon: ranked bars with margin indicators -->
+    <rect x="60" y="20" width="80" height="10" rx="2" fill="#2fd7c6" opacity="0.9"/>
+    <rect x="60" y="34" width="65" height="10" rx="2" fill="#2fd7c6" opacity="0.65"/>
+    <rect x="60" y="48" width="50" height="10" rx="2" fill="#2fd7c6" opacity="0.4"/>
+    <rect x="60" y="62" width="72" height="10" rx="2" fill="#2fd7c6" opacity="0.3"/>
+    <!-- Margin dots -->
+    <circle cx="152" cy="25" r="4" fill="#f59e0b"/>
+    <circle cx="136" cy="39" r="4" fill="#f59e0b" opacity="0.7"/>
+    <circle cx="122" cy="53" r="4" fill="#f59e0b" opacity="0.5"/>
+    <circle cx="144" cy="67" r="4" fill="#f59e0b" opacity="0.35"/>
+    <circle cx="120" cy="108" r="18" fill="#2fd7c6"/>
+    <text x="120" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#0a1a31" text-anchor="middle">3</text>
+    <text x="120" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Margin-weighted rank</text>
+    <text x="120" y="163" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#7aa8c4" text-anchor="middle">Highest-margin SKUs first</text>
+  </g>
+
+  <!-- Bottom CTA band -->
+  <rect x="0" y="455" width="1200" height="175" fill="#081828"/>
+  <rect x="0" y="455" width="1200" height="3" fill="url(#teal)"/>
+
+  <!-- AI brain icon -->
+  <g transform="translate(100, 510)">
+    <circle cx="44" cy="44" r="40" fill="none" stroke="#2fd7c6" stroke-width="1.5"/>
+    <circle cx="44" cy="44" r="32" fill="none" stroke="#1e3a6e" stroke-width="1"/>
+    <!-- Brain lobes suggestion -->
+    <path d="M 30 30 Q 44 20 58 30 Q 62 44 58 58 Q 44 68 30 58 Q 26 44 30 30" fill="none" stroke="#2fd7c6" stroke-width="1.5"/>
+    <path d="M 44 26 L 44 62" stroke="#2fd7c6" stroke-width="1" opacity="0.5"/>
+    <path d="M 30 44 L 58 44" stroke="#2fd7c6" stroke-width="1" opacity="0.5"/>
+    <circle cx="38" cy="38" r="5" fill="#f59e0b" opacity="0.8"/>
+    <circle cx="52" cy="50" r="4" fill="#2fd7c6" opacity="0.6"/>
+    <!-- Neural dots -->
+    <circle cx="30" cy="44" r="2" fill="#2fd7c6"/>
+    <circle cx="58" cy="44" r="2" fill="#2fd7c6"/>
+    <circle cx="44" cy="30" r="2" fill="#2fd7c6"/>
+    <circle cx="44" cy="58" r="2" fill="#2fd7c6"/>
+  </g>
+
+  <text x="230" y="535" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#ffffff">Three signals that separate real AI from dashboard decoration.</text>
+  <text x="230" y="560" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#7aa8c4">Coodra monitors your POS data continuously — flagging velocity anomalies,</text>
+  <text x="230" y="581" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#7aa8c4">lead time drift, and margin-weightedSKU rank — every Monday morning.</text>
+  <text x="230" y="605" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2fd7c6">No ERP required. Live in a day.</text>
+
+  <rect x="880" y="518" width="210" height="52" rx="8" fill="#2fd7c6"/>
+  <text x="985" y="548" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#0a1a31" text-anchor="middle">Start free trial →</text>
+
+  <text x="1150" y="618" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#1e3a6e" text-anchor="end">coodra.com</text>
+</svg>

@@ -44,8 +44,8 @@ function applyDocumentTheme(mode: ThemeMode) {
   const light = mode === 'light'
   document.documentElement.setAttribute('data-so-rc-theme', light ? 'light' : 'dark')
   document.body.setAttribute('data-so-rc-theme', light ? 'light' : 'dark')
-  document.documentElement.style.backgroundColor = light ? '#f4f5f7' : '#0b1220'
-  document.body.style.backgroundColor = light ? '#f4f5f7' : '#0b1220'
+  document.documentElement.style.backgroundColor = light ? '#f4f5f7' : '#0d1118'
+  document.body.style.backgroundColor = light ? '#f4f5f7' : '#0d1118'
 }
 
 function userScopeFromIdentity(userId: string | null | undefined, email: string | null | undefined): string {

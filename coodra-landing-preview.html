@@ -1,0 +1,952 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Coodra - Retail Operations, Decided</title>
+  <meta name="description" content="Coodra helps independent retailers decide what to reorder, what to stop reordering, and what needs attention now." />
+  <style>
+    :root {
+      --bg: #f3f7fb;
+      --surface: #ffffff;
+      --surface-2: #f7fbff;
+      --text: #0f172a;
+      --muted: #5f6f85;
+      --line: #d7e2ef;
+      --line-2: #e7eef6;
+      --teal: #2ed3b7;
+      --teal-deep: #10bfa0;
+      --teal-soft: #e9fffa;
+      --shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+      --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.06);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --max: 1160px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 340px, #f4f8fc 100%);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(10px);
+      background: rgba(248, 251, 255, 0.86);
+      border-bottom: 1px solid var(--line-2);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      font-size: 18px;
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(145deg, var(--teal), #7cf1de);
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(16, 98, 82, 0.15);
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border: 2px solid rgba(15, 23, 42, 0.7);
+      border-top-width: 4px;
+      border-left-width: 4px;
+      border-radius: 5px;
+      transform: rotate(8deg);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 650;
+      border-radius: 11px;
+      border: 1px solid transparent;
+      padding: 10px 16px;
+      transition: 180ms ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      color: #062b25;
+      box-shadow: 0 8px 22px rgba(46, 211, 183, 0.32);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      background: #24cdb0;
+      box-shadow: 0 10px 24px rgba(46, 211, 183, 0.38);
+    }
+
+    .btn-ghost {
+      border-color: var(--line);
+      background: #fff;
+      color: #10233a;
+    }
+
+    .btn-ghost:hover {
+      border-color: #c5d7ea;
+      background: #f9fcff;
+    }
+
+    .hero {
+      padding: 72px 0 36px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.04fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #1c4e47;
+      background: var(--teal-soft);
+      border: 1px solid #c7f6ec;
+      border-radius: 999px;
+      padding: 7px 11px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--teal-deep);
+      box-shadow: 0 0 0 6px rgba(16, 191, 160, 0.12);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(35px, 4.4vw, 62px);
+      line-height: 1.03;
+      letter-spacing: -0.03em;
+      max-width: 14.2ch;
+    }
+
+    .hero-sub {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 1.55vw, 20px);
+      max-width: 58ch;
+    }
+
+    .hero-actions {
+      margin-top: 26px;
+      display: flex;
+      gap: 11px;
+      flex-wrap: wrap;
+    }
+
+    .hero-notes {
+      margin-top: 20px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .note-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #334b67;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 12px;
+    }
+
+    .note-pill strong { color: #0b253f; }
+
+    .mock-wrap {
+      background: linear-gradient(180deg, #f9fcff 0%, #f5fbff 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .mock-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .mock-tabs {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .mock-tab {
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: #38506f;
+      background: #fff;
+      transition: 160ms ease;
+    }
+
+    .mock-tab.active {
+      border-color: #9ce8db;
+      background: var(--teal-soft);
+      color: #0f4f45;
+      font-weight: 700;
+    }
+
+    .mock-status {
+      font-size: 12px;
+      color: #4f647e;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--teal-deep);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 191, 160, 0.35); }
+      70% { box-shadow: 0 0 0 9px rgba(16, 191, 160, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 191, 160, 0); }
+    }
+
+    .mock-body {
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1.05fr 0.95fr;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      padding: 12px;
+    }
+
+    .panel h3 {
+      margin: 0;
+      font-size: 13px;
+      color: #415a79;
+      letter-spacing: 0.01em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .queue {
+      margin-top: 10px;
+      display: grid;
+      gap: 9px;
+    }
+
+    .queue-item {
+      border: 1px solid var(--line-2);
+      border-radius: 12px;
+      padding: 10px;
+      background: #fcfeff;
+      transition: 220ms ease;
+    }
+
+    .queue-item:hover {
+      transform: translateY(-1px);
+      border-color: #c7dae9;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .queue-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+
+    .sku {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f223b;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 4px 8px;
+      border: 1px solid transparent;
+    }
+
+    .tag-risk { background: #fff1ef; color: #a33a2f; border-color: #ffd8d3; }
+    .tag-stock { background: #eef9ff; color: #13506f; border-color: #d2ebf8; }
+    .tag-cash { background: #f5f2ff; color: #4a3592; border-color: #e1d8ff; }
+
+    .queue-text {
+      margin: 0;
+      font-size: 12px;
+      color: #4b607c;
+      line-height: 1.45;
+    }
+
+    .insight {
+      margin-top: 10px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .insight-card {
+      border: 1px solid var(--line-2);
+      border-radius: 12px;
+      background: #fcfeff;
+      padding: 10px;
+    }
+
+    .k {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #6b7f99;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .v {
+      margin: 0;
+      font-size: 13px;
+      color: #122740;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .recommend {
+      margin-top: 10px;
+      padding: 11px;
+      border-radius: 12px;
+      border: 1px solid #c6f4ea;
+      background: #f0fffb;
+    }
+
+    .recommend p {
+      margin: 0;
+      font-size: 13px;
+      color: #0f3f36;
+      line-height: 1.45;
+    }
+
+    .section {
+      padding: 74px 0;
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 24px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #2c5f58;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(30px, 3.1vw, 46px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .lead {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 60ch;
+    }
+
+    .how-grid {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .step-num {
+      display: inline-flex;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      align-items: center;
+      justify-content: center;
+      background: var(--teal-soft);
+      color: #125246;
+      font-size: 13px;
+      font-weight: 800;
+      border: 1px solid #c8f6ec;
+      margin-bottom: 12px;
+    }
+
+    .step h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    .step p {
+      margin: 0;
+      color: #526682;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .catch-grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .catch {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 15px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--teal-soft);
+      border: 1px solid #c8f4ea;
+      display: grid;
+      place-items: center;
+      font-size: 15px;
+      color: #14584b;
+      font-weight: 700;
+    }
+
+    .catch h4 {
+      margin: 1px 0 5px;
+      font-size: 17px;
+      letter-spacing: -0.01em;
+    }
+
+    .catch p {
+      margin: 0;
+      color: #536a88;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .trust-grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .trust-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .trust-card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    .trust-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .trust-list li {
+      font-size: 14px;
+      color: #4f6480;
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.45;
+    }
+
+    .trust-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--teal-deep);
+    }
+
+    .cta {
+      padding: 40px 0 86px;
+    }
+
+    .cta-box {
+      background: linear-gradient(180deg, #ffffff 0%, #f6fdff 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 12px;
+    }
+
+    .cta h2 { max-width: 18ch; }
+
+    .cta p {
+      margin: 0;
+      color: #566b87;
+      font-size: 17px;
+      max-width: 62ch;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      background: #f6f9fd;
+      padding: 26px 0 34px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: #6b7e98;
+      font-size: 13px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 520ms ease, transform 520ms ease;
+    }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1040px) {
+      .hero-grid,
+      .mock-body,
+      .trust-grid { grid-template-columns: 1fr; }
+      .how-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 720px) {
+      .container { width: min(var(--max), calc(100% - 24px)); }
+      .hero { padding-top: 42px; }
+      .how-grid,
+      .catch-grid { grid-template-columns: 1fr; }
+      .cta-box { padding: 22px; }
+      .btn { width: 100%; }
+      .hero-actions { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="#" class="brand" aria-label="Coodra home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Coodra</span>
+      </a>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="#how">How it works</a>
+        <a class="btn btn-primary" href="#cta">Get early access</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="hero-grid">
+        <div class="reveal">
+          <span class="eyebrow"><span class="eyebrow-dot"></span> For independent retailers</span>
+
+          <!-- Hero headline options:
+            1) Run your store on signals, not gut feel.
+            2) Retail decisions should be clear before they become expensive.
+            3) See what changed. Know what matters. Decide faster.
+          -->
+          <h1>Run your store on signals, not gut feel.</h1>
+
+          <!-- Hero subheadline options:
+            1) Coodra turns your POS and inventory data into clear next moves: what to reorder, what to stop buying, and what is quietly hurting margin.
+            2) Your data already knows where cash is getting stuck. Coodra surfaces it early and gives your team a practical next action.
+            3) Catch stockouts, dead inventory, margin risk, and demand shifts in one operator-grade workflow built for independent retail.
+          -->
+          <p class="hero-sub">Coodra turns your POS and inventory data into clear next moves: what to reorder, what to stop buying, and what is quietly hurting margin.</p>
+
+          <!-- CTA options:
+            1) Get early access
+            2) Book a product walkthrough
+            3) See the operator view
+            4) Join the pilot list
+            5) Start with a sample store
+          -->
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#cta">Get early access</a>
+            <a class="btn btn-ghost" href="#trust">How we earn trust</a>
+          </div>
+
+          <div class="hero-notes">
+            <span class="note-pill"><strong>Operator-first:</strong> built around daily store decisions</span>
+            <span class="note-pill"><strong>No black box:</strong> every recommendation shows why</span>
+          </div>
+        </div>
+
+        <aside class="mock-wrap reveal" aria-label="Sample Coodra product interface">
+          <div class="mock-top">
+            <div class="mock-tabs" id="mockTabs">
+              <button class="mock-tab active" data-view="queue">Action queue</button>
+              <button class="mock-tab" data-view="changes">What changed</button>
+              <button class="mock-tab" data-view="risk">Margin risk</button>
+            </div>
+            <span class="mock-status"><span class="pulse"></span>Signals updated 2m ago</span>
+          </div>
+
+          <div class="mock-body">
+            <section class="panel">
+              <h3>Priority actions</h3>
+              <div class="queue" id="queueList">
+                <article class="queue-item" data-kind="queue">
+                  <div class="queue-head">
+                    <span class="sku">SKU 4812 - Sparkling Water 12pk</span>
+                    <span class="tag tag-stock">Stock risk</span>
+                  </div>
+                  <p class="queue-text">On-hand dropped 34% this week. Forecast now points to a stockout in 4 days.</p>
+                </article>
+                <article class="queue-item" data-kind="risk" style="display:none;">
+                  <div class="queue-head">
+                    <span class="sku">SKU 9281 - Organic Granola 500g</span>
+                    <span class="tag tag-risk">Margin risk</span>
+                  </div>
+                  <p class="queue-text">Cost increased 11% from supplier. Current shelf price leaves margin below floor.</p>
+                </article>
+                <article class="queue-item" data-kind="changes" style="display:none;">
+                  <div class="queue-head">
+                    <span class="sku">Bakery Category</span>
+                    <span class="tag tag-cash">Demand shift</span>
+                  </div>
+                  <p class="queue-text">Weekend pastry demand moved toward premium SKUs. Core budget line is slowing.</p>
+                </article>
+
+                <article class="queue-item">
+                  <div class="queue-head">
+                    <span class="sku">SKU 3021 - Chili Almonds 200g</span>
+                    <span class="tag tag-cash">Cash drag</span>
+                  </div>
+                  <p class="queue-text">42 days on shelf with low movement. Reorder should pause until sell-through improves.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="panel">
+              <h3>Decision context</h3>
+              <div class="insight">
+                <div class="insight-card">
+                  <span class="k">What changed</span>
+                  <p class="v" id="insightChanged">Sell-through accelerated after local event weekend.</p>
+                </div>
+                <div class="insight-card">
+                  <span class="k">Why it matters</span>
+                  <p class="v" id="insightMatter">If you wait until Tuesday, projected lost sales are $620 across two stores.</p>
+                </div>
+                <div class="recommend">
+                  <span class="k">What to do next</span>
+                  <p id="insightNext">Place a 9-case reorder now. Review again in 48 hours before placing a second order.</p>
+                </div>
+              </div>
+            </section>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="how" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-label">How it works</span>
+          <h2>A retail mental model, not another analytics maze.</h2>
+          <p class="lead">Coodra is designed around the way operators actually think during the week: what changed, why it matters, and what action is worth taking right now.</p>
+        </div>
+
+        <div class="how-grid">
+          <article class="step reveal">
+            <span class="step-num">1</span>
+            <h3>See what changed</h3>
+            <p>Track unusual movement across SKUs, categories, and stores without hunting through reports. Coodra surfaces the shifts that deserve attention first.</p>
+          </article>
+          <article class="step reveal">
+            <span class="step-num">2</span>
+            <h3>Understand why it matters</h3>
+            <p>Each alert includes context: sell-through, on-hand, demand movement, margin pressure, and cash impact. No mystery scores. No vague “AI says so.”</p>
+          </article>
+          <article class="step reveal">
+            <span class="step-num">3</span>
+            <h3>Take the next best action</h3>
+            <p>Approve, adjust, or reject recommendations with confidence. Reorder decisions, hold decisions, and pricing flags are all tied to concrete operational logic.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 12px;">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-label">What Coodra catches</span>
+          <h2>The signals that quietly eat margin and cash.</h2>
+          <p class="lead">These are product examples, not customer claims. The goal is simple: catch issues early enough to make better calls before they get expensive.</p>
+        </div>
+
+        <div class="catch-grid">
+          <article class="catch reveal">
+            <div class="icon">LS</div>
+            <div>
+              <h4>Low-stock before stockout</h4>
+              <p>Flag items where current velocity makes a near-term stockout likely, with reorder timing and quantity guidance.</p>
+            </div>
+          </article>
+          <article class="catch reveal">
+            <div class="icon">DI</div>
+            <div>
+              <h4>Dead inventory and cash lockup</h4>
+              <p>Identify slow movers tying up working capital and recommend when to pause reorders or mark down intentionally.</p>
+            </div>
+          </article>
+          <article class="catch reveal">
+            <div class="icon">MR</div>
+            <div>
+              <h4>Margin risk from cost changes</h4>
+              <p>Catch supplier cost shifts and show where margin floors are at risk before they become end-of-month surprises.</p>
+            </div>
+          </article>
+          <article class="catch reveal">
+            <div class="icon">DS</div>
+            <div>
+              <h4>Demand shifts by category</h4>
+              <p>Spot changes in customer buying behavior and highlight where demand is moving faster than your current plan.</p>
+            </div>
+          </article>
+          <article class="catch reveal">
+            <div class="icon">RQ</div>
+            <div>
+              <h4>Reorder recommendations with rationale</h4>
+              <p>Recommendations include source signals and assumptions, so operators can approve fast or challenge them when needed.</p>
+            </div>
+          </article>
+          <article class="catch reveal">
+            <div class="icon">AQ</div>
+            <div>
+              <h4>Action queue by priority</h4>
+              <p>One practical queue that separates “watch later” from “do this now” across inventory, demand, margin, and cash flow.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="trust" class="section" style="padding-top: 12px;">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-label">Trust, without fake proof</span>
+          <h2>We are early. So we earn trust through clarity.</h2>
+          <p class="lead">No made-up logos. No invented testimonials. No inflated ROI claims. If you evaluate Coodra, you should be able to understand exactly how recommendations are produced.</p>
+        </div>
+
+        <div class="trust-grid">
+          <article class="trust-card reveal">
+            <h3>What you can expect</h3>
+            <ul class="trust-list">
+              <li>Every recommendation is tied to visible operational signals.</li>
+              <li>Context is explicit: what changed, why it matters, what to do next.</li>
+              <li>Your team stays in control with review and approval workflows.</li>
+              <li>Prioritization is practical, so action beats analysis paralysis.</li>
+            </ul>
+          </article>
+
+          <article class="trust-card reveal">
+            <h3>How we work with operators</h3>
+            <ul class="trust-list">
+              <li>We focus on independent retail realities, not enterprise theatre.</li>
+              <li>We tune signal logic around your category mix and cadence.</li>
+              <li>We improve recommendations from feedback, not from buzzwords.</li>
+              <li>We treat this like an operating system, not a screenshot product.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="cta" class="cta">
+      <div class="container">
+        <div class="cta-box reveal">
+          <span class="section-label">Get started</span>
+          <h2>Want a clearer weekly operating view of your store?</h2>
+          <p>Join early access and we’ll show you how Coodra frames inventory, demand, margin, and cash decisions in one operator workflow.</p>
+          <div class="hero-actions" style="margin-top:8px;">
+            <a class="btn btn-primary" href="mailto:admin@coodra.com?subject=Coodra%20Early%20Access">Get early access</a>
+            <a class="btn btn-ghost" href="mailto:admin@coodra.com?subject=Coodra%20Walkthrough">Book a product walkthrough</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="brand" style="font-size:15px;">
+        <span class="brand-mark" aria-hidden="true" style="transform: scale(.86);"></span>
+        <span>Coodra</span>
+      </div>
+      <div>Retail Decision Intelligence for independent operators.</div>
+      <div>© 2026 Coodra · <a href="mailto:admin@coodra.com" style="color:#2b7f73;">admin@coodra.com</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach((el) => observer.observe(el));
+
+    const tabs = Array.from(document.querySelectorAll('.mock-tab'));
+    const changed = document.getElementById('insightChanged');
+    const matter = document.getElementById('insightMatter');
+    const next = document.getElementById('insightNext');
+    const queueItems = Array.from(document.querySelectorAll('.queue-item[data-kind]'));
+
+    const states = {
+      queue: {
+        changed: 'Sell-through accelerated after local event weekend.',
+        matter: 'If you wait until Tuesday, projected lost sales are $620 across two stores.',
+        next: 'Place a 9-case reorder now. Review again in 48 hours before placing a second order.'
+      },
+      changes: {
+        changed: 'Bakery demand shifted 18% toward premium items in the last 10 days.',
+        matter: 'Your current buy plan is overweight on slower budget SKUs, increasing stale risk.',
+        next: 'Trim reorder quantity on the bottom two SKUs and shift spend to top movers this week.'
+      },
+      risk: {
+        changed: 'Supplier unit cost increased 11% on two high-volume items this month.',
+        matter: 'Current shelf pricing pushes gross margin below your target floor next cycle.',
+        next: 'Review pricing for both items and apply recommended adjustments before next PO closes.'
+      }
+    };
+
+    let idx = 0;
+    function activate(key) {
+      tabs.forEach((t) => t.classList.toggle('active', t.dataset.view === key));
+      queueItems.forEach((item) => {
+        item.style.display = item.dataset.kind === key ? '' : 'none';
+      });
+      changed.textContent = states[key].changed;
+      matter.textContent = states[key].matter;
+      next.textContent = states[key].next;
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        idx = tabs.indexOf(tab);
+        activate(tab.dataset.view);
+      });
+    });
+
+    setInterval(() => {
+      idx = (idx + 1) % tabs.length;
+      activate(tabs[idx].dataset.view);
+    }, 4200);
+  </script>
+</body>
+</html>

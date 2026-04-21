@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { blogPosts, getBlogPostBySlug } from '../data/blogPosts'
 import { trackEvent } from '../lib/analytics'
 import MarketingHeader from '../components/MarketingHeader'
+import MarketingFooter from '../components/MarketingFooter'
 import './BlogPages.css'
 
 export default function BlogPostPage() {
@@ -25,7 +26,7 @@ export default function BlogPostPage() {
 
   if (!post) {
     return (
-      <div className="blog-page">
+      <div className="blog-page blog-page--post">
         <div className="blog-page__container">
           <MarketingHeader />
 
@@ -38,6 +39,7 @@ export default function BlogPostPage() {
             </div>
           </article>
         </div>
+        <MarketingFooter />
       </div>
     )
   }
@@ -45,13 +47,16 @@ export default function BlogPostPage() {
   const related = blogPosts.filter((item) => item.slug !== post.slug).slice(0, 2)
 
   const SITE_URL = 'https://www.coodra.com'
+  const authorUrl = `${SITE_URL}/author/michael-shahid`
+  const authorName = 'Michael Shahid'
   const authorPerson = {
     '@context': 'https://schema.org',
     '@type': 'Person',
     '@id': `${SITE_URL}/#person`,
-    name: post.author,
+    name: authorName,
     jobTitle: 'CEO',
-    url: SITE_URL,
+    url: authorUrl,
+    image: `${SITE_URL}/images/michael.jpg`,
     sameAs: ['https://www.linkedin.com/company/coodra/'],
   }
   const articleJsonLd = {
@@ -59,8 +64,9 @@ export default function BlogPostPage() {
     '@type': 'Article',
     headline: post.title,
     description: post.excerpt,
-    image: `${SITE_URL}/og-image.png`,
+    image: `${SITE_URL}${post.coverImage}`,
     datePublished: post.isoPublishedAt,
+    dateModified: post.isoPublishedAt,
     author: { '@id': `${SITE_URL}/#person` },
     publisher: { '@id': `${SITE_URL}/#organization` },
     url: `${SITE_URL}/blog/${post.slug}`,
@@ -69,19 +75,41 @@ export default function BlogPostPage() {
   }
 
   return (
-    <div className="blog-page">
+    <div className="blog-page blog-page--post">
       <div className="blog-page__container">
         <MarketingHeader />
 
         <article className="blog-article">
-          <p className="blog-breadcrumbs">
-            <Link to="/">Home</Link> {'>'} <Link to="/blog">Blog</Link> {'>'} {post.title}
-          </p>
-          <h1>{post.title}</h1>
-          <p className="blog-article__meta">
-            {post.category} - {post.readingTime} - {post.author} - {post.publishedAt}
-          </p>
-          <p className="blog-article__lede">{post.excerpt}</p>
+          <header className="blog-post-hero">
+            <p className="blog-breadcrumbs">
+              <Link to="/">Home</Link> {'>'} <Link to="/blog">Blog</Link> {'>'} {post.title}
+            </p>
+
+            <div className="blog-post-hero__meta">
+              <span>{post.category}</span>
+              <span>{post.readingTime}</span>
+              <span>{post.publishedAt}</span>
+            </div>
+
+            <h1>{post.title}</h1>
+            <p className="blog-article__lede">{post.excerpt}</p>
+
+            <div className="blog-post-hero__author">
+              <img
+                src="/images/michael.jpg"
+                alt="Michael Shahid"
+                className="blog-post-hero__avatar-image"
+                loading="lazy"
+              />
+              <p>
+                <Link to="/author/michael-shahid">Michael Shahid</Link> • Founder & CEO
+              </p>
+            </div>
+
+            <figure className="blog-post-hero__cover">
+              <img src={post.coverImage} alt={post.coverImageAlt} loading="lazy" />
+            </figure>
+          </header>
 
           <div className="blog-content">
             {post.content.map((block, i) => {
@@ -150,15 +178,20 @@ export default function BlogPostPage() {
 
           <section className="blog-related">
             <h2>Related articles</h2>
-            <ul>
+            <ul className="blog-related__list">
               {related.map((item) => (
-                <li key={item.slug}>
-                  <Link to={`/blog/${item.slug}`}>{item.title}</Link>
+                <li key={item.slug} className="blog-related__item">
+                  <Link to={`/blog/${item.slug}`}>
+                    <span>{item.category}</span>
+                    <strong>{item.title}</strong>
+                    <small>{item.readingTime}</small>
+                  </Link>
                 </li>
               ))}
             </ul>
           </section>
         </article>
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(authorPerson) }}
@@ -168,6 +201,7 @@ export default function BlogPostPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
         />
       </div>
+      <MarketingFooter />
     </div>
   )
 }

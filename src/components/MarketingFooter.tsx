@@ -5,6 +5,7 @@ const productLinks = [
   { to: '/integrations', label: 'Integrations' },
   { to: '/pricing', label: 'Pricing' },
   { to: '/comparisons', label: 'Comparisons' },
+  { to: '/inventory-management', label: 'Inventory Management' },
   { to: '/#decision', label: 'Decision Engine' },
   { to: '/#how-it-works', label: 'How It Works' },
 ]
@@ -29,12 +30,12 @@ const legalLinks = [
 
 export default function MarketingFooter() {
   return (
-    <footer className="mf-footer">
+    <footer className="mf-footer" itemProp="publisher" itemScope itemType="https://schema.org/Organization">
       <div className="mf-wrap">
         <div className="mf-grid">
           <section className="mf-brand-col">
-            <img src="/images/coodra-logo.png" alt="Coodra" className="mf-logo" />
-            <p className="mf-summary">The AI intelligence layer for independent retail operations.</p>
+            <img src="/images/coodra-logo.png" alt="Coodra" className="mf-logo" itemProp="logo" />
+            <p className="mf-summary" itemProp="description">The AI intelligence layer for independent retail operations.</p>
           </section>
 
           <section className="mf-col">

@@ -201,24 +201,9 @@
     const tagEl = document.getElementById('howFlipTag');
     const titleEl = document.getElementById('howFlipTitle');
     const bodyEl = document.getElementById('howFlipBody');
-    const stage = document.querySelector('.how-flip-stage');
-    const head = document.querySelector('.how-sticky-head');
-    if (!triggers.length || !card || !tagEl || !titleEl || !bodyEl || !stage || !head) return;
+    if (!triggers.length || !card || !tagEl || !titleEl || !bodyEl) return;
 
     let activeIdx = 0;
-
-    const syncAlignment = () => {
-      if (window.matchMedia('(max-width: 1024px)').matches) {
-        stage.style.removeProperty('--how-align-offset');
-        return;
-      }
-      const heading = head.querySelector('h2');
-      const targetRect = heading ? heading.getBoundingClientRect() : head.getBoundingClientRect();
-      const targetCenter = targetRect.top + targetRect.height * 0.5;
-      const viewportCenter = window.innerHeight * 0.5;
-      const delta = targetCenter - viewportCenter;
-      stage.style.setProperty('--how-align-offset', `${Math.round(delta)}px`);
-    };
 
     const hydrate = (idx, animate) => {
       const source = triggers[idx];
@@ -251,7 +236,6 @@
 
     if (state.reducedMotion || window.matchMedia('(max-width: 1024px)').matches) {
       hydrate(0, false);
-      syncAlignment();
       return;
     }
 
@@ -269,7 +253,6 @@
         }
       });
       if (bestIdx !== activeIdx) hydrate(bestIdx, true);
-      syncAlignment();
     };
 
     let ticking = false;
@@ -284,12 +267,52 @@
 
     hydrate(0, false);
     pickNearest();
-    syncAlignment();
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', () => {
-      pickNearest();
-      syncAlignment();
-    }, { passive: true });
+    window.addEventListener('resize', pickNearest, { passive: true });
+  }
+
+  function initHowSectionMotion() {
+    const section = document.getElementById('how-it-works');
+    const shell = section ? section.querySelector('.how-stage-shell') : null;
+    if (!section || !shell) return;
+
+    const update = () => {
+      if (state.reducedMotion || window.matchMedia('(max-width: 1024px)').matches) {
+        shell.style.setProperty('--how-section-shift', '0px');
+        return;
+      }
+
+      const rect = section.getBoundingClientRect();
+      const viewport = window.innerHeight || 1;
+      const maxShift = 88;
+      const enterRange = viewport * 0.72;
+      const exitRange = viewport * 0.72;
+      let shift = 0;
+
+      if (rect.top > 0) {
+        const t = Math.max(0, Math.min(1, rect.top / enterRange));
+        shift = maxShift * t;
+      } else if (rect.bottom < viewport) {
+        const t = Math.max(0, Math.min(1, (viewport - rect.bottom) / exitRange));
+        shift = -maxShift * t;
+      }
+
+      shell.style.setProperty('--how-section-shift', `${shift.toFixed(2)}px`);
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
   }
 
   function initFooterWordmark() {
@@ -848,6 +871,7 @@
     initHeroGlobe();
     initHeroParticles();
     initHowStepFlip();
+    initHowSectionMotion();
     initScrollExpandMedia();
     initFooterWordmark();
     setScrollProgress();

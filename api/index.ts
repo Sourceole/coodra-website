@@ -1,4 +1,14 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+import type { IncomingHttpHeaders, IncomingMessage, ServerResponse } from "node:http";
+
+type VercelRequest = IncomingMessage & {
+  url?: string;
+  headers: IncomingHttpHeaders;
+};
+
+type VercelResponse = ServerResponse & {
+  status: (code: number) => VercelResponse;
+  send: (body: string) => void;
+};
 
 export const config = {
   runtime: "nodejs",

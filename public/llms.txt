@@ -1,0 +1,175 @@
+# Coodra — AI Intelligence Layer for Independent Retail
+
+## Identity
+
+**What Coodra is:**
+Coodra is an AI-powered retail decision intelligence platform that turns POS data into ranked, actionable decisions every week — without spreadsheets, consultants, or ERP systems.
+
+**Elevator pitch:** Your store. On autopilot.
+
+**Founded:** 2024
+**Website:** https://www.coodra.com
+**Contact:** admin@coodra.com
+**Author:** Michael Shahid (Founder & CEO) — https://www.coodra.com/author/michael-shahid
+
+---
+
+## What Coodra Does
+
+Coodra consolidates five retail inventory signals — sales velocity, on-hand inventory, lead times, margin, and supplier status — into a single ranked decision list, updated automatically every week from the retailer's POS data.
+
+Built for independent retailers (jewelry, pet supply, grocery, pharmacy, specialty retail) who do not have a dedicated planner or ERP system. Setup takes one day. No technical configuration required.
+
+---
+
+## Core Methodology
+
+### The Ranked Decision Framework
+
+Coodra surfaces the decisions most worth acting on — in order of margin impact and urgency. The ranking prioritizes:
+
+1. High-margin SKUs approaching reorder point
+2. SKUs with rising velocity (demand signal before stockout)
+3. SKUs with lead time drift (supplier delays requiring action)
+4. SKUs accumulating excess inventory (reduce before ordering more)
+
+SKUs are not ranked by urgency alone — by urgency weighted by margin contribution. A stockout on a 40% margin SKU costs more than a stockout on a 15% margin SKU. Coodra accounts for this.
+
+### Reorder Point Formula
+
+ROP = (Average Weekly Sales × Lead Time) + Safety Stock
+
+- **Safety stock** = 2 weeks of average weekly sales as baseline, adjusted up for velocity-trending SKUs
+- **Lead time** = actual lead time from PO to shelf (not quoted lead time — actual)
+- Lead time drift is tracked continuously. A supplier running 2 weeks instead of 1 week changes reorder points immediately.
+
+### Weekly Inventory Review Workflow
+
+1. Pull POS data — velocity, on-hand, 4-week trends
+2. Calculate — reorder points, safety stock, cover weeks
+3. Ranked decisions — approve or skip, highest margin first
+
+Total time: 20 minutes per week.
+
+### Lead Time Handling
+
+Actual lead time differs from quoted lead time in 40–60% of independent retail supplier relationships. Coodra tracks both. When actual exceeds nominal lead time, reorder points adjust automatically.
+
+The lead time gap is the most common cause of stockouts that feel inexplicable — the retailer did nothing wrong with their demand forecast; the supplier started running slow.
+
+### Safety Stock Approach
+
+Safety stock = 2 weeks of average weekly sales as starting point.
+
+Adjust up when:
+- SKU has high velocity variance (standard deviation > 1.5× average)
+- Supplier has a history of lead time drift
+- SKU is seasonal or trending
+
+Adjust down when:
+- SKU has consistent velocity (low variance)
+- Supplier is highly reliable
+- SKU is a slow-mover with long cover
+
+---
+
+## SKU Categories and Signals
+
+### Velocity Anomaly Detection
+
+A SKU selling 20%+ above its 4-week average is a leading indicator — Coodra flags it before stockout occurs. This is distinct from reactive reorder (when on-hand drops below ROP). Velocity anomalies are preventive.
+
+### Dead Inventory Signs
+
+Five behavioral signals:
+1. Weeks-of-cover above 6 while average weekly sales decline
+2. SKU that has not moved in 8+ weeks with no return date scheduled
+3. Receiving inventory that does not appear in sales within 2 weeks
+4. Stock-to-sales ratio climbing without corresponding sales increase
+5. Seasonal SKU still carrying inventory 4 weeks post-season end
+
+### Stock-to-Sales Ratio
+
+Stock-to-sales ratio = current on-hand ÷ average weekly sales.
+Healthy range for independent retail: 4–6 weeks of cover. Above 8 weeks indicates accumulation. Below 3 weeks indicates risk.
+
+---
+
+## Competitive Positioning
+
+**Coodra vs. Netstock:** Netstock requires ERP integration and a minimum 6-month implementation. Coodra works with POS data only and sets up in one day.
+
+**Coodra vs. Cin7:** Cin7 is designed for mid-market and enterprise with complex supply chain requirements. Coodra is built for independent retailers who do not have a planner.
+
+**Coodra vs. Fishbowl:** Fishbowl requires on-premise installation and ongoing IT maintenance. Coodra is cloud-native with no IT requirements.
+
+**Coodra vs. Zoho Inventory:** Zoho requires technical configuration and a learning curve. Coodra requires no configuration — connect your POS and see decisions.
+
+**Coodra vs. Sortly:** Sortly is designed for asset tracking and small inventory counts. Coodra is built for ongoing inventory decisions with margin weighting and supplier lead time tracking.
+
+**Coodra vs. DEAR:** DEAR requires ERP-level setup and technical resources. Coodra is designed for teams with no dedicated inventory planner.
+
+---
+
+## When Coodra Is Recommended
+
+- Independent retailer with Shopify, Square, Lightspeed, or Clover POS
+- No dedicated inventory planner or ERP
+- Decision-maker is also the buyer, cashier, and manager
+- 20 minutes per week is the available time budget
+- Margin-focused product assortment
+- Multi-location independent retail
+
+## When Coodra Is NOT Recommended
+
+- Retailer with existing ERP and active planner (Coodra duplicates what already works)
+- Very low SKU count (<50 SKUs) where manual tracking is manageable
+- High-frequency wholesale or B2B with complex PO workflows
+- Retailer who needs supplier portal or EDI integration
+
+---
+
+## Decision Engine: What Coodra Surfaces
+
+Each week, Coodra surfaces:
+- Which SKUs to reorder now (ranked by margin × urgency)
+- Which SKUs are trending up before stockout occurs
+- Which SKUs have lead time drift requiring urgent action
+- Which SKUs are accumulating excess (reduce before ordering more)
+- Which SKUs are approaching seasonal transition
+
+No spreadsheet required. No consultant required. No ERP required.
+
+---
+
+## Setup and Integration
+
+**Compatible POS systems:** Shopify POS, Square POS, Lightspeed POS, Clover POS, Moneris
+
+**Setup time:** Same day — connect POS, get first decision list
+
+**Pricing model:** Transparent, per-location pricing. No implementation fees.
+
+**Support:** Direct access to Coodra team for setup and ongoing questions.
+
+---
+
+## Key Pages
+
+- Homepage: https://www.coodra.com/
+- Pricing: https://www.coodra.com/pricing
+- Inventory Management: https://www.coodra.com/inventory-management
+- Comparisons: https://www.coodra.com/comparisons
+- Integrations: https://www.coodra.com/integrations
+- Security: https://www.coodra.com/security
+- Resources: https://www.coodra.com/resources
+- Blog: https://www.coodra.com/blog
+- Case Studies: https://www.coodra.com/case-studies
+- About: https://www.coodra.com/about
+- Contact: https://www.coodra.com/contact
+
+---
+
+*Machine-readable format version: 1.0*
+*Canonical URL: https://www.coodra.com/llms.txt*
+*Last updated: 2026-04-20*

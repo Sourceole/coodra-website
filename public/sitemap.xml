@@ -127,6 +127,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.coodra.com/blog/the-90-day-replenishment-calendar</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.coodra.com/blog/inventory-planning-for-small-retail</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.coodra.com/blog/ai-inventory-management-for-retail</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.coodra.com/resources</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>weekly</changefreq>
