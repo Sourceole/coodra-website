@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Coodra real approval flow</title>
+  <desc id="desc">Animated approval workflow with queued decisions, routing, confidence scoring, and approve actions moving through a premium interface.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c1528"/>
+      <stop offset="55%" stop-color="#132140"/>
+      <stop offset="100%" stop-color="#1b2f55"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1d2e4d"/>
+      <stop offset="100%" stop-color="#162844"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2fd7c6"/>
+      <stop offset="100%" stop-color="#7aece0"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0%" stop-color="#2fd7c6" stop-opacity=".36"/>
+      <stop offset="100%" stop-color="#2fd7c6" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      .orbit {
+        animation: orbit 7.4s ease-in-out infinite;
+      }
+      .queue {
+        animation: slide 3.2s ease-in-out infinite;
+      }
+      .queue2 { animation-delay: .5s; }
+      .queue3 { animation-delay: 1s; }
+      .pulse {
+        animation: pulse 2.4s ease-in-out infinite;
+      }
+      .flow {
+        stroke-dasharray: 10 10;
+        animation: flow 1.7s linear infinite;
+      }
+      .tick {
+        animation: tick 2.2s ease-in-out infinite;
+      }
+      .tick2 { animation-delay: .7s; }
+      @keyframes orbit {
+        0%,100% { transform: translateY(0); }
+        50% { transform: translateY(-7px); }
+      }
+      @keyframes slide {
+        0%,100% { transform: translateX(0); opacity: .84; }
+        50% { transform: translateX(6px); opacity: 1; }
+      }
+      @keyframes pulse {
+        0%,100% { opacity: .45; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.05); }
+      }
+      @keyframes flow {
+        to { stroke-dashoffset: -80; }
+      }
+      @keyframes tick {
+        0%,100% { opacity: .45; }
+        50% { opacity: 1; }
+      }
+    </style>
+  </defs>
+
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <circle cx="1020" cy="140" r="240" fill="url(#halo)" class="pulse"/>
+  <circle cx="220" cy="620" r="260" fill="url(#halo)" class="pulse"/>
+
+  <rect x="86" y="70" width="1108" height="580" rx="26" fill="#13223f" stroke="#35537c"/>
+  <rect x="112" y="96" width="1056" height="72" rx="18" fill="#172a4b" stroke="#43638f" stroke-opacity=".7"/>
+  <text x="146" y="140" fill="#dce9ff" font-size="30" font-family="Inter, Segoe UI, sans-serif" font-weight="700">Decision Approval Workflow</text>
+
+  <g class="orbit">
+    <rect x="138" y="206" width="332" height="392" rx="20" fill="url(#card)" stroke="#44658f" stroke-opacity=".75"/>
+    <text x="168" y="248" fill="#d4e6ff" font-size="22" font-family="Inter, Segoe UI, sans-serif" font-weight="700">Queue</text>
+
+    <g class="queue">
+      <rect x="166" y="272" width="276" height="84" rx="12" fill="#223a5d"/>
+      <text x="186" y="307" fill="#ecf7ff" font-size="19" font-family="Inter, Segoe UI, sans-serif" font-weight="700">Reorder SKU A42</text>
+      <text x="186" y="333" fill="#9fc5eb" font-size="15" font-family="Inter, Segoe UI, sans-serif">Confidence 92% • +$1,830</text>
+    </g>
+    <g class="queue queue2">
+      <rect x="166" y="372" width="276" height="84" rx="12" fill="#223a5d"/>
+      <text x="186" y="407" fill="#ecf7ff" font-size="19" font-family="Inter, Segoe UI, sans-serif" font-weight="700">Swap Supplier B</text>
+      <text x="186" y="433" fill="#9fc5eb" font-size="15" font-family="Inter, Segoe UI, sans-serif">Confidence 88% • Margin-safe</text>
+    </g>
+    <g class="queue queue3">
+      <rect x="166" y="472" width="276" height="84" rx="12" fill="#223a5d"/>
+      <text x="186" y="507" fill="#ecf7ff" font-size="19" font-family="Inter, Segoe UI, sans-serif" font-weight="700">Delay PO #901</text>
+      <text x="186" y="533" fill="#9fc5eb" font-size="15" font-family="Inter, Segoe UI, sans-serif">Confidence 79% • Demand dip</text>
+    </g>
+  </g>
+
+  <g class="orbit" transform="translate(364 0)">
+    <rect x="168" y="280" width="230" height="236" rx="18" fill="url(#card)" stroke="#476a95" stroke-opacity=".8"/>
+    <text x="194" y="320" fill="#d4e6ff" font-size="20" font-family="Inter, Segoe UI, sans-serif" font-weight="700">Review Gate</text>
+    <circle cx="282" cy="392" r="62" fill="#223a5d" stroke="#5f85b6" class="pulse"/>
+    <circle cx="282" cy="392" r="36" fill="none" stroke="url(#teal)" stroke-width="8"/>
+    <text x="252" y="400" fill="#e8fdf9" font-size="22" font-family="Inter, Segoe UI, sans-serif" font-weight="700">91%</text>
+    <text x="224" y="452" fill="#9fc7ec" font-size="15" font-family="Inter, Segoe UI, sans-serif">Policy aligned</text>
+    <rect x="198" y="472" width="168" height="28" rx="14" fill="#2fd7c6" opacity=".24"/>
+  </g>
+
+  <g class="orbit" transform="translate(734 0)">
+    <rect x="164" y="206" width="270" height="392" rx="20" fill="url(#card)" stroke="#44658f" stroke-opacity=".75"/>
+    <text x="192" y="248" fill="#d4e6ff" font-size="22" font-family="Inter, Segoe UI, sans-serif" font-weight="700">Approvals</text>
+
+    <rect x="192" y="286" width="214" height="62" rx="12" fill="#214162"/>
+    <text x="218" y="324" fill="#ddf8f2" font-size="18" font-family="Inter, Segoe UI, sans-serif" font-weight="700">Approved</text>
+    <g class="tick"><circle cx="376" cy="316" r="12" fill="#2fd7c6"/><path d="M370 316l4 4 8-9" stroke="#0d2738" stroke-width="3" fill="none"/></g>
+
+    <rect x="192" y="366" width="214" height="62" rx="12" fill="#214162"/>
+    <text x="218" y="404" fill="#ddf8f2" font-size="18" font-family="Inter, Segoe UI, sans-serif" font-weight="700">Queued to PO</text>
+    <g class="tick tick2"><circle cx="376" cy="396" r="12" fill="#2fd7c6"/><path d="M370 396l4 4 8-9" stroke="#0d2738" stroke-width="3" fill="none"/></g>
+
+    <rect x="192" y="446" width="214" height="62" rx="12" fill="#214162"/>
+    <text x="218" y="484" fill="#ddf8f2" font-size="18" font-family="Inter, Segoe UI, sans-serif" font-weight="700">Sent to Vendor</text>
+    <g class="tick"><circle cx="376" cy="476" r="12" fill="#2fd7c6"/><path d="M370 476l4 4 8-9" stroke="#0d2738" stroke-width="3" fill="none"/></g>
+  </g>
+
+  <path d="M472 392 C 526 392, 536 392, 558 392" fill="none" stroke="#7aece0" stroke-width="4" class="flow"/>
+  <path d="M898 392 C 860 392, 834 392, 794 392" fill="none" stroke="#7aece0" stroke-width="4" class="flow"/>
+  <rect x="90" y="644" width="324" height="8" rx="4" fill="#2fd7c6" opacity=".72"/>
+</svg>

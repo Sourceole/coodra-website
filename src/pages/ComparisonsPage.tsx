@@ -256,11 +256,11 @@ const heroStats = [
 
 const comparisonsMedia = {
   context: {
-    posterPng: '/images/media/comparisons-context-real.png',
+    posterPng: '/images/media/comparisons-context-view-animated.svg',
     objectPosition: 'center center',
   },
   approval: {
-    posterPng: '/images/media/comparisons-approval-flow-real.png',
+    posterPng: '/images/media/comparisons-approval-flow-animated.svg',
     objectPosition: 'center center',
   },
 } as const
