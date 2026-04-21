@@ -1,11 +1,10 @@
-import { useMemo, useState } from 'react'
+﻿import { useMemo, useState } from 'react'
 import { Link } from 'react-router'
 import { blogPosts } from '../data/blogPosts'
 import MarketingHeader from '../components/MarketingHeader'
 import MarketingFooter from '../components/MarketingFooter'
 import './BlogPages.css'
 
-// Sort newest first
 const sortedPosts = [...blogPosts].sort(
   (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
 )
@@ -46,7 +45,7 @@ export default function BlogIndexPage() {
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt,
-    image: post.coverImage,
+    image: `${SITE_URL}${post.coverImage}`,
     datePublished: post.isoPublishedAt,
     dateModified: post.isoPublishedAt,
     author: { '@type': 'Person', name: post.author },
@@ -69,11 +68,13 @@ export default function BlogIndexPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(posting) }}
         />
       ))}
+
       <div className="blog-page__container">
         <MarketingHeader />
 
         <section className="blog-hero">
-          <h1>Retail Inventory Intelligence</h1>
+          <p className="blog-hero__eyebrow">Resources</p>
+          <h1>Coodra Blog</h1>
           <p>
             Actionable breakdowns on inventory, POS signal quality, and practical operating moves
             that improve margin and reduce stock risk.
@@ -94,7 +95,7 @@ export default function BlogIndexPage() {
               <input
                 type="search"
                 className="blog-filter__search-input"
-                placeholder="Search posts..."
+                placeholder="Search posts"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -103,7 +104,7 @@ export default function BlogIndexPage() {
         </section>
 
         <section className="blog-latest" aria-label="Latest posts">
-          <h2>LATEST</h2>
+          <h2>All posts</h2>
           <section className="blog-grid" aria-label="Blog posts">
             {filteredPosts.map((post) => (
               <article key={post.slug} className="blog-card-wrap">
@@ -115,15 +116,15 @@ export default function BlogIndexPage() {
                     <p className="blog-card__meta">{post.category}</p>
                     <h3>{post.title}</h3>
                     <p>{post.excerpt}</p>
-                    <p className="blog-card__byline">{post.author} | {post.publishedAt}</p>
+                    <p className="blog-card__byline">{post.readingTime} • {post.publishedAt}</p>
                   </div>
                 </Link>
               </article>
             ))}
           </section>
         </section>
-
       </div>
+
       <MarketingFooter />
     </div>
   )

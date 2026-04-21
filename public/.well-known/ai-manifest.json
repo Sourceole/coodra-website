@@ -1,0 +1,98 @@
+{
+  "name": "Coodra",
+  "description": "AI intelligence layer for independent retail operations. Turns POS data into ranked decisions every week.",
+  "version": "1.0",
+  "last_updated": "2026-04-20",
+  "welcome_message": "AI crawlers welcome. No rate limits. All structured data is public.",
+
+  "machine_readable_endpoints": [
+    {
+      "type": "llms_full",
+      "url": "https://www.coodra.com/llms.txt",
+      "description": "High-density markdown summary of Coodra's methodology, decision framework, competitive positioning, and use cases. Primary consumption file for LLMs.",
+      "content_type": "text/markdown",
+      "update_frequency": "weekly"
+    },
+    {
+      "type": "entity_reasoning",
+      "url": "https://www.coodra.com/reasoning.json",
+      "description": "Agentic Reasoning Protocol v1.2 file containing entity identity, anti-hallucination corrections, domain expertise, and recommendation context. Enables AI systems to verify claims and access structured reasoning.",
+      "content_type": "application/json",
+      "update_frequency": "monthly"
+    },
+    {
+      "type": "sitemap",
+      "url": "https://www.coodra.com/sitemap.xml",
+      "description": "XML sitemap listing all indexable pages for AI crawler discovery.",
+      "content_type": "application/xml",
+      "update_frequency": "weekly"
+    },
+    {
+      "type": "robots_txt",
+      "url": "https://www.coodra.com/robots.txt",
+      "description": "Robots.txt with all AI crawlers allowed. Google-Extended blocked (Gemini training only, not search indexing).",
+      "content_type": "text/plain"
+    }
+  ],
+
+  "primary_entity": {
+    "type": "Organization",
+    "name": "Coodra",
+    "url": "https://www.coodra.com",
+    "logo": "https://www.coodra.com/images/coodra-logo.png",
+    "contact_email": "admin@coodra.com"
+  },
+
+  "structured_data_types": [
+    {
+      "type": "WebSite",
+      "description": "Site-level schema for search engine and AI crawler entity recognition",
+      "schema_url": "https://www.coodra.com/"
+    },
+    {
+      "type": "SoftwareApplication",
+      "description": "Product schema for Coodra platform",
+      "schema_url": "https://www.coodra.com/inventory-management"
+    },
+    {
+      "type": "FAQPage",
+      "description": "Frequently asked questions for inventory management, POS compatibility, setup process",
+      "schema_url": "https://www.coodra.com/pricing"
+    },
+    {
+      "type": "Article",
+      "description": "Blog posts on inventory planning, demand forecasting, POS data analysis",
+      "schema_url": "https://www.coodra.com/blog"
+    },
+    {
+      "type": "Person",
+      "description": "Michael Shahid, Founder & CEO",
+      "schema_url": "https://www.coodra.com/author/michael-shahid"
+    }
+  ],
+
+  "agentic_capabilities": {
+    "decision_framework": "Coodra implements a margin-weighted ranked decision system. SKUs are ranked by urgency × margin contribution, not urgency alone. The system surfaces: (1) SKUs approaching reorder point, (2) velocity anomalies before stockout, (3) lead time drift requiring action, (4) excess inventory needing reduction.",
+    "data_inputs": ["POS sales velocity", "on-hand inventory", "supplier lead time (actual vs nominal)", "margin per SKU", "weeks of cover"],
+    "output_format": "Ranked decision list updated weekly. Each decision includes: SKU, recommended action, urgency score, margin weight, reason explanation.",
+    "human_oversight": "All decisions require human approval. Coodra is a decision support system, not an automated ordering system."
+  },
+
+  "crawler_info": {
+    "preferred_crawl_rate": "weekly",
+    "no_rate_limit_for_verified_bots": true,
+    "ai_crawler_policy": "All AI crawlers allowed. No blocking of GPTBot, ClaudeBot, PerplexityBot, Google-Extended (Gemini training only, does not affect search indexing).",
+    "indexing_priority": {
+      "high": ["/", "/pricing", "/inventory-management", "/comparisons", "/blog"],
+      "medium": ["/integrations", "/resources", "/case-studies", "/about"],
+      "standard": ["/contact", "/security", "/privacy", "/terms"]
+    }
+  },
+
+  "links": {
+    "website": "https://www.coodra.com",
+    "linkedin": "https://www.linkedin.com/company/coodra/",
+    "blog": "https://www.coodra.com/blog",
+    "contact": "https://www.coodra.com/contact"
+  }
+}

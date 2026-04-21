@@ -1,0 +1,104 @@
+.author-page {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #0a1a31;
+}
+
+.author-main {
+  width: min(1120px, calc(100vw - 3rem));
+  margin: 0 auto;
+  padding: clamp(4.4rem, 8vw, 6rem) 0 clamp(3rem, 6vw, 4rem);
+}
+
+.author-hero {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: clamp(1.25rem, 2vw, 2rem);
+  align-items: center;
+  border: 1px solid rgba(10, 26, 49, 0.1);
+  border-radius: 28px;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.98), rgba(236, 251, 249, 0.92));
+  padding: clamp(1.2rem, 2vw, 1.75rem);
+}
+
+.author-hero__image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 24px;
+  object-fit: cover;
+}
+
+.author-hero__eyebrow {
+  margin: 0;
+  color: #1cb8aa;
+  font-family: "Inter", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.author-hero h1 {
+  margin: 0.45rem 0 0.2rem;
+  font-family: var(--font-heading, "Bebas Neue", "Avenir Next", "Segoe UI", sans-serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 0.9;
+  letter-spacing: var(--title-letter-spacing, 0.012em);
+  text-transform: uppercase;
+}
+
+.author-hero__role {
+  margin: 0;
+  color: #1cb8aa;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+}
+
+.author-hero__copy > p:last-of-type {
+  margin-top: 0.85rem;
+  color: #506786;
+  line-height: 1.7;
+  max-width: 70ch;
+}
+
+.author-hero__actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.author-btn {
+  border-radius: 999px;
+  border: 1px solid rgba(10, 26, 49, 0.16);
+  padding: 0.55rem 1rem;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.author-btn--primary {
+  background: #2fd7c6;
+  border-color: #2fd7c6;
+  color: #ffffff;
+}
+
+.author-btn--ghost {
+  background: #ffffff;
+  color: #0a1a31;
+}
+
+@media (max-width: 900px) {
+  .author-main {
+    width: min(100%, calc(100vw - 1.4rem));
+    padding-top: 4rem;
+  }
+
+  .author-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .author-hero__image {
+    max-width: 280px;
+  }
+}

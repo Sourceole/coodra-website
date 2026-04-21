@@ -44,6 +44,10 @@ export const blogPosts: BlogPostRecord[] = [
         text: 'These five mistakes are the most common. Coodra is built to catch all of them before they compound.',
       },
       {
+        type: 'callout',
+        text: 'What are the 5 inventory mistakes that kill margin — and how do you catch them early?',
+      },
+      {
         type: 'image',
         src: '/images/blog/inventory-mistakes-infographic.svg',
         alt: 'Five inventory management mistakes that erode retail margin, with icons for each mistake',
@@ -302,6 +306,10 @@ export const blogPosts: BlogPostRecord[] = [
         text: 'The hardest part about dead stock is that it does not announce itself. You have to know what to look for. Here are the five signals that tell you it is happening in your store.',
       },
       {
+        type: 'callout',
+        text: 'Signs of dead inventory in a retail store: the five signals to watch for before the damage compounds',
+      },
+      {
         type: 'image',
         src: '/images/blog/dead-inventory-signs.svg',
         alt: 'Five warning signs of dead inventory: shelf space, stock count mismatch, reorder fear, clearance sales, and margin drops',
@@ -405,6 +413,10 @@ export const blogPosts: BlogPostRecord[] = [
       {
         type: 'paragraph',
         text: 'This post is about the formula, what each variable means for an independent retailer, and how to apply it without building a spreadsheet that requires an accounting degree to maintain.',
+      },
+      {
+        type: 'callout',
+        text: 'The reorder point formula for retail: what it is, what each variable means, and how to apply it to your SKUs',
       },
       {
         type: 'image',
@@ -852,6 +864,10 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'callout',
+        text: 'Demand forecasting for independent retailers without an ERP: what actually works with POS data alone',
+      },
+      {
+        type: 'callout',
         text: 'The ERP assumption gap in inventory software',
       },
       {
@@ -1151,6 +1167,325 @@ export const blogPosts: BlogPostRecord[] = [
       {
         type: 'paragraph',
         text: '<a href="/inventory-management">Coodra calculates and monitors safety stock levels automatically</a> for every SKU in your POS, updated every week, so the buffer is always based on recent velocity rather than a number set once and forgotten. <a href="/signup">Connect your POS and see which SKUs are under-buffered this week</a>.',
+      },
+    ],
+  },
+  {
+    slug: 'the-90-day-replenishment-calendar',
+    title: 'The 90-Day Replenishment Calendar: Turn Your POS Data into a Concrete Buying Schedule',
+    excerpt:
+      'Most retailers know what they sold last week. Almost none have a clear picture of what they should buy for the next 90 days. A replenishment calendar fixes that — and it starts with your POS data.',
+    coverImage: '/images/blog/replenishment-calendar-90-day.svg',
+    coverImageAlt: '90-day replenishment calendar for independent retailers showing lead time gap and reorder points',
+    category: 'Inventory',
+    readingTime: '6 min read',
+    author: 'Michael Shahid (CEO)',
+    publishedAt: 'April 19, 2026',
+    isoPublishedAt: '2026-04-19',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'The most common replenishment pattern in independent retail: the owner or buyer reviews inventory on a feeling, places a purchase order, and hopes the product arrives before the shelf empties. This process is not a system. It is improvisation with a PO attached.',
+      },
+      {
+        type: 'paragraph',
+        text: 'A replenishment calendar transforms this from a reactive guess into a proactive schedule. The concept is straightforward: map out what you need to order and when, based on actual sales velocity, known lead times, and a 90-day forward view. The result is a buying calendar that tells you what to order in week 1, week 5, and week 9 — without having to re-decide every week.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The starting point is always your POS data. Without it, the calendar is a guess dressed up in a table.',
+      },
+      {
+        type: 'image',
+        src: '/images/blog/replenishment-calendar-90-day.svg',
+        alt: '90-day replenishment calendar showing lead time, reorder points, and SKU priority tiers',
+        caption: 'A replenishment calendar divides your SKUs by role and plans orders by when they are needed, not when the shelf looks low.',
+      },
+      {
+        type: 'callout',
+        text: 'Why 90 days is the right planning window for independent retail',
+      },
+      {
+        type: 'paragraph',
+        text: 'Ninety days is long enough to capture a full replenishment cycle for most products — from order to receipt to sell-through — without extending the forecast so far out that the data becomes unreliable. Most independent retailers plan too close: they reorder for next week, not for the next 90 days. This creates a perpetual scramble where every order is urgent and nothing is ever ordered with real confidence.',
+      },
+      {
+        type: 'paragraph',
+        text: 'A 90-day window forces you to think in sequences. When you order in week 1, you are ordering for arrival in week 5. When you order in week 5, you are ordering for arrival in week 9. Each purchase order is part of a chain, not a standalone event. This is the mindset shift that separates retailers who are always in front of their inventory from retailers who are always chasing it.',
+      },
+      {
+        type: 'callout',
+        text: 'Divide SKUs by role, not by category',
+      },
+      {
+        type: 'paragraph',
+        text: 'The first step in building a replenishment calendar is not sorting by product type. It is sorting by how critical the SKU is to your store and how reliably it sells. This gives you three tiers that map directly to reorder urgency.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Tier 1: Your top 5 hero SKUs — the products customers come in specifically asking for, the ones that anchor a category, the items that represent a disproportionate share of your revenue. These should always be on a standing purchase order. There should never be a week where these are not covered by at least 3 weeks of supply. <a href="/blog/safety-stock-without-overcomplicating-it">Set a higher safety stock for these</a> — 3 to 4 weeks instead of the standard 2.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Tier 2: Consistent secondary sellers. Products that sell reliably but are not the reason customers walk in the door. These follow the standard reorder formula: calculate your reorder point using average weekly sales and actual lead time, and place orders when inventory hits that point. <a href="/blog/reorder-points-without-excel">The reorder point formula applies directly here</a>.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Tier 3: Tail SKUs and slow movers. Products that sell 1-2 units per week and do not have a strong demand trend. Do not carry these on a standing order cycle. Order them when they hit their reorder point — and resist the urge to over-order just because the supplier has a minimum. A $50 missed opportunity on a slow SKU costs less than $200 in dead stock from an over-order.',
+      },
+      {
+        type: 'callout',
+        text: 'The lead time mapping: the step most retailers skip',
+      },
+      {
+        type: 'paragraph',
+        text: 'A replenishment calendar only works if you map every SKU to its actual lead time — not the supplier\'s quoted lead time. This is the step that most independent retailers skip, and it is the reason most reorder points are wrong.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Pull the last 10 purchase orders for each SKU or vendor group from your receiving records. Calculate the average number of days between PO placement and product being shelf-ready. That is your actual lead time. It will almost always be longer than what the supplier quotes — and that gap is exactly what the replenishment calendar is designed to bridge.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Once you have actual lead times mapped, you can build the sequence: order Week 1 for Week 5 arrival, order Week 5 for Week 9 arrival, and so on. The calendar is not telling you to buy more. It is telling you to buy in the right sequence so that every order arrives before you need it — not after.',
+      },
+      {
+        type: 'paragraph',
+        text: '<a href="/blog/lead-time-and-why-it-breaks-every-reorder-formula">The lead time gap is the most common point of failure in replenishment planning</a>. A calendar that ignores it is just a list of things to buy.',
+      },
+      {
+        type: 'callout',
+        text: 'How to build it in practice',
+      },
+      {
+        type: 'paragraph',
+        text: 'Start with your top 20 SKUs by revenue. Pull their average weekly sales from your POS over the last 8-12 weeks. Pull their actual lead time from your receiving records. Calculate a reorder point for each. Mark the date when each SKU hits its reorder point over the next 90 days. That is your first calendar draft.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The goal is not a perfect plan. It is a working schedule that you review and adjust every 4 weeks. The value is not in the plan itself — it is in having a structure that surfaces when you are falling behind, when lead times have drifted, or when demand has shifted enough that an order needs to move earlier or later.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra builds this calendar automatically from your POS data — surfacing which SKUs need orders this week, which are coming due in the next 4-6 weeks, and which are trending up and might need their buffer increased before the next reorder cycle. <a href="/inventory-management">See the 90-day replenishment view for your store</a>.',
+      },
+      {
+        type: 'callout',
+        text: 'The discipline the calendar creates',
+      },
+      {
+        type: 'paragraph',
+        text: 'The actual value of a replenishment calendar is not the plan itself. It is the discipline it creates. When you have a calendar, every order is a deliberate action in a sequence — not a reaction to a low shelf. You stop playing inventory management by ear and start running a scheduled supply chain, even if it is a simple one.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Retailers who run this way have fewer stockouts, less emergency ordering, and a more predictable cash flow — because they know when orders are going out and roughly when they need to pay for them. The calendar is the operating system of a well-run independent store.',
+      },
+      {
+        type: 'paragraph',
+        text: '<a href="/case-studies">See how retailers have structured their buying calendars</a> and what changed in their operations when they stopped reacting and started scheduling. Or <a href="/signup">connect your POS to Coodra</a> and see the replenishment calendar built from your actual data — no spreadsheet required.',
+      },
+    ],
+  },
+  {
+    slug: 'inventory-planning-for-small-retail',
+    title: 'What Inventory Planning Actually Means for Independent Retail (and How to Do It Without a Planner)',
+    excerpt:
+      'Most small retailers do not have a dedicated planner — and do not need one. Here is what inventory planning really requires for independent retail, and the weekly workflow that actually fits between everything else you are already doing.',
+    coverImage: '/images/blog/inventory-planning-guide.svg',
+    coverImageAlt: 'Weekly inventory planning workflow for independent retailers using POS data',
+    category: 'Inventory',
+    readingTime: '7 min read',
+    author: 'Michael Shahid (CEO)',
+    publishedAt: 'April 20, 2026',
+    isoPublishedAt: '2026-04-20',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'The phrase "inventory planning" sounds like something enterprise retailers do. Supply chain teams, ERP systems, monthly S&OP meetings. Most independent retailers look at that and think: that is not for us. And they are right — but not for the reason they think.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Inventory planning for independent retail does not require a planner or an enterprise system. It requires a clear answer to one question every week: based on what sold, what is on the shelf, and what is coming in, what should I actually order right now?',
+      },
+      {
+        type: 'paragraph',
+        text: 'That is the whole thing. Everything else in inventory planning is just machinery built to answer that question better. And for independent retailers running Shopify, Square, or Lightspeed, the machinery does not need to be complex. It needs to be consistent.',
+      },
+      {
+        type: 'callout',
+        text: 'What independent retail inventory planning actually requires',
+      },
+      {
+        type: 'paragraph',
+        text: 'The inputs for independent retail inventory planning are simpler than most software vendors suggest. You need three things: a reliable sales velocity number per SKU, a current inventory position, and an actual lead time per supplier. That is it. Everything else — demand forecasting, safety stock calculations, seasonal adjustments — is commentary on those three inputs.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Your POS gives you the first two automatically. Shopify, Square, Lightspeed, and Clover all track units sold per SKU per week and current on-hand inventory. Your distributor or supplier gives you the third, if you ask. Most independent retailers have never called a supplier and asked for their actual lead time — not the quoted time, the actual time from PO to shelf. That is where the gap usually lives.',
+      },
+      {
+        type: 'callout',
+        text: 'The weekly workflow: 20 minutes, three questions',
+      },
+      {
+        type: 'paragraph',
+        text: 'The inventory planning workflow that fits independent retail is not a 12-step process. It is a weekly review with three questions, answered in order. If you only have 20 minutes, answer those three questions and act on the one decision that matters most this week.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Question 1: Which SKUs are approaching their reorder point right now? Pull your current on-hand inventory from your POS, sort ascending by quantity. Cross-reference with your average weekly sales. Any SKU at fewer than 4 weeks of on-hand supply is a candidate. Any SKU at fewer than 2 weeks is urgent. This is your reorder list — not a feeling, not what looks low on the shelf, but a data-supported trigger.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Question 2: Which SKUs are trending up before they become a stockout? Look at your top 20 SKUs by sales volume over the last 4 weeks. Compare to the prior 4 weeks. Products selling 20% or more above their 4-week average are telling you demand has shifted — usually before you have run out. Acting on this signal early prevents the most expensive stockout: the one on your best seller.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Question 3: Which SKUs have been accumulating excess and need to be reduced? Look at weeks-of-cover — current on-hand divided by average weekly sales. Any SKU above 6 weeks of cover is accumulating. The action is not to stop ordering it entirely. The action is to reduce the order quantity on the next PO until velocity catches up to the supply you already have.',
+      },
+      {
+        type: 'callout',
+        text: 'Why most independent retailers skip the weekly review',
+      },
+      {
+        type: 'paragraph',
+        text: 'The reason most independent retailers do not do a weekly inventory review is not laziness. It is friction. Running the reports takes time. Doing the math takes time. Deciding what to change takes time. And for a store where the owner is also the buyer, the cashier, and the manager, time is the scarcest resource.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The fix is not to find more time. The fix is to reduce the friction. If running three POS reports and doing the math manually takes 45 minutes, the review will not happen consistently. If a system surfaces the three questions and their answers in a single view, updated automatically from your POS, the review takes 5 minutes. That is the difference between a weekly rhythm and a "when I remember" rhythm.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra consolidates the three questions into a single ranked decision list — automatically, every week, from your POS data. <a href="/inventory-management">See what the weekly inventory review looks like for your store</a>.',
+      },
+      {
+        type: 'callout',
+        text: 'The role of lead time in the weekly workflow',
+      },
+      {
+        type: 'paragraph',
+        text: 'The question most independent retailers skip in their weekly review is lead time. When you see a SKU at 3 weeks of on-hand supply, the question is not "is this enough?" The question is "given my supplier\'s lead time, will this be enough when the reorder arrives?" If your lead time is 3 weeks and you have 3 weeks of supply on hand, you are ordering at the edge of a stockout. One bad week — one unexpectedly strong seller week — and you are empty before the order lands.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The buffer that protects you is safety stock: enough extra inventory to cover the gap between when you order and when the order arrives, plus a cushion for demand variability. <a href="/blog/safety-stock-without-overcomplicating-it">The safety stock method for independent retailers is simpler than most people think</a> — two weeks of average weekly sales as a starting point, adjusted up for your fastest-moving SKUs.',
+      },
+      {
+        type: 'paragraph',
+        text: 'When lead time changes — and it does, especially around holidays and supplier disruptions — your reorder points need to change with it. <a href="/blog/lead-time-and-why-it-breaks-every-reorder-formula">Lead time drift is the most common cause of stockouts that feel inexplicable</a>. The retailer did nothing wrong with their demand forecast. They just did not update the lead time assumption when the supplier started running slow.',
+      },
+      {
+        type: 'callout',
+        text: 'How to fit this into a real independent retailer schedule',
+      },
+      {
+        type: 'paragraph',
+        text: 'The practical answer: Monday morning, before the store gets busy. Pull the ranked decision list from your inventory system. Review the top five items flagged for reorder. Confirm or adjust quantities. Approve. That is the entire weekly planning session. It takes less time than checking email.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The retailers who do this consistently are not doing it because they have more time. They are doing it because they have built it into their week as a non-negotiable operating habit — the same way they count the cash drawer or review the deposit. It is not a planning project. It is a weekly operating rhythm.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The alternative — waiting until the shelf looks low, reacting to stockouts instead of preventing them, ordering on intuition instead of velocity — costs more than the 20 minutes a week. Emergency orders cost more per unit. Stockouts on best sellers cost the customer and the sale. Dead stock from over-ordering costs margin on the clearance. The weekly review is not overhead. It is insurance against all three.',
+      },
+      {
+        type: 'paragraph',
+        text: '<a href="/comparisons">See how Coodra compares to other inventory planning tools</a> for independent retailers — and why the right answer for most small retail teams is not an enterprise planning platform. <a href="/signup">Connect your POS and see your first weekly decision list</a> in under a day.',
+      },
+    ],
+  },
+  {
+    slug: 'ai-inventory-management-for-retail',
+    title: 'What AI Inventory Management Actually Means for Independent Retail (and What It Does Not)',
+    excerpt:
+      'Every vendor now says they have AI. For independent retailers, AI in inventory management means one thing: your POS data getting turned into a ranked decision list without a consultant in the loop. Here is what to look for.',
+    coverImage: '/images/blog/ai-inventory-management.svg',
+    coverImageAlt: 'AI inventory management for independent retailers using POS data',
+    category: 'Inventory',
+    readingTime: '7 min read',
+    author: 'Michael Shahid (CEO)',
+    publishedAt: 'April 20, 2026',
+    isoPublishedAt: '2026-04-20',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'Search for inventory management software and every vendor now has AI. Machine learning models, demand forecasting engines, predictive replenishment. The term is everywhere. For independent retailers trying to separate signal from noise, it is increasingly hard to know what it actually means — and whether any of it is relevant to a 2-location jewelry store or a single-location pet shop running Square.',
+      },
+      {
+        type: 'paragraph',
+        text: 'This post is an honest accounting of what AI in inventory management actually does for independent retail, what it does not do, and what to look for when a vendor says their software is AI-powered.',
+      },
+      {
+        type: 'callout',
+        text: 'What AI inventory management means for independent retailers',
+      },
+      {
+        type: 'paragraph',
+        text: 'For independent retail, AI inventory management is not a forecasting model that requires months of training data, a data science team, or an ERP backend. It is a specific type of automation: taking the raw signal from your POS — what sold, what is on hand, what is trending — and converting it into a ranked decision list without a human having to run the numbers first.',
+      },
+      {
+        type: 'paragraph',
+        text: 'That is the practical definition. The POS generates data continuously. A true AI inventory management system for independent retail takes that data stream and does something useful with it: surfaces the SKUs that need attention this week, scores them by urgency and margin impact, and presents them as a clear action list — not a dashboard to explore.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The key qualifier is "for independent retail." Enterprise AI inventory tools do something different: they run statistical demand forecasting models across thousands of SKUs, optimize inventory positioning across multiple warehouses, and generate purchase orders automatically based on forecasts weeks or months in advance. That is AI for a different operational scale. Independent retailers do not need multi-warehouse optimization. They need one store\'s worth of decisions, ranked.',
+      },
+      {
+        type: 'callout',
+        text: 'The specific AI signals that actually matter for small retail',
+      },
+      {
+        type: 'paragraph',
+        text: 'For a retailer running Shopify, Square, or Lightspeed, there are three AI-generated signals that directly change outcomes. Everything else is enterprise-grade complexity that a 2-location retailer does not need.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Signal 1: Velocity trend detection. Your POS knows what sold last week. AI velocity trend detection knows whether that number is normal, climbing, or declining — and whether the change is noise or signal. A product selling 20 units this week versus 18 last week is noise. A product selling 20 units this week versus 12 four weeks ago is a trend. AI catches that distinction automatically, across all your SKUs, without you running a report.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Signal 2: Reorder timing calibrated to actual lead time. The most expensive mistake in independent retail inventory is reordering too late — running out before the new stock arrives. AI that knows your actual distributor lead time, updated from your receiving history, can tell you when to trigger a reorder for each SKU specifically — not based on a generic reorder point, but based on your actual supply chain rhythm.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Signal 3: Margin-weighted ranking. A SKU that is about to stock out is urgent. But urgency and importance are not the same thing. AI that scores every SKU by its contribution to margin — not just its velocity — ranks your reorder list by what matters most to your store, not by alphabetical or alphabetical. A $200 jewelry piece that is about to run out matters more to your margin than a $15 accessory at the same stockout risk.',
+      },
+      {
+        type: 'callout',
+        text: 'What AI inventory management does not mean',
+      },
+      {
+        type: 'paragraph',
+        text: 'AI does not replace judgment. No AI system knows that your top-selling SKU just got a mention in a local publication that will drive traffic this weekend. No AI system knows that you are about to run a 20%-off promotion that will spike velocity on three categories. AI gives you a data-backed baseline. Your judgment adjusts from there.',
+      },
+      {
+        type: 'paragraph',
+        text: 'AI also does not fix dirty data. If your POS has SKUs with incorrect names, duplicate entries, or inconsistent category tagging, AI will work from that dirty data and produce dirty outputs. The foundation of any AI inventory management system is clean POS data. If you have not done a periodic audit of your SKU names and category structure, AI amplifies your data — including the errors.',
+      },
+      {
+        type: 'paragraph',
+        text: 'And AI does not run without a POS connection. If the inventory software requires you to manually enter sales data or update inventory counts from a spreadsheet, it is not AI-powered inventory management — it is a spreadsheet with better UX. The AI layer requires live POS data to function. If you are not connected, you are not getting AI.',
+      },
+      {
+        type: 'callout',
+        text: 'What to look for when evaluating AI inventory management vendors',
+      },
+      {
+        type: 'paragraph',
+        text: 'Ask specifically: does this use my actual POS data or do I need to input it manually? If manual input is required, the AI claim is thin. Ask: what is the AI actually scoring, and in what order does it rank the decisions? If the answer is "we show you all your inventory" without a ranking, that is not AI — that is a data display. Ask: can I see the lead time and velocity data the AI is using, and can I override it? If the system does not let you see and adjust the inputs, you are trusting the AI completely — and that is not appropriate for a system making buying decisions with real cash implications.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Coodra is AI inventory management for independent retail: it connects directly to Shopify, Square, Lightspeed, or Clover, scores every SKU by velocity trend and margin contribution, and surfaces the ranked decision list every week. <a href="/inventory-management">See what the AI decision surface looks like</a>.',
+      },
+      {
+        type: 'paragraph',
+        text: 'For a comparison of what independent retailers actually need from inventory software versus what enterprise tools provide, <a href="/comparisons">see how Coodra compares to Netstock, Cin7, and six other alternatives</a>. The AI question is not "who has the most sophisticated model." The question is: who connects to my POS and gives me a decision I can act on this week.',
       },
     ],
   },

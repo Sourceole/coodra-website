@@ -247,10 +247,27 @@
 
 .about-v2-founding__image {
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  aspect-ratio: 16 / 10;
   display: block;
   border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 42px rgba(10, 26, 49, 0.12);
+}
+
+.about-v2-founding__media-label {
+  margin: 0.65rem 0 0;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(47, 215, 198, 0.42);
+  border-radius: 999px;
+  background: rgba(47, 215, 198, 0.08);
+  color: #0f7f76;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.24rem 0.58rem;
 }
 
 .about-v2-founding__copy h2 {

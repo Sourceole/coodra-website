@@ -1,0 +1,66 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Risk understanding visualization</title>
+  <desc id="desc">Concentric risk rings, impact bars, and warning pulse.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f2fbff"/>
+    </linearGradient>
+    <linearGradient id="barA" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2fd7c6"/>
+      <stop offset="100%" stop-color="#9feadf"/>
+    </linearGradient>
+    <linearGradient id="barB" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f6b94a"/>
+      <stop offset="100%" stop-color="#ffe2a8"/>
+    </linearGradient>
+    <linearGradient id="barC" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f06a7e"/>
+      <stop offset="100%" stop-color="#f9b8c5"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="700" rx="34" fill="url(#bg)"/>
+
+  <g transform="translate(335 348)">
+    <circle r="210" fill="none" stroke="#d9e9f2" stroke-width="3" stroke-dasharray="6 10"/>
+    <circle r="160" fill="none" stroke="#c5deea" stroke-width="3" stroke-dasharray="8 12">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="24s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="110" fill="none" stroke="#2fd7c6" stroke-width="4" opacity="0.45">
+      <animate attributeName="r" values="106;122;106" dur="3.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="22" fill="#2fd7c6"/>
+  </g>
+
+  <g transform="translate(620 190)">
+    <rect x="0" y="0" width="470" height="84" rx="16" fill="#ffffff" stroke="#d5e3ef"/>
+    <rect x="0" y="108" width="470" height="84" rx="16" fill="#ffffff" stroke="#d5e3ef"/>
+    <rect x="0" y="216" width="470" height="84" rx="16" fill="#ffffff" stroke="#d5e3ef"/>
+
+    <rect x="24" y="24" width="290" height="36" rx="18" fill="url(#barA)">
+      <animate attributeName="width" values="180;320;180" dur="5s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="24" y="132" width="230" height="36" rx="18" fill="url(#barB)">
+      <animate attributeName="width" values="160;280;160" dur="5.8s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="24" y="240" width="340" height="36" rx="18" fill="url(#barC)">
+      <animate attributeName="width" values="200;370;200" dur="4.8s" repeatCount="indefinite"/>
+    </rect>
+
+    <text x="336" y="49" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#0a1a31">Low</text>
+    <text x="336" y="157" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#915500">Watch</text>
+    <text x="336" y="265" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#a4334d">High</text>
+  </g>
+
+  <g transform="translate(1000 70)">
+    <path d="M0 90 L52 0 L104 90 Z" fill="#fff5f6" stroke="#f06a7e" stroke-width="4"/>
+    <rect x="48" y="30" width="8" height="30" rx="4" fill="#f06a7e"/>
+    <circle cx="52" cy="72" r="5" fill="#f06a7e"/>
+    <animateTransform attributeName="transform" type="translate" values="1000 70;1000 63;1000 70" dur="2.2s" repeatCount="indefinite"/>
+  </g>
+
+  <g fill="#506786" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="600">
+    <text x="84" y="110">Impact and consequence become obvious</text>
+  </g>
+</svg>

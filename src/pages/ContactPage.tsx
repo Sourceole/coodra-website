@@ -16,6 +16,30 @@ export default function ContactPage() {
   const actionData = useActionData<ContactActionData>()
   const navigation = useNavigation()
   const isSubmitting = navigation.state === 'submitting'
+  const contactPageJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'Contact Coodra',
+    url: 'https://www.coodra.com/contact',
+    description:
+      'Reach Coodra for support, sales, partnerships, or product questions. We reply within 1 business day.',
+    inLanguage: 'en',
+    mainEntity: {
+      '@type': 'Organization',
+      '@id': 'https://www.coodra.com/#organization',
+      name: 'Coodra',
+      url: 'https://www.coodra.com',
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          contactType: 'customer support',
+          email: 'admin@coodra.com',
+          availableLanguage: ['English'],
+          areaServed: ['CA', 'US'],
+        },
+      ],
+    },
+  }
 
   useEffect(() => {
     if (actionData?.ok) {
@@ -129,6 +153,10 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageJsonLd) }}
+      />
       <MarketingFooter />
     </>
   )

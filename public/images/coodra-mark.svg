@@ -1,0 +1,21 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="coodraMarkA" x1="11" y1="12" x2="29" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7DE4DA"/>
+      <stop offset="0.58" stop-color="#2FD7C6"/>
+      <stop offset="1" stop-color="#1C9F94"/>
+    </linearGradient>
+    <linearGradient id="coodraMarkB" x1="31" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#94ECE3"/>
+      <stop offset="0.56" stop-color="#40DCCE"/>
+      <stop offset="1" stop-color="#209E93"/>
+    </linearGradient>
+  </defs>
+
+  <path d="M12 18C12 15.8 13.8 14 16 14H24C26.2 14 28 15.8 28 18V36.5L14 52V18C14 16.9 13.1 16 12 16V18Z" fill="url(#coodraMarkA)"/>
+  <path d="M32 12C32 9.8 33.8 8 36 8H45C47.2 8 49 9.8 49 12V40L34 56V12Z" fill="url(#coodraMarkB)"/>
+  <path d="M28 33.5L14 49V52L28 36.5V33.5Z" fill="#0E7E77" fill-opacity="0.8"/>
+  <path d="M49 36.8L34 52V56L49 40.8V36.8Z" fill="#0A7D74" fill-opacity="0.8"/>
+  <path d="M28 24.5C23.5 24.5 18.7 27 14 32V34.6C19 29.4 23.7 26.8 28 26.8V24.5Z" fill="#CFFAF5" fill-opacity="0.65"/>
+  <path d="M49 20.7C43.8 20.7 38.6 23.7 34 29.2V31.9C38.8 26.1 43.9 23 49 23V20.7Z" fill="#D6FCF7" fill-opacity="0.62"/>
+</svg>

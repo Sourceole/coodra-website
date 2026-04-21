@@ -674,7 +674,7 @@ function enforceChatComposerStyle() {
     chatWrap.style.setProperty('flex-direction', 'column', 'important');
     chatWrap.style.setProperty('align-items', 'center', 'important');
     chatWrap.style.setProperty('justify-content', 'center', 'important');
-    chatWrap.style.setProperty('transform', 'translateY(-68px)', 'important');
+    chatWrap.style.setProperty('transform', 'translateY(0)', 'important');
   }
   if (chatWrap instanceof HTMLElement && !isEmpty) {
     chatWrap.style.setProperty('transform', 'none', 'important');
@@ -7733,7 +7733,7 @@ function renderSurfaceHeader(tabName) {
     els.surfaceWelcomeWrap.style.display = isPerformance ? '' : 'none';
   }
   if (isPerformance && els.surfaceWelcome) {
-    els.surfaceWelcome.textContent = `Welcome Back, ${headerClientName} !`;
+    els.surfaceWelcome.textContent = `Welcome back, ${headerClientName}`;
   }
 }
 

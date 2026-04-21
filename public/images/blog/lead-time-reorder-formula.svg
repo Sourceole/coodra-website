@@ -1,53 +1,100 @@
-<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-  <rect width="800" height="400" fill="#f4f5f7"/>
-  <text x="40" y="50" font-family="sans-serif" font-size="22" font-weight="700" fill="#0a1a31">The Lead Time Gap</text>
-  <text x="40" y="75" font-family="sans-serif" font-size="14" fill="#506786">Why reordering "now" is always too late</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1a31"/>
+      <stop offset="100%" stop-color="#0f2744"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2fd7c6"/>
+      <stop offset="100%" stop-color="#1fb5a3"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1" fill="#1a3560" opacity="0.5"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <rect x="0" y="0" width="1200" height="4" fill="url(#teal)"/>
+
+  <!-- Header -->
+  <text x="600" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2fd7c6" text-anchor="middle" letter-spacing="3">REPLENISHMENT PLANNING · LEAD TIME</text>
+  <text x="600" y="120" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">The Lead Time Gap</text>
+  <text x="600" y="165" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">That Kills Every Reorder Formula</text>
+  <text x="600" y="202" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#7aa8c4" text-anchor="middle">Reordering "now" is always too late. Here is why — and how to close the gap.</text>
+  <line x1="180" y1="225" x2="1020" y2="225" stroke="#1e3a6e" stroke-width="1"/>
 
   <!-- Timeline bar -->
-  <rect x="40" y="120" width="720" height="8" rx="4" fill="#e2e8f0"/>
-
+  <rect x="100" y="258" width="1000" height="10" rx="5" fill="#1e3a6e"/>
   <!-- Lead time section -->
-  <rect x="40" y="120" width="280" height="8" rx="4" fill="#2fd7c6"/>
-  <text x="40" y="110" font-family="sans-serif" font-size="11" fill="#2fd7c6" font-weight="700">LEAD TIME</text>
-
+  <rect x="100" y="258" width="320" height="10" rx="5" fill="#2fd7c6"/>
   <!-- Gap section -->
-  <rect x="320" y="120" width="200" height="8" rx="4" fill="#f59e0b"/>
-  <text x="320" y="110" font-family="sans-serif" font-size="11" fill="#f59e0b" font-weight="700">THE GAP</text>
+  <rect x="420" y="258" width="200" height="10" rx="5" fill="#f59e0b"/>
+  <!-- Stock depleting -->
+  <rect x="620" y="258" width="480" height="10" rx="5" fill="#ef4444" opacity="0.7"/>
 
-  <!-- Stock depletion section -->
-  <rect x="520" y="120" width="240" height="8" rx="4" fill="#0a1a31"/>
-  <text x="520" y="110" font-family="sans-serif" font-size="11" fill="#0a1a31" font-weight="700">STOCK DEPLETING</text>
+  <!-- Labels above bar -->
+  <text x="260" y="248" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#2fd7c6" text-anchor="middle">LEAD TIME</text>
+  <text x="520" y="248" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#f59e0b" text-anchor="middle">THE GAP</text>
+  <text x="860" y="248" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#ef4444" text-anchor="middle">STOCK DEPLETING</text>
 
   <!-- Order point marker -->
-  <line x1="320" y1="108" x2="320" y2="145" stroke="#2fd7c6" stroke-width="2" stroke-dasharray="4"/>
-  <circle cx="320" cy="120" r="6" fill="#2fd7c6"/>
-  <text x="320" y="165" font-family="sans-serif" font-size="12" fill="#2fd7c6" text-anchor="middle">You place order</text>
+  <line x1="420" y1="244" x2="420" y2="276" stroke="#2fd7c6" stroke-width="2" stroke-dasharray="4"/>
+  <circle cx="420" cy="258" r="8" fill="#2fd7c6"/>
+  <text x="420" y="294" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#2fd7c6" text-anchor="middle">You place order</text>
+  <text x="420" y="308" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4" text-anchor="middle">(when shelf looks low)</text>
 
-  <!-- Stock level curve -->
-  <polyline points="40,180 320,180 520,200 760,250" fill="none" stroke="#0a1a31" stroke-width="3"/>
-  <polyline points="40,180 320,180 520,200 760,250" fill="rgba(10,26,49,0.06)" stroke="none"/>
+  <!-- Stock depletion curve -->
+  <polyline points="100,330 420,330 620,355 1100,430" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="100,330 420,330 620,355 1100,430" fill="rgba(255,255,255,0.05)" stroke="none"/>
 
-  <!-- Safety stock line -->
-  <line x1="40" y1="270" x2="760" y2="270" stroke="#2fd7c6" stroke-width="2" stroke-dasharray="6,4"/>
-  <text x="40" y="285" font-family="sans-serif" font-size="12" fill="#2fd7c6">Safety stock floor</text>
+  <!-- Safety stock floor -->
+  <line x1="100" y1="380" x2="1100" y2="380" stroke="#2fd7c6" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="120" y="398" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#2fd7c6">Safety stock floor</text>
 
   <!-- Stockout point -->
-  <circle cx="620" cy="270" r="8" fill="#ef4444"/>
-  <line x1="620" y1="260" x2="620" y2="400" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
-  <text x="620" y="320" font-family="sans-serif" font-size="12" fill="#ef4444" text-anchor="middle">Stockout</text>
-  <text x="620" y="340" font-family="sans-serif" font-size="11" fill="#ef4444" text-anchor="middle">if lead time</text>
-  <text x="620" y="356" font-family="sans-serif" font-size="11" fill="#ef4444" text-anchor="middle">underestimated</text>
+  <circle cx="820" cy="380" r="8" fill="#ef4444"/>
+  <line x1="820" y1="370" x2="820" y2="460" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
+  <text x="820" y="478" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ef4444" text-anchor="middle">STOCKOUT</text>
+  <text x="820" y="496" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#7aa8c4" text-anchor="middle">if lead time underestimated</text>
 
   <!-- Reorder arriving -->
-  <line x1="700" y1="108" x2="700" y2="145" stroke="#2fd7c6" stroke-width="2" stroke-dasharray="4"/>
-  <circle cx="700" cy="120" r="6" fill="#2fd7c6"/>
-  <text x="700" y="165" font-family="sans-serif" font-size="12" fill="#2fd7c6" text-anchor="middle">Reorder arrives</text>
+  <line x1="1040" y1="244" x2="1040" y2="276" stroke="#2fd7c6" stroke-width="2" stroke-dasharray="4"/>
+  <circle cx="1040" cy="258" r="8" fill="#2fd7c6"/>
+  <text x="1040" y="294" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#2fd7c6" text-anchor="middle">Reorder arrives</text>
 
-  <!-- Key insight box -->
-  <rect x="40" y="360" width="340" height="30" rx="4" fill="#0a1a31"/>
-  <text x="56" y="380" font-family="sans-serif" font-size="12" fill="#ffffff">Reorder Point = (Avg Weekly Sales × Lead Time) + Safety Stock</text>
+  <!-- Formula callout box -->
+  <rect x="100" y="460" width="480" height="50" rx="8" fill="#0d2040"/>
+  <rect x="100" y="460" width="480" height="50" rx="8" fill="none" stroke="#2fd7c6" stroke-width="1.5"/>
+  <text x="120" y="486" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#2fd7c6">REORDER POINT FORMULA</text>
+  <text x="120" y="502" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#ffffff">(Avg Weekly Sales × Lead Time in Weeks) + Safety Stock</text>
 
-  <!-- Problem box -->
-  <rect x="420" y="360" width="340" height="30" rx="4" fill="#ef4444"/>
-  <text x="436" y="380" font-family="sans-serif" font-size="12" fill="#ffffff">Most retailers use QUOTED lead time, not ACTUAL lead time</text>
+  <!-- Problem callout box -->
+  <rect x="620" y="460" width="480" height="50" rx="8" fill="#0d2040"/>
+  <rect x="620" y="460" width="480" height="50" rx="8" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="640" y="486" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#ef4444">THE COMMON MISTAKE</text>
+  <text x="640" y="502" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#ffffff">Using quoted lead time — not your actual replenishment cycle</text>
+
+  <!-- Bottom CTA band -->
+  <rect x="0" y="520" width="1200" height="110" fill="#081828"/>
+  <rect x="0" y="520" width="1200" height="3" fill="url(#teal)"/>
+
+  <!-- Coodra compass icon -->
+  <g transform="translate(100, 568)">
+    <circle cx="32" cy="32" r="28" fill="none" stroke="#2fd7c6" stroke-width="1.5"/>
+    <polygon points="32,10 36,30 32,32 28,30" fill="#2fd7c6"/>
+    <polygon points="32,54 36,34 32,32 28,34" fill="#f59e0b"/>
+    <line x1="8" y1="32" x2="16" y2="32" stroke="#1e3a6e" stroke-width="1.5"/>
+    <line x1="48" y1="32" x2="56" y2="32" stroke="#1e3a6e" stroke-width="1.5"/>
+    <line x1="32" y1="8" x2="32" y2="16" stroke="#1e3a6e" stroke-width="1.5"/>
+    <line x1="32" y1="48" x2="32" y2="56" stroke="#1e3a6e" stroke-width="1.5"/>
+  </g>
+
+  <text x="200" y="575" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="#ffffff">Coodra calculates reorder points using your actual replenishment cycle — not the quoted one.</text>
+  <text x="200" y="596" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#7aa8c4">Per-SKU lead time tracked automatically. Flags drift before it becomes a stockout.</text>
+
+  <rect x="900" y="555" width="200" height="46" rx="8" fill="#2fd7c6"/>
+  <text x="1000" y="584" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#0a1a31" text-anchor="middle">See it in action →</text>
+
+  <text x="1140" y="618" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#1e3a6e" text-anchor="end">coodra.com</text>
 </svg>
