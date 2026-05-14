@@ -1,385 +1,359 @@
-import { useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router'
+import { Clock3, Database, ShieldCheck, Sparkles } from 'lucide-react'
+import {
+  animate,
+  motion,
+  useMotionValue,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from 'framer-motion'
 import MarketingHeader from '../components/MarketingHeader'
 import MarketingFooter from '../components/MarketingFooter'
+import { openEarlyAccessModal } from '../lib/earlyAccessEvents'
+import { formatPlanValue, pricingComparisonGroups, pricingPlans } from '../lib/pricingPlans'
 import './PricingPage.css'
 
-type Tier = {
-  name: string
-  monthlyPrice: number | 'Custom'
-  yearlyPrice: number | 'Custom'
-  description: string
-  cta: string
-  popular?: boolean
-  items: string[]
-}
-
-const YEARLY_DISCOUNT_LABEL = 'Save 18%'
-
-const tiers: Tier[] = [
-  {
-    name: 'Free',
-    monthlyPrice: 0,
-    yearlyPrice: 0,
-    description: 'Start free. No credit card. Connect your POS in 5 minutes.',
-    cta: 'Start Free',
-    items: [
-      '1 store',
-      '500 products tracked',
-      '75 AI decisions / month',
-      'Reorder, replace, remove decisions',
-      'Basic margin insights',
-      'POS included: Shopify, Square, Lightspeed, Clover, Moneris',
-      '1 team member',
-    ],
-  },
-  {
-    name: 'Starter',
-    monthlyPrice: 79,
-    yearlyPrice: 777,
-    description: 'For solo retailers ready to stop guessing and start knowing.',
-    cta: 'Choose Starter',
-    items: [
-      'Everything in Free',
-      '2,500 products tracked',
-      '500 AI decisions / month',
-      'Category performance',
-      'Export data',
-      'POS included: Shopify, Square, Lightspeed, Clover, Moneris',
-      '2 team members',
-      'No per-seat fees',
-    ],
-  },
-  {
-    name: 'Growth',
-    monthlyPrice: 199,
-    yearlyPrice: 1957,
-    description: 'For retailers ready to let Coodra run full product strategy.',
-    cta: 'Choose Growth',
-    popular: true,
-    items: [
-      'Everything in Starter',
-      '5 stores',
-      '10,000 products tracked',
-      'Unlimited AI decisions',
-      'Market signals and trend detection',
-      'Inventory risk alerts',
-      'POS included: Shopify, Square, Lightspeed, Clover, Moneris',
-      '10 team members',
-      'No per-seat fees',
-    ],
-  },
-  {
-    name: 'Pro',
-    monthlyPrice: 349,
-    yearlyPrice: 3434,
-    description: 'For growing retailers with multiple locations.',
-    cta: 'Choose Pro',
-    items: [
-      'Everything in Growth',
-      '15 stores',
-      'Unlimited products',
-      'Priority support',
-      'Custom alerts',
-      'POS included: Shopify, Square, Lightspeed, Clover, Moneris',
-      '25 team members',
-      'No per-seat fees',
-    ],
-  },
-  {
-    name: 'Enterprise',
-    monthlyPrice: 'Custom',
-    yearlyPrice: 'Custom',
-    description: 'For large retail operations that need custom everything.',
-    cta: 'Talk to Sales',
-    items: [
-      'Everything in Pro',
-      'Unlimited stores',
-      'Dedicated CSM',
-      'Custom integrations',
-      'SLA',
-      'API access',
-      'Unlimited team members',
-    ],
-  },
+const faqs = [
+  ['What POS systems does Coodra connect to?', 'Coodra connects to Shopify, Square, Lightspeed, and Clover. Moneris support is available by account configuration.'],
+  ['Do I need an ERP?', 'No. Coodra does not require an ERP. We connect directly to your POS and inventory sources.'],
+  ['Does Coodra place orders automatically?', 'No. Coodra is review-first in the app: it recommends actions, and your team approves or skips each decision.'],
+  ['Can I join before public launch?', 'Yes. Coodra is onboarding select retailers through early access so we can verify integrations, data quality, and dashboard workflows with real stores before opening self-serve plans.'],
 ]
 
-const features = [
-  ['Stores', '1', '1', '5', '15', 'Unlimited'],
-  ['Products tracked', '500', '2,500', '10,000', 'Unlimited', 'Unlimited'],
-  ['AI decisions / month', '75', '500', 'Unlimited', 'Unlimited', 'Unlimited'],
-  ['Team members', '1', '2', '10', '25', 'Unlimited'],
-  ['POS integrations included', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes'],
-  ['Reorder / Replace / Remove', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes'],
-  ['Category performance', '-', 'Yes', 'Yes', 'Yes', 'Yes'],
-  ['Market signals', '-', '-', 'Yes', 'Yes', 'Yes'],
-  ['Trend detection', '-', '-', 'Yes', 'Yes', 'Yes'],
-  ['Inventory risk alerts', '-', '-', 'Yes', 'Yes', 'Yes'],
-  ['Priority support', '-', '-', '-', 'Yes', 'Yes'],
-  ['Custom alerts', '-', '-', '-', 'Yes', 'Yes'],
-  ['API access', '-', '-', '-', '-', 'Yes'],
-]
-
-function formatPrice(value: number | 'Custom', yearly: boolean) {
-  if (value === 'Custom') return 'Custom'
-  return `$${value.toLocaleString()}${yearly ? '/year' : '/month'}`
+const pricingFaqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(([question, answer]) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: answer,
+    },
+  })),
 }
 
-function ComparisonCell({ value }: { value: string }) {
-  if (value === 'Yes') {
-    return (
-      <span className="check-yes" aria-label="Included">
-        <svg viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M6.8 11.1 3.9 8.2a.9.9 0 1 1 1.3-1.3l1.6 1.6 4.2-4.2a.9.9 0 0 1 1.3 1.3l-5.5 5.5Z" />
-        </svg>
-      </span>
-    )
+const pricingHowToJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to start Coodra with your POS',
+  description:
+    'A review-first onboarding flow for independent retailers to connect POS data and begin weekly decision reviews.',
+  step: [
+    {
+      '@type': 'HowToStep',
+      name: 'Connect your POS',
+      text: 'Connect Shopify, Square, Lightspeed, or Clover so sales and inventory data can sync.',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Review ranked recommendations',
+      text: 'Review weekly reorder and margin opportunities sorted by impact.',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Approve actions',
+      text: 'Approve high-confidence actions with context and projected impact.',
+    },
+  ],
+}
+
+function AnimatedPriceValue({ amount, reduceMotion }: { amount: number | 'Custom'; reduceMotion: boolean }) {
+  const [display, setDisplay] = useState(typeof amount === 'number' ? amount : 0)
+  const motionAmount = useMotionValue(typeof amount === 'number' ? amount : 0)
+  const roundedAmount = useTransform(motionAmount, (latest) => Math.round(latest))
+
+  useMotionValueEvent(roundedAmount, 'change', (latest) => {
+    setDisplay(latest)
+  })
+
+  useEffect(() => {
+    if (typeof amount !== 'number') {
+      motionAmount.set(0)
+      return
+    }
+
+    if (reduceMotion) {
+      motionAmount.set(amount)
+      return
+    }
+
+    const controls = animate(motionAmount, amount, {
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1],
+      onUpdate: (latest) => setDisplay(Math.round(latest)),
+    })
+
+    return () => controls.stop()
+  }, [amount, motionAmount, reduceMotion])
+
+  if (amount === 'Custom') {
+    return <span className="price-value">Custom</span>
   }
 
-  if (value === '-') {
-    return <span className="check-dash" aria-hidden="true">-</span>
-  }
+  return <span className="price-value">${display.toLocaleString()}</span>
+}
 
+function Cell({ value }: { value: string }) {
+  if (value === 'Included') return <span className="pricing-check">{'\u2713'}</span>
+  if (value === 'Not included') return <span className="pricing-dash">{'\u2014'}</span>
   return <span>{value}</span>
 }
 
 export default function PricingPage() {
-  const [isYearly, setIsYearly] = useState(false)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll()
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.22 })
+  const heroParallaxY = useTransform(smoothProgress, [0, 0.25], [0, -22])
+  const heroParallaxScale = useTransform(smoothProgress, [0, 0.25], [1, 1.02])
 
-  const displayTiers = useMemo(
+  const priceTiers = useMemo(
     () =>
-      tiers.map((tier) => ({
+      pricingPlans.map((tier) => ({
         ...tier,
-        displayPrice: formatPrice(isYearly ? tier.yearlyPrice : tier.monthlyPrice, isYearly),
+        displayPrice: tier.price,
+        cta: tier.key === 'enterprise' ? 'Talk to Coodra' : 'Request Early Access',
+        ctaHref: tier.key === 'enterprise' ? '/contact?intent=enterprise' : ''
       })),
-    [isYearly],
+    [],
   )
 
-  const faqJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'What POS systems does Coodra connect to?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Coodra connects to Shopify, Square, Lightspeed, Clover, and Moneris. All five POS integrations are included on every plan at no extra cost. You connect your POS once and Coodra syncs your sales and inventory data automatically — no manual exports required.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'How many stores can I manage?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Free supports 1 store. Starter supports 1 store. Growth supports up to 5 stores. Pro supports up to 15 stores. Enterprise supports unlimited stores.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'What counts as an "AI decision"?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Each reorder, replace, or remove recommendation that Coodra surfaces counts as one AI decision. Free plans get 75 per month. Starter gets 500 per month. Growth and Pro include unlimited AI decisions.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Is there a free plan?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Yes. The Free plan includes 1 store, 500 products tracked, and 75 AI decisions per month at no charge. No credit card required to start.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Can I add team members?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Free includes 1 team member. Starter includes 2. Growth includes 10. Pro includes 25. Enterprise includes unlimited team members. There are no per-seat fees on Starter, Growth, or Pro.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'What happens if I exceed my AI decision limit?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'On Free and Starter plans, you will receive a notification when you approach your monthly decision limit. You can upgrade to Growth for unlimited decisions, or wait until your limit resets at the start of the next billing month.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Can I cancel anytime?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Yes. There are no cancellation fees. You can cancel your subscription at any time from your account settings. If you cancel a paid plan, you will retain access through the end of your current billing period.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Does Coodra work for multi-location retailers?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Yes. Growth supports up to 5 stores, Pro up to 15 stores, and Enterprise supports unlimited stores. Each store\'s inventory and sales data is tracked separately and aggregated into a single inventory intelligence view.',
-        },
-      },
-    ],
-  }
+  const sectionReveal = reduceMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 26 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, amount: 0.16 },
+        transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+      }
 
   return (
     <div className="pricing-page">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingFaqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingHowToJsonLd) }}
       />
       <MarketingHeader />
+      <motion.div className="pricing-scroll-progress" style={{ scaleX: smoothProgress }} />
 
-      <main className="pricing-main">
-        <section className="pricing-hero" aria-label="Pricing hero">
-          <div className="pricing-hero-inner">
-            <p className="pricing-eyebrow">Simple Pricing</p>
-            <h1>Pricing that scales with your retail footprint</h1>
-            <p className="pricing-hero-subhead">Connect POS once, then let Coodra run smarter decisions every day.</p>
+      <main className="pricing-main-v2">
+        <motion.section className="pricing-hero-v2" {...sectionReveal}>
+          <div className="container pricing-hero-grid">
+            <div className="pricing-hero-copy">
+              <p className="pricing-eyebrow-v2">Early access</p>
+              <h1>Join Coodra before public launch</h1>
+              <p>Coodra is currently onboarding select retailers with guided setup so we can verify integrations, dashboard workflows, and recommendation quality before opening self-serve plans.</p>
 
-            <div className="pricing-billing-switch" role="tablist" aria-label="Billing period">
-              <button
-                type="button"
-                role="tab"
-                aria-selected={!isYearly}
-                className={`billing-option ${!isYearly ? 'is-active' : ''}`}
-                onClick={() => setIsYearly(false)}
-              >
-                Monthly
-              </button>
-              <button
-                type="button"
-                role="tab"
-                aria-selected={isYearly}
-                className={`billing-option ${isYearly ? 'is-active' : ''}`}
-                onClick={() => setIsYearly(true)}
-              >
-                Yearly <span className="billing-discount">{YEARLY_DISCOUNT_LABEL}</span>
-              </button>
-              <span className={`billing-knob ${isYearly ? 'is-yearly' : ''}`} aria-hidden="true" />
+              <div className="pricing-hero-actions">
+                <button type="button" className="btn-start" onClick={openEarlyAccessModal}>Request Early Access</button>
+                <Link to="/contact?intent=pilot" className="btn-sales">Talk to Coodra</Link>
+              </div>
+              <div className="pricing-early-access-note">
+                <span>Guided onboarding only</span>
+                <p>Plan details are shown for transparency. Early access accounts are approved before setup.</p>
+              </div>
             </div>
-          </div>
-        </section>
 
-        <section className="pricing-grid-section" aria-label="Pricing plans">
-          <div className="pricing-grid">
-            {displayTiers.map((tier) => (
-              <article className={`price-card ${tier.popular ? 'is-popular' : ''}`} key={tier.name}>
-                {tier.popular ? <span className="popular-badge">Most Popular</span> : null}
-                <p className="tier-name">{tier.name}</p>
-                <p className="tier-price">{tier.displayPrice}</p>
-                <p className="tier-desc">{tier.description}</p>
-                <ul className="tier-list">
-                  {tier.items.map((item) => (
+            <motion.div
+              className="pricing-hero-media"
+              style={reduceMotion ? undefined : { y: heroParallaxY, scale: heroParallaxScale }}
+            >
+              <picture>
+                <source srcSet="/images/pricing/hero-1.webp" type="image/webp" />
+                <img
+                  src="/images/pricing/hero-1.png"
+                  alt="Coodra pricing hero visual"
+                  width={1586}
+                  height={992}
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
+                />
+              </picture>
+            </motion.div>
+          </div>
+        </motion.section>
+
+        <motion.section className="container pricing-plans-v2" aria-label="Plans" {...sectionReveal}>
+          <div className="pricing-access-banner">
+            <div>
+              <span>Public self-serve is not open yet</span>
+              <p>We are prioritizing early access retailers who can connect real POS and inventory data with our team during onboarding.</p>
+            </div>
+            <button type="button" onClick={openEarlyAccessModal}>Apply for Early Access</button>
+          </div>
+          <div className="plan-grid-v2">
+            {priceTiers.map((tier, index) => (
+              <motion.article
+                key={tier.name}
+                className={`plan-card-v2${tier.highlighted ? ' is-popular' : ''}`}
+                initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+                whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={reduceMotion ? undefined : { duration: 0.42, delay: index * 0.055, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {tier.badge ? <div className="popular-top">{tier.badge}</div> : null}
+                <h3>{tier.name}</h3>
+                <p className="price">
+                  <AnimatedPriceValue amount={tier.displayPrice} reduceMotion={!!reduceMotion} />
+                  {tier.displayPrice === 'Custom' ? null : (
+                    <span className="price-unit">/month</span>
+                  )}
+                </p>
+                <p className="price-note">Public pricing preview</p>
+                <p className="blurb">{tier.description}</p>
+                <ul>
+                  {tier.bullets.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
-                <Link className={`pricing-btn ${tier.popular ? 'pricing-btn-primary' : 'pricing-btn-ghost'}`} to="/signup">
-                  {tier.cta}
-                </Link>
-              </article>
+                {tier.ctaHref ? (
+                  <Link to={tier.ctaHref} className={`plan-btn${tier.highlighted ? ' filled' : ''}`}>
+                    {tier.cta}
+                  </Link>
+                ) : (
+                  <button type="button" className={`plan-btn${tier.highlighted ? ' filled' : ''}`} onClick={openEarlyAccessModal}>
+                    {tier.cta}
+                  </button>
+                )}
+              </motion.article>
             ))}
           </div>
-        </section>
 
-        <section className="pricing-features-section" aria-label="Feature comparison section">
-          <div className="pricing-features-inner">
-            <header className="pricing-features-head">
-              <p className="pricing-eyebrow">Feature Breakdown</p>
-              <h2>Every plan, side by side.</h2>
-            </header>
+          <div className="plan-value-bar">
+            <div className="value-row">
+              <div className="value-feature">
+                <span className="value-icon" aria-hidden="true">
+                  <Sparkles className="value-icon-svg" />
+                </span>
+                <div><strong>Decision recommendations</strong><span>Clear, review-first actions your team controls.</span></div>
+              </div>
+              <div className="value-feature">
+                <span className="value-icon" aria-hidden="true">
+                  <Clock3 className="value-icon-svg" />
+                </span>
+                <div><strong>Setup in one day</strong><span>Connect today. Decisions tomorrow.</span></div>
+              </div>
+              <div className="value-feature">
+                <span className="value-icon" aria-hidden="true">
+                  <Database className="value-icon-svg" />
+                </span>
+                <div><strong>No ERP required</strong><span>We connect cleanly to your POS data.</span></div>
+              </div>
+              <div className="value-feature">
+                <span className="value-icon" aria-hidden="true">
+                  <ShieldCheck className="value-icon-svg" />
+                </span>
+                <div><strong>Review-first decisions</strong><span>Your team reviews and approves before execution.</span></div>
+              </div>
+            </div>
+            <div className="value-pos-label">Works with the POS you use</div>
+            <div className="value-logo-row">
+              <div className="value-logo-item logo-shopify"><img src="/images/integrations/wordmarks/shopify.svg" alt="Shopify" /></div>
+              <div className="value-logo-item logo-square"><img src="/images/integrations/wordmarks/square.svg" alt="Square" /></div>
+              <div className="value-logo-item logo-lightspeed"><img src="/images/integrations/wordmarks/lightspeed.svg" alt="Lightspeed" /></div>
+              <div className="value-logo-item logo-clover"><img src="/images/integrations/wordmarks/clover-logotyp-tight.svg" alt="Clover" /></div>
+              <div className="value-logo-item logo-moneris"><img src="/images/integrations/wordmarks/moneris.png" alt="Moneris" /></div>
+            </div>
+          </div>
+        </motion.section>
 
-            <div className="pricing-table-wrap">
-              <table className="pricing-table">
-                <thead>
-                  <tr>
-                    <th>Feature</th>
-                    <th>Free</th>
-                    <th>Starter</th>
-                    <th>Growth</th>
-                    <th>Pro</th>
-                    <th>Enterprise</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {features.map((row) => (
-                    <tr key={row[0]}>
-                      <td>{row[0]}</td>
-                      <td><ComparisonCell value={row[1]} /></td>
-                      <td><ComparisonCell value={row[2]} /></td>
-                      <td><ComparisonCell value={row[3]} /></td>
-                      <td><ComparisonCell value={row[4]} /></td>
-                      <td><ComparisonCell value={row[5]} /></td>
+        <motion.section className="container includes-v2" {...sectionReveal}>
+          <div className="includes-copy">
+            <p className="pricing-eyebrow-v2">Built for retail. Powered by AI.</p>
+            <h2>Early access keeps the workflow review-first</h2>
+            <ul>
+              <li>Guided connection for POS and inventory data</li>
+              <li>Get ranked recommendations by margin &times; urgency</li>
+              <li>Ask Coodra Agent what changed and why</li>
+              <li>Validate recommendations with your team before public launch</li>
+            </ul>
+          </div>
+          <div className="includes-images">
+            <div className="includes-image-card">
+              <img src="/images/pricing/includes-2.png" alt="Coodra AI chat preview" loading="lazy" decoding="async" />
+            </div>
+            <div className="includes-image-card">
+              <img src="/images/pricing/includes-3.png" alt="Coodra recommendations preview" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </motion.section>
+
+        <motion.section className="container sidebyside-v2" {...sectionReveal}>
+          <div className="sidebyside-head">
+            <h2>Every plan, side by side.</h2>
+          </div>
+          <div className="sidebyside-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th />
+                  {pricingPlans.map((plan) => <th key={plan.key}>{plan.name}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {pricingComparisonGroups.map((group) => (
+                  <Fragment key={group.title}>
+                    <tr className="pricing-group-row" key={`${group.title}-label`}>
+                      <td colSpan={pricingPlans.length + 1}>{group.title}</td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                    {group.rows.map(([label, key]) => (
+                      <tr key={label}>
+                        <td>{label}</td>
+                        {pricingPlans.map((plan) => {
+                          const raw = key === 'support' || key === 'slaOnboarding'
+                            ? plan[key]
+                            : key in plan.limits
+                              ? plan.limits[key as keyof typeof plan.limits]
+                              : plan.features[key as keyof typeof plan.features]
+                          return <td key={plan.key}><Cell value={formatPlanValue(raw)} /></td>
+                        })}
+                      </tr>
+                    ))}
+                  </Fragment>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </section>
+        </motion.section>
 
-        <section className="pricing-faq" aria-label="Frequently asked questions">
-          <div className="pricing-faq-inner">
-            <h2>Frequently asked questions</h2>
-            <div className="pricing-faq-grid">
-              <details className="faq-item">
-                <summary className="faq-question">What POS systems does Coodra connect to?</summary>
-                <div className="faq-answer">
-                  <p>Coodra connects to Shopify, Square, Lightspeed, Clover, and Moneris. All five POS integrations are included on every plan at no extra cost. You connect your POS once and Coodra syncs your sales and inventory data automatically — no manual exports required.</p>
-                </div>
+        <motion.section className="container pricing-faq-v2" {...sectionReveal}>
+          <h2>Frequently asked questions</h2>
+          <div className="faq-list-v2">
+            {faqs.map(([q, a]) => (
+              <details key={q}>
+                <summary>{q}</summary>
+                <p>{a}</p>
               </details>
-              <details className="faq-item">
-                <summary className="faq-question">How many stores can I manage?</summary>
-                <div className="faq-answer">
-                  <p>Free supports 1 store. Starter supports 1 store. Growth supports up to 5 stores. Pro supports up to 15 stores. Enterprise supports unlimited stores. Each additional store beyond your plan limit can be added as an add-on or by upgrading your plan.</p>
-                </div>
-              </details>
-              <details className="faq-item">
-                <summary className="faq-question">What counts as an "AI decision"?</summary>
-                <div className="faq-answer">
-                  <p>Each reorder, replace, or remove recommendation that Coodra surfaces counts as one AI decision. Free plans get 75 per month. Starter gets 500 per month. Growth and Pro include unlimited AI decisions.</p>
-                </div>
-              </details>
-              <details className="faq-item">
-                <summary className="faq-question">Is there a free plan?</summary>
-                <div className="faq-answer">
-                  <p>Yes. The Free plan includes 1 store, 500 products tracked, and 75 AI decisions per month at no charge. No credit card required to start.</p>
-                </div>
-              </details>
-              <details className="faq-item">
-                <summary className="faq-question">Can I add team members?</summary>
-                <div className="faq-answer">
-                  <p>Free includes 1 team member. Starter includes 2. Growth includes 10. Pro includes 25. Enterprise includes unlimited team members. There are no per-seat fees on Starter, Growth, or Pro.</p>
-                </div>
-              </details>
-              <details className="faq-item">
-                <summary className="faq-question">What happens if I exceed my AI decision limit?</summary>
-                <div className="faq-answer">
-                  <p>On Free and Starter plans, you will receive a notification when you approach your monthly decision limit. You can upgrade to Growth for unlimited decisions, or wait until your limit resets at the start of the next billing month.</p>
-                </div>
-              </details>
-              <details className="faq-item">
-                <summary className="faq-question">Can I cancel anytime?</summary>
-                <div className="faq-answer">
-                  <p>Yes. There are no cancellation fees. You can cancel your subscription at any time from your account settings. If you cancel a paid plan, you will retain access through the end of your current billing period.</p>
-                </div>
-              </details>
-              <details className="faq-item">
-                <summary className="faq-question">Does Coodra work for multi-location retailers?</summary>
-                <div className="faq-answer">
-                  <p>Yes. Growth supports up to 5 stores, Pro up to 15 stores, and Enterprise supports unlimited stores. Each store's inventory and sales data is tracked separately and aggregated into a single inventory intelligence view.</p>
-                </div>
-              </details>
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section className="container pricing-cta-v2" {...sectionReveal}>
+          <div className="pricing-cta-card">
+            <div className="cta-copy">
+              <p className="pricing-eyebrow-v2">Join the pilot</p>
+              <h2>Help shape Coodra before public launch.</h2>
+              <p>Apply for early access and we will guide setup, verify your connections, and gather feedback from real dashboard use.</p>
+            </div>
+            <div className="cta-actions">
+              <button type="button" className="btn-start" onClick={openEarlyAccessModal}>Request Early Access</button>
+              <Link to="/contact?intent=pilot" className="btn-sales">Talk to Coodra</Link>
             </div>
           </div>
-        </section>
+        </motion.section>
       </main>
 
       <MarketingFooter />
     </div>
   )
 }
+

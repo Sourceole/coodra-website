@@ -41,12 +41,16 @@ preview/
 AiDesigner/
 hyperframes/
 *.heapsnapshot
+data/state_store.db/
 
 # Local screenshot/debug artifacts
 *-updated.png
 *-current.png
+codex-*.png
 decision-section.png
 contact-updated.png
+*_fetch*.html
+tmp-bootstrap-fetch.ps1
 
 # Local one-off scripts
 extract-react-*.mjs

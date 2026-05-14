@@ -190,7 +190,7 @@ export default function InventoryManagementPage() {
                 name: 'Does Coodra work with Shopify, Square, and Lightspeed?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'Yes. Coodra connects directly to Shopify, Square, Lightspeed, Clover, and Moneris. It pulls 90 days of sales history, current inventory levels, and catalog data automatically — no ERP required, no importer scripts, and no manual data entry. Setup is designed to complete in under five minutes per POS connection.',
+                  text: 'Yes. Coodra connects directly to Shopify, Square, Lightspeed, and Clover, with Moneris available by account configuration. It pulls sales history, current inventory levels, and catalog data automatically - no ERP required and no importer scripts.',
                 },
               },
               {
@@ -198,7 +198,7 @@ export default function InventoryManagementPage() {
                 name: 'How long does it take to set up Coodra\'s inventory management?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'Coodra is designed to deliver its first ranked decision list the same day you connect your POS. There is no implementation project, no data cleanup exercise, and no consultant. You connect Shopify, Square, Lightspeed, or Clover; Coodra pulls 90 days of sales and inventory data; and your first weekly decision list is ready — typically within the same business day.',
+                  text: 'Coodra is designed for fast setup after you connect your POS. There is no implementation project, and the workflow is built to reduce manual prep. You connect Shopify, Square, Lightspeed, or Clover; Coodra pulls sales and inventory data; and your first weekly decision list follows after a successful sync.',
                 },
               },
               {
@@ -244,7 +244,7 @@ export default function InventoryManagementPage() {
               </p>
               <div className="inv-hero-actions">
                 <Link to="/signup" className="inv-btn inv-btn-primary">Start free</Link>
-                <Link to="/integrations" className="inv-btn inv-btn-ghost">See POS integrations</Link>
+                <Link to="/integrations" className="inv-btn inv-btn-ghost">See POS / commerce integrations</Link>
               </div>
             </div>
 
@@ -351,8 +351,8 @@ export default function InventoryManagementPage() {
                 {
                   step: '01',
                   title: 'Connect your POS',
-                  body: 'Link Shopify, Square, Lightspeed, Clover, or Moneris. Coodra pulls 90 days of sales, catalog, and current inventory data. No ERP required.',
-                  note: 'Setup in under 5 minutes.',
+                  body: 'Link Shopify, Square, Lightspeed, or Clover, with Moneris available by account configuration. Coodra pulls sales, catalog, and current inventory data. No ERP required.',
+                  note: 'Designed for fast setup.',
                 },
                 {
                   step: '02',
@@ -443,7 +443,7 @@ export default function InventoryManagementPage() {
             <div className="inv-decisions-head">
               <p className="inv-eyebrow">
                 <span className="inv-eyebrow-dot" aria-hidden="true" />
-                AI decision types
+                Decision recommendation types
               </p>
               <h2 className="inv-how-h2">
                 Every recommendation is a reorder, replace, or remove — with the why attached.
@@ -469,14 +469,14 @@ export default function InventoryManagementPage() {
           </div>
         </RevealSection>
 
-        {/* ── POS INTEGRATIONS ─────────────────────────── */}
+        {/* POS / commerce integrations */}
         <RevealSection id="integrations" className="inv-pos">
           <div className="inv-container">
             <div className="inv-pos-inner">
               <div className="inv-pos-copy">
                 <p className="inv-eyebrow">
                   <span className="inv-eyebrow-dot" aria-hidden="true" />
-                  POS integrations
+                  POS / commerce integrations
                 </p>
                 <h2>Works with the POS you already have.</h2>
                 <p>

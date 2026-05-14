@@ -2,7 +2,7 @@ import type { MetaFunction } from 'react-router'
 import AboutPage from '../pages/AboutPage'
 
 const aboutDescription =
-  'Coodra is AI-powered retail intelligence for independent stores. We turn your POS sales and inventory data into clear daily actions - reorder, replace, remove, protect.'
+  'Coodra is AI-powered retail intelligence for independent stores. We turn your POS sales and inventory data into clear, ranked daily recommendations for reorder, replace, and remove decisions.'
 
 export const meta: MetaFunction = () => [
   { title: 'About | Coodra' },

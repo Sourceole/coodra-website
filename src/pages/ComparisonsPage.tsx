@@ -125,7 +125,7 @@ const comparisonRows: FeatureRow[] = [
     },
   },
   {
-    feature: 'Starts from POS data — no data cleanup required',
+    feature: 'Starts from POS data - designed to reduce manual data prep',
     coodra: true,
     competitors: {
       Netstock: false,
@@ -180,7 +180,7 @@ const competitorDetails: { name: Competitor; tagline: string; body: string; call
     name: 'Netstock',
     tagline: 'Mid-market planning — built for ERP shops',
     body: 'Netstock was built for mid-market businesses that already have an ERP and a planning team to operate it. Getting value out of Netstock requires mapping data from that ERP — a process that routinely takes weeks and often involves consultants. If your business runs on a modern POS and not an ERP, Netstock is not built for you.',
-    callout: 'Choose Coodra if you do not have an ERP and need replenishment decisions the same day you sign up.',
+    callout: 'Choose Coodra if you do not have an ERP and need review-first replenishment decisions with fast setup.',
   },
   {
     name: 'Cin7',
@@ -203,7 +203,7 @@ const competitorDetails: { name: Competitor; tagline: string; body: string; call
   {
     name: 'Zoho Inventory',
     tagline: 'Part of the Zoho suite — best within Zoho ecosystem',
-    body: 'Zoho Inventory is part of the broader Zoho suite — a collection of business tools that includes CRM, accounting, inventory, and more. For independent retailers already in the Zoho ecosystem, Zoho Inventory works as an inventory module. But the inventory module alone does not have the AI decision-ranking layer that Coodra is built around.',
+    body: 'Zoho Inventory is part of the broader Zoho suite — a collection of business tools that includes CRM, accounting, inventory, and more. For independent retailers already in the Zoho ecosystem, Zoho Inventory works as an inventory module. But the inventory module alone does not have the decision-recommendation ranking layer that Coodra is built around.',
     callout: 'Choose Coodra if your priority is a ranked list of what to reorder this week without adopting the Zoho platform.',
   },
   {
@@ -217,8 +217,8 @@ const competitorDetails: { name: Competitor; tagline: string; body: string; call
 const whyCoodra = [
   {
     icon: Zap,
-    title: 'Live in a day',
-    body: 'Connect your POS and see your first ranked inventory decision the same day. No implementation project, no data cleanup, no consultant.',
+    title: 'Fast setup',
+    body: 'Connect your POS and review your first ranked inventory decisions after successful sync. No implementation project and less manual prep.',
   },
   {
     icon: RefreshCw,
@@ -357,7 +357,7 @@ const faqJsonLd = {
       name: 'How is Coodra different from Netstock?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Netstock is built for mid-market companies with ERP systems and dedicated supply chain planners. Coodra is built for independent retailers who run Shopify, Square, Lightspeed, or Clover and do not have an ERP or a dedicated planner. Coodra connects directly to your POS and delivers ranked decisions the same day — no implementation project, no data mapping, and no months of setup.',
+        text: 'Netstock is built for mid-market companies with ERP systems and dedicated supply chain planners. Coodra is built for independent retailers who run Shopify, Square, Lightspeed, or Clover and do not have an ERP or a dedicated planner. Coodra connects directly to your POS and delivers ranked, review-first decisions after successful sync - without a multi-week implementation project.',
       },
     },
     {
@@ -508,7 +508,7 @@ export default function ComparisonsPage() {
                   What small retailers actually need is simple: a list of what to reorder this week, ranked by urgency and impact on margin. Not a dashboard to explore. Not a spreadsheet to maintain. Not a module to configure. The right software surfaces the five decisions most worth acting on right now, with clear rationale, so you can approve or skip in under ten minutes. That is the bar for what independent retail inventory management software should deliver in 2026.
                 </p>
                 <p>
-                  Beyond the core decision surface, look for transparent pricing on the vendor's own website, a free entry plan with no credit card required, and a setup that completes in hours — not weeks. Retail inventory software for small business should also work with the POS you already have, pulling live sales and on-hand data without manual entry or importer scripts. Any vendor that asks you to export, clean, and re-import your own POS data before they can deliver their first insight is adding steps that a small retail team does not have time for.
+                  Beyond the core decision surface, look for transparent pricing on the vendor's own website, a free entry plan with no credit card required, and setup designed for quick time-to-value rather than weeks-long onboarding. Retail inventory software for small business should also work with the POS you already have, pulling live sales and on-hand data without manual entry or importer scripts. Any vendor that asks you to export, clean, and re-import your own POS data before they can deliver their first insight is adding steps that a small retail team does not have time for.
                 </p>
               </div>
               <div className="cmp-tier1-col">
@@ -615,7 +615,7 @@ export default function ComparisonsPage() {
               </div>
               <div className="cmp-company-card">
                 <h3>Same-day setup</h3>
-                <p>If a retail inventory management company quotes weeks or months to implement, they are built for projects, not operations. The best vendors for small retail teams offer setup that completes in hours — pulling 90 days of live POS sales and inventory data automatically, without a consultant, data mapping exercise, or importer spreadsheet.</p>
+                <p>If a retail inventory management company quotes weeks or months to implement, they are built for projects, not operations. The best vendors for small retail teams provide fast setup and first recommendations after successful sync, without a consultant, data mapping exercise, or importer spreadsheet.</p>
               </div>
               <div className="cmp-company-card">
                 <h3>Decision-first, not dashboard-first</h3>

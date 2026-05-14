@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { createPortal } from 'react-dom'
+import { openEarlyAccessModal } from '../lib/earlyAccessEvents'
 import './MarketingHeader.css'
 
 const platformFeatures = [
   {
     to: '/integrations',
     title: 'Integrations',
-    description: 'Connect Shopify, Square, Lightspeed, Clover, and Moneris in minutes.',
+    description: 'Connect Shopify, Square, Lightspeed, and Clover, with Moneris available by account configuration.',
     icon: 'plug',
   },
   {
@@ -109,6 +110,11 @@ export default function MarketingHeader() {
     setIsMobilePlatformOpen(false)
   }
 
+  const openEarlyAccess = () => {
+    openEarlyAccessModal()
+    closeMobileMenu()
+  }
+
   const mobileNavLayer = (
     <>
       <button
@@ -185,14 +191,14 @@ export default function MarketingHeader() {
               </Link>
             </div>
           </li>
-          <li><Link to="/#how-it-works" onClick={closeMobileMenu}>How it works</Link></li>
+          <li><Link to="/#decision" onClick={closeMobileMenu}>How it works</Link></li>
           <li><Link to="/pricing" onClick={closeMobileMenu}>Pricing</Link></li>
-          <li><Link to="/#decision" onClick={closeMobileMenu}>Decision Engine</Link></li>
-          <li><Link to="/#proof" onClick={closeMobileMenu}>Proof</Link></li>
+          <li><Link to="/#ai-chat" onClick={closeMobileMenu}>AI Chat</Link></li>
+          <li><Link to="/#proof" onClick={closeMobileMenu}>Impact</Link></li>
         </ul>
         <div className="mh-mobile-nav-actions">
           <Link to="/login" className="mh-sign-in" onClick={closeMobileMenu}>Sign in</Link>
-          <Link to="/signup" className="mh-btn-start" onClick={closeMobileMenu}>Start for free</Link>
+          <button type="button" className="mh-btn-start" onClick={openEarlyAccess}>Request access</button>
         </div>
       </div>
     </>
@@ -283,15 +289,15 @@ export default function MarketingHeader() {
                 </div>
               </div>
             </li>
-            <li><Link to="/#how-it-works">How it works</Link></li>
+            <li><Link to="/#decision">How it works</Link></li>
             <li><Link to="/pricing">Pricing</Link></li>
-            <li><Link to="/#decision">Decision Engine</Link></li>
-            <li><Link to="/#proof">Proof</Link></li>
+            <li><Link to="/#ai-chat">AI Chat</Link></li>
+            <li><Link to="/#proof">Impact</Link></li>
           </ul>
 
           <div className="mh-nav-actions">
             <Link to="/login" className="mh-sign-in">Sign in</Link>
-            <Link to="/signup" className="mh-btn-start">Start for free</Link>
+            <button type="button" className="mh-btn-start" onClick={openEarlyAccess}>Request access</button>
           </div>
 
         </div>

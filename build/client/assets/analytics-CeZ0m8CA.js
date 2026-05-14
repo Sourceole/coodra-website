@@ -1,1 +1,0 @@
-var e=void 0,t=()=>typeof window<`u`&&!!e,n=()=>{window.dataLayer||(window.dataLayer=[]),window.gtag||(window.gtag=function(...e){window.dataLayer?.push(e)})},r=()=>{},i=(e,r={})=>{t()&&(n(),window.gtag?.(`event`,e,r))},a=(e,t)=>{i(`page_view`,{page_path:e,page_title:t})};export{i as n,a as r,r as t};

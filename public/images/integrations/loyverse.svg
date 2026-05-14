@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Loyverse">
+  <rect x="13" y="13" width="70" height="70" rx="14" fill="#F58220"/>
+  <g fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 34h.1M48 34h.1M64 34h.1M32 48h.1M48 48h.1M64 48h.1M32 62h.1M48 62h.1M64 62h.1"/>
+    <rect x="26" y="26" width="44" height="44" rx="8" opacity=".42"/>
+  </g>
+</svg>

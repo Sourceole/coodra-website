@@ -48,12 +48,25 @@ export default function BlogIndexPage() {
     image: `${SITE_URL}${post.coverImage}`,
     datePublished: post.isoPublishedAt,
     dateModified: post.isoPublishedAt,
-    author: { '@type': 'Person', name: post.author },
+    author: { '@type': 'Person', name: 'Michael Shahid', jobTitle: 'CEO' },
     publisher: { '@id': `${SITE_URL}/#organization` },
     url: `${SITE_URL}/blog/${post.slug}`,
     inLanguage: 'en',
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/blog/${post.slug}` },
   }))
+  const blogItemListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Coodra Blog',
+    itemListOrder: 'https://schema.org/ItemListOrderDescending',
+    numberOfItems: filteredPosts.length,
+    itemListElement: filteredPosts.map((post, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: `${SITE_URL}/blog/${post.slug}`,
+      name: post.title,
+    })),
+  }
 
   return (
     <div className="blog-page blog-page--index">
@@ -68,6 +81,10 @@ export default function BlogIndexPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(posting) }}
         />
       ))}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogItemListJsonLd) }}
+      />
 
       <div className="blog-page__container">
         <MarketingHeader />

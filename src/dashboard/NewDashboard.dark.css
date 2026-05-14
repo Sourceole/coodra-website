@@ -1,0 +1,717 @@
+/* Dark theme parity: light-theme structure with dark surfaces. */
+body:has(.cd-app-shell.cd-theme-dark),
+html:has(.cd-app-shell.cd-theme-dark) {
+  background: #080808 !important;
+  color: #e8e8e8 !important;
+}
+
+.cd-app-shell.cd-theme-dark {
+  --cd-dark-divider: #2a2a2a;
+  --cd-shell: #080808;
+  --cd-sidebar-bg: #0b0b0b;
+  --cd-sidebar-active: rgba(31, 196, 186, 0.12);
+  --cd-border: #2a2a2a;
+  --cd-border-strong: #3a3a3a;
+  --cd-ink: #f4f4f4;
+  --cd-muted: #b5b5b5;
+  --cd-page: #111111;
+  --cd-card: #181818;
+  --cd-blue: #9a9a9a;
+  --cd-teal: #31e6cb;
+  --cd-teal-dark: #35e5cf;
+  --cd-teal-soft: rgba(49, 230, 203, 0.14);
+  --cd-teal-pale: rgba(49, 230, 203, 0.08);
+  --cd-signal-positive: #22e69f;
+  --cd-signal-negative: #ff4768;
+  border: 1px solid #303030 !important;
+  background: var(--cd-sidebar-bg) !important;
+  color: #f0f0f0 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-main,
+.cd-app-shell.cd-theme-dark .cd-ref-page {
+  background: var(--cd-page) !important;
+  color: #f0f0f0 !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(.cd-mobile-topbar, .cd-sidebar) {
+  border-color: #242424 !important;
+  background: var(--cd-sidebar-bg) !important;
+  color: #e2e2e2 !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(.cd-card, .cd-ref-card, .cd-ref-section, .cd-overview-card, .cd-impact-map, .cd-launch-readiness-card, .cd-launch-step, .cd-plan-table-wrap, .cd-pulse-card, .cd-command-outcomes, .cd-chat-drawer, .cd-detail-drawer, .cd-filter-menu, .cd-notification-popover, .cd-profile-menu, .cd-chat-recent-panel, .cd-chat-confirm-card, .cd-settings-card, .cd-settings-wide, .cd-settings-danger, .cd-role-card, .cd-integration, .cd-integrations-toolbar, .cd-help-search, .cd-search, .cd-chat-drawer .cd-composer) {
+  border-color: var(--cd-dark-divider) !important;
+  background: var(--cd-card) !important;
+  color: #f0f0f0 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-main,
+.cd-app-shell.cd-theme-dark :is(.cd-plan-table tr, .cd-plan-table th, .cd-plan-table td, .cd-ref-table th, .cd-ref-table td, .cd-ops-compact-table th, .cd-ops-compact-table td) {
+  border-color: #303030 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(h1, h2, h3, h4, strong, b, th, .cd-page-title-block h1, .cd-ref-card-title h3, .cd-card-title-row h2, .cd-command-section__head h2) {
+  color: #fafafa !important;
+  text-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(p, small, td, span, label, em, .cd-page-title-block p, .cd-date, .cd-empty-row) {
+  color: #b6b6b6;
+}
+
+.cd-app-shell.cd-theme-dark :is(input, textarea, select) {
+  border-color: #343434;
+  background: #161616 !important;
+  color: #f0f0f0 !important;
+}
+
+.cd-app-shell.cd-theme-dark:not(.is-sidebar-collapsed) .cd-brand-logo--full {
+  content: url('/images/brand/coodra-new-logo-dark.png') !important;
+  display: block !important;
+  width: 154px !important;
+  height: 42px !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+}
+
+.cd-app-shell.cd-theme-dark:not(.is-sidebar-collapsed) .cd-brand-logo--mark {
+  display: none !important;
+}
+
+.cd-app-shell.cd-theme-dark:not(.is-sidebar-collapsed) .cd-brand__copy::after {
+  content: none !important;
+}
+
+/* Sidebar parity: default nav/profile rows match light behavior. */
+.cd-app-shell.cd-theme-dark:not(.is-sidebar-collapsed) .cd-brand-logo--full {
+  width: 142px !important;
+  height: 44px !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-nav button,
+.cd-app-shell.cd-theme-dark .cd-nav button:hover {
+  border: 0 !important;
+  background: transparent !important;
+  color: #fafafa !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-nav button.is-active {
+  border: 0 !important;
+  background: #1a1a1a !important;
+  color: #fafafa !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-nav button:focus,
+.cd-app-shell.cd-theme-dark .cd-nav button:focus-visible,
+.cd-app-shell.cd-theme-dark .cd-nav button.is-active:focus,
+.cd-app-shell.cd-theme-dark .cd-nav button.is-active:focus-visible {
+  outline: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-nav button.is-active,
+.cd-app-shell.cd-theme-dark .cd-nav button.is-active:focus,
+.cd-app-shell.cd-theme-dark .cd-nav button.is-active:focus-visible {
+  background: #1a1a1a !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-nav button::before {
+  content: none !important;
+  display: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-nav button svg,
+.cd-app-shell.cd-theme-dark .cd-nav button:hover svg,
+.cd-app-shell.cd-theme-dark .cd-nav button.is-active svg {
+  color: #b6b6b6 !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-profile-card__chevron {
+  color: #a8a8a8 !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-profile-card,
+.cd-app-shell.cd-theme-dark .cd-profile-card:hover,
+.cd-app-shell.cd-theme-dark .cd-profile-card.is-open,
+.cd-app-shell.cd-theme-dark .cd-sidebar__bottom > .cd-profile-card {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-update-card {
+  border-color: #383838;
+  background: #242424;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.34), 0 2px 8px rgba(0, 0, 0, 0.22);
+}
+
+.cd-app-shell.cd-theme-dark .cd-update-card p {
+  color: #f5f5f5;
+}
+
+.cd-app-shell.cd-theme-dark .cd-update-card > span {
+  color: #d0d0d0;
+}
+
+.cd-app-shell.cd-theme-dark .cd-update-card__actions a {
+  color: #bdbdbd;
+}
+
+.cd-app-shell.cd-theme-dark .cd-update-card button {
+  background: var(--cd-teal);
+  color: #ffffff;
+  box-shadow: 0 10px 20px rgba(31, 196, 186, 0.2);
+}
+
+.cd-app-shell.cd-theme-dark .cd-update-card button:hover {
+  background: var(--cd-teal-dark);
+}
+
+.cd-app-shell.cd-theme-dark .cd-update-compact {
+  border-color: rgba(31, 196, 186, 0.34);
+  background: rgba(31, 196, 186, 0.13);
+  color: #f5f5f5;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.34);
+}
+
+.cd-app-shell.cd-theme-dark .cd-update-compact:hover {
+  border-color: rgba(31, 196, 186, 0.56);
+  background: rgba(31, 196, 186, 0.2);
+}
+
+.cd-app-shell.cd-theme-dark :is(.cd-filter-button, .cd-notification-button, .cd-icon-button, .cd-small-ghost, .cd-settings-button, .cd-settings-select, .cd-integration__action, .cd-ref-view-all, .cd-help-support-options button, .cd-help-resource-card button, .cd-help-recommended-row button, .cd-help-status-card > button, .cd-help-shortcuts-card > button) {
+  border-color: #2a2a2a !important;
+  background: #1a1a1a !important;
+  color: #e2e2e2 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-primary-button {
+  border-color: #2a2a2a !important;
+  background: #1a1a1a !important;
+  color: #fafafa !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-primary-button:hover {
+  border-color: #3a3a3a !important;
+  background: #222222 !important;
+  color: #fafafa !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(.cd-page-header, .cd-sidebar__bottom, .cd-ref-section, .cd-ref-card, .cd-card, .cd-overview-card, .cd-brief-row, .cd-impact-map, .cd-launch-readiness-card, .cd-launch-step, .cd-plan-table th, .cd-plan-table td, .cd-ref-table th, .cd-ref-table td, .cd-ops-compact-table th, .cd-ops-compact-table td, .cd-help-recommended-row, .cd-settings-row, .cd-detail-grid span) {
+  border-color: #2a2a2a !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-impact-row div {
+  background: #2a2a2a !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-search-kbd,
+.cd-app-shell.cd-theme-dark .cd-launch-step__index,
+.cd-app-shell.cd-theme-dark .cd-launch-step em {
+  border-color: #3a3a3a !important;
+  background: #333333 !important;
+  color: #e4e4e4 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-search-kbd {
+  border-radius: 7px !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-launch-step:not(.tone-amber) .cd-launch-step__index,
+.cd-app-shell.cd-theme-dark .cd-launch-step:not(.tone-amber) em {
+  border-color: #3a3a3a !important;
+  background: #333333 !important;
+  color: #e4e4e4 !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-launch-step.tone-amber .cd-launch-step__index,
+.cd-app-shell.cd-theme-dark .cd-launch-step.tone-amber em {
+  border-color: rgba(255, 159, 53, 0.24) !important;
+  background: rgba(255, 159, 53, 0.14) !important;
+  color: #ff9f35 !important;
+}
+
+/* Final dark-page parity: light-theme structure, dark-theme surfaces. */
+.cd-app-shell.cd-theme-dark :is(
+  .cd-page-header,
+  .cd-header-actions,
+  .cd-ref-section__head,
+  .cd-card-title-row,
+  .cd-ref-card-title,
+  .cd-ref-tabs,
+  .cd-intel-card-head,
+  .cd-workspace-card-head,
+  .cd-sidebar__bottom
+) {
+  border-color: var(--cd-dark-divider) !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(
+  .cd-plan-table th,
+  .cd-ref-table th,
+  .cd-merch-opportunity-card .cd-ref-table th,
+  .cd-operations-reorder-card .cd-ref-table th,
+  .cd-ops-compact-table th,
+  .cd-intel-signal-table th,
+  .cd-intel-supplier-table th,
+  .cd-ref-tabs button
+) {
+  border-color: var(--cd-dark-divider) !important;
+  background: #1a1a1a !important;
+  color: #b6b6b6 !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-ref-tabs button.is-active {
+  border-color: #3a3a3a !important;
+  background: #222222 !important;
+  color: #fafafa !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(
+  .cd-plan-table td,
+  .cd-ref-table td,
+  .cd-ops-compact-table td,
+  .cd-intel-signal-table td,
+  .cd-intel-supplier-table td,
+  .cd-decision-history-row,
+  .cd-dismissed-row,
+  .cd-help-recommended-row,
+  .cd-settings-row,
+  .cd-detail-section,
+  .cd-drawer-actions,
+  .cd-workspace-billing__metrics span + span,
+  .cd-workspace-policy__metrics span + span,
+  .cd-outcome-total,
+  .cd-decision-outcomes-metric,
+  .cd-dismissed-row,
+  .cd-launch-step
+) {
+  border-color: var(--cd-dark-divider) !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(
+  .cd-page-header,
+  .cd-ref-tabs,
+  .cd-plan-table th,
+  .cd-plan-table td,
+  .cd-ref-table th,
+  .cd-ref-table td,
+  .cd-ops-compact-table th,
+  .cd-ops-compact-table td,
+  .cd-intel-signal-table th,
+  .cd-intel-signal-table td,
+  .cd-intel-supplier-table th,
+  .cd-intel-supplier-table td
+) {
+  border-top-color: var(--cd-dark-divider) !important;
+  border-right-color: var(--cd-dark-divider) !important;
+  border-bottom-color: var(--cd-dark-divider) !important;
+  border-left-color: var(--cd-dark-divider) !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(.cd-soft-icon, .cd-ref-metric__icon, .cd-ref-row-icon) {
+  border-color: transparent !important;
+  background: #222222 !important;
+  color: #e2e2e2 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(.cd-soft-icon, .cd-ref-row-icon) {
+  border-radius: 9px !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-ref-metric__icon {
+  border-radius: 14px !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(
+  .cd-ref-metric.tone-teal .cd-ref-metric__icon,
+  .cd-ref-metric.tone-green .cd-ref-metric__icon
+) {
+  background: #222222 !important;
+  color: var(--cd-teal-dark) !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-ref-metric.tone-blue .cd-ref-metric__icon {
+  background: #222222 !important;
+  color: #a8a8a8 !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-ref-metric.tone-amber .cd-ref-metric__icon {
+  background: #222222 !important;
+  color: #ff9f35 !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-ref-metric.tone-red .cd-ref-metric__icon {
+  background: #222222 !important;
+  color: #ff4768 !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-merch-role-breakdown {
+  --cd-merch-donut-empty: #242424;
+}
+
+.cd-app-shell.cd-theme-dark .cd-merch-donut {
+  box-shadow: inset 0 0 0 1px #3a3a3a !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-merch-donut span {
+  background: #1a1a1a !important;
+  box-shadow: 0 0 0 1px #3a3a3a !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-merch-donut strong {
+  color: #fafafa !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-merch-donut small {
+  color: #b6b6b6 !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-merch-role-legend__row {
+  border-color: var(--cd-dark-divider) !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-merch-role-legend__row :is(strong, span) {
+  color: #e8e8e8 !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-merch-role-legend__row b {
+  color: #b6b6b6 !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(.cd-settings-avatar, .cd-context-chip) {
+  border-color: #2a2a2a !important;
+  background: #222222 !important;
+  color: #e2e2e2 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-context-chip span {
+  background: var(--cd-teal-dark) !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(
+  .cd-ref-page--decisions,
+  .cd-ref-page--merchandise,
+  .cd-ref-page--operations,
+  .cd-ref-page--intelligence,
+  .cd-ref-page--workspace
+) .cd-ref-overview .cd-ref-metric__icon {
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #a8a8a8 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(
+  .cd-ref-page--decisions,
+  .cd-ref-page--merchandise,
+  .cd-ref-page--operations,
+  .cd-ref-page--intelligence,
+  .cd-ref-page--workspace
+) .cd-ref-overview .cd-ref-metric__icon svg {
+  color: currentColor !important;
+  stroke: currentColor !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-approval-card .cd-ref-chart-row > div:nth-child(2)::before,
+.cd-app-shell.cd-theme-dark .cd-approval-card .cd-ref-chart-row > .cd-approval-chart::before,
+.cd-app-shell.cd-theme-dark :is(.cd-ops-locations-card, .cd-ops-transfer-card) .cd-ops-stat-grid span + span {
+  background: var(--cd-dark-divider) !important;
+  border-color: var(--cd-dark-divider) !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-profit-empty {
+  border-top-color: var(--cd-dark-divider) !important;
+  border-bottom-color: var(--cd-dark-divider) !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-chart-grid line,
+.cd-app-shell.cd-theme-dark .cd-approval-grid line {
+  stroke: #3a3a3a !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-approval-dot {
+  fill: #181818 !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(.cd-plan-blocker, .cd-plan-blocker__actions a.is-secondary) {
+  border-color: var(--cd-dark-divider) !important;
+  background: #1a1a1a !important;
+  color: #e2e2e2 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-plan-blocker__icon,
+.cd-app-shell.cd-theme-dark .cd-workspace-icon {
+  border: 0 !important;
+  background: #222222 !important;
+  color: #b6b6b6 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-plan-blocker :is(small, p, li),
+.cd-app-shell.cd-theme-dark .cd-plan-blocker__actions a.is-secondary {
+  color: #b6b6b6 !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-plan-blocker h3 {
+  color: #fafafa !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-ref-page--integrations .cd-integration__logo,
+.cd-app-shell.cd-theme-dark .cd-ref-page--workspace .cd-integration__logo {
+  border-color: #3a3a3a !important;
+  background: #222222 !important;
+  color: #b6b6b6 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-ref-page--integrations .cd-integration__logo img,
+.cd-app-shell.cd-theme-dark .cd-ref-page--workspace .cd-integration__logo img {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-chat-drawer {
+  border-color: var(--cd-dark-divider) !important;
+  background: var(--cd-card) !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-chat-topline {
+  border-bottom-color: var(--cd-dark-divider) !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-chat-mark,
+.cd-app-shell.cd-theme-dark .cd-chat-mark:hover {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-chat-mark img {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(
+  .cd-chat-recent-button,
+  .cd-chat-recent-panel__head button,
+  .cd-chat-drawer .cd-prompt-grid button,
+  .cd-chat-attachments button,
+  .cd-attach-button
+) {
+  border-color: #3a3a3a !important;
+  background: #222222 !important;
+  color: #e2e2e2 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(
+  .cd-chat-recent-button:hover,
+  .cd-chat-recent-button[aria-expanded="true"],
+  .cd-chat-recent-panel__head button:hover,
+  .cd-chat-drawer .cd-prompt-grid button:hover,
+  .cd-attach-button:hover
+) {
+  border-color: #444444 !important;
+  background: #262626 !important;
+  color: #fafafa !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-chat-drawer .cd-composer {
+  border-color: #3a3a3a !important;
+  background: #1a1a1a !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-chat-drawer .cd-composer textarea,
+.cd-app-shell.cd-theme-dark .cd-chat-drawer .cd-composer textarea:hover,
+.cd-app-shell.cd-theme-dark .cd-chat-drawer .cd-composer textarea:focus {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-chat-drawer .cd-context-chip,
+.cd-app-shell.cd-theme-dark .cd-chat-drawer .cd-context-chip:hover {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-chat-drawer .cd-context-chip span {
+  background: var(--cd-teal-dark) !important;
+  box-shadow: 0 0 0 3px rgba(53, 229, 207, 0.12) !important;
+}
+
+.cd-app-shell.cd-theme-dark,
+.cd-app-shell.cd-theme-dark :is(.cd-main, .cd-chat-drawer, .cd-detail-drawer, .cd-chat-thread, .cd-notification-list, .cd-chat-recent-list) {
+  scrollbar-color: #6f6f6f #181818;
+}
+
+.cd-app-shell.cd-theme-dark ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.cd-app-shell.cd-theme-dark ::-webkit-scrollbar-track {
+  background: #181818;
+  border-radius: 999px;
+}
+
+.cd-app-shell.cd-theme-dark ::-webkit-scrollbar-thumb {
+  background: #6f6f6f;
+  border: 3px solid #181818;
+  border-radius: 999px;
+}
+
+.cd-app-shell.cd-theme-dark ::-webkit-scrollbar-thumb:hover {
+  background: #748094;
+}
+
+.cd-app-shell.cd-theme-dark ::-webkit-scrollbar-corner {
+  background: #181818;
+}
+
+.cd-app-shell.cd-theme-dark .cd-data-notice {
+  border-color: #3a3a3a !important;
+  background: #1a1a1a !important;
+  color: #e2e2e2 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-data-notice.is-success {
+  border-color: rgba(34, 230, 159, 0.26) !important;
+  background: rgba(34, 230, 159, 0.1) !important;
+  color: #7ff3bf !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-data-notice.is-warning {
+  border-color: rgba(255, 159, 53, 0.28) !important;
+  background: rgba(255, 159, 53, 0.1) !important;
+  color: #ffbe72 !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-data-notice :is(span, svg) {
+  color: currentColor !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-profile-menu button.cd-profile-theme-toggle,
+.cd-app-shell.cd-theme-dark .cd-profile-menu button.cd-profile-theme-toggle:hover {
+  color: #e2e2e2 !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(.cd-ops-locations-card, .cd-ops-transfer-card) .cd-ops-stat-grid span {
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(.cd-ops-locations-card, .cd-ops-transfer-card) .cd-ops-stat-grid span + span {
+  border-left: 1px solid var(--cd-dark-divider) !important;
+  background: transparent !important;
+  background-image: none !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(.cd-sidebar-toggle, .cd-mobile-menu-button) {
+  border-color: #2a2a2a !important;
+  background: #1a1a1a !important;
+  color: #a8a8a8 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(.cd-sidebar-toggle, .cd-mobile-menu-button):hover {
+  border-color: #3a3a3a !important;
+  background: #222222 !important;
+  color: #b6b6b6 !important;
+}
+
+.cd-app-shell.cd-theme-dark :is(.cd-sidebar-toggle, .cd-mobile-menu-button) svg {
+  color: currentColor !important;
+  stroke: currentColor !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-help-page :is(
+  .cd-help-topic-row button,
+  .cd-help-support-options button,
+  .cd-help-resource-card button,
+  .cd-help-recommended-row button,
+  .cd-help-status-card > button,
+  .cd-help-shortcuts-card > button,
+  .cd-help-cta button
+) {
+  border-color: #3a3a3a !important;
+  background: #1a1a1a !important;
+  color: #e2e2e2 !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-help-page :is(
+  .cd-help-topic-row button:hover,
+  .cd-help-support-options button:hover,
+  .cd-help-resource-card button:hover,
+  .cd-help-recommended-row button:hover,
+  .cd-help-status-card > button:hover,
+  .cd-help-shortcuts-card > button:hover,
+  .cd-help-cta button:hover
+) {
+  border-color: #444444 !important;
+  background: #222222 !important;
+  color: #fafafa !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-help-page .cd-help-support-options button.is-primary,
+.cd-app-shell.cd-theme-dark .cd-help-page .cd-help-cta button:first-of-type {
+  border-color: rgba(49, 230, 203, 0.28) !important;
+  background: rgba(49, 230, 203, 0.12) !important;
+  color: var(--cd-teal-dark) !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-help-page :is(
+  .cd-help-support-options > div,
+  .cd-help-recommended-row,
+  .cd-help-shortcuts-card kbd
+) {
+  border-color: var(--cd-dark-divider) !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-help-page .cd-help-shortcuts-card kbd {
+  background: #1a1a1a !important;
+  color: #b6b6b6 !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-help-page :is(
+  .cd-help-support-options svg,
+  .cd-help-resource-card > svg,
+  .cd-help-recommended-row svg,
+  .cd-help-cta > span
+) {
+  color: #b6b6b6 !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-help-page .cd-help-cta > span {
+  background: #222222 !important;
+  box-shadow: none !important;
+}
+

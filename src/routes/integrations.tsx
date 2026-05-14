@@ -2,13 +2,13 @@ import type { MetaFunction } from 'react-router'
 import IntegrationsPage from '../pages/IntegrationsPage'
 
 export const meta: MetaFunction = () => [
-  { title: 'POS Integrations | Coodra' },
+  { title: 'POS / Commerce Integrations | Coodra' },
   {
     name: 'description',
     content:
-      'Coodra POS integrations: connect Shopify, Square, Lightspeed, and Clover to turn live store data into clear daily retail actions.',
+      'Coodra POS / commerce integrations: connect Shopify, Square, Lightspeed, and Clover to turn live store data into clear daily retail actions.',
   },
-  { property: 'og:title', content: 'POS Integrations | Coodra' },
+  { property: 'og:title', content: 'POS / Commerce Integrations | Coodra' },
   {
     property: 'og:description',
     content:
@@ -19,7 +19,7 @@ export const meta: MetaFunction = () => [
   { property: 'og:type', content: 'website' },
   { property: 'og:site_name', content: 'Coodra' },
   { name: 'twitter:card', content: 'summary_large_image' },
-  { name: 'twitter:title', content: 'POS Integrations | Coodra' },
+  { name: 'twitter:title', content: 'POS / Commerce Integrations | Coodra' },
   {
     name: 'twitter:description',
     content:

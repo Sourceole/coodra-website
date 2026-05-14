@@ -1,4 +1,5 @@
 ﻿import { Link } from 'react-router'
+import { openEarlyAccessModal } from '../lib/earlyAccessEvents'
 import './MarketingFooter.css'
 
 const productLinks = [
@@ -29,6 +30,10 @@ const legalLinks = [
 ]
 
 export default function MarketingFooter() {
+  const openEarlyAccess = () => {
+    openEarlyAccessModal()
+  }
+
   return (
     <footer className="mf-footer" itemProp="publisher" itemScope itemType="https://schema.org/Organization">
       <div className="mf-wrap">
@@ -53,6 +58,7 @@ export default function MarketingFooter() {
               {resourceLinks.map((item) => (
                 <li key={item.to}><Link to={item.to}>{item.label}</Link></li>
               ))}
+              <li><button type="button" className="mf-inline-link" onClick={openEarlyAccess}>Early access</button></li>
             </ul>
           </section>
 

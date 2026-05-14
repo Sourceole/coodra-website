@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, Link } from 'react-router'
-import { supabase, exchangeForBackendJwt } from '../lib/supabase'
+import { supabase, exchangeForBackendJwt, getSessionSafely, loginMfaStatus, resendLoginMfa, startLoginMfa, verifyLoginMfa } from '../lib/supabase'
 import { trackEvent } from '../lib/analytics'
 import './LoginPage.css'
 
@@ -121,24 +121,48 @@ export default function LoginPage() {
   const [recoverState, setRecoverState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [recoverError, setRecoverError] = useState('')
   const [googleLoading, setGoogleLoading] = useState(false)
+  const [mfaEmail, setMfaEmail] = useState('')
+  const [mfaCode, setMfaCode] = useState('')
+  const [mfaJwt, setMfaJwt] = useState('')
+  const [mfaExp, setMfaExp] = useState(0)
+  const [mfaResendAfter, setMfaResendAfter] = useState(0)
+  const [mfaSending, setMfaSending] = useState(false)
+  const [mfaVerifying, setMfaVerifying] = useState(false)
+  const isMfaView = Boolean(mfaEmail && mfaJwt)
 
   useEffect(() => {
     let active = true
     const init = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
+      const session = await getSessionSafely()
       if (!active || !session) return
 
       const exchanged = await exchangeForBackendJwt()
       if (!active) return
 
       if (exchanged?.token && exchanged?.exp) {
-        try {
-          sessionStorage.setItem('backend_jwt', exchanged.token)
-          sessionStorage.setItem('backend_jwt_exp', String(exchanged.exp))
-        } catch {
-          // ignore storage failures
+        const sessionEmail = session.user.email || ''
+        const mfa = await loginMfaStatus(exchanged.token, sessionEmail).catch(() => null)
+        if (mfa?.ok && (!mfa.data.required || mfa.data.verified)) {
+          try {
+            sessionStorage.setItem('backend_jwt', exchanged.token)
+            sessionStorage.setItem('backend_jwt_exp', String(exchanged.exp))
+          } catch {
+            // ignore storage failures
+          }
+          navigate('/dashboard', { replace: true })
+          return
         }
-        navigate('/dashboard', { replace: true })
+        setMfaEmail(sessionEmail)
+        setMfaJwt(exchanged.token)
+        setMfaExp(exchanged.exp)
+        const started = await startLoginMfa(exchanged.token, sessionEmail).catch(() => null)
+        if (started?.ok || started?.status === 429) {
+          setMfaResendAfter(Number(started.data.retry_after_sec || started.data.resend_after_sec || 30))
+          setError('')
+          return
+        }
+        await supabase.auth.signOut().catch(() => {})
+        setError('Could not send your verification code. Please try again.')
         return
       }
 
@@ -153,40 +177,134 @@ export default function LoginPage() {
     }
   }, [navigate])
 
+  useEffect(() => {
+    if (mfaResendAfter <= 0) return
+    const timer = window.setInterval(() => {
+      setMfaResendAfter((seconds) => Math.max(0, seconds - 1))
+    }, 1000)
+    return () => window.clearInterval(timer)
+  }, [mfaResendAfter])
+
+  const finishLogin = (token: string, exp: number) => {
+    try {
+      sessionStorage.setItem('backend_jwt', token)
+      sessionStorage.setItem('backend_jwt_exp', String(exp))
+    } catch {
+      // ignore storage failures
+    }
+    trackEvent('form_submit', { form_name: 'login_mfa', form_state: 'success' })
+    navigate('/dashboard')
+  }
+
+  const startMfaStep = async (token: string, exp: number, targetEmail: string) => {
+    const started = await startLoginMfa(token, targetEmail)
+    if (!started.ok && started.status !== 429) {
+      throw new Error(started.data.error || 'Could not send your verification code.')
+    }
+    setMfaEmail(targetEmail)
+    setMfaJwt(token)
+    setMfaExp(exp)
+    setMfaCode('')
+    setMfaResendAfter(Number(started.data.retry_after_sec || started.data.resend_after_sec || 30))
+  }
+
+  const handleVerifyCode = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const code = mfaCode.replace(/\D/g, '')
+    if (!/^\d{6}$/.test(code)) {
+      setError('Enter the 6-digit verification code.')
+      return
+    }
+    setMfaVerifying(true)
+    setError('')
+    const out = await verifyLoginMfa(mfaJwt, mfaEmail, code).catch(() => null)
+    setMfaVerifying(false)
+    if (!out?.ok) {
+      const message = out?.data.error === 'code_expired'
+        ? 'Code expired. Send a new code.'
+        : out?.data.error === 'too_many_attempts'
+          ? 'Too many attempts. Send a new code.'
+          : out?.data.error === 'invalid_code'
+            ? `Invalid code.${typeof out.data.remaining_attempts === 'number' ? ` ${out.data.remaining_attempts} attempts left.` : ''}`
+            : 'Could not verify that code. Please try again.'
+      setError(message)
+      return
+    }
+    finishLogin(mfaJwt, mfaExp)
+  }
+
+  const handleResendCode = async () => {
+    if (mfaResendAfter > 0 || !mfaJwt || !mfaEmail) return
+    setMfaSending(true)
+    setError('')
+    const out = await resendLoginMfa(mfaJwt, mfaEmail).catch(() => null)
+    setMfaSending(false)
+    if (!out?.ok) {
+      setMfaResendAfter(Number(out?.data.retry_after_sec || 0))
+      setError(out?.status === 429 ? 'Please wait before requesting another code.' : 'Could not send a new code. Please try again.')
+      return
+    }
+    setMfaResendAfter(Number(out.data.resend_after_sec || 30))
+  }
+
+  const cancelMfa = async () => {
+    setMfaEmail('')
+    setMfaJwt('')
+    setMfaExp(0)
+    setMfaCode('')
+    setMfaResendAfter(0)
+    setError('')
+    await supabase.auth.signOut().catch(() => {})
+  }
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
     trackEvent('form_submit', { form_name: 'login', form_state: 'attempt' })
 
-    const { error: authError } = await supabase.auth.signInWithPassword({ email, password })
-
-    if (authError) {
-      trackEvent('form_submit', { form_name: 'login', form_state: 'error' })
-      setError(authError.message)
-      setLoading(false)
-      return
-    }
-
-    const exchanged = await exchangeForBackendJwt()
-    if (!exchanged?.token || !exchanged?.exp) {
-      trackEvent('form_submit', { form_name: 'login', form_state: 'error' })
-      await supabase.auth.signOut().catch(() => {})
-      setError('Sign-in succeeded, but your dashboard session could not be verified. Please try again.')
-      setLoading(false)
-      return
-    }
-
     try {
-      sessionStorage.setItem('backend_jwt', exchanged.token)
-      sessionStorage.setItem('backend_jwt_exp', String(exchanged.exp))
-    } catch {
-      // ignore storage failures
-    }
+      try {
+        sessionStorage.removeItem('backend_jwt')
+        sessionStorage.removeItem('backend_jwt_exp')
+        sessionStorage.removeItem('backend_jwt_role')
+      } catch {
+        // ignore storage failures
+      }
+      const { error: authError } = await supabase.auth.signInWithPassword({ email, password })
 
-    setLoading(false)
-    trackEvent('form_submit', { form_name: 'login', form_state: 'success' })
-    navigate('/dashboard')
+      if (authError) {
+        trackEvent('form_submit', { form_name: 'login', form_state: 'error' })
+        setError(authError.message)
+        setLoading(false)
+        return
+      }
+
+      const exchanged = await exchangeForBackendJwt()
+      if (!exchanged?.token || !exchanged?.exp) {
+        trackEvent('form_submit', { form_name: 'login', form_state: 'error' })
+        await supabase.auth.signOut().catch(() => {})
+        setError('Sign-in succeeded, but your dashboard session could not be verified. Please try again.')
+        setLoading(false)
+        return
+      }
+
+      const targetEmail = email.trim().toLowerCase()
+      const mfa = await loginMfaStatus(exchanged.token, targetEmail).catch(() => null)
+      if (mfa?.ok && (!mfa.data.required || mfa.data.verified)) {
+        finishLogin(exchanged.token, exchanged.exp)
+        setLoading(false)
+        return
+      }
+
+      await startMfaStep(exchanged.token, exchanged.exp, targetEmail)
+      setLoading(false)
+      trackEvent('form_submit', { form_name: 'login', form_state: 'mfa_required' })
+    } catch (err) {
+      trackEvent('form_submit', { form_name: 'login', form_state: 'error' })
+      setError(err instanceof Error ? err.message : 'Could not sign in. Please refresh and try again.')
+      setLoading(false)
+    }
   }
 
   const handleGoogleLogin = async () => {
@@ -194,7 +312,7 @@ export default function LoginPage() {
     const { error: oauthError } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/dashboard`,
+        redirectTo: `${window.location.origin}/login`,
       },
     })
     if (oauthError) {
@@ -244,7 +362,7 @@ export default function LoginPage() {
 
         <div className="login__panel">
           <div className="login__card">
-            <div className="login__view" style={{ display: showRecover ? 'none' : undefined }}>
+            <div className="login__view" style={{ display: showRecover || isMfaView ? 'none' : undefined }}>
               <h1 className="login__title">Log in</h1>
               <p className="login__sub">Use your account to continue to your retailer workspace.</p>
 
@@ -300,6 +418,52 @@ export default function LoginPage() {
 
               <div className="login__links">
                 Need an account? <Link to="/signup">Start free</Link>
+              </div>
+            </div>
+
+            <div className="login__view" style={{ display: isMfaView && !showRecover ? undefined : 'none' }}>
+              <h1 className="login__title">Check your email</h1>
+              <p className="login__sub">
+                We sent a 6-digit verification code to <strong>{mfaEmail}</strong>.
+              </p>
+
+              {error && <div className="login__errors">{error}</div>}
+
+              <form onSubmit={handleVerifyCode}>
+                <div className="login__field">
+                  <label htmlFor="mfa-code">Verification code</label>
+                  <input
+                    id="mfa-code"
+                    className="login__mfaCode"
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    maxLength={6}
+                    value={mfaCode}
+                    onChange={(e) => setMfaCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    placeholder="000000"
+                    required
+                    autoComplete="one-time-code"
+                  />
+                </div>
+
+                <button type="submit" className="login__btn" disabled={mfaVerifying || mfaCode.length !== 6}>
+                  {mfaVerifying ? 'Verifying...' : 'Verify code'}
+                </button>
+              </form>
+
+              <div className="login__mfaActions">
+                <button type="button" className="login__btnGhost" onClick={handleResendCode} disabled={mfaSending || mfaResendAfter > 0}>
+                  {mfaSending
+                    ? 'Sending...'
+                    : mfaResendAfter > 0
+                      ? `Resend code in ${mfaResendAfter}s`
+                      : 'Resend code'}
+                </button>
+
+                <button type="button" className="login__backBtn" onClick={cancelMfa}>
+                  Back to login
+                </button>
               </div>
             </div>
 

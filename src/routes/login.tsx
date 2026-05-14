@@ -15,7 +15,7 @@ export const meta: MetaFunction = () => [
   { name: 'twitter:description', content: 'Log in to your Coodra account and continue running smarter retail decisions.' },
   { name: 'twitter:image', content: 'https://www.coodra.com/og-image.png' },
   { name: 'robots', content: 'noindex, follow' },
-  { rel: 'canonical', href: 'https://www.coodra.com/login' },
+  { tagName: 'link', rel: 'canonical', href: 'https://www.coodra.com/login' },
 ]
 
 export default LoginPage

@@ -25,6 +25,7 @@ export const meta: MetaFunction = () => [
   { name: 'twitter:image', content: 'https://www.coodra.com/og-image.png' },
   { name: 'robots', content: 'index, follow' },
   { tagName: 'link', rel: 'canonical', href: 'https://www.coodra.com/resources' },
+  { tagName: 'link', rel: 'preload', as: 'image', href: '/images/resources/hero.webp', type: 'image/webp' },
 ]
 
 export default ResourcesPage

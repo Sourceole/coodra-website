@@ -1,37 +1,69 @@
 ﻿import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router'
-import { exchangeForBackendJwt, getCachedBackendJwt } from '../lib/supabase'
+import { clearAuthState, exchangeForBackendJwt, loginMfaStatus, supabase } from '../lib/supabase'
 
 interface AdminGuardProps {
   children: React.ReactNode
 }
 
 export function AdminGuard({ children }: AdminGuardProps) {
-  const cached = getCachedBackendJwt()
-  const cachedRole = cached?.role || ''
-  const [loading, setLoading] = useState(!cached)
-  const [isAdmin, setIsAdmin] = useState(cachedRole === 'admin')
+  const [loading, setLoading] = useState(true)
+  const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
     let cancelled = false
-    if (cachedRole === 'admin') {
-      return
-    }
-    exchangeForBackendJwt()
-      .then((result) => {
-        if (cancelled) return
-        setIsAdmin(result?.role === 'admin')
+
+    const deny = async () => {
+      clearAuthState()
+      if (!cancelled) {
+        setIsAdmin(false)
         setLoading(false)
-      })
-      .catch(() => {
+      }
+    }
+
+    const verify = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (!session?.user?.email) {
+          await deny()
+          return
+        }
+
+        const result = await exchangeForBackendJwt({ forceRefresh: true, scope: 'admin' })
+        if (cancelled) return
+        if (result?.role !== 'super_admin' || !result.token) {
+          await deny()
+          return
+        }
+
+        const mfa = await loginMfaStatus(result.token, session.user.email).catch(() => null)
+        if (!mfa?.ok || !mfa.data.verified) {
+          await deny()
+          return
+        }
+
+        setIsAdmin(true)
+        setLoading(false)
+      } catch {
+        await deny()
+      }
+    }
+
+    void verify()
+    const { data: authSubscription } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_OUT') {
+        clearAuthState()
         if (cancelled) return
         setIsAdmin(false)
         setLoading(false)
-      })
+      }
+    })
+
     return () => {
       cancelled = true
+      authSubscription.subscription.unsubscribe()
     }
-  }, [cachedRole])
+  }, [])
 
   if (loading) {
     return (

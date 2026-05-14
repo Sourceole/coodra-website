@@ -135,6 +135,25 @@
   box-shadow: 0 0 0 3px rgba(46, 211, 183, 0.14);
 }
 
+.login__mfaCode {
+  text-align: center;
+  font-size: 24px !important;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  padding-left: 18px !important;
+}
+
+.login__mfaActions {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.login__sub strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
 .login__btn {
   width: 100%;
   height: 48px;

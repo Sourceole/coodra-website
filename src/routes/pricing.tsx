@@ -16,6 +16,7 @@ export const meta: MetaFunction = () => [
   { name: 'twitter:image', content: 'https://www.coodra.com/og-image.png' },
   { name: 'robots', content: 'index, follow' },
   { tagName: 'link', rel: 'canonical', href: 'https://www.coodra.com/pricing' },
+  { tagName: 'link', rel: 'preload', as: 'image', href: '/images/pricing/hero-1.webp', type: 'image/webp' },
 ]
 
 export default PricingPage

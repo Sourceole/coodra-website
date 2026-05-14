@@ -15,7 +15,7 @@ canvas {
 @media (max-width: 900px) {
   .about-v2-section-inner,
   .integrations-v2-inner,
-  .security-v2-inner,
+  .security-shell,
   .resources-container,
   .case-page__container,
   .legal-page__container,
@@ -40,7 +40,7 @@ canvas {
 @media (max-width: 760px) {
   .about-v2-page [class*="grid"],
   .integrations-v2-page [class*="grid"],
-  .security-v2-page [class*="grid"],
+  .security-page-v3 [class*="grid"],
   .resources-page [class*="grid"],
   .cmp-page [class*="grid"],
   .case-page [class*="grid"],
@@ -53,7 +53,7 @@ canvas {
 
   .about-v2-page [class*="inner"],
   .integrations-v2-page [class*="inner"],
-  .security-v2-page [class*="inner"],
+  .security-page-v3 [class*="inner"],
   .resources-page [class*="inner"],
   .cmp-page [class*="inner"],
   .case-page [class*="inner"],
@@ -66,7 +66,7 @@ canvas {
 
   .about-v2-page section,
   .integrations-v2-page section,
-  .security-v2-page section,
+  .security-page-v3 section,
   .resources-page section,
   .cmp-page section,
   .case-page section,
@@ -80,7 +80,7 @@ canvas {
 
   .about-v2-page h1,
   .integrations-v2-page h1,
-  .security-v2-page h1,
+  .security-page-v3 h1,
   .resources-page h1,
   .cmp-page h1,
   .case-page h1,
@@ -94,7 +94,7 @@ canvas {
 
   .about-v2-page p,
   .integrations-v2-page p,
-  .security-v2-page p,
+  .security-page-v3 p,
   .resources-page p,
   .cmp-page p,
   .case-page p,
@@ -104,7 +104,7 @@ canvas {
   .inv-page p,
   .about-v2-page li,
   .integrations-v2-page li,
-  .security-v2-page li,
+  .security-page-v3 li,
   .resources-page li,
   .cmp-page li,
   .case-page li,

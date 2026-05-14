@@ -6,13 +6,13 @@ export const meta: MetaFunction = () => [
   {
     name: 'description',
     content:
-      'See how Coodra compares to Netstock and Cin7 — built for independent retailers without an ERP, live in one day, no data cleanup required.',
+      'See how Coodra compares to Netstock and Cin7 for independent retailers without an ERP, with faster setup and review-first workflows.',
   },
   { property: 'og:title', content: 'Coodra vs Netstock, Cin7 | Inventory Software Comparisons' },
   {
     property: 'og:description',
     content:
-      'Built for independent retail, not enterprise operations. Coodra goes live the same day you connect your store — no ERP, no data cleanup, no weeks of setup.',
+      'Built for independent retail, not enterprise operations. Coodra is designed for fast POS-connected setup and review-first inventory decisions.',
   },
   { property: 'og:image', content: 'https://www.coodra.com/og-image.png' },
   { property: 'og:url', content: 'https://www.coodra.com/comparisons' },
@@ -22,7 +22,7 @@ export const meta: MetaFunction = () => [
   { name: 'twitter:title', content: 'Coodra vs Netstock, Cin7 | Comparisons' },
   {
     name: 'twitter:description',
-    content: 'Coodra vs Netstock and Cin7 — independent retail inventory software comparison.',
+    content: 'Coodra vs Netstock and Cin7 - independent retail inventory software comparison.',
   },
   { name: 'twitter:image', content: 'https://www.coodra.com/og-image.png' },
   { name: 'robots', content: 'index, follow' },

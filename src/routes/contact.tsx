@@ -19,6 +19,11 @@ export const meta: MetaFunction = () => [
 ]
 
 const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email)
+const MAX_CONTACT_BODY_BYTES = 32 * 1024
+const CONTACT_RATE_WINDOW_MS = 10 * 60 * 1000
+const CONTACT_RATE_LIMIT = 5
+const contactBuckets = new Map<string, { count: number; resetAt: number }>()
+
 const escapeHtml = (value: string) =>
   value
     .replaceAll('&', '&amp;')
@@ -27,15 +32,57 @@ const escapeHtml = (value: string) =>
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;')
 
+const field = (value: unknown, maxLength: number) =>
+  String(value || '').trim().slice(0, maxLength)
+
+const clientIp = (headers: Headers) =>
+  String(headers.get('x-forwarded-for') || '').split(',')[0]?.trim()
+    || String(headers.get('x-real-ip') || headers.get('cf-connecting-ip') || 'unknown')
+
+function isRateLimited(bucketKey: string) {
+  const now = Date.now()
+  const bucket = contactBuckets.get(bucketKey)
+  if (!bucket || bucket.resetAt <= now) {
+    contactBuckets.set(bucketKey, { count: 1, resetAt: now + CONTACT_RATE_WINDOW_MS })
+    return false
+  }
+  bucket.count += 1
+  return bucket.count > CONTACT_RATE_LIMIT
+}
+
+function securityError(message: string) {
+  return {
+    ok: false,
+    message,
+    errors: {},
+    values: {
+      name: '',
+      businessName: '',
+      email: '',
+      subject: 'Sales',
+      message: '',
+    },
+  }
+}
+
 export async function action({ request }: ActionFunctionArgs) {
+  const contentLength = Number(request.headers.get('content-length') || 0)
+  if (Number.isFinite(contentLength) && contentLength > MAX_CONTACT_BODY_BYTES) {
+    return securityError('Your message is too large. Please shorten it and try again.')
+  }
+
+  if (isRateLimited(`contact:${clientIp(request.headers)}`)) {
+    return securityError('Too many messages were submitted. Please wait a few minutes and try again.')
+  }
+
   const formData = await request.formData()
 
   const values = {
-    name: String(formData.get('name') || '').trim(),
-    businessName: String(formData.get('businessName') || '').trim(),
-    email: String(formData.get('email') || '').trim(),
-    subject: String(formData.get('subject') || 'Sales').trim(),
-    message: String(formData.get('message') || '').trim(),
+    name: field(formData.get('name'), 120),
+    businessName: field(formData.get('businessName'), 160),
+    email: field(formData.get('email'), 254).toLowerCase(),
+    subject: field(formData.get('subject') || 'Sales', 120),
+    message: field(formData.get('message'), 2000),
   }
 
   const errors: Record<string, string> = {}

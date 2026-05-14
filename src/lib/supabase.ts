@@ -1,15 +1,61 @@
 import { createClient } from '@supabase/supabase-js'
+import type { Session, SupabaseClient } from '@supabase/supabase-js'
 
 // Lazily create the client so we don't crash during module initialization
-let _supabase: ReturnType<typeof createClient> | null = null
+type AppSupabaseClient = SupabaseClient
+let _supabase: AppSupabaseClient | null = null
 
-function getSupabase() {
+function createFallbackSupabase(): AppSupabaseClient {
+  const fallbackAuth = {
+    async getSession() {
+      return { data: { session: null as Session | null }, error: null }
+    },
+    async signInWithPassword() {
+      return {
+        data: { user: null, session: null },
+        error: new Error('Supabase is not configured for this environment. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.'),
+      }
+    },
+    async signInWithOAuth() {
+      return {
+        data: { provider: null, url: null },
+        error: new Error('Supabase is not configured for this environment. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.'),
+      }
+    },
+    async signOut() {
+      return { error: null }
+    },
+    async resetPasswordForEmail() {
+      return {
+        data: null,
+        error: new Error('Supabase is not configured for this environment. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.'),
+      }
+    },
+    onAuthStateChange() {
+      return {
+        data: {
+          subscription: {
+            unsubscribe() {
+              // no-op fallback
+            },
+          },
+        },
+      }
+    },
+  }
+
+  return {
+    auth: fallbackAuth,
+  } as unknown as AppSupabaseClient
+}
+
+function getSupabase(): AppSupabaseClient | null {
   if (!_supabase) {
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined
     const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
-    // During SSR build, these may be undefined - return a dummy that fails gracefully if actually used
+    // During SSR build, these may be undefined.
     if (!supabaseUrl || !supabaseAnonKey) {
-      return null as any
+      return null
     }
     _supabase = createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
@@ -21,15 +67,52 @@ function getSupabase() {
   return _supabase
 }
 
-// Export a proxy that returns null during SSR build when env vars aren't available
-export const supabase: any = new Proxy({} as any, {
-  get(_target, prop) {
+// Export a proxy that returns safe auth fallbacks during SSR build when env vars aren't available
+const fallbackSupabase = createFallbackSupabase()
+
+export const supabase: AppSupabaseClient = new Proxy(fallbackSupabase, {
+  get(_target, prop: PropertyKey) {
     const client = getSupabase()
-    if (!client) return () => ({ data: { session: null }, error: null })
-    const val = (client as any)[prop]
-    return typeof val === 'function' ? val.bind(client) : val
+    if (!client) {
+      return Reflect.get(fallbackSupabase, prop)
+    }
+    return Reflect.get(client, prop)
+  },
+}) as AppSupabaseClient
+
+export function clearAuthState() {
+  try {
+    sessionStorage.removeItem('backend_jwt')
+    sessionStorage.removeItem('backend_jwt_exp')
+    sessionStorage.removeItem('backend_jwt_role')
+    for (let i = sessionStorage.length - 1; i >= 0; i--) {
+      const key = sessionStorage.key(i) || ''
+      if (key.startsWith('coodra_mfa_token_v1_')) {
+        sessionStorage.removeItem(key)
+      }
+    }
+  } catch {
+    // ignore storage failures
   }
-})
+  try {
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const key = localStorage.key(i) || ''
+      if (key.startsWith('sb-') && key.includes('-auth-token')) {
+        localStorage.removeItem(key)
+      }
+      if (key.startsWith('coodra_mfa_token_v1_')) {
+        localStorage.removeItem(key)
+      }
+    }
+  } catch {
+    // ignore storage failures
+  }
+}
+
+function isInvalidRefreshTokenError(err: unknown) {
+  const text = String(err instanceof Error ? err.message : err || '').toLowerCase()
+  return text.includes('invalid refresh token') || text.includes('refresh token not found')
+}
 
 export function getCachedBackendJwt(): { token: string; exp: number; role: string } | null {
   try {
@@ -53,9 +136,122 @@ export function resolveApiEndpoint(path: string) {
   return `${baseRaw}/api${path.startsWith('/') ? path : `/${path}`}`
 }
 
+function randomId() {
+  const cryptoObj = globalThis.crypto
+  if (cryptoObj?.getRandomValues) {
+    const bytes = new Uint8Array(16)
+    cryptoObj.getRandomValues(bytes)
+    return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('')
+  }
+  return `${Date.now()}_${Math.random().toString(36).slice(2)}`
+}
+
+export function getMfaDeviceId() {
+  const key = 'coodra_mfa_device_id_v1'
+  try {
+    const existing = localStorage.getItem(key)
+    if (existing) return existing
+    const next = randomId()
+    localStorage.setItem(key, next)
+    return next
+  } catch {
+    return 'browser-session'
+  }
+}
+
+function mfaTokenKey(email: string) {
+  return `coodra_mfa_token_v1_${email.trim().toLowerCase()}`
+}
+
+export function getMfaToken(email: string) {
+  try {
+    const key = mfaTokenKey(email)
+    return localStorage.getItem(key) || sessionStorage.getItem(key) || ''
+  } catch {
+    try {
+      return sessionStorage.getItem(mfaTokenKey(email)) || ''
+    } catch {
+      return ''
+    }
+  }
+}
+
+export function setMfaToken(email: string, token: string) {
+  try {
+    const key = mfaTokenKey(email)
+    localStorage.setItem(key, token)
+    sessionStorage.removeItem(key)
+  } catch {
+    try {
+      sessionStorage.setItem(mfaTokenKey(email), token)
+    } catch {
+      // ignore storage failures
+    }
+  }
+}
+
+type MfaResult = {
+  ok?: boolean
+  required?: boolean
+  verified?: boolean
+  token?: string
+  error?: string
+  mfa_error?: string
+  resend_after_sec?: number
+  retry_after_sec?: number
+  expires_in_sec?: number
+  remaining_attempts?: number
+  enabled?: boolean
+}
+
+async function mfaFetch(
+  action: 'status' | 'start' | 'resend' | 'verify',
+  jwt: string,
+  email: string,
+  body: Record<string, unknown> = {},
+): Promise<{ ok: boolean; status: number; data: MfaResult }> {
+  const url = resolveApiEndpoint(`/mfa?action=${encodeURIComponent(action)}&reason=login`)
+  const res = await fetch(url, {
+    method: action === 'status' ? 'GET' : 'POST',
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+      'Content-Type': 'application/json',
+      'x-user-email': email,
+      'x-mfa-device': getMfaDeviceId(),
+      'x-mfa-token': getMfaToken(email),
+    },
+    body: action === 'status' ? undefined : JSON.stringify({ reason: 'login', channel: 'email', ...body }),
+  })
+  const data = await res.json().catch(() => ({}))
+  return { ok: res.ok && !!data?.ok, status: res.status, data }
+}
+
+export function startLoginMfa(jwt: string, email: string) {
+  return mfaFetch('start', jwt, email)
+}
+
+export function resendLoginMfa(jwt: string, email: string) {
+  return mfaFetch('resend', jwt, email)
+}
+
+export async function verifyLoginMfa(jwt: string, email: string, code: string) {
+  const result = await mfaFetch('verify', jwt, email, { code })
+  if (result.ok && result.data.token) setMfaToken(email, result.data.token)
+  return result
+}
+
+export function loginMfaStatus(jwt: string, email: string) {
+  return mfaFetch('status', jwt, email)
+}
+
 // Exchange Supabase session for a backend JWT by calling role_resolve
-export async function exchangeForBackendJwt(): Promise<{ token: string; exp: number; role: string } | null> {
-  const cached = getCachedBackendJwt()
+type BackendJwtExchangeOptions = {
+  forceRefresh?: boolean
+  scope?: 'retailer' | 'admin'
+}
+
+export async function exchangeForBackendJwt(options: BackendJwtExchangeOptions = {}): Promise<{ token: string; exp: number; role: string } | null> {
+  const cached = options.forceRefresh ? null : getCachedBackendJwt()
   if (cached) return cached
 
   const supabaseClient = getSupabase()
@@ -66,12 +262,11 @@ export async function exchangeForBackendJwt(): Promise<{ token: string; exp: num
     if (!session?.user) return null
 
     const supabaseToken = session.access_token
-    const sessionEmail = session.user.email || ''
-    const email = sessionEmail.trim().toLowerCase()
 
     async function attemptExchange(): Promise<{ token: string; exp: number; role: string } | null> {
+      const scope = options.scope === 'admin' ? 'admin' : 'retailer'
       const roleResolveUrl = resolveApiEndpoint(
-        `/log?view=role_resolve&scope=retailer&email=${encodeURIComponent(email)}`
+        `/log?view=role_resolve&scope=${encodeURIComponent(scope)}`
       )
 
       let res: Response
@@ -80,7 +275,6 @@ export async function exchangeForBackendJwt(): Promise<{ token: string; exp: num
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${supabaseToken}`,
-            'x-user-email': sessionEmail,
           },
         })
       } catch {
@@ -129,8 +323,26 @@ export async function exchangeForBackendJwt(): Promise<{ token: string; exp: num
       if (result?.token) return result
       if (attempt < 1) await new Promise(r => setTimeout(r, 200))
     }
-  } catch (e) {
-    // Supabase not available - return null silently
+  } catch (err) {
+    if (isInvalidRefreshTokenError(err)) {
+      clearAuthState()
+      await supabaseClient.auth.signOut().catch(() => {})
+    }
   }
   return null
+}
+
+export async function getSessionSafely(): Promise<Session | null> {
+  const supabaseClient = getSupabase()
+  if (!supabaseClient) return null
+  try {
+    const { data: { session } } = await supabaseClient.auth.getSession()
+    return session
+  } catch (err) {
+    if (isInvalidRefreshTokenError(err)) {
+      clearAuthState()
+      await supabaseClient.auth.signOut().catch(() => {})
+    }
+    return null
+  }
 }

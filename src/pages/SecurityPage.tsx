@@ -1,194 +1,199 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router'
-import { Activity, Download, Lock, ShieldCheck, Sparkles } from 'lucide-react'
+import {
+  CheckCircle2,
+  Clock3,
+  Download,
+  Globe,
+  Lock,
+  Mail,
+  Puzzle,
+  ShieldCheck,
+  UserCheck,
+} from 'lucide-react'
 import MarketingHeader from '../components/MarketingHeader'
 import MarketingFooter from '../components/MarketingFooter'
 import './SecurityPage.css'
 
-const claims = [
+type SecurityStep = {
+  id: string
+  title: string
+  body: string
+  Icon: typeof Lock
+}
+
+type SecurityControl = {
+  label: string
+  status: 'Implemented' | 'In Progress' | 'Planned'
+  Icon: typeof Lock
+}
+
+const steps: SecurityStep[] = [
   {
-    claim: 'Data encrypted at rest (AES-256)',
-    evidence: 'Architecture controls (available on request)',
-    status: 'Implemented',
+    id: '1. Control',
+    title: 'Control',
+    body:
+      'We enforce strong integration boundaries with scoped credentials and least-privilege access, so your data stays in the right hands.',
+    Icon: Lock,
   },
   {
-    claim: 'Data encrypted in transit (TLS 1.2+)',
-    evidence: 'Transport security policy and edge configuration',
-    status: 'Implemented',
+    id: '2. Detection',
+    title: 'Detection',
+    body:
+      'Continuous telemetry and anomaly detection monitor suspicious behavior across systems, users, and data flows.',
+    Icon: Globe,
   },
   {
-    claim: 'API keys scoped to least privilege',
-    evidence: 'Integration key policy documentation',
-    status: 'Implemented',
-  },
-  {
-    claim: 'GDPR alignment',
-    evidence: 'Privacy policy and DPA process',
-    status: 'In Progress',
-  },
-  {
-    claim: 'CCPA alignment',
-    evidence: 'Privacy rights workflow',
-    status: 'In Progress',
-  },
-  {
-    claim: 'Incident response SLA: 24 hours',
-    evidence: 'Response runbook (available on request)',
-    status: 'Implemented',
-  },
-  {
-    claim: 'Data residency: Canada + US',
-    evidence: 'Infrastructure region strategy',
-    status: 'Planned',
+    id: '3. Response',
+    title: 'Response',
+    body:
+      'Our security team follows a defined incident workflow with SLA-backed response, recovery actions, and full auditability.',
+    Icon: ShieldCheck,
   },
 ]
 
-const operatingModel = [
-  {
-    icon: Lock,
-    label: 'Control',
-    title: 'Defense starts at integration boundaries.',
-    body: 'Scoped credentials and explicit permission design reduce blast radius across retail systems.',
-  },
-  {
-    icon: Activity,
-    label: 'Detection',
-    title: 'Operational telemetry is monitored continuously.',
-    body: 'We track suspicious behavior and escalate with runbook-ready context.',
-  },
-  {
-    icon: ShieldCheck,
-    label: 'Response',
-    title: 'Incidents move through a defined SLA workflow.',
-    body: 'Teams receive status visibility and recovery actions without losing auditability.',
-  },
+const controls: SecurityControl[] = [
+  { label: 'Data encrypted at rest (AES-256)', status: 'Implemented', Icon: Lock },
+  { label: 'Data encrypted in transit (TLS 1.2+)', status: 'Implemented', Icon: ShieldCheck },
+  { label: 'Role-based access controls', status: 'Implemented', Icon: UserCheck },
+  { label: 'GDPR alignment', status: 'In Progress', Icon: Globe },
+  { label: 'CCPA alignment', status: 'In Progress', Icon: Globe },
+  { label: 'Incident response SLA: 24 hours', status: 'Implemented', Icon: Clock3 },
+  { label: 'Data residency: Canada + US', status: 'Planned', Icon: Globe },
 ]
+
+function statusClass(status: SecurityControl['status']) {
+  if (status === 'Implemented') return 'security-status security-status--implemented'
+  if (status === 'In Progress') return 'security-status security-status--progress'
+  return 'security-status security-status--planned'
+}
 
 export default function SecurityPage() {
-  useEffect(() => {
-    const nodes = Array.from(document.querySelectorAll<HTMLElement>('.security-reveal'))
-    if (!nodes.length) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible')
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.16, rootMargin: '0px 0px -8% 0px' }
-    )
-
-    nodes.forEach((node) => observer.observe(node))
-    return () => observer.disconnect()
-  }, [])
-
   return (
-    <div className="security-v2-page">
-      <div className="security-v2-container">
-        <MarketingHeader />
+    <div className="security-page-v3">
+      <MarketingHeader />
 
-        <main className="security-v2-main">
-          <section className="security-v2-hero security-reveal is-visible" aria-label="Security hero">
-            <div className="security-v2-hero__bg" aria-hidden="true">
-              <span className="security-v2-hero__orb security-v2-hero__orb--a" />
-              <span className="security-v2-hero__orb security-v2-hero__orb--b" />
-              <span className="security-v2-hero__orb security-v2-hero__orb--c" />
-              <span className="security-v2-hero__spark security-v2-hero__spark--a" />
-              <span className="security-v2-hero__spark security-v2-hero__spark--b" />
-              <span className="security-v2-hero__spark security-v2-hero__spark--c" />
-            </div>
-            <div className="security-v2-inner">
-              <p className="security-v2-badge">
-                <Sparkles size={14} aria-hidden="true" />
-                Security
-              </p>
-              <h1>
-                YOUR DATA.
-                <br />
-                <em>LOCKED DOWN.</em>
-              </h1>
-              <p>
-                Coodra is built with practical safeguards for retail operations teams. We prioritize data protection,
-                operational reliability, and transparent controls.
-              </p>
-              <div className="security-v2-hero__actions">
-                <a className="security-v2-btn security-v2-btn--primary" href="/security-summary.pdf" download>
-                  <Download size={16} aria-hidden="true" />
-                  Download Security Summary
-                </a>
-                <Link className="security-v2-btn security-v2-btn--ghost" to="/contact">
-                  Contact Security Team
-                </Link>
+      <main className="security-main-v3">
+        <section className="security-hero-v3" aria-label="Security overview">
+          <div className="security-shell">
+            <div className="security-hero-grid">
+              <div className="security-hero-copy">
+                <p className="security-eyebrow">
+                  <span className="security-eyebrow-icon" aria-hidden="true">
+                    <ShieldCheck size={12} />
+                  </span>
+                  Security
+                </p>
+                <h1>Your data. Locked down.</h1>
+                <p>
+                  Enterprise-grade safeguards for independent retail operations. Coodra prioritizes data protection,
+                  operational reliability, and transparent controls so you can run with confidence.
+                </p>
+                <div className="security-hero-actions">
+                  <a className="security-btn security-btn--primary" href="/security-summary.pdf" download>
+                    <Download size={16} aria-hidden="true" />
+                    Download Security Summary
+                  </a>
+                  <Link className="security-btn security-btn--secondary" to="/contact">
+                    <Mail size={16} aria-hidden="true" />
+                    Contact Security Team
+                  </Link>
+                </div>
+              </div>
+
+              <div className="security-hero-media">
+                <img src="/images/security/security.png" alt="Security architecture overview" loading="eager" decoding="async" />
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          <section className="security-v2-model security-reveal" aria-label="Security operating model">
-            <div className="security-v2-model__ambient" aria-hidden="true" />
-            <div className="security-v2-inner">
-              <header>
-                <p className="security-v2-eyebrow">Operating Model</p>
-                <h2>How Coodra secures daily decision workflows.</h2>
-              </header>
-              <div className="security-v2-model__grid">
-                {operatingModel.map((item) => (
-                  <article key={item.label}>
-                    <div className="security-v2-model__icon" aria-hidden="true">
-                      <item.icon size={18} />
-                    </div>
-                    <p className="security-v2-model__label">{item.label}</p>
-                    <h3>{item.title}</h3>
-                    <p>{item.body}</p>
-                  </article>
-                ))}
-              </div>
+        <section className="security-section-v3" aria-label="How Coodra secures daily decision workflows">
+          <div className="security-shell">
+            <h2 className="security-section-title">How Coodra secures daily decision workflows</h2>
+            <div className="security-steps-grid">
+              {steps.map((step) => (
+                <article key={step.id} className="security-step-card">
+                  <span className="security-step-icon" aria-hidden="true">
+                    <step.Icon size={20} />
+                  </span>
+                  <div>
+                    <h3>
+                      <span className="security-step-id">{step.id}</span> {step.title}
+                    </h3>
+                    <p>{step.body}</p>
+                  </div>
+                </article>
+              ))}
             </div>
-          </section>
+          </div>
+        </section>
 
-          <section className="security-v2-matrix security-reveal" aria-label="Security controls and status">
-            <div className="security-v2-matrix__ambient" aria-hidden="true" />
-            <div className="security-v2-inner">
-              <header>
-                <p className="security-v2-eyebrow">Controls</p>
-                <h2>Implementation status by control area.</h2>
-              </header>
-              <div className="security-v2-matrix__rows">
-                {claims.map((row) => (
-                  <article key={row.claim} className="security-v2-matrix__row">
-                    <div className="security-v2-matrix__copy">
-                      <h3>{row.claim}</h3>
-                      <p>{row.evidence}</p>
-                    </div>
-                    <span className={`security-v2-status security-v2-status--${row.status.toLowerCase().replace(' ', '-')}`}>
-                      {row.status}
+        <section className="security-section-v3" aria-label="Implementation status by control area">
+          <div className="security-shell">
+            <h2 className="security-section-title">Implementation status by control area</h2>
+            <div className="security-controls-grid">
+              {controls.map((item) => (
+                <article key={item.label} className="security-control-card">
+                  <div className="security-control-left">
+                    <span className="security-control-icon" aria-hidden="true">
+                      <item.Icon size={18} />
                     </span>
-                  </article>
-                ))}
-              </div>
-              <p className="security-v2-note">
-                Need a deeper technical review? Email <a href="mailto:admin@coodra.com">admin@coodra.com</a>.
-              </p>
+                    <h3>{item.label}</h3>
+                  </div>
+                  <span className={statusClass(item.status)}>{item.status}</span>
+                </article>
+              ))}
             </div>
-          </section>
+          </div>
+        </section>
 
-          <section className="security-v2-cta security-reveal" aria-label="Security CTA">
-            <div className="security-v2-inner">
-              <h2>Need security documentation for procurement?</h2>
-              <p>We can share architecture notes, control evidence, and response workflows with your team.</p>
-              <div className="security-v2-cta__actions">
-                <Link to="/contact" className="security-v2-btn security-v2-btn--primary">
+        <section className="security-section-v3" aria-label="Security posture">
+          <div className="security-shell">
+            <div className="security-posture-strip">
+              <div className="security-posture-item">
+                <UserCheck size={20} aria-hidden="true" />
+                <span>Human approval on every action</span>
+              </div>
+              <div className="security-posture-item">
+                <Puzzle size={20} aria-hidden="true" />
+                <span>No ERP required</span>
+              </div>
+              <div className="security-posture-item">
+                <ShieldCheck size={20} aria-hidden="true" />
+                <span>Encrypted data handling</span>
+              </div>
+              <div className="security-posture-item">
+                <CheckCircle2 size={20} aria-hidden="true" />
+                <span>All systems operational</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="security-section-v3 security-section-v3--cta" aria-label="Security contact">
+          <div className="security-shell">
+            <div className="security-procurement-card">
+              <div className="security-procurement-copy">
+                <h2>Need security documentation for procurement?</h2>
+                <p>
+                  We can provide architecture notes, control evidence, and response workflows to share with your team.
+                </p>
+                <p className="security-procurement-note">
+                  Need a deeper technical review? Email <a href="mailto:admin@coodra.com">admin@coodra.com</a>.
+                </p>
+              </div>
+              <div className="security-procurement-actions">
+                <Link to="/contact" className="security-btn security-btn--primary">
+                  <Mail size={16} aria-hidden="true" />
                   Send Message
                 </Link>
               </div>
             </div>
-          </section>
-        </main>
+          </div>
+        </section>
+      </main>
 
-        <MarketingFooter />
-      </div>
+      <MarketingFooter />
     </div>
   )
 }

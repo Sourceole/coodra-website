@@ -23,7 +23,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: '5 inventory mistakes that kill margin (and how to catch them before they do)',
     excerpt:
       'A practical framework for spotting hidden inventory drag early and turning signals into high-confidence actions.',
-    coverImage: '/images/blog/inventory-mistakes-infographic.svg',
+    coverImage: '/images/blog/covers/margin.png',
     coverImageAlt: 'Inventory mistakes infographic',
     category: 'Inventory',
     readingTime: '7 min read',
@@ -46,12 +46,6 @@ export const blogPosts: BlogPostRecord[] = [
       {
         type: 'callout',
         text: 'What are the 5 inventory mistakes that kill margin — and how do you catch them early?',
-      },
-      {
-        type: 'image',
-        src: '/images/blog/inventory-mistakes-infographic.svg',
-        alt: 'Five inventory management mistakes that erode retail margin, with icons for each mistake',
-        caption: 'The five most compounding inventory mistakes in independent retail.',
       },
       {
         type: 'callout',
@@ -176,7 +170,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: 'Shopify vs Square vs Lightspeed: which POS data should you trust for inventory decisions?',
     excerpt:
       'How to evaluate signal quality across POS platforms and avoid making critical inventory calls on noisy data.',
-    coverImage: '/images/blog/erp-vs-pos-comparison.svg',
+    coverImage: '/images/blog/covers/pos-data-trust-guide.png',
     coverImageAlt: 'ERP versus POS planning comparison',
     category: 'Industry Trends',
     readingTime: '8 min read',
@@ -237,12 +231,6 @@ export const blogPosts: BlogPostRecord[] = [
         text: 'What POS-first demand intelligence does is surface those signals automatically. <a href="/inventory-management">Coodra pulls your last 90 days of sales and inventory data</a> and generates a ranked list of inventory decisions — which SKUs to reorder now, which to hold, which to reduce. Updated weekly, based on fresh data from your POS.',
       },
       {
-        type: 'image',
-        src: '/images/blog/erp-vs-pos-comparison.svg',
-        alt: 'Comparison of ERP-first inventory planning vs POS-connected demand intelligence for independent retailers',
-        caption: 'Enterprise inventory planning requires months of setup. POS-direct intelligence goes live in a day.',
-      },
-      {
         type: 'callout',
         text: 'What good demand forecasting actually looks like at independent scale',
       },
@@ -289,7 +277,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: '5 Signs Your Store Has Too Much Dead Inventory',
     excerpt:
       'Dead stock quietly drains margin every week it sits. Here are the five signals that tell you it is happening in your store before the damage compounds.',
-    coverImage: '/images/blog/dead-inventory-signs.svg',
+    coverImage: '/images/blog/covers/dead-inventory-signs.png',
     coverImageAlt: 'Five warning signs of dead inventory in independent retail stores',
     category: 'Inventory',
     readingTime: '6 min read',
@@ -308,12 +296,6 @@ export const blogPosts: BlogPostRecord[] = [
       {
         type: 'callout',
         text: 'Signs of dead inventory in a retail store: the five signals to watch for before the damage compounds',
-      },
-      {
-        type: 'image',
-        src: '/images/blog/dead-inventory-signs.svg',
-        alt: 'Five warning signs of dead inventory: shelf space, stock count mismatch, reorder fear, clearance sales, and margin drops',
-        caption: 'The five most reliable signals of dead inventory accumulation.',
       },
       {
         type: 'callout',
@@ -398,7 +380,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: 'How to Calculate Reorder Points Without Excel',
     excerpt:
       'The reorder point formula is simple. The hard part is getting the data and applying it consistently. Here is how to do it with your POS data.',
-    coverImage: '/images/blog/reorder-points-formula.svg',
+    coverImage: '/images/blog/covers/reorder.png',
     coverImageAlt: 'Reorder point formula for independent retailers without Excel or ERP',
     category: 'Inventory',
     readingTime: '7 min read',
@@ -417,12 +399,6 @@ export const blogPosts: BlogPostRecord[] = [
       {
         type: 'callout',
         text: 'The reorder point formula for retail: what it is, what each variable means, and how to apply it to your SKUs',
-      },
-      {
-        type: 'image',
-        src: '/images/blog/reorder-points-formula.svg',
-        alt: 'Reorder point equals average weekly sales times lead time in weeks plus safety stock',
-        caption: 'The three variables you need: average weekly sales, supplier lead time, and safety stock.',
       },
       {
         type: 'callout',
@@ -531,7 +507,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: 'Coodra vs Netstock: Which Is Right for Independent Retailers?',
     excerpt:
       'Netstock serves mid-market planning teams with ERP integrations and weeks-long onboarding. Coodra is built for independent retailers who want decisions, not dashboards. Here is how they compare.',
-    coverImage: '/images/blog/coodra-vs-netstock-comparison.svg',
+    coverImage: '/images/blog/covers/comparison.png',
     coverImageAlt: 'Coodra vs Netstock comparison for independent retailers without ERP',
     category: 'Comparisons',
     readingTime: '8 min read',
@@ -546,12 +522,6 @@ export const blogPosts: BlogPostRecord[] = [
       {
         type: 'paragraph',
         text: 'This post is not about declaring a winner. It is about being direct about where each product fits and who it actually serves — so you can make the right decision for your store.',
-      },
-      {
-        type: 'image',
-        src: '/images/blog/coodra-vs-netstock-comparison.svg',
-        alt: 'Side-by-side comparison of Coodra and Netstock across key features for independent retailers',
-        caption: 'Key differences between Coodra and Netstock for independent retailers.',
       },
       {
         type: 'callout',
@@ -632,7 +602,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: 'How to Read Your POS Data to Make Smarter Buying Decisions',
     excerpt:
       'Your POS logs everything you need — sales velocity, stock position, demand trends. Here is how to turn transaction data into a weekly buying strategy without a spreadsheet.',
-    coverImage: '/images/blog/pos-data-buying-decisions.svg',
+    coverImage: '/images/blog/covers/pos-data.png',
     coverImageAlt: 'How to read POS data for smarter retail buying decisions',
     category: 'Inventory',
     readingTime: '7 min read',
@@ -647,12 +617,6 @@ export const blogPosts: BlogPostRecord[] = [
       {
         type: 'paragraph',
         text: 'This is not about building dashboards. It is about knowing which five questions to ask your POS data every week, and knowing where to find the answers.',
-      },
-      {
-        type: 'image',
-        src: '/images/blog/pos-data-buying-decisions.svg',
-        alt: 'POS data sources on the left, weekly buying decisions on the right',
-        caption: 'Your POS already captures the data. The question is whether you are using it.',
       },
       {
         type: 'callout',
@@ -749,7 +713,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: 'The Stock-to-Sales Ratio: The Simple Metric Most Independent Retailers Skip',
     excerpt:
       'It tells you how many days of inventory you have on hand at any given time. Lower is better. Most retailers do not track it — and pay for it in margin.',
-    coverImage: '/images/blog/stock-to-sales-ratio.svg',
+    coverImage: '/images/blog/covers/stock-to-sales-ratio-guide.png',
     coverImageAlt: 'Stock-to-sales ratio guide for independent retailers showing healthy, caution, and danger zones',
     category: 'Inventory',
     readingTime: '6 min read',
@@ -764,12 +728,6 @@ export const blogPosts: BlogPostRecord[] = [
       {
         type: 'paragraph',
         text: 'Most independent retailers do not track it. They track sell-through in vague terms ("we moved a lot of that") and they track inventory levels in the same vague terms ("we have a lot of that in the back"). The stock-to-sales ratio makes the conversation precise.',
-      },
-      {
-        type: 'image',
-        src: '/images/blog/stock-to-sales-ratio.svg',
-        alt: 'Stock-to-sales ratio formula with healthy, caution, and danger zone examples',
-        caption: 'The ratio reveals where your capital is sitting — and for how long.',
       },
       {
         type: 'callout',
@@ -842,7 +800,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: 'Demand Forecasting Without an ERP: What Independent Retailers Can Actually Do',
     excerpt:
       'Most inventory forecasting tools assume you have an ERP, a data team, and years of clean records. Here is what independent retailers can do with the data they already have.',
-    coverImage: '/images/blog/erp-vs-pos-comparison.svg',
+    coverImage: '/images/blog/covers/demand-forecasting.png',
     coverImageAlt: 'Retailer reviewing POS data on a tablet',
     category: 'Demand Forecasting',
     readingTime: '6 min read',
@@ -977,7 +935,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: 'Lead Time and Why It Breaks Every Reorder Formula',
     excerpt:
       'Most demand forecasting mistakes are not bad forecasts. They are lead-time errors. Here is why lead time is the variable that quietly destroys most inventory planning — and how to account for it.',
-    coverImage: '/images/blog/lead-time-reorder-formula.svg',
+    coverImage: '/images/blog/covers/lead-time.png',
     coverImageAlt: 'Lead time gap in retail inventory replenishment cycle',
     category: 'Inventory',
     readingTime: '6 min read',
@@ -1072,7 +1030,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: 'How to Set Safety Stock Levels Without Overcomplicating It',
     excerpt:
       'Most retailers either hold too much safety stock or none at all. Here is the practical middle ground: a simple method that actually gets used.',
-    coverImage: '/images/blog/safety-stock-guide.svg',
+    coverImage: '/images/blog/covers/safety-stock.png',
     coverImageAlt: 'Safety stock calculation for independent retailers',
     category: 'Inventory',
     readingTime: '5 min read',
@@ -1175,7 +1133,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: 'The 90-Day Replenishment Calendar: Turn Your POS Data into a Concrete Buying Schedule',
     excerpt:
       'Most retailers know what they sold last week. Almost none have a clear picture of what they should buy for the next 90 days. A replenishment calendar fixes that — and it starts with your POS data.',
-    coverImage: '/images/blog/replenishment-calendar-90-day.svg',
+    coverImage: '/images/blog/covers/replenishment-calendar.png',
     coverImageAlt: '90-day replenishment calendar for independent retailers showing lead time gap and reorder points',
     category: 'Inventory',
     readingTime: '6 min read',
@@ -1194,12 +1152,6 @@ export const blogPosts: BlogPostRecord[] = [
       {
         type: 'paragraph',
         text: 'The starting point is always your POS data. Without it, the calendar is a guess dressed up in a table.',
-      },
-      {
-        type: 'image',
-        src: '/images/blog/replenishment-calendar-90-day.svg',
-        alt: '90-day replenishment calendar showing lead time, reorder points, and SKU priority tiers',
-        caption: 'A replenishment calendar divides your SKUs by role and plans orders by when they are needed, not when the shelf looks low.',
       },
       {
         type: 'callout',
@@ -1292,7 +1244,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: 'What Inventory Planning Actually Means for Independent Retail (and How to Do It Without a Planner)',
     excerpt:
       'Most small retailers do not have a dedicated planner — and do not need one. Here is what inventory planning really requires for independent retail, and the weekly workflow that actually fits between everything else you are already doing.',
-    coverImage: '/images/blog/inventory-planning-guide.svg',
+    coverImage: '/images/blog/covers/inventory-planning.png',
     coverImageAlt: 'Weekly inventory planning workflow for independent retailers using POS data',
     category: 'Inventory',
     readingTime: '7 min read',
@@ -1403,7 +1355,7 @@ export const blogPosts: BlogPostRecord[] = [
     title: 'What AI Inventory Management Actually Means for Independent Retail (and What It Does Not)',
     excerpt:
       'Every vendor now says they have AI. For independent retailers, AI in inventory management means one thing: your POS data getting turned into a ranked decision list without a consultant in the loop. Here is what to look for.',
-    coverImage: '/images/blog/ai-inventory-management.svg',
+    coverImage: '/images/blog/covers/ai-inventory-management.png',
     coverImageAlt: 'AI inventory management for independent retailers using POS data',
     category: 'Inventory',
     readingTime: '7 min read',
@@ -1481,7 +1433,7 @@ export const blogPosts: BlogPostRecord[] = [
       },
       {
         type: 'paragraph',
-        text: 'Coodra is AI inventory management for independent retail: it connects directly to Shopify, Square, Lightspeed, or Clover, scores every SKU by velocity trend and margin contribution, and surfaces the ranked decision list every week. <a href="/inventory-management">See what the AI decision surface looks like</a>.',
+        text: 'Coodra is AI inventory management for independent retail: it connects directly to Shopify, Square, Lightspeed, or Clover, scores every SKU by velocity trend and margin contribution, and surfaces the ranked recommendation list every week. <a href="/inventory-management">See what the decision recommendation surface looks like</a>.',
       },
       {
         type: 'paragraph',

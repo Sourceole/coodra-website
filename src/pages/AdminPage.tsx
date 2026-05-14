@@ -1,9 +1,6 @@
-/* eslint-disable react-hooks/set-state-in-effect */
-import { useEffect, useState, useCallback, useMemo } from 'react'
-import { supabase, exchangeForBackendJwt, getCachedBackendJwt } from '../lib/supabase'
+﻿import { useEffect, useState, useCallback, useMemo } from 'react'
+import { exchangeForBackendJwt, resolveApiEndpoint } from '../lib/supabase'
 import './AdminPage.css'
-
-// ── Types ────────────────────────────────────────────────────────────────────
 
 type OverviewStats = {
   totalRetailers: number
@@ -72,6 +69,13 @@ type Retailer = {
   last_seen: string | null
 }
 
+type RetailerSortKey = 'email' | 'role' | 'plan_code' | 'status' | 'period_end' | 'last_seen' | 'actions'
+
+type RetailerSort = {
+  key: RetailerSortKey
+  direction: 'asc' | 'desc'
+}
+
 type ChatThread = {
   id: string
   title: string
@@ -105,26 +109,19 @@ type PartnerApp = {
   created_at: string
 }
 
-// ── API helper ────────────────────────────────────────────────────────────────
-
-function resolveApiEndpoint(path: string) {
-  const baseRaw = ((import.meta.env.VITE_API_URL as string) || 'https://api.coodra.com').trim().replace(/\/+$/, '')
-  if (baseRaw.endsWith('/api')) {
-    return `${baseRaw}${path.startsWith('/') ? path : `/${path}`}`
-  }
-  return `${baseRaw}/api${path.startsWith('/') ? path : `/${path}`}`
-}
-
 async function adminFetch(path: string, options: RequestInit = {}) {
-  const cached = getCachedBackendJwt()
-  const exchanged = cached || await exchangeForBackendJwt()
-  const token = exchanged?.token
-  const email = (await supabase.auth.getSession())?.data?.session?.user?.email || ''
   const hasBody = options.body !== undefined && options.body !== null
   const method = String(options.method || (hasBody ? 'POST' : 'GET')).toUpperCase()
+  const exchanged = await exchangeForBackendJwt({ forceRefresh: true, scope: 'admin' })
+  const token = exchanged?.token
+  if (!token || exchanged?.role !== 'super_admin') {
+    return new Response(JSON.stringify({ ok: false, error: 'unauthorized' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
   const defaultHeaders: Record<string, string> = {
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    'x-user-email': email,
+    Authorization: `Bearer ${token}`,
   }
   if (hasBody && method !== 'GET') defaultHeaders['Content-Type'] = 'application/json'
   const res = await fetch(resolveApiEndpoint(path), {
@@ -138,14 +135,44 @@ async function adminFetch(path: string, options: RequestInit = {}) {
   return res
 }
 
-// ── AdminPage ─────────────────────────────────────────────────────────────────
-
 type Tab = 'overview' | 'retailers' | 'chats' | 'applications'
 
 function toNum(v: unknown, fallback = 0) {
   const n = Number(v)
   return Number.isFinite(n) ? n : fallback
 }
+
+function toTime(value: string | null | undefined) {
+  if (!value) return 0
+  const time = new Date(value).getTime()
+  return Number.isFinite(time) ? time : 0
+}
+
+function compareText(a: unknown, b: unknown) {
+  return String(a || '').localeCompare(String(b || ''), undefined, { sensitivity: 'base', numeric: true })
+}
+
+function badgeClass(prefix: string, value: unknown, allowed: readonly string[]) {
+  const safeValue = String(value || '').toLowerCase()
+  return allowed.includes(safeValue) ? `${prefix}-${safeValue}` : `${prefix}-unknown`
+}
+
+function normalizeRetailers(rows: unknown): Retailer[] {
+  if (!Array.isArray(rows)) return []
+  const seen = new Set<string>()
+  const normalized: Retailer[] = []
+  for (const row of rows) {
+    const retailer = row as Retailer
+    const key = retailer.user_id || retailer.email
+    if (!key || seen.has(key)) continue
+    seen.add(key)
+    normalized.push(retailer)
+  }
+  return normalized
+}
+
+const PLAN_CODES = ['free', 'starter', 'growth', 'enterprise'] as const
+const STATUSES = ['active', 'trialing', 'past_due', 'canceled', 'paused'] as const
 
 function monthLabel(monthKey: string) {
   const [y, m] = String(monthKey || '').split('-').map((x) => Number(x))
@@ -188,7 +215,7 @@ export default function AdminPage() {
   )
 }
 
-// ── Overview Tab ──────────────────────────────────────────────────────────────
+// Overview tab
 
 function OverviewTab() {
   const [payload, setPayload] = useState<OverviewPayload | null>(null)
@@ -287,7 +314,7 @@ function OverviewTab() {
         </div>
         <div className="admin-stat-card">
           <div className="admin-stat-value">{toNum(stats.aiDecisionsToday).toLocaleString()}</div>
-          <div className="admin-stat-label">AI Decisions Today</div>
+          <div className="admin-stat-label">Recommendations Today</div>
         </div>
       </div>
 
@@ -430,11 +457,11 @@ function OverviewTab() {
         <section className="admin-panel">
           <div className="admin-panel-head">
             <h3>Peak Hours (UTC)</h3>
-            <span>AI decisions in last 24h</span>
+            <span>Decision recommendations in last 24h</span>
           </div>
           <div className="admin-hourly">
             {hourly.map((h) => (
-              <div key={h.hour} className="hour-bar" title={`${h.hour}:00 UTC - ${toNum(h.ai_decisions)} decisions`}>
+              <div key={h.hour} className="hour-bar" title={`${h.hour}:00 UTC - ${toNum(h.ai_decisions)} recommendations`}>
                 <div className="hour-fill" style={{ height: `${(toNum(h.ai_decisions) / maxHour) * 100}%` }} />
               </div>
             ))}
@@ -463,7 +490,7 @@ function OverviewTab() {
                 {topActive.map((r) => (
                   <tr key={r.user_id}>
                     <td>{r.email || r.user_id}</td>
-                    <td><span className={`admin-plan-badge plan-${r.plan_code}`}>{r.plan_code}</span></td>
+                    <td><span className={`admin-plan-badge ${badgeClass('plan', r.plan_code, PLAN_CODES)}`}>{r.plan_code}</span></td>
                     <td>{toNum(r.chat_count).toLocaleString()}</td>
                   </tr>
                 ))}
@@ -476,58 +503,114 @@ function OverviewTab() {
   )
 }
 
-// ── Retailers Tab ─────────────────────────────────────────────────────────────
+// Retailers tab
 
 function RetailersTab() {
   const [retailers, setRetailers] = useState<Retailer[]>([])
-  const [total, setTotal] = useState(0)
   const [search, setSearch] = useState('')
   const [planFilter, setPlanFilter] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
+  const [sort, setSort] = useState<RetailerSort>({ key: 'email', direction: 'asc' })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [page, setPage] = useState(0)
-  const limit = 25
+  const limit = 500
   const [manageRetailer, setManageRetailer] = useState<Retailer | null>(null)
   const [managePlan, setManagePlan] = useState('')
   const [manageStatus, setManageStatus] = useState('')
   const [manageRole, setManageRole] = useState('retailer_user')
   const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState('')
+  const isSuperAdmin = true
 
-  const loadRetailers = useCallback((offset = 0) => {
+  const loadRetailers = useCallback(() => {
     setLoading(true)
-    const params = new URLSearchParams({ limit: String(limit), offset: String(offset) })
+    setError('')
+    const params = new URLSearchParams({ limit: String(limit), offset: '0' })
     if (search) params.set('search', search)
-    if (planFilter) params.set('plan_code', planFilter)
-    if (statusFilter) params.set('status', statusFilter)
     adminFetch(`/log?view=admin_retailers&${params}`)
       .then(r => r.json())
       .then(d => {
         if (d.ok) {
-          setRetailers(Array.isArray(d.retailers) ? d.retailers : [])
-          setTotal(toNum(d.total))
+          const rawRetailers = Array.isArray(d.retailers) ? d.retailers : []
+          const nextRetailers = normalizeRetailers(rawRetailers)
+          setRetailers(nextRetailers)
         } else {
           setError(d.error || 'Failed to load')
         }
         setLoading(false)
       })
       .catch(() => { setError('Network error'); setLoading(false) })
-  }, [search, planFilter, statusFilter])
+  }, [search])
 
   useEffect(() => {
-    loadRetailers(page * limit)
-  }, [loadRetailers, page, limit])
+    loadRetailers()
+  }, [loadRetailers])
+
+  const visibleRetailers = useMemo(() => {
+    const rolePriority: Record<string, number> = { super_admin: 0, admin: 1, retailer_user: 2 }
+    const statusPriority: Record<string, number> = { past_due: 0, trialing: 1, active: 2, paused: 3, canceled: 4 }
+    const planPriority: Record<string, number> = { enterprise: 0, growth: 1, starter: 2, free: 3 }
+    const rows = retailers.filter((retailer) => {
+      if (planFilter && retailer.plan_code !== planFilter) return false
+      if (statusFilter && retailer.status !== statusFilter) return false
+      return true
+    })
+    rows.sort((a, b) => {
+      let result = 0
+      switch (sort.key) {
+        case 'email':
+          result = compareText(a.email, b.email)
+          break
+        case 'role':
+          result =
+            (rolePriority[a.role || 'retailer_user'] ?? 99) -
+            (rolePriority[b.role || 'retailer_user'] ?? 99) ||
+            compareText(a.email, b.email)
+          break
+        case 'plan_code':
+          result = (planPriority[a.plan_code] ?? 99) - (planPriority[b.plan_code] ?? 99) || compareText(a.email, b.email)
+          break
+        case 'status':
+          result = (statusPriority[a.status] ?? 99) - (statusPriority[b.status] ?? 99) || compareText(a.email, b.email)
+          break
+        case 'period_end':
+          result = toTime(a.period_end) - toTime(b.period_end) || compareText(a.email, b.email)
+          break
+        case 'last_seen':
+          result = toTime(a.last_seen) - toTime(b.last_seen) || compareText(a.email, b.email)
+          break
+        case 'actions':
+          result =
+            (statusPriority[a.status] ?? 99) - (statusPriority[b.status] ?? 99) ||
+            (planPriority[a.plan_code] ?? 99) - (planPriority[b.plan_code] ?? 99) ||
+            compareText(a.email, b.email)
+          break
+        default:
+          result = 0
+      }
+      return sort.direction === 'asc' ? result : -result
+    })
+    return rows
+  }, [retailers, planFilter, statusFilter, sort])
 
   const openManage = (r: Retailer) => {
     setManageRetailer(r)
     setManagePlan(r.plan_code)
     setManageStatus(r.status)
     setManageRole(r.role || 'retailer_user')
+    setSaveError('')
   }
 
   const savePlan = async () => {
     if (!manageRetailer) return
+    const previousRole = manageRetailer.role || 'retailer_user'
+    const roleChanged = manageRole !== previousRole
+    if (roleChanged && !isSuperAdmin) {
+      setSaveError('Only super admins can change roles.')
+      return
+    }
     setSaving(true)
+    setSaveError('')
     const planRes = await adminFetch('/log?action=admin_set_plan', {
       method: 'PATCH',
       body: JSON.stringify({ user_id: manageRetailer.user_id, plan_code: managePlan, status: manageStatus }),
@@ -535,24 +618,25 @@ function RetailersTab() {
     const planData = await planRes.json().catch(() => ({}))
     if (!planData?.ok) {
       setSaving(false)
-      alert(planData?.error || 'Failed to update')
+      setSaveError('Could not update this retailer. Please try again.')
       return
     }
-    const roleRes = await adminFetch('/log?action=admin_set_role', {
-      method: 'PATCH',
-      body: JSON.stringify({ user_id: manageRetailer.user_id, email: manageRetailer.email, role: manageRole }),
-    })
-    const d = await roleRes.json().catch(() => ({}))
+    const d = roleChanged
+      ? await adminFetch('/log?action=admin_set_role', {
+        method: 'PATCH',
+        body: JSON.stringify({ user_id: manageRetailer.user_id, email: manageRetailer.email, role: manageRole }),
+      }).then((roleRes) => roleRes.json().catch(() => ({})))
+      : { ok: true }
     setSaving(false)
     if (d.ok) {
       setManageRetailer(null)
-      loadRetailers(page * limit)
+      loadRetailers()
     } else {
-      alert(d.error || 'Failed to update')
+      setSaveError('Could not update this retailer role. Please try again.')
     }
   }
 
-  const totalPages = Math.ceil(total / limit)
+  const total = visibleRetailers.length
 
   return (
     <div className="admin-retailers">
@@ -561,18 +645,18 @@ function RetailersTab() {
       <div className="admin-toolbar">
         <input
           className="admin-search"
-          placeholder="Search email…"
+          placeholder="Search email..."
           value={search}
-          onChange={e => { setSearch(e.target.value); setPage(0) }}
+          onChange={e => setSearch(e.target.value)}
         />
-        <select className="admin-select" value={planFilter} onChange={e => { setPlanFilter(e.target.value); setPage(0) }}>
+        <select className="admin-select" value={planFilter} onChange={e => setPlanFilter(e.target.value)}>
           <option value="">All Plans</option>
           <option value="free">Free</option>
           <option value="starter">Starter</option>
           <option value="growth">Growth</option>
           <option value="enterprise">Enterprise</option>
         </select>
-        <select className="admin-select" value={statusFilter} onChange={e => { setStatusFilter(e.target.value); setPage(0) }}>
+        <select className="admin-select" value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
           <option value="">All Statuses</option>
           <option value="active">Active</option>
           <option value="trialing">Trialing</option>
@@ -580,7 +664,32 @@ function RetailersTab() {
           <option value="canceled">Canceled</option>
           <option value="paused">Paused</option>
         </select>
-        <span className="admin-count">{toNum(total).toLocaleString()} retailers</span>
+        <select
+          className="admin-select"
+          value={sort.key}
+          onChange={e => setSort(current => ({ ...current, key: e.target.value as RetailerSortKey }))}
+          aria-label="Sort retailers by"
+        >
+          <option value="email">Sort: Email</option>
+          <option value="role">Sort: Role</option>
+          <option value="plan_code">Sort: Plan</option>
+          <option value="status">Sort: Status</option>
+          <option value="period_end">Sort: Period End</option>
+          <option value="last_seen">Sort: Last Active</option>
+          <option value="actions">Sort: Actions</option>
+        </select>
+        <select
+          className="admin-select admin-sort-direction"
+          value={sort.direction}
+          onChange={e => setSort(current => ({ ...current, direction: e.target.value as RetailerSort['direction'] }))}
+          aria-label="Sort direction"
+        >
+          <option value="asc">Asc</option>
+          <option value="desc">Desc</option>
+        </select>
+        <span className="admin-count">
+          {toNum(total).toLocaleString()} shown / {toNum(retailers.length).toLocaleString()} total
+        </span>
       </div>
 
       {error && <div className="admin-error">{error}</div>}
@@ -600,16 +709,16 @@ function RetailersTab() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={7} className="admin-td-center">Loading…</td></tr>
-            ) : retailers.length === 0 ? (
+              <tr><td colSpan={7} className="admin-td-center">Loading...</td></tr>
+            ) : visibleRetailers.length === 0 ? (
               <tr><td colSpan={7} className="admin-td-center">No retailers found</td></tr>
-            ) : retailers.map(r => (
+            ) : visibleRetailers.map(r => (
               <tr key={r.user_id}>
                 <td>{r.email}</td>
                 <td>{r.role || 'retailer_user'}</td>
-                <td><span className={`admin-plan-badge plan-${r.plan_code}`}>{r.plan_code}</span></td>
-                <td><span className={`admin-status-badge status-${r.status}`}>{r.status}</span></td>
-                <td>{r.period_end ? new Date(r.period_end).toLocaleDateString() : '—'}</td>
+                <td><span className={`admin-plan-badge ${badgeClass('plan', r.plan_code, PLAN_CODES)}`}>{r.plan_code}</span></td>
+                <td><span className={`admin-status-badge ${badgeClass('status', r.status, STATUSES)}`}>{r.status}</span></td>
+                <td>{r.period_end ? new Date(r.period_end).toLocaleDateString() : '-'}</td>
                 <td>{r.last_seen ? new Date(r.last_seen).toLocaleDateString() : 'Never'}</td>
                 <td>
                   <button className="admin-btn admin-btn-sm" onClick={() => openManage(r)}>Manage</button>
@@ -620,25 +729,25 @@ function RetailersTab() {
         </table>
       </div>
 
-      {totalPages > 1 && (
-        <div className="admin-pagination">
-          <button className="admin-btn admin-btn-sm" disabled={page === 0} onClick={() => setPage(p => p - 1)}>Prev</button>
-          <span>Page {page + 1} of {totalPages}</span>
-          <button className="admin-btn admin-btn-sm" disabled={page >= totalPages - 1} onClick={() => setPage(p => p + 1)}>Next</button>
-        </div>
-      )}
-
       {manageRetailer && (
         <div className="admin-modal-overlay" onClick={() => setManageRetailer(null)}>
           <div className="admin-modal" onClick={e => e.stopPropagation()}>
             <h3>Manage Retailer</h3>
             <p className="admin-modal-email">{manageRetailer.email}</p>
+            {saveError && <div className="admin-error admin-modal-error">{saveError}</div>}
             <div className="admin-modal-field">
               <label>Role</label>
-              <select className="admin-select" value={manageRole} onChange={e => setManageRole(e.target.value)}>
+              <select
+                className="admin-select"
+                value={manageRole}
+                onChange={e => setManageRole(e.target.value)}
+                disabled={!isSuperAdmin}
+              >
                 <option value="retailer_user">Retailer</option>
                 <option value="admin">Admin</option>
+                {(isSuperAdmin || manageRole === 'super_admin') && <option value="super_admin">Super Admin</option>}
               </select>
+              {!isSuperAdmin && <span className="admin-field-note">Only super admins can change roles.</span>}
             </div>
             <div className="admin-modal-field">
               <label>Plan</label>
@@ -662,7 +771,7 @@ function RetailersTab() {
             <div className="admin-modal-actions">
               <button className="admin-btn" onClick={() => setManageRetailer(null)}>Cancel</button>
               <button className="admin-btn admin-btn-primary" disabled={saving} onClick={savePlan}>
-                {saving ? 'Saving…' : 'Save'}
+                {saving ? 'Saving...' : 'Save'}
               </button>
             </div>
           </div>
@@ -672,7 +781,7 @@ function RetailersTab() {
   )
 }
 
-// ── Chat History Tab ──────────────────────────────────────────────────────────
+// Chat history tab
 
 function ChatsTab() {
   const [retailers, setRetailers] = useState<Retailer[]>([])
@@ -689,7 +798,7 @@ function ChatsTab() {
     adminFetch(`/log?view=admin_retailers&${params}`)
       .then(r => r.json())
       .then(d => {
-        if (d.ok) setRetailers(Array.isArray(d.retailers) ? d.retailers : [])
+        if (d.ok) setRetailers(normalizeRetailers(d.retailers))
         setLoadingR(false)
       })
       .catch(() => setLoadingR(false))
@@ -726,7 +835,7 @@ function ChatsTab() {
         <div className="admin-chats-sidebar">
           <label className="admin-chats-label">Retailer</label>
           {loadingR ? (
-            <div className="admin-td-center">Loading…</div>
+            <div className="admin-td-center">Loading...</div>
           ) : (
             <select
               className="admin-select admin-chat-retailer-select"
@@ -738,14 +847,14 @@ function ChatsTab() {
                 setMessages([])
               }}
             >
-              <option value="">Select retailer…</option>
+              <option value="">Select retailer...</option>
               {retailers.map(r => (
                 <option key={r.user_id} value={r.user_id}>{r.email}</option>
               ))}
             </select>
           )}
           {loadingT ? (
-            <div className="admin-td-center">Loading…</div>
+            <div className="admin-td-center">Loading...</div>
           ) : threads.length === 0 && selectedUserId ? (
             <div className="admin-td-center">No chats</div>
           ) : (
@@ -767,7 +876,7 @@ function ChatsTab() {
           {!selectedThread ? (
             <div className="admin-empty-state">Select a retailer and thread to view messages</div>
           ) : loadingM ? (
-            <div className="admin-td-center">Loading…</div>
+            <div className="admin-td-center">Loading...</div>
           ) : messages.length === 0 ? (
             <div className="admin-empty-state">No messages</div>
           ) : (
@@ -789,7 +898,7 @@ function ChatsTab() {
   )
 }
 
-// ── Applications Tab ───────────────────────────────────────────────────────────
+// Applications tab
 
 function ApplicationsTab() {
   const [statusFilter, setStatusFilter] = useState('pending')
@@ -820,14 +929,15 @@ function ApplicationsTab() {
 
   const patchStatus = async (id: string, status: 'approved' | 'rejected', notes = '') => {
     setActioningId(id)
+    setError('')
     const res = await adminFetch('/log?action=partner_application_status', {
       method: 'PATCH',
       body: JSON.stringify({ id, status, reviewed_by: 'admin', decision_notes: notes }),
     })
-    const d = await res.json()
+    const d = await res.json().catch(() => ({}))
     setActioningId(null)
     if (d.ok) loadApps(page * limit)
-    else alert(d.error || 'Failed to update')
+    else setError('Could not update this application. Please try again.')
   }
 
   const totalPages = Math.ceil(total / limit)
@@ -862,14 +972,14 @@ function ApplicationsTab() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={6} className="admin-td-center">Loading…</td></tr>
+              <tr><td colSpan={6} className="admin-td-center">Loading...</td></tr>
             ) : apps.length === 0 ? (
               <tr><td colSpan={6} className="admin-td-center">No {statusFilter} applications</td></tr>
             ) : apps.map(a => (
               <tr key={a.id}>
                 <td>{a.company_name}</td>
                 <td>{a.contact_name}</td>
-                <td><a href={`mailto:${a.email}`}>{a.email}</a></td>
+                <td><a href={`mailto:${encodeURIComponent(a.email)}`}>{a.email}</a></td>
                 <td>{a.application_type}</td>
                 <td>{new Date(a.created_at).toLocaleDateString()}</td>
                 <td>
@@ -880,14 +990,14 @@ function ApplicationsTab() {
                         disabled={actioningId === a.id}
                         onClick={() => patchStatus(a.id, 'approved')}
                       >
-                        {actioningId === a.id ? '…' : 'Approve'}
+                        {actioningId === a.id ? '...' : 'Approve'}
                       </button>
                       <button
                         className="admin-btn admin-btn-reject"
                         disabled={actioningId === a.id}
                         onClick={() => patchStatus(a.id, 'rejected')}
                       >
-                        {actioningId === a.id ? '…' : 'Reject'}
+                        {actioningId === a.id ? '...' : 'Reject'}
                       </button>
                     </div>
                   )}
@@ -913,3 +1023,4 @@ function ApplicationsTab() {
     </div>
   )
 }
+

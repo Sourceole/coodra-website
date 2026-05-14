@@ -412,9 +412,12 @@ function FloatingParticles() {
   const positions = useMemo(() => {
     const arr = new Float32Array(50 * 3)
     for (let i = 0; i < 50; i++) {
-      arr[i * 3] = (Math.random() - 0.5) * 20
-      arr[i * 3 + 1] = (Math.random() - 0.5) * 10
-      arr[i * 3 + 2] = (Math.random() - 0.5) * 6 - 1
+      const a = Math.sin(i * 12.9898) * 43758.5453
+      const b = Math.sin((i + 17) * 78.233) * 24634.6345
+      const c = Math.sin((i + 31) * 37.719) * 13579.2468
+      arr[i * 3] = ((a - Math.floor(a)) - 0.5) * 20
+      arr[i * 3 + 1] = ((b - Math.floor(b)) - 0.5) * 10
+      arr[i * 3 + 2] = ((c - Math.floor(c)) - 0.5) * 6 - 1
     }
     return arr
   }, [])
