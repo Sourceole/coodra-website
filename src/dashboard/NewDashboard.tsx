@@ -1809,22 +1809,31 @@ function WooCommerceConnectModal({
   const [storeUrl, setStoreUrl] = useState('')
   const [consumerKey, setConsumerKey] = useState('')
   const [consumerSecret, setConsumerSecret] = useState('')
+  const [formError, setFormError] = useState('')
 
   useEffect(() => {
     if (!open) return
     setStoreUrl('')
     setConsumerKey('')
     setConsumerSecret('')
+    setFormError('')
   }, [open])
 
   if (!open) return null
 
   const submit = (event: FormEvent) => {
     event.preventDefault()
+    const trimmedKey = consumerKey.trim()
+    const trimmedSecret = consumerSecret.trim()
+    if (!trimmedKey.startsWith('ck_') || !trimmedSecret.startsWith('cs_')) {
+      setFormError('Paste the WooCommerce REST API consumer key that starts with ck_ and secret that starts with cs_.')
+      return
+    }
+    setFormError('')
     onSubmit({
       storeUrl: storeUrl.trim(),
-      consumerKey: consumerKey.trim(),
-      consumerSecret: consumerSecret.trim()
+      consumerKey: trimmedKey,
+      consumerSecret: trimmedSecret
     })
   }
 
@@ -1843,8 +1852,22 @@ function WooCommerceConnectModal({
           </button>
         </header>
         <p className="cd-woo-modal__copy">
-          Paste a WooCommerce REST API key from WordPress. Coodra will use it read-only first to sync products, orders, sales, and inventory.
+          Create a read-only WooCommerce REST API key in WordPress, then paste the generated values below.
         </p>
+        <div className="cd-woo-guide" aria-label="WooCommerce connection steps">
+          <div>
+            <span>1</span>
+            <p>Open WordPress, then go to WooCommerce, Settings, Advanced, REST API.</p>
+          </div>
+          <div>
+            <span>2</span>
+            <p>Add a key named Coodra and set permissions to Read.</p>
+          </div>
+          <div>
+            <span>3</span>
+            <p>Copy the generated Store URL, Consumer key, and Consumer secret here.</p>
+          </div>
+        </div>
         <form className="cd-woo-modal__form" onSubmit={submit} autoComplete="off">
           <div className="cd-autofill-trap" aria-hidden="true">
             <input type="text" name="username" autoComplete="username" tabIndex={-1} />
@@ -1895,6 +1918,7 @@ function WooCommerceConnectModal({
               required
             />
           </label>
+          {formError ? <div className="cd-woo-modal__error" role="alert">{formError}</div> : null}
           <div className="cd-woo-modal__actions">
             <button className="cd-small-ghost" type="button" onClick={onClose} disabled={busy}>Cancel</button>
             <button className="cd-integration__action" type="submit" disabled={busy}>

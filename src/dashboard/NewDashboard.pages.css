@@ -5271,10 +5271,46 @@
 }
 
 .cd-woo-modal__copy {
-  margin: 14px 0 18px;
+  margin: 14px 0 14px;
   color: #667085;
   font-size: 14px;
   line-height: 1.55;
+}
+
+.cd-woo-guide {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding: 12px;
+  border: 1px solid #e4e7ec;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.cd-woo-guide > div {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.cd-woo-guide span {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #e6f7f4;
+  color: #0f766e;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cd-woo-guide p {
+  margin: 0;
+  color: #475467;
+  font-size: 13px;
+  line-height: 1.45;
 }
 
 .cd-woo-modal__form {
@@ -5312,6 +5348,16 @@
 
 .cd-woo-modal__form input::placeholder {
   color: #98a2b3;
+}
+
+.cd-woo-modal__error {
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background: #fff1f2;
+  color: #b42318;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.4;
 }
 
 .cd-woo-modal__actions {

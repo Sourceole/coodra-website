@@ -77,6 +77,20 @@ html:has(.cd-app-shell.cd-theme-dark) {
   box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45) !important;
 }
 
+.cd-app-shell.cd-theme-dark .cd-woo-guide {
+  border-color: #2a2a2a;
+  background: #171717;
+}
+
+.cd-app-shell.cd-theme-dark .cd-woo-guide span {
+  background: #202020;
+  color: #50dfc5;
+}
+
+.cd-app-shell.cd-theme-dark .cd-woo-guide p {
+  color: #c8c8c8;
+}
+
 .cd-app-shell.cd-theme-dark .cd-woo-modal__form label {
   color: #f0f0f0;
 }
@@ -85,6 +99,12 @@ html:has(.cd-app-shell.cd-theme-dark) {
   border-color: #303030;
   background: #151515;
   color: #f0f0f0;
+}
+
+.cd-app-shell.cd-theme-dark .cd-woo-modal__error {
+  border-color: #4a2424;
+  background: #211515;
+  color: #ffb4a8;
 }
 
 .cd-app-shell.cd-theme-dark:not(.is-sidebar-collapsed) .cd-brand-logo--full {
