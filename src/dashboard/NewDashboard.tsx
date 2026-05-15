@@ -1857,7 +1857,7 @@ function WooCommerceConnectModal({
         <div className="cd-woo-guide" aria-label="WooCommerce connection steps">
           <div>
             <span>1</span>
-            <p>Open WordPress, then go to WooCommerce, Settings, Advanced, REST API.</p>
+            <p>Open <a href="https://wordpress.com/log-in" target="_blank" rel="noreferrer">WordPress</a> &gt; WooCommerce &gt; Settings &gt; Advanced &gt; REST API.</p>
           </div>
           <div>
             <span>2</span>

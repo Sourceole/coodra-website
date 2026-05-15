@@ -91,6 +91,10 @@ html:has(.cd-app-shell.cd-theme-dark) {
   color: #c8c8c8;
 }
 
+.cd-app-shell.cd-theme-dark .cd-woo-guide a {
+  color: #50dfc5;
+}
+
 .cd-app-shell.cd-theme-dark .cd-woo-modal__form label {
   color: #f0f0f0;
 }
