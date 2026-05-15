@@ -91,6 +91,18 @@ const integrations: IntegrationCard[] = [
     category: 'POS',
   },
   {
+    name: 'WooCommerce',
+    logo: '/images/integrations/woocommerce.svg',
+    logoWordmark: '/images/integrations/woocommerce.svg',
+    summary: 'Connect WordPress commerce data for product, order, sales, and inventory intelligence.',
+    bullets: ['Products & variations', 'Orders & refunds', 'Stock quantities', 'Catalog quality'],
+    metricLabel: 'Sync mode',
+    metricValue: 'Read-only',
+    metricDelta: 'Early access',
+    badge: 'Early access',
+    category: 'Ecommerce',
+  },
+  {
     name: 'Moneris',
     logo: '/images/integrations/moneris.png',
     logoWordmark: '/images/integrations/wordmarks/moneris.png',

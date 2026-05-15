@@ -8,7 +8,7 @@ const platformFeatures = [
   {
     to: '/integrations',
     title: 'Integrations',
-    description: 'Connect Shopify, Square, Lightspeed, and Clover, with Moneris available by account configuration.',
+    description: 'Connect Shopify, Square, Lightspeed, Clover, and WooCommerce, with Moneris available by account configuration.',
     icon: 'plug',
   },
   {

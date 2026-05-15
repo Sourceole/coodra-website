@@ -118,6 +118,8 @@ export type IntegrationConnectResult = {
   launch_url?: string
   configured?: boolean
   missing_fields?: string[]
+  setup_mode?: string
+  store_url?: string
   message?: string
   error?: string
 }
@@ -137,12 +139,26 @@ function normalizeProvider(provider: string) {
   return provider.trim().toLowerCase().replace(/\s+/g, '')
 }
 
-export async function startIntegrationConnection(provider: string, jwt: string): Promise<ApiResult<IntegrationConnectResult>> {
+export type IntegrationConnectionPayload = {
+  storeUrl?: string
+  consumerKey?: string
+  consumerSecret?: string
+}
+
+export async function startIntegrationConnection(
+  provider: string,
+  jwt: string,
+  options: IntegrationConnectionPayload = {}
+): Promise<ApiResult<IntegrationConnectResult>> {
   const normalizedProvider = normalizeProvider(provider)
+  const timeoutMs = options.storeUrl || options.consumerKey || options.consumerSecret ? 25_000 : 12_000
   return postJson<IntegrationConnectResult>('/api/integrations/start', jwt, {
     provider: normalizedProvider,
-    return_to: window.location.href
-  }, 12_000)
+    return_to: window.location.href,
+    ...(options.storeUrl ? { store_url: options.storeUrl } : {}),
+    ...(options.consumerKey ? { consumer_key: options.consumerKey } : {}),
+    ...(options.consumerSecret ? { consumer_secret: options.consumerSecret } : {})
+  }, timeoutMs)
 }
 
 export async function updateIntegrationConnection(
@@ -158,6 +174,27 @@ export async function updateIntegrationConnection(
 
 export function disconnectIntegrationConnection(provider: string, jwt: string) {
   return updateIntegrationConnection(provider, jwt, 'disconnect')
+}
+
+export type IntegrationSyncResult = {
+  ok?: boolean
+  provider?: string
+  status?: string
+  result?: {
+    synced_products?: number
+    synced_variants?: number
+    synced_orders?: number
+  }
+  message?: string
+  error?: string
+}
+
+export function syncIntegrationConnection(provider: string, jwt: string) {
+  return postJson<IntegrationSyncResult>('/api/performance/sync', jwt, {
+    provider: normalizeProvider(provider),
+    syncType: 'FULL_SYNC',
+    executeNow: true
+  }, 60_000)
 }
 
 export type DecisionMutationStatus = 'approved' | 'dismissed' | 'executed' | 'open'

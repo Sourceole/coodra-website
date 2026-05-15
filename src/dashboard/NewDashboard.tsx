@@ -55,6 +55,7 @@ import {
   startBillingCheckout,
   streamDashboardChat,
   startIntegrationConnection,
+  syncIntegrationConnection,
   updateAccountProfile,
   updateMerchantDecisionStatus
 } from './dashboardApi'
@@ -1406,7 +1407,7 @@ function OperationsSupplierAlerts({ onAsk }: { onAsk: (context: string) => void 
   )
 }
 
-const CORE_POS_INVENTORY_PROVIDERS = ['Shopify', 'Square', 'Clover', 'Lightspeed', 'Loyverse']
+const CORE_POS_INVENTORY_PROVIDERS = ['Shopify', 'Square', 'Clover', 'Lightspeed', 'WooCommerce', 'Loyverse']
 const FUTURE_PAYMENT_PROVIDERS = ['Moneris', 'Global Payments']
 
 function providerKey(provider: string) {
@@ -1726,6 +1727,7 @@ function IntegrationTile({
     square: '/images/integrations/square.svg',
     clover: '/images/integrations/clover.svg',
     lightspeed: '/images/integrations/lightspeed.svg',
+    woocommerce: '/images/integrations/woocommerce.svg',
     quickbooks: '/images/integrations/quickbooks.svg',
     shipstation: '/images/integrations/globalpayments.svg',
     loyverse: '/images/integrations/loyverse.svg',
@@ -1737,6 +1739,7 @@ function IntegrationTile({
     square: 'POS, sales, catalog, and inventory',
     clover: 'POS, items, orders, and inventory',
     lightspeed: 'Retail POS and inventory',
+    woocommerce: 'Products, orders, sales, and inventory',
     moneris: 'Payments provider, not primary inventory',
     loyverse: 'POS, items, receipts, and inventory',
     globalpayments: 'Payments provider, future data source',
@@ -1748,7 +1751,7 @@ function IntegrationTile({
   return (
     <article className={`cd-card cd-integration ${moneyToneClass(integration.accent)}`}>
       <div className="cd-integration__logo">
-        {logoSrc[key] ? <img src={logoSrc[key]} alt="" /> : integration.provider.slice(0, 1)}
+        {logoSrc[key] ? <img src={logoSrc[key]} alt="" /> : integration.provider.slice(0, 2)}
       </div>
       <div className="cd-integration__body">
         <h3>{integration.provider}</h3>
@@ -1786,10 +1789,113 @@ function oauthReturnNoticeFromQuery() {
   return { tone: 'amber' as MetricTone, text: `${provider} returned from authorization. Refreshing live connection status now.` }
 }
 
+type WooCommerceCredentials = {
+  storeUrl: string
+  consumerKey: string
+  consumerSecret: string
+}
+
+function WooCommerceConnectModal({
+  open,
+  busy,
+  onClose,
+  onSubmit
+}: {
+  open: boolean
+  busy: boolean
+  onClose: () => void
+  onSubmit: (credentials: WooCommerceCredentials) => void
+}) {
+  const [storeUrl, setStoreUrl] = useState('')
+  const [consumerKey, setConsumerKey] = useState('')
+  const [consumerSecret, setConsumerSecret] = useState('')
+
+  useEffect(() => {
+    if (!open) return
+    setStoreUrl('')
+    setConsumerKey('')
+    setConsumerSecret('')
+  }, [open])
+
+  if (!open) return null
+
+  const submit = (event: FormEvent) => {
+    event.preventDefault()
+    onSubmit({
+      storeUrl: storeUrl.trim(),
+      consumerKey: consumerKey.trim(),
+      consumerSecret: consumerSecret.trim()
+    })
+  }
+
+  return (
+    <div className="cd-modal-backdrop" role="presentation" onMouseDown={(event) => {
+      if (event.target === event.currentTarget && !busy) onClose()
+    }}>
+      <section className="cd-card cd-woo-modal" role="dialog" aria-modal="true" aria-labelledby="woocommerce-connect-title">
+        <header className="cd-woo-modal__head">
+          <div>
+            <span>WooCommerce</span>
+            <h2 id="woocommerce-connect-title">Connect store</h2>
+          </div>
+          <button className="cd-icon-button" type="button" aria-label="Close WooCommerce connection" onClick={onClose} disabled={busy}>
+            <X size={16} />
+          </button>
+        </header>
+        <p className="cd-woo-modal__copy">
+          Paste a WooCommerce REST API key from WordPress. Coodra will use it read-only first to sync products, orders, sales, and inventory.
+        </p>
+        <form className="cd-woo-modal__form" onSubmit={submit}>
+          <label>
+            <span>Store URL</span>
+            <input
+              type="url"
+              value={storeUrl}
+              onChange={(event) => setStoreUrl(event.target.value)}
+              placeholder="https://yourstore.com"
+              autoComplete="url"
+              required
+            />
+          </label>
+          <label>
+            <span>Consumer key</span>
+            <input
+              type="text"
+              value={consumerKey}
+              onChange={(event) => setConsumerKey(event.target.value)}
+              placeholder="ck_..."
+              autoComplete="off"
+              required
+            />
+          </label>
+          <label>
+            <span>Consumer secret</span>
+            <input
+              type="password"
+              value={consumerSecret}
+              onChange={(event) => setConsumerSecret(event.target.value)}
+              placeholder="cs_..."
+              autoComplete="off"
+              required
+            />
+          </label>
+          <div className="cd-woo-modal__actions">
+            <button className="cd-small-ghost" type="button" onClick={onClose} disabled={busy}>Cancel</button>
+            <button className="cd-integration__action" type="submit" disabled={busy}>
+              {busy ? 'Connecting...' : 'Connect WooCommerce'}
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+  )
+}
+
 function IntegrationsPage({ data, user, onRefresh }: { data: DashboardData; user: BootUser; onRefresh: () => Promise<LoadResult> }) {
   const [query, setQuery] = useState('')
   const [busyProvider, setBusyProvider] = useState<{ provider: string; action: 'connect' | 'disconnect' } | null>(null)
   const [connectNotice, setConnectNotice] = useState<{ tone: MetricTone; text: string } | null>(null)
+  const [wooModalOpen, setWooModalOpen] = useState(false)
   const integrations = getDisplayIntegrations(data.workspace.integrations)
   const filteredIntegrations = integrations.filter((integration) => {
     const haystack = [integration.provider, integration.description, integration.status, integration.lastSync || ''].join(' ').toLowerCase()
@@ -1809,6 +1915,49 @@ function IntegrationsPage({ data, user, onRefresh }: { data: DashboardData; user
       })
     })
   }, [onRefresh])
+
+  const runWooCommerceConnect = async (credentials: WooCommerceCredentials) => {
+    const provider = 'WooCommerce'
+    setBusyProvider({ provider, action: 'connect' })
+    setConnectNotice(null)
+    const result = await startIntegrationConnection(provider, user.backendJwt, credentials)
+    if (!result.ok) {
+      setBusyProvider(null)
+      setConnectNotice({
+        tone: 'red',
+        text: result.error
+          ? `WooCommerce connection could not be started. ${result.error}`
+          : 'WooCommerce connection could not be started.'
+      })
+      return
+    }
+
+    setConnectNotice({ tone: 'amber', text: 'WooCommerce connected. Running the first read-only sync now.' })
+    const syncResult = await syncIntegrationConnection(provider, user.backendJwt)
+    try {
+      await onRefresh()
+    } catch {
+      // A failed refresh should not hide the connection result.
+    }
+    setBusyProvider(null)
+    setWooModalOpen(false)
+
+    if (!syncResult.ok) {
+      setConnectNotice({
+        tone: 'amber',
+        text: syncResult.error
+          ? `WooCommerce connected, but the first sync needs attention: ${syncResult.error}`
+          : 'WooCommerce connected, but the first sync needs attention.'
+      })
+      return
+    }
+
+    const synced = syncResult.data?.result
+    setConnectNotice({
+      tone: 'green',
+      text: `WooCommerce connected and synced ${synced?.synced_products || 0} products, ${synced?.synced_variants || 0} variants, and ${synced?.synced_orders || 0} orders.`
+    })
+  }
 
   const handleConnect = async (integration: IntegrationCard) => {
     const provider = integration.provider
@@ -1838,6 +1987,10 @@ function IntegrationsPage({ data, user, onRefresh }: { data: DashboardData; user
         tone: 'red',
         text: result.error || `${provider} could not be disconnected.`
       })
+      return
+    }
+    if (providerKey(provider) === 'woocommerce') {
+      setWooModalOpen(true)
       return
     }
     setBusyProvider({ provider, action: 'connect' })
@@ -1928,6 +2081,12 @@ function IntegrationsPage({ data, user, onRefresh }: { data: DashboardData; user
           <span>Try searching for a POS, inventory source, provider, or sync status.</span>
         </article>
       ) : null}
+      <WooCommerceConnectModal
+        open={wooModalOpen}
+        busy={busyProvider?.provider === 'WooCommerce'}
+        onClose={() => setWooModalOpen(false)}
+        onSubmit={runWooCommerceConnect}
+      />
     </div>
   )
 }

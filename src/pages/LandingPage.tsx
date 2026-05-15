@@ -16,6 +16,11 @@ const heroTrustRailItems = [
     logoClass: 'hero-v5-trust-logo is-clover',
   },
   {
+    name: 'WooCommerce',
+    logoSrc: '/images/integrations/woocommerce.svg',
+    logoClass: 'hero-v5-trust-logo is-woocommerce',
+  },
+  {
     name: 'Moneris',
     logoSrc: '/images/integrations/wordmarks/moneris.png',
     logoClass: 'hero-v5-trust-logo is-moneris',
@@ -220,7 +225,7 @@ export default function LandingPage() {
                   <path d="M8 1.8 2.6 4.2v3.9c0 3.3 2.3 6.2 5.4 6.9 3.1-.7 5.4-3.6 5.4-6.9V4.2Zm0 2.1 3.6 1.6v2.7c0 2.2-1.4 4.2-3.6 4.8-2.2-.6-3.6-2.6-3.6-4.8V5.5Z" />
                 </svg>
               </span>
-              Connect securely to Shopify, Square, Lightspeed, and Clover. Moneris available by account configuration.
+              Connect securely to Shopify, Square, Lightspeed, Clover, and WooCommerce. Moneris available by account configuration.
             </p>
             <div className="hero-v5-trust-row" role="list">
               {heroTrustRailItems.map((item) => (

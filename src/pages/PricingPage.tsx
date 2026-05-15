@@ -18,7 +18,7 @@ import { formatPlanValue, pricingComparisonGroups, pricingPlans } from '../lib/p
 import './PricingPage.css'
 
 const faqs = [
-  ['What POS systems does Coodra connect to?', 'Coodra connects to Shopify, Square, Lightspeed, and Clover. Moneris support is available by account configuration.'],
+  ['What POS systems does Coodra connect to?', 'Coodra connects to Shopify, Square, Lightspeed, Clover, and WooCommerce. Moneris support is available by account configuration.'],
   ['Do I need an ERP?', 'No. Coodra does not require an ERP. We connect directly to your POS and inventory sources.'],
   ['Does Coodra place orders automatically?', 'No. Coodra is review-first in the app: it recommends actions, and your team approves or skips each decision.'],
   ['Can I join before public launch?', 'Yes. Coodra is onboarding select retailers through early access so we can verify integrations, data quality, and dashboard workflows with real stores before opening self-serve plans.'],
@@ -47,7 +47,7 @@ const pricingHowToJsonLd = {
     {
       '@type': 'HowToStep',
       name: 'Connect your POS',
-      text: 'Connect Shopify, Square, Lightspeed, or Clover so sales and inventory data can sync.',
+      text: 'Connect Shopify, Square, Lightspeed, Clover, or WooCommerce so sales and inventory data can sync.',
     },
     {
       '@type': 'HowToStep',
