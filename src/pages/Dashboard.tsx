@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import NewDashboard from '../dashboard/NewDashboard'
 import type { BootUser } from '../dashboard/dashboardTypes'
 import { loadAccountProfile } from '../dashboard/dashboardApi'
-import { exchangeForBackendJwt, loginMfaStatus, supabase } from '../lib/supabase'
+import { exchangeForBackendJwt, supabase } from '../lib/supabase'
 import './Dashboard.css'
 
 type ThemeMode = 'light' | 'dark'
@@ -116,14 +116,6 @@ export default function Dashboard() {
           return
         }
 
-        const sessionEmail = session.user.email || ''
-        const mfa = await loginMfaStatus(jwt, sessionEmail).catch(() => null)
-        if (!mfa?.ok || !mfa.data.verified) {
-          clearStoredJwt()
-          if (!cancelled) navigate('/login?mfa=required', { replace: true })
-          return
-        }
-
         const user = session.user
         const themeScope = userScopeFromIdentity(user.id || null, user.email || '')
         const profileResult = await loadAccountProfile(jwt).catch(() => null)
@@ -172,19 +164,20 @@ export default function Dashboard() {
     if (!bootUser?.email) return
 
     let cancelled = false
-    const verifyActiveMfaWindow = async () => {
-      const exchanged = await exchangeForBackendJwt()
-      const jwt = exchanged?.token || ''
-      if (!jwt) {
+    const refreshBackendSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession()
+
+      if (!session) {
         clearStoredJwt()
         if (!cancelled) navigate('/login', { replace: true })
         return
       }
 
-      const mfa = await loginMfaStatus(jwt, bootUser.email).catch(() => null)
-      if (!mfa?.ok || !mfa.data.verified) {
-        clearStoredJwt()
-        if (!cancelled) navigate('/login?mfa=required', { replace: true })
+      const exchanged = await exchangeForBackendJwt()
+      const jwt = exchanged?.token || ''
+      if (!jwt) {
         return
       }
 
@@ -201,7 +194,7 @@ export default function Dashboard() {
     }
 
     const intervalId = window.setInterval(() => {
-      void verifyActiveMfaWindow()
+      void refreshBackendSession()
     }, 60_000)
 
     return () => {

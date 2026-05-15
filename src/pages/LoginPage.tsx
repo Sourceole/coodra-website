@@ -11,6 +11,12 @@ const RECOMMENDATIONS = [
   { tag: 'Protect', text: 'Top seller - auto-reorder enabled', confidence: 'High confidence' },
 ]
 
+function isOAuthCallbackUrl() {
+  const params = new URLSearchParams(window.location.search)
+  const hash = new URLSearchParams(window.location.hash.replace(/^#/, ''))
+  return params.has('code') || params.has('error') || hash.has('access_token') || hash.has('refresh_token')
+}
+
 function LiveWidget() {
   const [saleCount, setSaleCount] = useState(1847)
   const [stockLevel, setStockLevel] = useState(62)
@@ -133,6 +139,8 @@ export default function LoginPage() {
   useEffect(() => {
     let active = true
     const init = async () => {
+      if (!isOAuthCallbackUrl()) return
+
       const session = await getSessionSafely()
       if (!active || !session) return
 
