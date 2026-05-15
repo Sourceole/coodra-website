@@ -143,6 +143,10 @@ export type IntegrationConnectionPayload = {
   storeUrl?: string
   consumerKey?: string
   consumerSecret?: string
+  baseUrl?: string
+  database?: string
+  username?: string
+  apiKey?: string
 }
 
 export async function startIntegrationConnection(
@@ -151,13 +155,17 @@ export async function startIntegrationConnection(
   options: IntegrationConnectionPayload = {}
 ): Promise<ApiResult<IntegrationConnectResult>> {
   const normalizedProvider = normalizeProvider(provider)
-  const timeoutMs = options.storeUrl || options.consumerKey || options.consumerSecret ? 25_000 : 12_000
+  const timeoutMs = options.storeUrl || options.consumerKey || options.consumerSecret || options.baseUrl || options.database || options.username || options.apiKey ? 25_000 : 12_000
   return postJson<IntegrationConnectResult>('/api/integrations/start', jwt, {
     provider: normalizedProvider,
     return_to: window.location.href,
     ...(options.storeUrl ? { store_url: options.storeUrl } : {}),
     ...(options.consumerKey ? { consumer_key: options.consumerKey } : {}),
-    ...(options.consumerSecret ? { consumer_secret: options.consumerSecret } : {})
+    ...(options.consumerSecret ? { consumer_secret: options.consumerSecret } : {}),
+    ...(options.baseUrl ? { base_url: options.baseUrl } : {}),
+    ...(options.database ? { database: options.database } : {}),
+    ...(options.username ? { username: options.username } : {}),
+    ...(options.apiKey ? { api_key: options.apiKey } : {})
   }, timeoutMs)
 }
 

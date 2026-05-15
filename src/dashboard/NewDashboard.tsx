@@ -1407,7 +1407,7 @@ function OperationsSupplierAlerts({ onAsk }: { onAsk: (context: string) => void 
   )
 }
 
-const CORE_POS_INVENTORY_PROVIDERS = ['Shopify', 'Square', 'Clover', 'Lightspeed', 'WooCommerce', 'Loyverse']
+const CORE_POS_INVENTORY_PROVIDERS = ['Shopify', 'Square', 'Clover', 'Lightspeed', 'WooCommerce', 'Odoo', 'Loyverse']
 const FUTURE_PAYMENT_PROVIDERS = ['Moneris', 'Global Payments']
 
 function providerKey(provider: string) {
@@ -1728,6 +1728,7 @@ function IntegrationTile({
     clover: '/images/integrations/clover.svg',
     lightspeed: '/images/integrations/lightspeed.svg',
     woocommerce: '/images/integrations/woocommerce.svg',
+    odoo: '/images/integrations/odoo.svg',
     quickbooks: '/images/integrations/quickbooks.svg',
     shipstation: '/images/integrations/globalpayments.svg',
     loyverse: '/images/integrations/loyverse.svg',
@@ -1740,6 +1741,7 @@ function IntegrationTile({
     clover: 'POS, items, orders, and inventory',
     lightspeed: 'Retail POS and inventory',
     woocommerce: 'Products, orders, sales, and inventory',
+    odoo: 'ERP, sales, products, and inventory',
     moneris: 'Payments provider, not primary inventory',
     loyverse: 'POS, items, receipts, and inventory',
     globalpayments: 'Payments provider, future data source',
@@ -1794,6 +1796,19 @@ type WooCommerceCredentials = {
   consumerKey: string
   consumerSecret: string
 }
+
+type OdooCredentials = {
+  baseUrl: string
+  database: string
+  username: string
+  apiKey: string
+}
+
+type ConnectionWindowState = {
+  provider: string
+  launchUrl: string
+  popupBlocked: boolean
+} | null
 
 function WooCommerceConnectModal({
   open,
@@ -1931,11 +1946,208 @@ function WooCommerceConnectModal({
   )
 }
 
+function OdooConnectModal({
+  open,
+  busy,
+  onClose,
+  onSubmit
+}: {
+  open: boolean
+  busy: boolean
+  onClose: () => void
+  onSubmit: (credentials: OdooCredentials) => void
+}) {
+  const [baseUrl, setBaseUrl] = useState('')
+  const [database, setDatabase] = useState('')
+  const [username, setUsername] = useState('')
+  const [apiKey, setApiKey] = useState('')
+  const [formError, setFormError] = useState('')
+
+  useEffect(() => {
+    if (!open) return
+    setBaseUrl('')
+    setDatabase('')
+    setUsername('')
+    setApiKey('')
+    setFormError('')
+  }, [open])
+
+  if (!open) return null
+
+  const submit = (event: FormEvent) => {
+    event.preventDefault()
+    const trimmedUrl = baseUrl.trim()
+    const trimmedDatabase = database.trim()
+    const trimmedUsername = username.trim()
+    const trimmedApiKey = apiKey.trim()
+    if (!trimmedUrl || !trimmedDatabase || !trimmedUsername || !trimmedApiKey) {
+      setFormError('Enter the Odoo URL, database name, user email, and API key.')
+      return
+    }
+    setFormError('')
+    onSubmit({
+      baseUrl: trimmedUrl,
+      database: trimmedDatabase,
+      username: trimmedUsername,
+      apiKey: trimmedApiKey
+    })
+  }
+
+  return (
+    <div className="cd-modal-backdrop" role="presentation" onMouseDown={(event) => {
+      if (event.target === event.currentTarget && !busy) onClose()
+    }}>
+      <section className="cd-card cd-woo-modal" role="dialog" aria-modal="true" aria-labelledby="odoo-connect-title">
+        <header className="cd-woo-modal__head">
+          <div>
+            <span>Odoo</span>
+            <h2 id="odoo-connect-title">Connect Odoo</h2>
+          </div>
+          <button className="cd-icon-button" type="button" aria-label="Close Odoo connection" onClick={onClose} disabled={busy}>
+            <X size={16} />
+          </button>
+        </header>
+        <p className="cd-woo-modal__copy">
+          Create an Odoo API key for a user with read access, then paste the connection details below.
+        </p>
+        <div className="cd-woo-guide" aria-label="Odoo connection steps">
+          <div>
+            <span>1</span>
+            <p>Open <a href="https://www.odoo.com/my/databases" target="_blank" rel="noreferrer">Odoo</a> &gt; Settings &gt; Users &amp; Companies &gt; Users.</p>
+          </div>
+          <div>
+            <span>2</span>
+            <p>Open the user &gt; Account Security &gt; New API Key.</p>
+          </div>
+          <div>
+            <span>3</span>
+            <p>Paste the Odoo URL, database name, user email, and generated API key here.</p>
+          </div>
+        </div>
+        <form className="cd-woo-modal__form" onSubmit={submit} autoComplete="off">
+          <div className="cd-autofill-trap" aria-hidden="true">
+            <input type="text" name="username" autoComplete="username" tabIndex={-1} />
+            <input type="password" name="password" autoComplete="current-password" tabIndex={-1} />
+          </div>
+          <label>
+            <span>Odoo URL</span>
+            <input
+              name="odoo-base-url"
+              type="url"
+              value={baseUrl}
+              onChange={(event) => setBaseUrl(event.target.value)}
+              placeholder="https://your-company.odoo.com"
+              autoComplete="off"
+              data-1p-ignore="true"
+              data-lpignore="true"
+              spellCheck={false}
+              required
+            />
+          </label>
+          <label>
+            <span>Database name</span>
+            <input
+              name="odoo-database-name"
+              type="text"
+              value={database}
+              onChange={(event) => setDatabase(event.target.value)}
+              placeholder="your-database"
+              autoComplete="off"
+              data-1p-ignore="true"
+              data-lpignore="true"
+              spellCheck={false}
+              required
+            />
+          </label>
+          <label>
+            <span>User email</span>
+            <input
+              name="odoo-user-login"
+              type="email"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+              placeholder="owner@company.com"
+              autoComplete="off"
+              data-1p-ignore="true"
+              data-lpignore="true"
+              spellCheck={false}
+              required
+            />
+          </label>
+          <label>
+            <span>API key</span>
+            <input
+              name="odoo-api-key"
+              type="password"
+              value={apiKey}
+              onChange={(event) => setApiKey(event.target.value)}
+              placeholder="Paste generated API key"
+              autoComplete="new-password"
+              data-1p-ignore="true"
+              data-lpignore="true"
+              spellCheck={false}
+              required
+            />
+          </label>
+          {formError ? <div className="cd-woo-modal__error" role="alert">{formError}</div> : null}
+          <div className="cd-woo-modal__actions">
+            <button className="cd-small-ghost" type="button" onClick={onClose} disabled={busy}>Cancel</button>
+            <button className="cd-integration__action" type="submit" disabled={busy}>
+              {busy ? 'Connecting...' : 'Connect Odoo'}
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+  )
+}
+
+function ConnectionWindowModal({
+  state,
+  onClose,
+  onOpen
+}: {
+  state: ConnectionWindowState
+  onClose: () => void
+  onOpen: () => void
+}) {
+  if (!state) return null
+  return (
+    <div className="cd-modal-backdrop" role="presentation" onMouseDown={(event) => {
+      if (event.target === event.currentTarget) onClose()
+    }}>
+      <section className="cd-card cd-connect-window" role="dialog" aria-modal="true" aria-labelledby="connection-window-title">
+        <header className="cd-woo-modal__head">
+          <div>
+            <span>{state.provider}</span>
+            <h2 id="connection-window-title">Connect in secure window</h2>
+          </div>
+          <button className="cd-icon-button" type="button" aria-label="Close connection window status" onClick={onClose}>
+            <X size={16} />
+          </button>
+        </header>
+        <p className="cd-woo-modal__copy">
+          Keep this dashboard open. Complete authorization in the smaller window, then come back here and Coodra will refresh the connection status.
+        </p>
+        {state.popupBlocked ? (
+          <div className="cd-woo-modal__error" role="alert">Your browser blocked the connection window. Use the button below to open it.</div>
+        ) : null}
+        <div className="cd-woo-modal__actions">
+          <button className="cd-small-ghost" type="button" onClick={onClose}>Close</button>
+          <button className="cd-integration__action" type="button" onClick={onOpen}>Open {state.provider}</button>
+        </div>
+      </section>
+    </div>
+  )
+}
+
 function IntegrationsPage({ data, user, onRefresh }: { data: DashboardData; user: BootUser; onRefresh: () => Promise<LoadResult> }) {
   const [query, setQuery] = useState('')
   const [busyProvider, setBusyProvider] = useState<{ provider: string; action: 'connect' | 'disconnect' } | null>(null)
   const [connectNotice, setConnectNotice] = useState<{ tone: MetricTone; text: string } | null>(null)
   const [wooModalOpen, setWooModalOpen] = useState(false)
+  const [odooModalOpen, setOdooModalOpen] = useState(false)
+  const [connectWindow, setConnectWindow] = useState<ConnectionWindowState>(null)
   const integrations = getDisplayIntegrations(data.workspace.integrations)
   const filteredIntegrations = integrations.filter((integration) => {
     const haystack = [integration.provider, integration.description, integration.status, integration.lastSync || ''].join(' ').toLowerCase()
@@ -1999,6 +2211,72 @@ function IntegrationsPage({ data, user, onRefresh }: { data: DashboardData; user
     })
   }
 
+  const runOdooConnect = async (credentials: OdooCredentials) => {
+    const provider = 'Odoo'
+    setBusyProvider({ provider, action: 'connect' })
+    setConnectNotice(null)
+    const result = await startIntegrationConnection(provider, user.backendJwt, credentials)
+    if (!result.ok) {
+      setBusyProvider(null)
+      setConnectNotice({
+        tone: 'red',
+        text: result.error
+          ? `Odoo connection could not be started. ${result.error}`
+          : 'Odoo connection could not be started.'
+      })
+      return
+    }
+
+    setConnectNotice({ tone: 'amber', text: 'Odoo connected. Running the first read-only sync now.' })
+    const syncResult = await syncIntegrationConnection(provider, user.backendJwt)
+    try {
+      await onRefresh()
+    } catch {
+      // A failed refresh should not hide the connection result.
+    }
+    setBusyProvider(null)
+    setOdooModalOpen(false)
+
+    if (!syncResult.ok) {
+      setConnectNotice({
+        tone: 'amber',
+        text: syncResult.error
+          ? `Odoo connected, but the first sync needs attention: ${syncResult.error}`
+          : 'Odoo connected, but the first sync needs attention.'
+      })
+      return
+    }
+
+    const synced = syncResult.data?.result
+    setConnectNotice({
+      tone: 'green',
+      text: `Odoo connected and synced ${synced?.synced_products || 0} products, ${synced?.synced_variants || 0} variants, and ${synced?.synced_orders || 0} orders.`
+    })
+  }
+
+  const openConnectionWindow = (provider: string, launchUrl: string) => {
+    const popup = window.open(
+      launchUrl,
+      `coodra_${providerKey(provider)}_connect`,
+      'popup=yes,width=760,height=820,left=120,top=80'
+    )
+    setConnectWindow({ provider, launchUrl, popupBlocked: !popup })
+    if (!popup) return
+    const refreshTimer = window.setInterval(() => {
+      if (!popup.closed) return
+      window.clearInterval(refreshTimer)
+      setConnectWindow(null)
+      void onRefresh().then(() => {
+        setConnectNotice({ tone: 'amber', text: `${provider} connection window closed. Refreshed live connection status.` })
+      }).catch((err: unknown) => {
+        setConnectNotice({
+          tone: 'red',
+          text: err instanceof Error ? `${provider} window closed, but refresh failed: ${err.message}` : `${provider} window closed, but connection status could not be refreshed.`
+        })
+      })
+    }, 900)
+  }
+
   const handleConnect = async (integration: IntegrationCard) => {
     const provider = integration.provider
     if (integration.status === 'Connected') {
@@ -2033,13 +2311,17 @@ function IntegrationsPage({ data, user, onRefresh }: { data: DashboardData; user
       setWooModalOpen(true)
       return
     }
+    if (providerKey(provider) === 'odoo') {
+      setOdooModalOpen(true)
+      return
+    }
     setBusyProvider({ provider, action: 'connect' })
     setConnectNotice(null)
     const result = await startIntegrationConnection(provider, user.backendJwt)
     setBusyProvider(null)
     const launchUrl = result.data?.connectUrl || result.data?.launch_url || ''
     if (result.ok && launchUrl) {
-      window.location.assign(launchUrl)
+      openConnectionWindow(provider, launchUrl)
       return
     }
     if (result.ok) {
@@ -2126,6 +2408,19 @@ function IntegrationsPage({ data, user, onRefresh }: { data: DashboardData; user
         busy={busyProvider?.provider === 'WooCommerce'}
         onClose={() => setWooModalOpen(false)}
         onSubmit={runWooCommerceConnect}
+      />
+      <OdooConnectModal
+        open={odooModalOpen}
+        busy={busyProvider?.provider === 'Odoo'}
+        onClose={() => setOdooModalOpen(false)}
+        onSubmit={runOdooConnect}
+      />
+      <ConnectionWindowModal
+        state={connectWindow}
+        onClose={() => setConnectWindow(null)}
+        onOpen={() => {
+          if (connectWindow) openConnectionWindow(connectWindow.provider, connectWindow.launchUrl)
+        }}
       />
     </div>
   )

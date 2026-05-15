@@ -5252,6 +5252,12 @@
   box-shadow: 0 22px 60px rgba(15, 23, 42, 0.22);
 }
 
+.cd-connect-window {
+  width: min(100%, 420px);
+  padding: 22px;
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.22);
+}
+
 .cd-woo-modal__head {
   display: flex;
   align-items: flex-start;

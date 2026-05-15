@@ -41,7 +41,7 @@ html:has(.cd-app-shell.cd-theme-dark) {
   color: #e2e2e2 !important;
 }
 
-.cd-app-shell.cd-theme-dark :is(.cd-card, .cd-ref-card, .cd-ref-section, .cd-overview-card, .cd-impact-map, .cd-launch-readiness-card, .cd-launch-step, .cd-plan-table-wrap, .cd-pulse-card, .cd-command-outcomes, .cd-chat-drawer, .cd-detail-drawer, .cd-filter-menu, .cd-notification-popover, .cd-profile-menu, .cd-chat-recent-panel, .cd-chat-confirm-card, .cd-settings-card, .cd-settings-wide, .cd-settings-danger, .cd-role-card, .cd-integration, .cd-integrations-toolbar, .cd-help-search, .cd-search, .cd-chat-drawer .cd-composer, .cd-woo-modal) {
+.cd-app-shell.cd-theme-dark :is(.cd-card, .cd-ref-card, .cd-ref-section, .cd-overview-card, .cd-impact-map, .cd-launch-readiness-card, .cd-launch-step, .cd-plan-table-wrap, .cd-pulse-card, .cd-command-outcomes, .cd-chat-drawer, .cd-detail-drawer, .cd-filter-menu, .cd-notification-popover, .cd-profile-menu, .cd-chat-recent-panel, .cd-chat-confirm-card, .cd-settings-card, .cd-settings-wide, .cd-settings-danger, .cd-role-card, .cd-integration, .cd-integrations-toolbar, .cd-help-search, .cd-search, .cd-chat-drawer .cd-composer, .cd-woo-modal, .cd-connect-window) {
   border-color: var(--cd-dark-divider) !important;
   background: var(--cd-card) !important;
   color: #f0f0f0 !important;
@@ -73,7 +73,7 @@ html:has(.cd-app-shell.cd-theme-dark) {
   background: rgba(0, 0, 0, 0.56);
 }
 
-.cd-app-shell.cd-theme-dark .cd-woo-modal {
+.cd-app-shell.cd-theme-dark :is(.cd-woo-modal, .cd-connect-window) {
   box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45) !important;
 }
 

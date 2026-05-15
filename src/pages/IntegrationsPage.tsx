@@ -103,6 +103,18 @@ const integrations: IntegrationCard[] = [
     category: 'Ecommerce',
   },
   {
+    name: 'Odoo',
+    logo: '/images/integrations/odoo.svg',
+    logoWordmark: '/images/integrations/odoo.svg',
+    summary: 'Connect Odoo ERP data for products, sales orders, and inventory intelligence.',
+    bullets: ['Products & variants', 'Sales orders', 'Stock availability', 'ERP context'],
+    metricLabel: 'Sync mode',
+    metricValue: 'Read-only',
+    metricDelta: 'Early access',
+    badge: 'Early access',
+    category: 'POS',
+  },
+  {
     name: 'Moneris',
     logo: '/images/integrations/moneris.png',
     logoWordmark: '/images/integrations/wordmarks/moneris.png',
