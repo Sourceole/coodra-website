@@ -442,6 +442,7 @@ export default function LoginPage() {
                   <label htmlFor="mfa-code">Verification code</label>
                   <input
                     id="mfa-code"
+                    name="one-time-code"
                     className="login__mfaCode"
                     type="text"
                     inputMode="numeric"
@@ -452,6 +453,10 @@ export default function LoginPage() {
                     placeholder="000000"
                     required
                     autoComplete="one-time-code"
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    enterKeyHint="done"
                   />
                 </div>
 
