@@ -1845,37 +1845,53 @@ function WooCommerceConnectModal({
         <p className="cd-woo-modal__copy">
           Paste a WooCommerce REST API key from WordPress. Coodra will use it read-only first to sync products, orders, sales, and inventory.
         </p>
-        <form className="cd-woo-modal__form" onSubmit={submit}>
+        <form className="cd-woo-modal__form" onSubmit={submit} autoComplete="off">
+          <div className="cd-autofill-trap" aria-hidden="true">
+            <input type="text" name="username" autoComplete="username" tabIndex={-1} />
+            <input type="password" name="password" autoComplete="current-password" tabIndex={-1} />
+          </div>
           <label>
             <span>Store URL</span>
             <input
+              name="woocommerce-store-origin"
               type="url"
               value={storeUrl}
               onChange={(event) => setStoreUrl(event.target.value)}
-              placeholder="https://yourstore.com"
-              autoComplete="url"
+              placeholder="https://your-woocommerce-store.com"
+              autoComplete="off"
+              data-1p-ignore="true"
+              data-lpignore="true"
+              spellCheck={false}
               required
             />
           </label>
           <label>
             <span>Consumer key</span>
             <input
+              name="woocommerce-rest-consumer-key"
               type="text"
               value={consumerKey}
               onChange={(event) => setConsumerKey(event.target.value)}
-              placeholder="ck_..."
-              autoComplete="off"
+              placeholder="ck_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+              autoComplete="new-password"
+              data-1p-ignore="true"
+              data-lpignore="true"
+              spellCheck={false}
               required
             />
           </label>
           <label>
             <span>Consumer secret</span>
             <input
+              name="woocommerce-rest-consumer-secret"
               type="password"
               value={consumerSecret}
               onChange={(event) => setConsumerSecret(event.target.value)}
-              placeholder="cs_..."
-              autoComplete="off"
+              placeholder="cs_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+              autoComplete="new-password"
+              data-1p-ignore="true"
+              data-lpignore="true"
+              spellCheck={false}
               required
             />
           </label>

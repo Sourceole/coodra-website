@@ -5282,6 +5282,16 @@
   gap: 14px;
 }
 
+.cd-autofill-trap {
+  position: fixed;
+  left: -100vw;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .cd-woo-modal__form label {
   display: grid;
   gap: 7px;
