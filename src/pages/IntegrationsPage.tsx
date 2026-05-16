@@ -93,7 +93,8 @@ const integrations: IntegrationCard[] = [
   {
     name: 'WooCommerce',
     logo: '/images/integrations/woocommerce.svg',
-    logoWordmark: '/images/integrations/woocommerce.svg',
+    logoWordmark: '/images/integrations/wordmarks/woocommerce.svg',
+    logoWordmarkClass: 'is-woocommerce',
     summary: 'Connect WordPress commerce data for product, order, sales, and inventory intelligence.',
     bullets: ['Products & variations', 'Orders & refunds', 'Stock quantities', 'Catalog quality'],
     metricLabel: 'Sync mode',
@@ -128,6 +129,10 @@ const integrations: IntegrationCard[] = [
     category: 'Payments',
   },
 ]
+
+const platformLogoIntegrations = integrations.filter((item) =>
+  ['Shopify', 'Square', 'Lightspeed', 'Clover', 'WooCommerce'].includes(item.name)
+)
 
 const capabilityCards: CapabilityCard[] = [
   {
@@ -235,14 +240,14 @@ export default function IntegrationsPage() {
               <div className="integrations-hero-platforms">
                 <p>Works with leading platforms</p>
                 <div className="integrations-platform-row" role="list" aria-label="Supported integrations">
-                  {integrations.map((item, index) => (
+                  {platformLogoIntegrations.map((item, index) => (
                     <div key={item.name} className="integrations-platform-item" role="listitem" aria-label={item.name}>
                       <img
                         src={item.logoWordmark}
                         alt={item.name}
                         className={`integrations-platform-logo ${item.logoWordmarkClass ?? ''}`.trim()}
                       />
-                      {index < integrations.length - 1 ? <span className="integrations-platform-divider" aria-hidden="true" /> : null}
+                      {index < platformLogoIntegrations.length - 1 ? <span className="integrations-platform-divider" aria-hidden="true" /> : null}
                     </div>
                   ))}
                 </div>

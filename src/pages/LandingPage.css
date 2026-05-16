@@ -1186,9 +1186,8 @@ main {
   height: 28px;
   transform: none;
 }
-.hero-v5-trust-logo.is-moneris {
-  height: 34px;
-  transform: translate(3px, -8px);
+.hero-v5-trust-logo.is-woocommerce {
+  height: 32px;
 }
 .hero-v5-actions {
   margin-top: 1.6rem;
@@ -1754,9 +1753,8 @@ main {
     height: 15px;
   }
 
-  .hero-v5-trust-logo.is-moneris {
+  .hero-v5-trust-logo.is-woocommerce {
     height: 16px;
-    transform: none;
   }
 
   .hero-v5-headline {
