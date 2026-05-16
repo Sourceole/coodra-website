@@ -2,6 +2,7 @@
 import { Link } from 'react-router'
 import Lenis from 'lenis'
 import { trackEvent } from '../lib/analytics'
+import { openEarlyAccessModal } from '../lib/earlyAccessEvents'
 import MarketingHeader from '../components/MarketingHeader'
 import MarketingFooter from '../components/MarketingFooter'
 import './LandingPage.css'
@@ -205,7 +206,7 @@ export default function LandingPage() {
               Coodra is the AI layer that knows your inventory, catches margin leaks, and knows your store better than you do - all from one dashboard.
             </p>
             <div className="hero-v5-actions">
-              <Link to="/signup" className="hero-v5-cta hero-v5-cta-primary">Start For Free</Link>
+              <button type="button" className="hero-v5-cta hero-v5-cta-primary" onClick={openEarlyAccessModal}>Request access</button>
               <Link to="/integrations" className="hero-v5-cta hero-v5-cta-secondary">
                 See Integrations
                 <span className="hero-v5-cta-icon" aria-hidden="true">
@@ -467,7 +468,7 @@ export default function LandingPage() {
           <h2>Ready to make better retail decisions this week?</h2>
           <p>Connect your data, review AI-ranked actions, and approve your first decision in minutes.</p>
           <div className="cta-actions">
-            <Link to="/signup" className="btn btn-primary">Start Free</Link>
+            <button type="button" className="btn btn-primary" onClick={openEarlyAccessModal}>Request access</button>
             <Link to="/pricing" className="btn btn-secondary">View Pricing</Link>
           </div>
         </section>
