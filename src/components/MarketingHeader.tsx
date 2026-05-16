@@ -25,6 +25,16 @@ const platformFeatures = [
   },
 ]
 
+const eagerNav = {
+  discover: 'render',
+  prefetch: 'render',
+} as const
+
+const intentNav = {
+  discover: 'render',
+  prefetch: 'intent',
+} as const
+
 export default function MarketingHeader() {
   const [isMounted, setIsMounted] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -160,7 +170,7 @@ export default function MarketingHeader() {
               <ul className="mh-mobile-feature-list">
                 {platformFeatures.map((feature) => (
                   <li key={feature.to}>
-                    <Link to={feature.to} onClick={closeMobileMenu}>
+                    <Link to={feature.to} {...intentNav} onClick={closeMobileMenu}>
                       <span className="mh-platform-icon" aria-hidden="true">
                         {feature.icon === 'plug' ? (
                           <svg viewBox="0 0 16 16">
@@ -186,18 +196,18 @@ export default function MarketingHeader() {
                   </li>
                 ))}
               </ul>
-              <Link to="/about" className="mh-mobile-discover-link" onClick={closeMobileMenu}>
+              <Link to="/about" {...intentNav} className="mh-mobile-discover-link" onClick={closeMobileMenu}>
                 Discover Coodra
               </Link>
             </div>
           </li>
           <li><Link to="/#decision" onClick={closeMobileMenu}>How it works</Link></li>
-          <li><Link to="/pricing" onClick={closeMobileMenu}>Pricing</Link></li>
+          <li><Link to="/pricing" {...eagerNav} onClick={closeMobileMenu}>Pricing</Link></li>
           <li><Link to="/#ai-chat" onClick={closeMobileMenu}>AI Chat</Link></li>
           <li><Link to="/#proof" onClick={closeMobileMenu}>Impact</Link></li>
         </ul>
         <div className="mh-mobile-nav-actions">
-          <Link to="/login" className="mh-sign-in" onClick={closeMobileMenu}>Sign in</Link>
+          <Link to="/login" {...intentNav} className="mh-sign-in" onClick={closeMobileMenu}>Sign in</Link>
           <button type="button" className="mh-btn-start" onClick={openEarlyAccess}>Request access</button>
         </div>
       </div>
@@ -258,7 +268,7 @@ export default function MarketingHeader() {
                     <ul className="mh-platform-list">
                       {platformFeatures.map((feature) => (
                         <li key={feature.to}>
-                          <Link to={feature.to} className="mh-platform-link" onClick={() => setIsPlatformMenuOpen(false)}>
+                          <Link to={feature.to} {...intentNav} className="mh-platform-link" onClick={() => setIsPlatformMenuOpen(false)}>
                             <span className="mh-platform-icon" aria-hidden="true">
                               {feature.icon === 'plug' ? (
                                 <svg viewBox="0 0 16 16">
@@ -290,13 +300,13 @@ export default function MarketingHeader() {
               </div>
             </li>
             <li><Link to="/#decision">How it works</Link></li>
-            <li><Link to="/pricing">Pricing</Link></li>
+            <li><Link to="/pricing" {...eagerNav}>Pricing</Link></li>
             <li><Link to="/#ai-chat">AI Chat</Link></li>
             <li><Link to="/#proof">Impact</Link></li>
           </ul>
 
           <div className="mh-nav-actions">
-            <Link to="/login" className="mh-sign-in">Sign in</Link>
+            <Link to="/login" {...intentNav} className="mh-sign-in">Sign in</Link>
             <button type="button" className="mh-btn-start" onClick={openEarlyAccess}>Request access</button>
           </div>
 

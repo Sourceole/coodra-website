@@ -29,6 +29,11 @@ const legalLinks = [
   { to: '/terms', label: 'Terms' },
 ]
 
+const intentNav = {
+  discover: 'render',
+  prefetch: 'intent',
+} as const
+
 export default function MarketingFooter() {
   const openEarlyAccess = () => {
     openEarlyAccessModal()
@@ -47,7 +52,7 @@ export default function MarketingFooter() {
             <h4>Product</h4>
             <ul>
               {productLinks.map((item) => (
-                <li key={item.to}><Link to={item.to}>{item.label}</Link></li>
+                <li key={item.to}><Link to={item.to} {...intentNav}>{item.label}</Link></li>
               ))}
             </ul>
           </section>
@@ -56,7 +61,7 @@ export default function MarketingFooter() {
             <h4>Resources</h4>
             <ul>
               {resourceLinks.map((item) => (
-                <li key={item.to}><Link to={item.to}>{item.label}</Link></li>
+                <li key={item.to}><Link to={item.to} {...intentNav}>{item.label}</Link></li>
               ))}
               <li><button type="button" className="mf-inline-link" onClick={openEarlyAccess}>Early access</button></li>
             </ul>
@@ -66,7 +71,7 @@ export default function MarketingFooter() {
             <h4>Company</h4>
             <ul>
               {companyLinks.map((item) => (
-                <li key={item.to}><Link to={item.to}>{item.label}</Link></li>
+                <li key={item.to}><Link to={item.to} {...intentNav}>{item.label}</Link></li>
               ))}
             </ul>
           </section>
@@ -75,7 +80,7 @@ export default function MarketingFooter() {
             <h4>Legal</h4>
             <ul>
               {legalLinks.map((item) => (
-                <li key={item.to}><Link to={item.to}>{item.label}</Link></li>
+                <li key={item.to}><Link to={item.to} {...intentNav}>{item.label}</Link></li>
               ))}
             </ul>
           </section>
