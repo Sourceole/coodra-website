@@ -228,158 +228,32 @@
 
 .integration-card {
   border: 1px solid rgba(10, 26, 49, 0.12);
-  border-radius: 14px;
+  border-radius: 10px;
   background: #ffffff;
-  padding: 1rem;
-  display: grid;
-  grid-template-rows: auto auto auto auto auto;
-  gap: 0.72rem;
-}
-
-.integration-card-head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.6rem;
-}
-
-.integration-card-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.58rem;
+  gap: 0.75rem;
+  min-height: 78px;
+  padding: 0.95rem 1.05rem;
 }
 
 .integration-card-logo {
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(10, 26, 49, 0.12);
+  border-radius: 8px;
   object-fit: contain;
-}
-
-.integration-card-brand h3 {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  font-size: 1.76rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.integration-card-badge {
-  border-radius: 999px;
-  background: rgba(17, 200, 186, 0.13);
-  color: #0b8c80;
-  border: 1px solid rgba(17, 200, 186, 0.42);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.74rem;
-  font-weight: 700;
-  padding: 0.22rem 0.54rem;
-}
-
-.integration-card-summary {
-  margin: 0;
-  color: #4f6785;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.98rem;
-  line-height: 1.55;
-}
-
-.integration-card-bullets {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 0.36rem;
-}
-
-.integration-card-bullets li {
-  color: #334b69;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.91rem;
-  line-height: 1.45;
-  position: relative;
-  padding-left: 1rem;
-}
-
-.integration-card-bullets li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.56em;
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: #11c8ba;
-}
-
-.integration-card-metric {
-  border: 1px solid rgba(10, 26, 49, 0.1);
-  border-radius: 11px;
-  background: linear-gradient(180deg, #f8fdff 0%, #f2faff 100%);
-  padding: 0.7rem 0.76rem;
-}
-
-.integration-card-metric p {
-  margin: 0;
-  color: #748aa6;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
-}
-
-.integration-card-metric strong {
-  margin-top: 0.2rem;
-  display: block;
-  color: #0e2844;
-  font-family: 'Inter', sans-serif;
-  font-size: 1.26rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-}
-
-.integration-card-metric span {
-  margin-top: 0.08rem;
-  display: block;
-  color: #11a799;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 700;
-}
-
-.integration-card-foot {
-  margin-top: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.6rem;
-}
-
-.integration-card-btn {
-  border-radius: 999px;
-  border: 1px solid rgba(17, 200, 186, 0.5);
+  padding: 0.28rem;
   background: #ffffff;
-  color: #0e8f83;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.86rem;
-  font-weight: 700;
-  padding: 0.42rem 1.08rem;
-  cursor: pointer;
 }
 
-.integration-card-foot p {
+.integration-card h3 {
   margin: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.36rem;
-  color: #3f5878;
   font-family: 'Inter', sans-serif;
-  font-size: 0.83rem;
-  font-weight: 600;
-}
-
-.integration-status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: #0fad43;
+  font-weight: 700;
+  color: #0e2844;
+  font-size: 1rem;
+  line-height: 1.2;
 }
 
 .integrations-capabilities {

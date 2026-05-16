@@ -19,11 +19,6 @@ type IntegrationCard = {
   logoWordmark: string
   logoWordmarkClass?: string
   summary: string
-  bullets: string[]
-  metricLabel: string
-  metricValue: string
-  metricDelta: string
-  badge: string
   category: 'POS' | 'Ecommerce' | 'Payments'
 }
 
@@ -46,11 +41,6 @@ const integrations: IntegrationCard[] = [
     logo: '/images/integrations/shopify.png',
     logoWordmark: '/images/integrations/wordmarks/shopify.svg',
     summary: 'Sync orders, customers, inventory, and catalogs to power smarter retail decisions.',
-    bullets: ['Orders & customers', 'Catalog sync', 'Inventory updates', 'Payout reconciliation'],
-    metricLabel: 'Revenue (30d)',
-    metricValue: '$98,420',
-    metricDelta: '+18.6%',
-    badge: 'Popular',
     category: 'Ecommerce',
   },
   {
@@ -58,11 +48,6 @@ const integrations: IntegrationCard[] = [
     logo: '/images/integrations/square.png',
     logoWordmark: '/images/integrations/wordmarks/square.svg',
     summary: 'Connect in-person sales and payments from every location and channel.',
-    bullets: ['POS sales & refunds', 'Item & variant sync', 'Payment details', 'Location performance'],
-    metricLabel: 'Transactions (30d)',
-    metricValue: '1,248',
-    metricDelta: '+12.3%',
-    badge: 'Core integration',
     category: 'POS',
   },
   {
@@ -70,11 +55,6 @@ const integrations: IntegrationCard[] = [
     logo: '/images/integrations/lightspeed.png',
     logoWordmark: '/images/integrations/wordmarks/lightspeed.svg',
     summary: 'Bring real-time retail data and inventory into Coodra for intelligent actions.',
-    bullets: ['Sell & inventory sync', 'Refunds & returns', 'Vendor reporting', 'Location performance'],
-    metricLabel: 'GMV (30d)',
-    metricValue: '$76,210',
-    metricDelta: '+14.2%',
-    badge: 'Popular',
     category: 'POS',
   },
   {
@@ -83,11 +63,6 @@ const integrations: IntegrationCard[] = [
     logoWordmark: '/images/integrations/wordmarks/clover-logotyp-tight.svg',
     logoWordmarkClass: 'is-clover',
     summary: 'Track transactions and item-level data to uncover growth opportunities.',
-    bullets: ['Transaction details', 'Items & categories', 'Tax & tips', 'Payout reconciliation'],
-    metricLabel: 'Sales (30d)',
-    metricValue: '$62,340',
-    metricDelta: '+9.8%',
-    badge: 'Available',
     category: 'POS',
   },
   {
@@ -96,11 +71,6 @@ const integrations: IntegrationCard[] = [
     logoWordmark: '/images/integrations/wordmarks/woocommerce.svg',
     logoWordmarkClass: 'is-woocommerce',
     summary: 'Connect WordPress commerce data for product, order, sales, and inventory intelligence.',
-    bullets: ['Products & variations', 'Orders & refunds', 'Stock quantities', 'Catalog quality'],
-    metricLabel: 'Sync mode',
-    metricValue: 'Read-only',
-    metricDelta: 'Early access',
-    badge: 'Early access',
     category: 'Ecommerce',
   },
   {
@@ -108,11 +78,6 @@ const integrations: IntegrationCard[] = [
     logo: '/images/integrations/odoo.svg',
     logoWordmark: '/images/integrations/odoo.svg',
     summary: 'Connect Odoo ERP data for products, sales orders, and inventory intelligence.',
-    bullets: ['Products & variants', 'Sales orders', 'Stock availability', 'ERP context'],
-    metricLabel: 'Sync mode',
-    metricValue: 'Read-only',
-    metricDelta: 'Early access',
-    badge: 'Early access',
     category: 'POS',
   },
   {
@@ -121,11 +86,6 @@ const integrations: IntegrationCard[] = [
     logoWordmark: '/images/integrations/wordmarks/moneris.png',
     logoWordmarkClass: 'is-moneris',
     summary: 'Reconcile payments and settlements with confidence and speed.',
-    bullets: ['Payment capture', 'Settlement reports', 'Fees & chargebacks', 'Daily reconciliation'],
-    metricLabel: 'Settlements (30d)',
-    metricValue: '$61,870',
-    metricDelta: '+11.7%',
-    badge: 'Available',
     category: 'Payments',
   },
 ]
@@ -204,8 +164,7 @@ export default function IntegrationsPage() {
       const byQuery =
         lowered.length === 0 ||
         item.name.toLowerCase().includes(lowered) ||
-        item.summary.toLowerCase().includes(lowered) ||
-        item.bullets.some((bullet) => bullet.toLowerCase().includes(lowered))
+        item.summary.toLowerCase().includes(lowered)
 
       return byFilter && byQuery
     })
@@ -292,37 +251,8 @@ export default function IntegrationsPage() {
             <div className="integrations-card-grid">
               {filteredIntegrations.map((item) => (
                 <article key={item.name} className="integration-card">
-                  <header className="integration-card-head">
-                    <div className="integration-card-brand">
-                      <img src={item.logo} alt={`${item.name} logo`} className="integration-card-logo" />
-                      <h3>{item.name}</h3>
-                    </div>
-                    <span className="integration-card-badge">{item.badge}</span>
-                  </header>
-
-                  <p className="integration-card-summary">{item.summary}</p>
-
-                  <ul className="integration-card-bullets">
-                    {item.bullets.map((bullet) => (
-                      <li key={bullet}>{bullet}</li>
-                    ))}
-                  </ul>
-
-                  <div className="integration-card-metric" aria-label={`${item.name} metric`}>
-                    <p>{item.metricLabel}</p>
-                    <strong>{item.metricValue}</strong>
-                    <span>{item.metricDelta}</span>
-                  </div>
-
-                  <footer className="integration-card-foot">
-                    <button type="button" className="integration-card-btn">
-                      View details
-                    </button>
-                    <p>
-                      <span className="integration-status-dot" aria-hidden="true" />
-                      Available
-                    </p>
-                  </footer>
+                  <img src={item.logo} alt={`${item.name} logo`} className="integration-card-logo" />
+                  <h3>{item.name}</h3>
                 </article>
               ))}
             </div>
