@@ -2755,6 +2755,8 @@
 
 @media (max-width: 820px) {
   .cd-main {
+    display: block !important;
+    gap: 0 !important;
     height: 100dvh !important;
     min-height: 100dvh !important;
     margin: 0 !important;
@@ -2946,20 +2948,20 @@
   }
 
   .cd-launch-readiness-card {
-    margin: 0 -18px;
-    padding: 0 18px 6px;
+    margin: 0;
+    padding: 0;
     border: 0;
     border-radius: 0;
     background: transparent;
     box-shadow: none;
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(210px, 64vw);
-    grid-template-columns: none;
-    gap: 14px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    overflow: visible;
+    scroll-snap-type: none;
+    scrollbar-width: auto;
   }
 
   .cd-launch-readiness-card::-webkit-scrollbar {
@@ -2967,12 +2969,12 @@
   }
 
   .cd-launch-step {
-    min-height: 118px;
+    min-height: 0;
     padding: 16px;
     border-radius: 12px;
     background: #ffffff;
     box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
-    scroll-snap-align: start;
+    scroll-snap-align: none;
   }
 
   .cd-launch-step__index {

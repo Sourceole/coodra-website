@@ -233,6 +233,8 @@
   }
 
   .cd-main {
+    display: block;
+    gap: 0;
     height: 100dvh;
     min-height: 100dvh;
     margin: 0;

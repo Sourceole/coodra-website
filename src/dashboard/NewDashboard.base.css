@@ -746,6 +746,8 @@ body:has(.cd-app-shell) {
 }
 
 .cd-main {
+  display: block;
+  gap: 0;
   min-width: 0;
   height: calc(100% - 16px);
   margin: 8px 8px 8px 0;

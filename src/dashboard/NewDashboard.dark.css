@@ -362,6 +362,22 @@ html:has(.cd-app-shell.cd-theme-dark) {
   border-left-color: var(--cd-dark-divider) !important;
 }
 
+.cd-app-shell.cd-theme-dark :is(
+  .cd-ref-page--decisions .cd-ref-table tr,
+  .cd-ref-page--merchandise .cd-ref-table tr,
+  .cd-ref-page--operations .cd-ref-table tr,
+  .cd-plan-table tr,
+  .cd-ops-compact-table tr,
+  .cd-intel-signal-table tr,
+  .cd-intel-supplier-table tr,
+  .cd-decision-history-row,
+  .cd-dismissed-row
+) {
+  border-color: var(--cd-dark-divider) !important;
+  background: var(--cd-card) !important;
+  box-shadow: none !important;
+}
+
 .cd-app-shell.cd-theme-dark :is(.cd-soft-icon, .cd-ref-metric__icon, .cd-ref-row-icon) {
   border-color: transparent !important;
   background: #222222 !important;
@@ -687,6 +703,18 @@ html:has(.cd-app-shell.cd-theme-dark) {
   border-color: #3a3a3a !important;
   background: #222222 !important;
   color: #b6b6b6 !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-settings-danger button {
+  border-color: #4a2d2d !important;
+  background: #1a1a1a !important;
+  color: #ffb4ab !important;
+  box-shadow: none !important;
+}
+
+.cd-app-shell.cd-theme-dark .cd-settings-danger > div:first-child button {
+  border-color: #3a3a3a !important;
+  color: #d6d6d6 !important;
 }
 
 .cd-app-shell.cd-theme-dark :is(.cd-sidebar-toggle, .cd-mobile-menu-button) svg {
