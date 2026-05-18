@@ -194,6 +194,7 @@
   .mf-footer {
     padding: 2.8rem 1rem 1.4rem;
     background: rgb(253, 253, 254);
+    text-align: center;
   }
 
   .mf-grid {
@@ -211,11 +212,13 @@
 
   .mf-logo {
     width: 10.5rem;
+    margin-inline: auto;
     margin-bottom: 0.85rem;
   }
 
   .mf-summary {
     max-width: 30ch;
+    margin-inline: auto;
     font-size: 0.84rem;
     line-height: 1.5;
     color: #5b6f8d;
@@ -242,6 +245,8 @@
   }
 
   .mf-col a {
+    justify-content: center;
+    margin-inline: auto;
     font-size: 0.82rem;
     color: #1f3553;
     line-height: 1.35;
@@ -250,7 +255,8 @@
   .mf-bottom {
     padding-top: 1rem;
     gap: 0.62rem;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
   }
 
   .mf-bottom p,

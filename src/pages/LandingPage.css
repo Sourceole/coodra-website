@@ -1695,7 +1695,7 @@ main {
 }
 
 @media (max-width: 760px) {
-:root { --container: min(1180px, calc(100vw - 1.35rem)); }
+:root { --container: min(1180px, calc(100% - 1.35rem)); }
 
   .hero-v5 {
     min-height: auto;
@@ -1777,6 +1777,13 @@ main {
     margin: 0 0 6px;
     font-size: 0.9rem;
     text-align: center;
+    display: block;
+  }
+
+  .hero-v5-pos-icon {
+    display: inline-flex;
+    margin-right: 0.35rem;
+    vertical-align: -0.12em;
   }
 
   .hero-v5-trust {
@@ -1832,6 +1839,38 @@ main {
     margin-top: 0;
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
+  }
+
+  .how-simple-copy,
+  .ai-chat-copy,
+  .impact-section,
+  .how-workflow-card,
+  .how-workflow-outcome {
+    text-align: center;
+  }
+
+  .how-simple-copy .hero-v5-eyebrow,
+  .ai-chat-copy .hero-v5-eyebrow,
+  .how-workflow-step,
+  .impact-pillars,
+  .impact-metrics {
+    justify-content: center;
+  }
+
+  .how-simple-list,
+  .ai-chat-list {
+    width: min(100%, 34rem);
+    margin-inline: auto;
+    text-align: left;
+  }
+
+  .how-simple-media,
+  .ai-chat-media,
+  .how-workflow-grid,
+  .how-workflow-outcomes,
+  .impact-card,
+  .cta-actions {
+    margin-inline: auto;
   }
 
 }
@@ -2059,7 +2098,7 @@ main {
 }
 
 #cta.cta {
-  width: min(1060px, calc(100vw - 2.2rem));
+  width: min(1060px, calc(100% - 2.2rem));
   margin-inline: auto;
 }
 
@@ -2086,7 +2125,7 @@ main {
   }
 
   #cta.cta {
-    width: min(1060px, calc(100vw - 1.4rem));
+    width: min(1060px, calc(100% - 1.4rem));
   }
 
   .how-simple-layout {
